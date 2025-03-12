@@ -10,7 +10,9 @@
             </x-forms.header>
 
             <x-forms.body >
-                <x-splade-select name="pengajars[]" :options="$pengajars" option-label="name" option-value="id" multiple choices />
+                <x-splade-input name="kode_nama_pengajar" :label="__('Kode Nama Pengajar')" required min="3" oninvalid="this.setCustomValidity('Harus Diisi, Minimal 3 Huruf')"/>
+                {{-- <x-splade-select name="pengajars[]" :options="$pengajars" option-label="name" option-value="id" multiple choices /> --}}
+                <x-splade-select name="pengajars" :label="__('User Akun')" :options="$pengajars" option-label="name" option-value="id" choices />
             </x-forms.body>
 
             <x-forms.footer />

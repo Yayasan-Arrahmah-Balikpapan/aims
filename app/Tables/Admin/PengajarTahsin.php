@@ -49,7 +49,12 @@ class PengajarTahsin extends AbstractTable
     {
         $table
             ->withGlobalSearch(columns: ['user.name','user.phone_number'])
+            ->rowLink(fn (Pengajar $pengajar) => route('admin.pengajar.show', ['unit' => 'tahsin', 'pengajar' => $pengajar->id],$pengajar))
             ->column('id', sortable: true)
+            ->column(
+                key:'kode_nama_pengajar',
+                label:'Pengajar',
+            )
             ->column(
                 key:'user.name',
                 label:'Nama',
