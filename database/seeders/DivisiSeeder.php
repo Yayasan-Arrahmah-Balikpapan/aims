@@ -33,5 +33,10 @@ class DivisiSeeder extends Seeder
                 'nama' => 'HRD',
                 'slug' => 'hrd',
         ]);
+        Divisi::create([
+                'id'   => 5,
+                'nama' => 'KARYAWAN',
+                'slug' => 'karyawan',
+        ]);
     }
 }

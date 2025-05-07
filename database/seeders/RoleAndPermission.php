@@ -45,6 +45,7 @@ class RoleAndPermission extends Seeder
             'dkm'      => ['dkm'],
             'laziz'    => ['dkm'],
             'mci'      => ['dkm'],
+            'karyawan'      => ['karyawan'],
 
             'ketua-divisi-pendidikan' => ['pendidikan', 'rtq', 'tahsin', 'rq', 'tla', 'tahla', 'read'],
             'ketua-divisi-dkm'        => ['dkm', 'read'],
