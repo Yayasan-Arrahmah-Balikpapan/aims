@@ -9,6 +9,6 @@
             class="hover:underline">
             arrahmahbalikpapan.or.id
         </Link>
-        © 2019-{{ date('Y') }}
+        © 2013-{{ date('Y') }}
     </p>
 </footer>

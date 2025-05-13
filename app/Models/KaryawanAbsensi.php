@@ -11,13 +11,22 @@ class KaryawanAbsensi extends Model
 
     protected $table = 'karyawan_absensis';
 
+
     protected $fillable = [
         'user_id',
         'status',
         'foto',
         'koordinat',
         'keterangan',
-        'waktu_absen'
+        'waktu_datang',
+        'waktu_pulang',
+    ];
+
+    protected $casts = [
+        'koordinat' => 'array',
+        'foto' => 'array',
+        'waktu_datang' => 'datetime',
+        'waktu_pulang' => 'datetime',
     ];
 
     public function user()

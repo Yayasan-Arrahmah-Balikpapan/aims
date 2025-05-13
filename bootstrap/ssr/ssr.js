@@ -169,12 +169,18 @@ ${codeFrame}` : message);
       })(vue_cjs);
       return vue_cjs;
     }
-    if (process.env.NODE_ENV === "production") {
-      vue.exports = requireVue_cjs_prod();
-    } else {
-      vue.exports = requireVue_cjs();
+    var hasRequiredVue;
+    function requireVue() {
+      if (hasRequiredVue) return vue.exports;
+      hasRequiredVue = 1;
+      if (process.env.NODE_ENV === "production") {
+        vue.exports = requireVue_cjs_prod();
+      } else {
+        vue.exports = requireVue_cjs();
+      }
+      return vue.exports;
     }
-    var vueExports = vue.exports;
+    var vueExports = requireVue();
     function Ds(e, t) {
       for (var r = -1, n = e == null ? 0 : e.length; ++r < n && t(e[r], r, e) !== false; )
         ;
@@ -1137,7 +1143,7 @@ ${codeFrame}` : message);
         i[r] = t(e[r], r, e);
       return i;
     }
-    var Vl = 1 / 0, Pn = ke ? ke.prototype : void 0, qn = Pn ? Pn.toString : void 0;
+    var Pn = ke ? ke.prototype : void 0, qn = Pn ? Pn.toString : void 0;
     function Qt(e) {
       if (typeof e == "string")
         return e;
@@ -1146,7 +1152,7 @@ ${codeFrame}` : message);
       if (Xt(e))
         return qn ? qn.call(e) : "";
       var t = e + "";
-      return t == "0" && 1 / e == -Vl ? "-0" : t;
+      return t == "0" && 1 / e == -Infinity ? "-0" : t;
     }
     function Qr(e) {
       return e == null ? "" : Qt(e);
@@ -1154,12 +1160,11 @@ ${codeFrame}` : message);
     function Yr(e, t) {
       return M(e) ? e : Xr(e, t) ? [e] : Nl(Qr(e));
     }
-    var Hl = 1 / 0;
     function $t(e) {
       if (typeof e == "string" || Xt(e))
         return e;
       var t = e + "";
-      return t == "0" && 1 / e == -Hl ? "-0" : t;
+      return t == "0" && 1 / e == -Infinity ? "-0" : t;
     }
     function ki(e, t, r) {
       t = Yr(t, e);
@@ -3024,7 +3029,6 @@ ${codeFrame}` : message);
       var r = t, n = r.placement, i = n === void 0 ? e.placement : n, s = r.strategy, a = s === void 0 ? e.strategy : s, o = r.boundary, l = o === void 0 ? dc : o, u = r.rootBoundary, c = u === void 0 ? as : u, v = r.elementContext, g = v === void 0 ? mt : v, f = r.altBoundary, h = f === void 0 ? false : f, m = r.padding, d = m === void 0 ? 0 : m, b = kc(typeof d != "number" ? d : Lc(d, nr)), O = g === mt ? fc : mt, A = e.rects.popper, S = e.elements[h ? O : g], $ = Fc(Xe(S) ? S : S.contextElement || je(e.elements.popper), l, c, a), w = it(e.elements.reference), _ = ls({
         reference: w,
         element: A,
-        strategy: "absolute",
         placement: i
       }), q = _r(Object.assign({}, A, _)), P = g === mt ? q : w, k = {
         top: $.top - P.top + b.top,
@@ -3179,7 +3183,6 @@ ${codeFrame}` : message);
       t.modifiersData[r] = ls({
         reference: t.rects.reference,
         element: t.rects.popper,
-        strategy: "absolute",
         placement: t.placement
       });
     }
@@ -4086,7 +4089,7 @@ ${codeFrame}` : message);
     function Pf(e) {
       if (!e)
         return e === 0 ? e : 0;
-      if (e = Tr(e), e === ni || e === -ni) {
+      if (e = Tr(e), e === ni || e === -Infinity) {
         var t = e < 0 ? -1 : 1;
         return t * Af;
       }

@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('status')->default('HADIR'); // 1 HADIR, 2 TIDAK MASUK, 3 SAKIT, 4 IZIN
-            $table->string('foto')->nullable();
+            $table->json('foto')->nullable();
             $table->json('koordinat')->nullable();
             $table->json('keterangan')->nullable();
-            $table->timestamp('waktu_absen', 0)->nullable();
+            $table->timestamp('waktu_datang', 0)->nullable();
+            $table->timestamp('waktu_pulang', 0)->nullable();
             $table->timestamps();
         });
     }

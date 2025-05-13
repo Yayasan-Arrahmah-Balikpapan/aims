@@ -21,7 +21,7 @@
 
 </x-splade-script>
 
-<aside id="sidebar" class="fixed top-0 left-0 z-10 flex flex-col flex-shrink-0 hidden w-64 bg-white border-r border-gray-200 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
+<aside id="sidebar" class="fixed top-0 left-0 z-10 flex flex-col flex-shrink-0 hidden w-[200px] bg-white border-r border-gray-200 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
     <div class="relative flex flex-col flex-1 min-h-0 pt-0 ">
         <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
             <div class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200">
@@ -42,6 +42,9 @@
                 @endif
                 @if (Request::is('dashboard/penguji*'))
                     <x-layouts.sidebar.penguji :unit="$unit ?? null"/>
+                @endif
+                @if (Request::is('dashboard/karyawan*'))
+                    <x-layouts.sidebar.karyawan/>
                 @endif
                 {{-- @role('ketua-divisi-pendidikan')
                     <x-layouts.sidebar.ketua-divisi-pendidikan />

@@ -15,6 +15,12 @@ import Photo from "./components/Photo.vue";
 import RecordVoice from "./components/RecordVoice.vue";
 import SendOTP from "./components/SendOTP.vue";
 import SliderDashboard from "./components/SliderDashboard.vue";
+import TahsinDashboardPeriode1 from "./components/tahsin/TahsinDashboardPeriode1.vue";
+import TahsinDashboardPeriode2 from "./components/tahsin/TahsinDashboardPeriode2.vue";
+import FotoAbsensi from "./components/FotoAbsensi.vue";
+import KalenderAbsensiKaryawan from "./components/karyawan/KalenderAbsensiKaryawan.vue";
+import InputAbsensiKaryawan from "./components/karyawan/InputAbsensiKaryawan.vue";
+import HariTanggalJam from "./components/HariTanggalJam.vue";
 
 const el = document.getElementById("app");
 
@@ -35,7 +41,13 @@ createApp({
             AudioUpload,
             KtpUpload,
             BuktiTransferUpload,
-            ListBiayaPendaftaran
+            ListBiayaPendaftaran,
+            TahsinDashboardPeriode1,
+            TahsinDashboardPeriode2,
+            FotoAbsensi,
+            KalenderAbsensiKaryawan,
+            InputAbsensiKaryawan,
+            HariTanggalJam
         },
     })
 

@@ -11,8 +11,19 @@ Route::get('/rekam', function (){
 
 });
 
+Route::get('/veb', function (){
+    return view('veb');
+});
+
 Route::get("/lttq/tahsin/pendaftaran/rekaman", [WebController::class, "lttq_tahsin_pendaftaran_rekaman"])->name("website.lttq.tahsin.pendaftaran.rekaman");
 
+Route::prefix('/dashboard/karyawan')->middleware('role:karyawan')->group(function () {
+    Route::get('/absensi/datang', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'datang'])->name('karyawan.absensi.datang');
+    Route::post('/absensi/datang/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'datang_store'])->name('karyawan.absensi.datang.store');
+    Route::get('/absensi/pulang', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'pulang'])->name('karyawan.absensi.pulang');
+    Route::post('/absensi/pulang/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'pulang_store'])->name('karyawan.absensi.pulang.store');
+
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +37,10 @@ Route::get("/lttq/tahsin/pendaftaran/rekaman", [WebController::class, "lttq_tahs
 */
 
 Route::middleware('splade')->group(function () {
+    Route::get('/absen', function (){
+        return view('absen');
+    });
+
     // Registers routes to support the interactive components...
     Route::spladeWithVueBridge();
 
@@ -78,6 +93,7 @@ Route::middleware('splade')->group(function () {
             require __DIR__.'/sub/kasir.php';
             require __DIR__.'/sub/keuangan.php';
             require __DIR__.'/sub/pimpinan.php';
+            require __DIR__.'/sub/karyawan.php';
         });
     });
 
