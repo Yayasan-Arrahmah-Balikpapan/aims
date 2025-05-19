@@ -19,7 +19,29 @@
                 :class="[warnaStatus(tanggal), isToday(tanggal) ? 'font-bold border-2 border-red-600' : ''],isWeekend(tanggal) ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : ''"
                 >
                 {{ tanggal }}
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <hr class="my-4">
+            <div class="grid grid-cols-2 gap-2">
+                <div class="flex items-center justify-start">
+                    <span class="inline-block w-3 h-3 rounded-full bg-green-500 mr-2"></span>
+                    <span class="text-gray-600 text-xs">: Hadir</span>
                 </div>
+                <div class="flex items-center justify-start">
+                    <span class="inline-block w-3 h-3 rounded-full bg-yellow-300 mr-2"></span>
+                    <span class="text-gray-600 text-xs">: Izin</span>
+                </div>
+                <div class="flex items-center justify-start">
+                    <span class="inline-block w-3 h-3 rounded-full bg-red-400 mr-2"></span>
+                    <span class="text-gray-600 text-xs">: Tanpa Keterangan</span>
+                </div>
+                <div class="flex items-center justify-start">
+                    <span class="inline-block w-3 h-3 rounded-full bg-purple-500 mr-2"></span>
+                    <span class="text-gray-600 text-xs">: Cuti</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -72,11 +94,13 @@ export default {
             const status = this.dataAbsensi[key];
 
             switch (status) {
-                case "hadir":
+                case "HADIR":
                     return "bg-emerald-500 text-white";
-                case "izin":
+                case "IZIN":
                     return "bg-yellow-300 text-white";
-                case "cuti":
+                case "TIDAK MASUK":
+                    return "bg-red-400 text-white";
+                case "CUTI":
                     return "bg-purple-500 text-white";
                 default:
                     return "";
@@ -110,3 +134,4 @@ export default {
     },
 };
 </script>
+

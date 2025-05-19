@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use ProtoneMedia\Splade\Facades\Splade;
+use Carbon\Carbon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,8 @@ class AppServiceProvider extends ServiceProvider
         Splade::defaultToast(function ($toast) {
             $toast->info()->rightTop()->autoDismiss(10);
         });
+
+        date_default_timezone_set('Asia/Makassar');
+        Carbon::setLocale('id');
     }
 }

@@ -31,8 +31,9 @@ Route::post("/lttq/tahsin/daftar-ulang/store", [DaftarUlangTahsinController::cla
 Route::get("/lttq/tahsin/daftar-ulang/berhasil", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
 Route::get("/lttq/tahsin/daftar-ulang/gagal", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
 
-Route::get("/lttq/rq", [WebController::class, "lttq_rq"])->name("website.lttq.rq");
-Route::get("/lttq/tla", [WebController::class, "lttq_tla"])->name("website.lttq.tla");
+Route::get("/lttq/tla", [App\Domain\Website\Controllers\LttqTlaController::class, "index"])->name("website.lttq.tla");
+Route::get("/lttq/rq", [App\Domain\Website\Controllers\LttqRqController::class, "index"])->name("website.lttq.rq");
+
 Route::get("/lttq/rtq-putra", [WebController::class, "lttq_rtq_putra"])->name("website.lttq.rtq-putra");
 Route::get("/lttq/rtq-putri", [WebController::class, "lttq_rtq_putri"])->name("website.lttq.rtq-putri");
 

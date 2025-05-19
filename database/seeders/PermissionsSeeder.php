@@ -33,5 +33,6 @@ class PermissionsSeeder extends Seeder
         Permission::create(['name' => 'penguji']);
         Permission::create(['name' => 'pengajar']);
         Permission::create(['name' => 'karyawan']);
+        Permission::create(['name' => 'hrd']);
     }
 }

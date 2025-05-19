@@ -17,12 +17,12 @@ class KaryawanAbsensi extends Model
         'status',
         'foto',
         'koordinat',
-        'keterangan',
         'waktu_datang',
         'waktu_pulang',
     ];
 
     protected $casts = [
+        'keterangan' =>'array',
         'koordinat' => 'array',
         'foto' => 'array',
         'waktu_datang' => 'datetime',

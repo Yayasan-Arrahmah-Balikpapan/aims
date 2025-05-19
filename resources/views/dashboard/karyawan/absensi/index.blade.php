@@ -36,9 +36,6 @@
                 @endif
             @endif
 
-
-
-
             <div class="grid grid-cols-2 gap-2 p-4">
                 <div class="flex flex-col items-center mr-2">
                     @svg('carbon-timer', 'h-10 w-10 text-gray-500 mb-1')

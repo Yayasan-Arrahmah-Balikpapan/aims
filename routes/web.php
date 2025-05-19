@@ -94,6 +94,7 @@ Route::middleware('splade')->group(function () {
             require __DIR__.'/sub/keuangan.php';
             require __DIR__.'/sub/pimpinan.php';
             require __DIR__.'/sub/karyawan.php';
+            require __DIR__.'/sub/hrd.php';
         });
     });
 

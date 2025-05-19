@@ -18,7 +18,7 @@ class AbsensiController extends Controller
     {
         $user = Auth::user();
 
-        $today = Carbon::today();
+        $today = Carbon::today('Asia/Makassar');
         $absensi = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
             ->whereDate('created_at', '>=', $today)
             ->first();
@@ -32,14 +32,19 @@ class AbsensiController extends Controller
     // app/Http/Controllers/AbsensiController.php
     public function data(Request $request)
     {
+        $user = Auth::user();
+
         $bulan = $request->input('bulan'); // format: 01, 02, dst
         $tahun = $request->input('tahun'); // format: 2023
 
-        $data = [
-            "{$tahun}-{$bulan}-09" => 'hadir',
-            "{$tahun}-{$bulan}-10" => 'izin',
-            "{$tahun}-{$bulan}-12" => 'cuti',
-        ];
+        $data = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
+            ->whereYear('created_at', $tahun)
+            ->whereMonth('created_at', $bulan)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->created_at->format('Y-m-d') => $item->status];
+            })
+            ->toArray();
 
         return response()->json($data);
     }
@@ -50,12 +55,11 @@ class AbsensiController extends Controller
 
     public function datang()
     {
-        $today = Carbon::today();
         $user = Auth::user();
+        $today = Carbon::today('Asia/Makassar');
         $absensi = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
             ->whereDate('created_at', '>=', $today)
             ->first();
-
         if ($absensi) {
             return redirect()->route('karyawan.absensi.index');
         }
@@ -81,7 +85,7 @@ class AbsensiController extends Controller
             $userId = Auth::id();
 
             // Ambil tanggal sekarang dan formatnya
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Makassar');
             $tanggalFormatFolder = $now->format('d-m-Y');
             $tanggalFormatNama = $now->format('Ymd');
 
@@ -113,6 +117,10 @@ class AbsensiController extends Controller
                                         ];
         $absen->waktu_datang           = Carbon::now('Asia/Makassar');
         $absen->foto                   = [ 'datang' => $photoPath ?? null];
+        $absen->status                 = $request->status;
+        $absen->keterangan             = [ 'datang' => $request->keterangan ];
+        $absen->created_at             = Carbon::now('Asia/Makassar');
+        $absen->updated_at             = Carbon::now('Asia/Makassar');
         $absen->save();
 
         if ($absen) {
@@ -126,8 +134,8 @@ class AbsensiController extends Controller
 
     public function pulang()
     {
-        $today = Carbon::today();
         $user = Auth::user();
+        $today = Carbon::today('Asia/Makassar');
         $absensi = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
             ->whereDate('created_at', '>=', $today)
             ->first();
@@ -154,7 +162,7 @@ class AbsensiController extends Controller
             $userId = Auth::id();
 
             // Ambil tanggal sekarang dan formatnya
-            $now = Carbon::now();
+            $now = Carbon::now('Asia/Makassar');
             $tanggalFormatFolder = $now->format('d-m-Y');
             $tanggalFormatNama = $now->format('Ymd');
 
@@ -189,6 +197,8 @@ class AbsensiController extends Controller
             ];
             $absen->waktu_pulang = Carbon::now('Asia/Makassar');
             $absen->foto =  ['pulang' => $photoPath ?? null ];
+            $absen->updated_at             = Carbon::now('Asia/Makassar');
+
             $absen->save();
         }
 

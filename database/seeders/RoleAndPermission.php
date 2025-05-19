@@ -40,12 +40,13 @@ class RoleAndPermission extends Seeder
             'penguji-tahla'      => ['pendidikan', 'penguji','tahla', 'read'],
             'pengajar-tahla'     => ['pendidikan', 'pengajar','tahla', 'read'],
 
-            'kasir'    => ['keuangan'],
+            'kasir'    => ['kasir'],
             'keuangan' => ['keuangan'],
             'dkm'      => ['dkm'],
-            'laziz'    => ['dkm'],
-            'mci'      => ['dkm'],
-            'karyawan'      => ['karyawan'],
+            'laziz'    => ['laziz'],
+            'mci'      => ['mci'],
+            'karyawan' => ['karyawan'],
+            'hrd'      => ['hrd'],
 
             'ketua-divisi-pendidikan' => ['pendidikan', 'rtq', 'tahsin', 'rq', 'tla', 'tahla', 'read'],
             'ketua-divisi-dkm'        => ['dkm', 'read'],

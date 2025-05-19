@@ -55,6 +55,27 @@
 
             <p class="text-center text-md font-bold text-gray-600 mt-4 mb-2" id="currentTime"></p>
 
+            <div class="m-2 p-4">
+                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                <select name="status" id="status" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" onchange="toggleKeterangan()">
+                    <option value="HADIR">HADIR</option>
+                    <option value="IZIN TELAT">IZIN TELAT</option>
+                    <option value="SAKIT">SAKIT</option>
+                </select>
+                <div id="keteranganContainer" class="hidden mt-2">
+                    <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+                    <textarea name="keterangan" id="keterangan" rows="1" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+            </div>
+            <script>
+                function toggleKeterangan() {
+                    if (document.getElementById('status').value === 'HADIR') {
+                        document.getElementById('keteranganContainer').classList.add('hidden');
+                    } else {
+                        document.getElementById('keteranganContainer').classList.remove('hidden');
+                    }
+                }
+            </script>
             <hr class="mb-2">
 
             <!-- Hidden Inputs -->

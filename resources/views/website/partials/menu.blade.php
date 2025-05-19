@@ -31,7 +31,7 @@
                 Pendidikan LTTQ
             </x-website.nav>
         </li>
-        {{-- <li>
+        <li>
             <a href="#" class="block font-medium py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0">
                 Ibadah
             </a>
@@ -40,7 +40,7 @@
             <a href="#" class="block font-medium py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0">
                 Sosial
             </a>
-        </li> --}}
+        </li>
         <li>
             <x-website.nav :href="route('website.informasi')" :active="request()->routeIs('website.informasi')">
                 Informasi
@@ -49,10 +49,10 @@
             <x-website.nav :href="route('website.kontak')" :active="request()->routeIs('website.kontak')">
                 Kontak
             </x-website.nav>
-        <li>
+        {{-- <li>
             <x-website.nav :href="route('website.quranic-camp')" :active="request()->routeIs('website.quranic-camp')">
                 Quranic Camp 🏕️
             </x-website.nav>
-        </li>
+        </li> --}}
     </ul>
 </div>
