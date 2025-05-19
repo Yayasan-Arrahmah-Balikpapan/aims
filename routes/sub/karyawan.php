@@ -15,4 +15,9 @@ Route::prefix('/karyawan')->middleware('role:karyawan')->group(function () {
     Route::get('/cuti/create', [\App\Http\Controllers\Karyawan\CutiController::class, 'create'])->name('karyawan.cuti.create');
     Route::post('/cuti/store', [\App\Http\Controllers\Karyawan\CutiController::class, 'store'])->name('karyawan.cuti.store');
     Route::delete('/cuti/{id}', [\App\Http\Controllers\Karyawan\CutiController::class, 'destroy'])->name('karyawan.cuti.destroy');
+
+    Route::get('/akun', [\App\Http\Controllers\Karyawan\AkunController::class, 'index'])->name('karyawan.akun.index');
+    Route::patch('/akun/update', [\App\Http\Controllers\Karyawan\AkunController::class, 'update'])->name('karyawan.akun.update');
+
+    Route::get('/notifikasi', [\App\Http\Controllers\Karyawan\NotifikasiController::class, 'index'])->name('karyawan.notifikasi.index');
 });

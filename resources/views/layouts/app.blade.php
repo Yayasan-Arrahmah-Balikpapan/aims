@@ -9,5 +9,6 @@
     <main>
         {{ $slot }}
     </main>
+    <x-layouts.footer />
     @include('layouts.navigation-mobile')
 </div>

@@ -35,5 +35,11 @@
             <span class="ml-3">Cuti</span>
         </x-link-item>
     </li>
+    <li>
+        <x-link-item :href="route('karyawan.notifikasi.index')" :active="request()->routeIs('karyawan.notifikasi.index')">
+            @svg('carbon-notification-new', 'text-gray-600 h-6 w-6')
+            <span class="ml-3">Notifikasi</span>
+        </x-link-item>
+    </li>
 
 </ul>

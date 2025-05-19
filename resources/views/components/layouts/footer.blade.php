@@ -1,5 +1,5 @@
 <footer>
-    <p class="my-10 text-sm text-center text-gray-500">
+    <p class="py-16 lg:py-8 text-sm text-center text-gray-500">
         <Link
             confirm="#"
             confirm-text="rimbaborne"
