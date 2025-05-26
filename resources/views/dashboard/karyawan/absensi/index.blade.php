@@ -57,7 +57,8 @@
             <div class="grid grid-cols-3 gap-2 p-4">
                 <div class="flex flex-col items-center mr-2">
                     @svg('carbon-timer', 'h-10 w-10 text-gray-500 mb-1')
-                    <span class="text-gray-800 font-bold text-sm">{{ $absensi ? $absensi->waktu_datang->format('H:i') . ' WITA' : '-' }}</span>
+                    <span class="text-gray-800 font-bold text-sm">{{ $absensi ? $absensi->waktu_datang->format('H:i') : '-' }}</span>
+                    <span class="text-gray-800 font-bold text-sm">{{ $absensi ? 'WITA' : '' }}</span>
                     <span class="text-gray-500">Datang</span>
                 </div>
                 <div class="flex flex-col items-center mr-2">
@@ -65,13 +66,17 @@
                     <span class="text-gray-800 font-bold text-sm">
                         {{ $absensi && isset($absensi->keterangan['istirahat_mulai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_mulai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}
                         -
-                        {{ $absensi && isset($absensi->keterangan['istirahat_selesai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_selesai'])->timezone('Asia/Makassar')->format('H:i') . ' WITA' : '-' }}
+                        {{ $absensi && isset($absensi->keterangan['istirahat_selesai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_selesai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}
+                    </span>
+                    <span class="text-gray-800 font-bold text-sm">
+                        {{ $absensi && isset($absensi->keterangan['istirahat_mulai']) ? 'WITA' : '' }}
                     </span>
                     <span class="text-gray-500">Istirahat</span>
                 </div>
                 <div class="flex flex-col items-center">
                     @svg('carbon-event-schedule', 'h-10 w-10 text-gray-500 mb-1')
-                    <span class="text-gray-800 font-bold text-sm">{{ $absensi && $absensi->waktu_pulang ? $absensi->waktu_pulang->format('H:i') . ' WITA' : '-' }}</span>
+                    <span class="text-gray-800 font-bold text-sm">{{ $absensi && $absensi->waktu_pulang ? $absensi->waktu_pulang->format('H:i') : '-' }}</span>
+                    <span class="text-gray-800 font-bold text-sm">{{ $absensi && $absensi->waktu_pulang ? 'WITA' : '' }}</span>
                     <span class="text-gray-500">Pulang</span>
                 </div>
             </div>
