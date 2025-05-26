@@ -30,6 +30,7 @@ class CutiController extends Controller
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'alasan' => 'required',
+            'jenis_cuti' => 'required',
         ]);
 
         $cuti = \App\Models\KaryawanCuti::create([
@@ -37,6 +38,7 @@ class CutiController extends Controller
             'tanggal_mulai' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai,
             'alasan' => $request->alasan,
+            'jenis_cuti' => $request->jenis_cuti,
         ]);
 
         if ($cuti) { Toast::success('Cuti berhasil diajukan'); }

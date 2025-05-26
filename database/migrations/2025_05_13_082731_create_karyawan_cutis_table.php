@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('tanggal_selesai')->nullable();
             $table->string('alasan')->nullable();
             $table->string('status')->default('MENUNGGU PERSETUJUAN'); // PENDING, APPROVED, REJECTED
+            $table->string('jenis_cuti')->default('TAHUNAN');
             $table->json('keterangan')->nullable();
             $table->timestamps();
         });

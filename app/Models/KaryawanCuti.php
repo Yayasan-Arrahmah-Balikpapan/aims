@@ -12,6 +12,7 @@ class KaryawanCuti extends Model
         'tanggal_selesai',
         'alasan',
         'status',
+        'jenis_cuti',
         'keterangan',
     ];
 

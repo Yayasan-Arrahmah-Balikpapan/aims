@@ -22,6 +22,10 @@ Route::prefix('/dashboard/karyawan')->middleware('role:karyawan')->group(functio
     Route::post('/absensi/datang/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'datang_store'])->name('karyawan.absensi.datang.store');
     Route::get('/absensi/pulang', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'pulang'])->name('karyawan.absensi.pulang');
     Route::post('/absensi/pulang/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'pulang_store'])->name('karyawan.absensi.pulang.store');
+    Route::get('/absensi/istirahat-mulai', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'istirahat_mulai'])->name('karyawan.absensi.istirahat-mulai');
+    Route::post('/absensi/istirahat-mulai/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'istirahat_mulai_store'])->name('karyawan.absensi.istirahat-mulai.store');
+    Route::get('/absensi/istirahat-selesai', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'istirahat_selesai'])->name('karyawan.absensi.istirahat-selesai');
+    Route::post('/absensi/istirahat-selesai/store', [\App\Http\Controllers\Karyawan\AbsensiController::class, 'istirahat_selesai_store'])->name('karyawan.absensi.istirahat-selesai.store');
 
 });
 

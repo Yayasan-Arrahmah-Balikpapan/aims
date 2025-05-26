@@ -31,11 +31,11 @@
                 </div>
                 <div class="flex items-center justify-start">
                     <span class="inline-block w-3 h-3 rounded-full bg-yellow-300 mr-2"></span>
-                    <span class="text-gray-600 text-xs">: Izin</span>
+                    <span class="text-gray-600 text-xs">: Izin Telat</span>
                 </div>
                 <div class="flex items-center justify-start">
                     <span class="inline-block w-3 h-3 rounded-full bg-red-400 mr-2"></span>
-                    <span class="text-gray-600 text-xs">: Tanpa Keterangan</span>
+                    <span class="text-gray-600 text-xs">: Libur</span>
                 </div>
                 <div class="flex items-center justify-start">
                     <span class="inline-block w-3 h-3 rounded-full bg-purple-500 mr-2"></span>
@@ -96,7 +96,7 @@ export default {
             switch (status) {
                 case "HADIR":
                     return "bg-emerald-500 text-white";
-                case "IZIN":
+                case "IZIN TELAT":
                     return "bg-yellow-300 text-white";
                 case "TIDAK MASUK":
                     return "bg-red-400 text-white";

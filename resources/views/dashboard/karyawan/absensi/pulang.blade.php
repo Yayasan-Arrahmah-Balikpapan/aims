@@ -33,7 +33,7 @@
     <form id="absensiForm" action="{{ route('karyawan.absensi.pulang.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="max-w-xl mx-auto p-2 mt-10 bg-white rounded-2xl shadow-lg">
-            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Absensi Datang</h2>
+            <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Absensi Pulang</h2>
             <div class="grid grid-cols-2 gap-1">
                 <div>
                     <div class="flex justify-center">

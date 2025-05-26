@@ -28,7 +28,6 @@ class AbsensiController extends Controller
 
         return view('dashboard.karyawan.absensi.index', compact('absensi'));
     }
-
     // app/Http/Controllers/AbsensiController.php
     public function data(Request $request)
     {
@@ -52,7 +51,6 @@ class AbsensiController extends Controller
     {
         return view('dashboard.karyawan.absensi.create',);
     }
-
     public function datang()
     {
         $user = Auth::user();
@@ -112,8 +110,8 @@ class AbsensiController extends Controller
         $absen                         = new \App\Models\KaryawanAbsensi();
         $absen->user_id                = $request->user_id;
         $absen->koordinat              = [
-                                            'latitude' => $request->latitude ?? null,
-                                            'longitude' => $request->longitude ?? null,
+                                            'latitude_datang' => $request->latitude ?? null,
+                                            'longitude_datang' => $request->longitude ?? null,
                                         ];
         $absen->waktu_datang           = Carbon::now('Asia/Makassar');
         $absen->foto                   = [ 'datang' => $photoPath ?? null];
@@ -131,7 +129,6 @@ class AbsensiController extends Controller
 
         return redirect()->route('karyawan.absensi.index');
     }
-
     public function pulang()
     {
         $user = Auth::user();
@@ -191,13 +188,13 @@ class AbsensiController extends Controller
             ->first();
 
         if ($absen) {
-            $absen->koordinat = [
-                'latitude' => $request->latitude ?? null,
-                'longitude' => $request->longitude ?? null,
-            ];
+            $absen->koordinat   =   array_merge($absen->koordinat ?? [], [
+                                        'latitude_pulang'  => $request->latitude ?? null,
+                                        'longitude_pulang' => $request->longitude ?? null,
+                                    ]);
             $absen->waktu_pulang = Carbon::now('Asia/Makassar');
-            $absen->foto =  ['pulang' => $photoPath ?? null ];
-            $absen->updated_at             = Carbon::now('Asia/Makassar');
+            $absen->foto         = array_merge($absen->foto ?? [], ['pulang' => $photoPath ?? null ]);
+            $absen->updated_at   = Carbon::now('Asia/Makassar');
 
             $absen->save();
         }
@@ -206,6 +203,162 @@ class AbsensiController extends Controller
             session()->flash('success', 'Absen pulang berhasil disimpan!');
         } else {
             session()->flash('error', 'Gagal menyimpan absen pulang. Silakan coba lagi');
+        }
+
+        return redirect()->route('karyawan.absensi.index');
+    }
+    public function istirahat_mulai()
+    {
+        $user = Auth::user();
+        $today = Carbon::today('Asia/Makassar');
+        $absensi = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
+        ->whereDate('created_at', '>=', $today)
+        ->first();
+
+        if ($absensi && isset($absensi->keterangan['istirahat_mulai'])) {
+            return redirect()->route('karyawan.absensi.index');
+        }
+        return view('dashboard.karyawan.absensi.istirahat-mulai',);
+    }
+    public function istirahat_mulai_store(Request $request)
+    {
+        $request->validate([
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'time' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'photo' => 'nullable|image'
+        ]);
+
+        $photoPath = null;
+
+        if ($request->hasFile('photo')) {
+            $manager = new ImageManager(new Driver());
+            $userId = Auth::id();
+
+            // Ambil tanggal sekarang dan formatnya
+            $now = Carbon::now('Asia/Makassar');
+            $tanggalFormatFolder = $now->format('d-m-Y');
+            $tanggalFormatNama = $now->format('Ymd');
+
+            // Nama file: userID-tanggal-datang.jpg
+            $filename = "{$userId}-{$tanggalFormatNama}-pulang.jpg";
+
+            // Folder tujuan
+            $folder = "absensi_photos/{$tanggalFormatFolder}";
+
+            // Buat gambar dengan kompresi
+            $image = $manager->read($request->file('photo'))
+            ->resize(500, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->toJpeg(70); // 70% quality JPEG
+
+            // Simpan gambar ke storage
+            Storage::put("public/{$folder}/{$filename}", $image);
+
+            // Simpan path-nya ke database
+            $photoPath = "{$folder}/{$filename}";
+        }
+
+        $absen = \App\Models\KaryawanAbsensi::where('user_id', $request->user_id)
+                ->whereDate('created_at', Carbon::today())
+                ->first();
+
+        if ($absen) {
+            $absen->koordinat = array_merge($absen->koordinat ?? [], [
+                                    'latitude_istirahat_mulai'  => $request->latitude ?? null,
+                                    'longitude_istirahat_mulai' => $request->longitude ?? null,
+                                ]);
+            $absen->keterangan = array_merge($absen->keterangan ?? [], ['istirahat_mulai' => Carbon::now('Asia/Makassar')]);
+            $absen->foto       = array_merge($absen->foto ?? [], ['istirahat_mulai' => $photoPath ?? null ]);
+            $absen->updated_at = Carbon::now('Asia/Makassar');
+
+            $absen->save();
+        }
+
+        if ($absen) {
+            session()->flash('success', 'Berhasil disimpan!');
+        } else {
+            session()->flash('error', 'Gagal. Silakan coba lagi');
+        }
+
+        return redirect()->route('karyawan.absensi.index');
+    }
+    public function istirahat_selesai()
+    {
+        $user = Auth::user();
+        $today = Carbon::today('Asia/Makassar');
+        $absensi = \App\Models\KaryawanAbsensi::where('user_id', $user->id)
+        ->whereDate('created_at', '>=', $today)
+        ->first();
+
+        if ($absensi && isset($absensi->keterangan['istirahat_selesai'])) {
+            return redirect()->route('karyawan.absensi.index');
+        }
+        return view('dashboard.karyawan.absensi.istirahat-selesai',);
+    }
+    public function istirahat_selesai_store(Request $request)
+    {
+        $request->validate([
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'time' => 'required',
+            'user_id' => 'required|exists:users,id',
+            'photo' => 'nullable|image'
+        ]);
+
+        $photoPath = null;
+
+        if ($request->hasFile('photo')) {
+            $manager = new ImageManager(new Driver());
+            $userId = Auth::id();
+
+            // Ambil tanggal sekarang dan formatnya
+            $now = Carbon::now('Asia/Makassar');
+            $tanggalFormatFolder = $now->format('d-m-Y');
+            $tanggalFormatNama = $now->format('Ymd');
+
+            // Nama file: userID-tanggal-datang.jpg
+            $filename = "{$userId}-{$tanggalFormatNama}-pulang.jpg";
+
+            // Folder tujuan
+            $folder = "absensi_photos/{$tanggalFormatFolder}";
+
+            // Buat gambar dengan kompresi
+            $image = $manager->read($request->file('photo'))
+            ->resize(500, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->toJpeg(70); // 70% quality JPEG
+
+            // Simpan gambar ke storage
+            Storage::put("public/{$folder}/{$filename}", $image);
+
+            // Simpan path-nya ke database
+            $photoPath = "{$folder}/{$filename}";
+        }
+
+        $absen = \App\Models\KaryawanAbsensi::where('user_id', $request->user_id)
+                ->whereDate('created_at', Carbon::today())
+                ->first();
+
+        if ($absen) {
+            $absen->koordinat = array_merge($absen->koordinat ?? [], [
+                                    'latitude_istirahat_selesai'  => $request->latitude ?? null,
+                                    'longitude_istirahat_selesai' => $request->longitude ?? null,
+                                ]);
+            $absen->keterangan = array_merge($absen->keterangan ?? [], ['istirahat_selesai' => Carbon::now('Asia/Makassar')]);
+            $absen->foto       = array_merge($absen->foto ?? [], ['istirahat_selesai' => $photoPath ?? null ]);
+            $absen->updated_at = Carbon::now('Asia/Makassar');
+
+            $absen->save();
+        }
+
+        if ($absen) {
+            session()->flash('success', 'Berhasil disimpan!');
+        } else {
+            session()->flash('error', 'Gagal. Silakan coba lagi');
         }
 
         return redirect()->route('karyawan.absensi.index');
