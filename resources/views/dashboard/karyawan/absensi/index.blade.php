@@ -64,9 +64,7 @@
                 <div class="flex flex-col items-center mr-2">
                     @svg('carbon-time', 'h-10 w-10 text-gray-500 mb-1')
                     <span class="text-gray-800 font-bold text-sm">
-                        {{ $absensi && isset($absensi->keterangan['istirahat_mulai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_mulai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}
-                        -
-                        {{ $absensi && isset($absensi->keterangan['istirahat_selesai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_selesai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}
+                        {{ $absensi && isset($absensi->keterangan['istirahat_mulai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_mulai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}-{{ $absensi && isset($absensi->keterangan['istirahat_selesai']) ? \Carbon\Carbon::parse($absensi->keterangan['istirahat_selesai'])->timezone('Asia/Makassar')->format('H:i') : '-' }}
                     </span>
                     <span class="text-gray-800 font-bold text-sm">
                         {{ $absensi && isset($absensi->keterangan['istirahat_mulai']) ? 'WITA' : '' }}
