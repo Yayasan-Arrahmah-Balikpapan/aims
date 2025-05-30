@@ -44,7 +44,7 @@ class UserController extends Controller
                     })
                     ->orderBy('name')
                     ->paginate(10);
-        dd($users);
+        // dd($users);
 
 
         return view('dashboard.admin.user.index', compact('users', 'unit'));

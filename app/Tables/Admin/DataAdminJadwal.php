@@ -2,7 +2,7 @@
 
 namespace App\Tables\Admin;
 
-use App\Models\DataAdminJadwal;
+use App\Models\Jadwal;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
@@ -36,7 +36,7 @@ class DataAdminJadwal extends AbstractTable
      */
     public function for()
     {
-        return DataAdminJadwal::query();
+        return Jadwal::query();
     }
 
     /**

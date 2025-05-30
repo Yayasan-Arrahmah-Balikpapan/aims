@@ -63,9 +63,9 @@
 @elseif ($role === 'cms')
     {{ url('/dashboard/cms') }}
 @elseif ($role === 'karyawan')
-{{ url('/dashboard/karyawan') }}
+    {{ url('/dashboard/karyawan') }}
 @elseif ($role === 'hrd')
-{{ url('/dashboard/hrd') }}
+    {{ url('/dashboard/hrd') }}
 @else
     {{ url('/dashboard') }}
 @endif

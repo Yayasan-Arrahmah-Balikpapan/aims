@@ -52,29 +52,9 @@
                         @php
                         $events = [
                             [
-                                'tanggal' => '18 JAN 2025',
-                                'keterangan' => 'RAKER YAYASAN AR RAHMAH BALIKPAPAN',
+                                'tanggal' => 'JULI 2025',
+                                'keterangan' => 'WISUDA LTTQ 2025',
                                 'link' => 'https://www.arrahmahbalikpapan.or.id/',
-                            ],
-                            [
-                                'tanggal' => '21 JAN 2025 - 1 FEB 2025',
-                                'keterangan' => 'Pendaftaran Lomba Tarhib Ramadhan',
-                                'link' => 'https://berbagi.link/SemarakTarhibRamadhanArRahmah',
-                            ],
-                            [
-                                'tanggal' => '21 JAN 2025 - 1 FEB 2025',
-                                'keterangan' => 'Tarhib Ramadhan Ar Rahmah',
-                                'link' => 'https://instagram.com/masjid.arrahmahbpn',
-                            ],
-                            [
-                                'tanggal' => '21 RAMADHAN 1446H - 30 RAMADHAN 1446H',
-                                'keterangan' => 'ITIKAF Bersama Masjid Ar Rahmah',
-                                'link' => 'https://instagram.com/masjid.arrahmahbpn',
-                            ],
-                            [
-                                'tanggal' => '17 APR 2025',
-                                'keterangan' => 'Semarak Tahsin LTTQ Ar Rahmah',
-                                'link' => 'https://instagram.com/masjid.arrahmahbpn',
                             ],
                         ];
                         @endphp
@@ -326,5 +306,11 @@
         </div>
     </div>
 </div>
+
+{{-- <div class="pt-10 pb-10">
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
+        <UploadManager />
+    </div>
+</div> --}}
 
 </x-app-layout>

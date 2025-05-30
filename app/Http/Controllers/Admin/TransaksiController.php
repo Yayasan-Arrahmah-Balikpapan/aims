@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
-    public function index($unit)
+    public function index($unit, $periode)
     {
         // Logika untuk menampilkan data
+        $dataperiode = \App\Models\Periode::find( $periode);
+
+        return view('dashboard.admin.periode.transaksi.index', compact('unit','periode', 'dataperiode'));
     }
 
     public function store(Request $request, $unit)

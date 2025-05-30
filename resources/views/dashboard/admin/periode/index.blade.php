@@ -25,7 +25,13 @@
     </div> --}}
 
     <x-layouts.card>
-        <x-layouts.title>Manajemen Periode {{ $unit }}</x-layouts.title>
+        <h2 class="text-2xl font-bold uppercase">Manajemen Data {{ $unit }}</h2>
+        {{-- <x-layouts.title>Manajemen Periode {{ $unit }}</x-layouts.title> --}}
+
+        {{-- <x-splade-table :for="$periode" /> --}}
+    </x-layouts.card>
+
+    <div class="p-4">
         <div class="items-center justify-end flex">
             <Link modal max-width="lg" href="{{ route('admin.periode.create', ['unit' => $unit]) }}"
                 class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
@@ -33,8 +39,8 @@
             @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
             </Link>
         </div>
-        {{-- <x-splade-table :for="$periode" /> --}}
-    </x-layouts.card>
+    </div>
+
 
     <div class="p-4">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-6">
@@ -68,7 +74,7 @@
                     </div>
                     <hr class="border-t border-gray-200 pt-2">
                     <div class="flex w-full items-center justify-between space-x-2">
-                        <Link href="{{ route('admin.periode.dashboard', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-primary-700 px-5 py-2.5 text-sm font-medium text-primary-700">
+                        <Link href="{{ route('admin.periode.statistik', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-primary-700 px-5 py-2.5 text-sm font-medium text-primary-700">
                             Lihat Data  @svg('carbon-arrow-right', 'ml-2 h-5 w-5 text-primary-700')
                         </Link>
                         <a href="#" class="flex items-center justify-center rounded-lg border border-yellow-400 px-3 py-2.5 text-sm font-medium text-yellow-400">

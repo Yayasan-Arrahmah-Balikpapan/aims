@@ -32,7 +32,11 @@ class DashboardController extends Controller
 
         $data_peserta = Peserta::where('user_id',auth()->user()->id)->paginate(10);
 
-        return view('dashboard', compact('user', 'data_peserta'));
+        $api_token = $user->createToken('api-token')->plainTextToken;
+
+        // dd($api_token);
+
+        return view('dashboard', compact('user', 'data_peserta', 'api_token'));
     }
 
     public function peserta($uuid) {

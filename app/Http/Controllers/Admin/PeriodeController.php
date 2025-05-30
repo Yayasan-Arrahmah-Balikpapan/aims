@@ -141,9 +141,51 @@ Tahsin Ar Rahmah Balikpapan',
         // Logika untuk menghapus data berdasarkan ID
     }
 
-    public function dashboard($unit, $periode)
+    public function statistik($unit, $periode)
     {
         $dataperiode = \App\Models\Periode::find($periode);
-        return view('dashboard.admin.periode.dashboard', compact('unit', 'periode', 'dataperiode'));
+        return view('dashboard.admin.periode.statistik', compact('unit', 'periode', 'dataperiode'));
     }
+
+    public function getTahsinDashboardChartData1()
+    {
+        return response()->json([
+            'labels' => ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26'],
+            'datasets' => [
+                [
+                    'label' => 'Jumlah Peserta Aktif',
+                    'data' => [1634, 1427, 1353, 1167, 1116, 933, 796, 806, 763, 767, 645],
+                ],
+                [
+                    'label' => 'Daftar Ulang',
+                    'data' => [0, 1195, 1051, 943, 873, 760, 649, 559, 567, 542, 525],
+                ],
+                [
+                    'label' => 'Daftar Baru',
+                    'data' => [1634, 238, 226, 251, 102, 74, 250, 207, 76, 239, 124],
+                ],
+                [
+                    'label' => 'Ikhwan',
+                    'data' => [84, 110, 69, 64, 66, 102, 74, 61, 76, 52, 0],
+                ],
+                [
+                    'label' => 'Akhwat',
+                    'data' => [1550, 1317, 1284, 1103, 1050, 831, 722, 745, 687, 715, 645],
+                ],
+                [
+                    'label' => 'Al-Haq',
+                    'data' => [84, 110, 69, 64, 66, 102, 74, 61, 76, 52, 0],
+                ]
+            ]
+        ]);
+    }
+
+    public function getTahsinDashboardChartData2()
+    {
+        return response()->json([
+            'labels' => ['Laki-laki', 'Perempuan'],
+            'values' => [530, 120],
+        ]);
+    }
+
 }

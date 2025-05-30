@@ -57,7 +57,7 @@
         </x-link-item>
     </li>
     <li>
-        <x-link-item :href="route('superadmin.level.index')" :active="request()->routeIs('superadmin.level.index')">
+        <x-link-item :href="route('admin.level.index', ['unit' => $unit])" :active="request()->routeIs('admin.level.index', ['unit' => $unit])">
             @svg('carbon-distribute-horizontal-center', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Level</span>
         </x-link-item>
@@ -87,7 +87,7 @@
         </x-link-item>
     </li> --}}
     <li>
-        <x-link-item :href="route('superadmin.roles.index')" :active="request()->routeIs('superadmin.roles.index')">
+        <x-link-item :href="route('admin.pengaturan.index', ['unit' => $unit])" :active="request()->routeIs('admin.pengaturan.index', ['unit' => $unit])">
             @svg('carbon-settings-services', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Pengaturan</span>
         </x-link-item>

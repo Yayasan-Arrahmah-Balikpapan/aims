@@ -1,15 +1,14 @@
 <x-layouts.main :unit="$unit">
 
-    <div class="p-4">
-        <h2 class="text-2xl font-bold uppercase">
+    <x-layouts.card>
+        <h2 class="text-xl font-bold uppercase">
             Periode {{ $unit }}  Angkatan {{ $dataperiode->angkatan }}, Tahun {{ $dataperiode->tahun_ajaran }}
         </h2>
-    </div>
+    </x-layouts.card>
 
-    <div class="md:flex p-4">
+    <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <div class="p-6 bg-white border border-gray-200 text-medium text-gray-500 rounded-lg w-full">
-
+        <div class="p-6 w-full">
             <div class="items-center justify-end flex">
                 <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data

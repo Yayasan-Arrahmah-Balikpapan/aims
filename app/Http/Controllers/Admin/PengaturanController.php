@@ -10,6 +10,7 @@ class PengaturanController extends Controller
     public function index($unit)
     {
         // Logika untuk menampilkan data
+        return view('dashboard.admin.pengaturan.index', compact('unit'));
     }
 
     public function store(Request $request, $unit)
