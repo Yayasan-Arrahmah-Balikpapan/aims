@@ -242,7 +242,7 @@ class AbsensiController extends Controller
             $tanggalFormatNama = $now->format('Ymd');
 
             // Nama file: userID-tanggal-datang.jpg
-            $filename = "{$userId}-{$tanggalFormatNama}-pulang.jpg";
+            $filename = "{$userId}-{$tanggalFormatNama}-istirahat-mulai.jpg";
 
             // Folder tujuan
             $folder = "absensi_photos/{$tanggalFormatFolder}";
@@ -320,7 +320,7 @@ class AbsensiController extends Controller
             $tanggalFormatNama = $now->format('Ymd');
 
             // Nama file: userID-tanggal-datang.jpg
-            $filename = "{$userId}-{$tanggalFormatNama}-pulang.jpg";
+            $filename = "{$userId}-{$tanggalFormatNama}-istirahat-selesai.jpg";
 
             // Folder tujuan
             $folder = "absensi_photos/{$tanggalFormatFolder}";
