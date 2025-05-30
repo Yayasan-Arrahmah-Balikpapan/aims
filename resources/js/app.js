@@ -22,6 +22,7 @@ import KalenderAbsensiKaryawan from "./components/karyawan/KalenderAbsensiKaryaw
 import InputAbsensiKaryawan from "./components/karyawan/InputAbsensiKaryawan.vue";
 import HariTanggalJam from "./components/HariTanggalJam.vue";
 import HariTanggalJamKecil from "./components/HariTanggalJamKecil.vue";
+import UploadManager from "./components/UploadManager.vue";
 
 const el = document.getElementById("app");
 
@@ -49,7 +50,8 @@ createApp({
             KalenderAbsensiKaryawan,
             InputAbsensiKaryawan,
             HariTanggalJam,
-            HariTanggalJamKecil
+            HariTanggalJamKecil,
+            UploadManager
         },
     })
 
