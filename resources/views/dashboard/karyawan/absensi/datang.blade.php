@@ -69,10 +69,15 @@
             </div>
             <script>
                 function toggleKeterangan() {
+                    const keteranganContainer = document.getElementById('keteranganContainer');
+                    const keterangan = document.getElementById('keterangan');
+
                     if (document.getElementById('status').value === 'HADIR') {
-                        document.getElementById('keteranganContainer').classList.add('hidden');
+                        keteranganContainer.classList.add('hidden');
+                        keterangan.removeAttribute('required');
                     } else {
-                        document.getElementById('keteranganContainer').classList.remove('hidden');
+                        keteranganContainer.classList.remove('hidden');
+                        keterangan.setAttribute('required', 'required');
                     }
                 }
             </script>
