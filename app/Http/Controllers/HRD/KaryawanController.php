@@ -48,6 +48,8 @@ class KaryawanController extends Controller
             'user_id' => $request->karyawans,
             'divisi_id' => $request->divisi,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'nip' => $request->nip,
+            'status_bekerja' => $request->status_bekerja,
         ]);
 
 
