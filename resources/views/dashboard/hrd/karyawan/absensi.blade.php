@@ -15,6 +15,11 @@
         <div class="my-8">
             <div class="mb-4">
                 <div class="space-y-4 bg-white border p-4 rounded-lg">
+                    <div class="flex items-end justify-end">
+                        <a href="#" class="inline-flex items-center px-4 py-2 bg-green-400 rounded-md font-semibold text-xs text-white">
+                            Export Data
+                        </a>
+                    </div>
                     {{-- Filter Bulan & Tahun --}}
                     <form method="GET" class="flex flex-wrap items-center gap-2 sm:gap-4">
                         <label for="bulan" class="text-sm text-gray-700">Bulan</label>

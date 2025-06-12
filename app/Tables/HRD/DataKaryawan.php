@@ -49,11 +49,11 @@ class DataKaryawan extends AbstractTable
     {
         $table
             ->withGlobalSearch(columns: ['id'])
-            ->column('id', sortable: true)
-            // ->column(
-            //     key:'nik',
-            //     label:'NIK',
-            // )
+            // ->column('id', sortable: true)
+            ->column(
+                key:'nip',
+                label:'NIP',
+            )
             ->column(
                 key:'user.name',
                 label:'Nama',
@@ -70,6 +70,10 @@ class DataKaryawan extends AbstractTable
                 key:'divisi.nama',
                 label:'Divisi',
             )
+            ->column(
+                key:'status_bekerja',
+                label:'Status',
+            )
 
             // ->searchInput()
             // ->selectFilter()
@@ -77,6 +81,7 @@ class DataKaryawan extends AbstractTable
 
             // ->bulkAction()
             // ->export()
+            ->paginate(10)
             ;
     }
 }
