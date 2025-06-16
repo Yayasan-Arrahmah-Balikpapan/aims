@@ -11,6 +11,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use ProtoneMedia\Splade\Facades\Toast;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AbsensiKaryawanController extends Controller
 {
@@ -41,6 +42,20 @@ class AbsensiKaryawanController extends Controller
     {
         $absensi = \App\Models\KaryawanAbsensi::find($absensi);
         return view('dashboard.hrd.karyawan.absensi-detail', compact('absensi'));
+    }
+
+    public function absensi_export(Request $request)
+    {
+        $bulan = $request->input('bulan', now()->month);
+        $tahun = $request->input('tahun', now()->year);
+
+        $users = \App\Models\User::whereHas('roles', function ($query) {
+            $query->where('name', 'karyawan');
+        })->with(['karyawan_absensi' => function ($query) use ($bulan, $tahun) {
+            $query->whereMonth('waktu_datang', $bulan)
+                ->whereYear('waktu_datang', $tahun);
+        }])->get();
+        return Excel::download(new \App\Exports\KaryawanAbsensi($users,$bulan, $tahun), "Absensi_Karyawan_{$bulan}_{$tahun}.xlsx");
     }
 
     public function hari_libur_create()

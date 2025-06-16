@@ -23,6 +23,8 @@ import InputAbsensiKaryawan from "./components/karyawan/InputAbsensiKaryawan.vue
 import HariTanggalJam from "./components/HariTanggalJam.vue";
 import HariTanggalJamKecil from "./components/HariTanggalJamKecil.vue";
 import UploadManager from "./components/UploadManager.vue";
+import MapMini from "./components/MapMini.vue";
+import MapMiniMultiMarker from "./components/MapMiniMultiMarker.vue";
 
 const el = document.getElementById("app");
 
@@ -51,7 +53,9 @@ createApp({
             InputAbsensiKaryawan,
             HariTanggalJam,
             HariTanggalJamKecil,
-            UploadManager
+            UploadManager,
+            MapMini,
+            MapMiniMultiMarker,
         },
     })
 

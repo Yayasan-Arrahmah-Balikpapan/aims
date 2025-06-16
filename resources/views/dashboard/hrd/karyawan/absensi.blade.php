@@ -16,7 +16,7 @@
             <div class="mb-4">
                 <div class="space-y-4 bg-white border p-4 rounded-lg">
                     <div class="flex items-end justify-end">
-                        <a href="#" class="inline-flex items-center px-4 py-2 bg-green-400 rounded-md font-semibold text-xs text-white">
+                        <a target="_blank" href="{{ route('hrd.karyawan.absensi.export') }}?bulan={{ request('bulan', date('n')) }}&tahun={{ request('tahun', date('Y')) }}" class="inline-flex items-center px-4 py-2 bg-green-400 rounded-md font-semibold text-xs text-white">
                             Export Data
                         </a>
                     </div>
