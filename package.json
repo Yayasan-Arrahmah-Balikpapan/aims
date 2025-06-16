@@ -34,6 +34,7 @@
     "filepond-plugin-media-preview": "^1.0.11",
     "konva": "^9.3.14",
     "leaflet": "^1.9.4",
+    "leaflet.fullscreen": "^4.0.0",
     "moment": "^2.30.1",
     "peaks.js": "^3.4.0",
     "swiper": "^11.1.4",

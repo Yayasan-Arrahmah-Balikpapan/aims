@@ -130,8 +130,8 @@
                                     <th class="px-6 py-3">Nama</th>
                                     <th class="px-6 py-3">Jam Masuk</th>
                                     <th class="px-6 py-3">Jam Pulang</th>
-                                    <th class="px-6 py-3">Ket</th>
                                     <th class="px-6 py-3">Status</th>
+                                    <th class="px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,11 +140,16 @@
                                         <td class="px-6 py-4">{{ $item->user->name }} - {{ $item->user->phone_number }}</td>
                                         <td class="px-6 py-4">{{ $item->waktu_datang ? $item->waktu_datang->format('H:i') . ' WITA' : '-' }}</td>
                                         <td class="px-6 py-4">{{ $item->waktu_pulang ? $item->waktu_pulang->format('H:i') . ' WITA' : '-'}}</td>
-                                        <td class="px-6 py-4">{{ $item->keterangan['datang']}}</td>
                                         <td class="px-6 py-4">
                                             <span class="me-2 inline-flex items-center rounded bg-primary-200 px-2.5 py-0.5 text-xs font-medium text-gray-00">
                                                 {{ $item->status }}
                                             </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <Link modal href="{{ route('hrd.karyawan.absensi.detail', ['absensi' => $item->id]) }}"
+                                                class="text-xs font-semibold uppercase text-primary-700 hover:text-white bg-white  hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                                                Detail
+                                            </Link>
                                         </td>
                                     </tr>
                                 @endforeach

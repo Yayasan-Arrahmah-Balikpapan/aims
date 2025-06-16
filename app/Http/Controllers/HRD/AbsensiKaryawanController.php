@@ -37,6 +37,12 @@ class AbsensiKaryawanController extends Controller
         return view('dashboard.hrd.karyawan.absensi', compact('data_absensi', 'data_karyawan_hadir_hari_ini', 'data_karyawan_tidak_hadir_hari_ini', 'karyawan_hadir_hari_ini'));
     }
 
+    public function absensi_detail($absensi)
+    {
+        $absensi = \App\Models\KaryawanAbsensi::find($absensi);
+        return view('dashboard.hrd.karyawan.absensi-detail', compact('absensi'));
+    }
+
     public function hari_libur_create()
     {
         return view('dashboard.hrd.karyawan.hari-libur-create');

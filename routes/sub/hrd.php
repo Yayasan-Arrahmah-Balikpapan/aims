@@ -12,6 +12,7 @@ Route::prefix('/hrd')->middleware('role:hrd')->group(function () {
     Route::post('/karyawan/data/store', [\App\Http\Controllers\HRD\KaryawanController::class, 'data_store'])->name('hrd.karyawan.data.store');
 
     Route::get('/karyawan/absensi', [\App\Http\Controllers\HRD\AbsensiKaryawanController::class, 'absensi'])->name('hrd.karyawan.absensi.index');
+    Route::get('/karyawan/absensi/{absensi}', [\App\Http\Controllers\HRD\AbsensiKaryawanController::class, 'absensi_detail'])->name('hrd.karyawan.absensi.detail');
     Route::get('/karyawan/hari-libur/create', [\App\Http\Controllers\HRD\AbsensiKaryawanController::class, 'hari_libur_create'])->name('hrd.karyawan.hari_libur_create');
     Route::post('/karyawan/hari-libur/store', [\App\Http\Controllers\HRD\AbsensiKaryawanController::class, 'hari_libur_store'])->name('hrd.karyawan.hari_libur_store');
     Route::delete('/karyawan/hari-libur/delete', [\App\Http\Controllers\HRD\AbsensiKaryawanController::class, 'hari_libur_delete'])->name('hrd.karyawan.hari_libur_delete');
