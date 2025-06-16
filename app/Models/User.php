@@ -72,4 +72,10 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Pengajar::class, 'user_id');
     }
 
+
+    public function karyawan_absensi()
+    {
+        return $this->hasMany(KaryawanAbsensi::class, 'user_id');
+    }
+
 }
