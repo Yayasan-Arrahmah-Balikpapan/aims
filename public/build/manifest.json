@@ -1,22 +1,22 @@
 {
-  "_choices-DwckhUoX.js": {
-    "file": "assets/choices-DwckhUoX.js",
+  "_choices-CCaFeytm.js": {
+    "file": "assets/choices-CCaFeytm.js",
     "name": "choices",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_jodit.min-CxJlna8G.js": {
-    "file": "assets/jodit.min-CxJlna8G.js",
+  "_jodit.min-DqticpJX.js": {
+    "file": "assets/jodit.min-DqticpJX.js",
     "name": "jodit.min",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_nprogress-RXzehWjS.js": {
-    "file": "assets/nprogress-RXzehWjS.js",
+  "_nprogress-ah5CXVvS.js": {
+    "file": "assets/nprogress-ah5CXVvS.js",
     "name": "nprogress",
     "isDynamicEntry": true,
     "imports": [
@@ -33,18 +33,6 @@
     "file": "assets/autosize.esm-UUezp8hd.js",
     "name": "autosize.esm",
     "src": "node_modules/autosize/dist/autosize.esm.js",
-    "isDynamicEntry": true
-  },
-  "node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.esm.js": {
-    "file": "assets/filepond-plugin-file-validate-size.esm-CRxnmUVA.js",
-    "name": "filepond-plugin-file-validate-size.esm",
-    "src": "node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.esm.js",
-    "isDynamicEntry": true
-  },
-  "node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js": {
-    "file": "assets/filepond-plugin-file-validate-type.esm-BWLk2aN8.js",
-    "name": "filepond-plugin-file-validate-type.esm",
-    "src": "node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js",
     "isDynamicEntry": true
   },
   "node_modules/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.esm.js": {
@@ -86,26 +74,24 @@
     "src": "node_modules/leaflet/dist/images/marker-shadow.png"
   },
   "resources/js/app.js": {
-    "file": "assets/app-DcGqdILn.js",
+    "file": "assets/app-C602R4Vx.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.esm.js",
-      "node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js",
-      "node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.esm.js",
       "node_modules/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.esm.js",
       "node_modules/flatpickr/dist/esm/index.js",
-      "_jodit.min-CxJlna8G.js",
-      "_choices-DwckhUoX.js",
+      "_jodit.min-DqticpJX.js",
+      "_choices-CCaFeytm.js",
       "node_modules/autosize/dist/autosize.esm.js",
       "node_modules/autosize/dist/autosize.esm.js",
       "node_modules/autosize/dist/autosize.esm.js",
-      "_nprogress-RXzehWjS.js",
+      "_nprogress-ah5CXVvS.js",
       "node_modules/@protonemedia/laravel-splade/dist/CompilerErrorMessages-6b34f14b.js"
     ],
     "css": [
-      "assets/app-Bp1_gHhX.css"
+      "assets/app-CEp8S7wN.css"
     ],
     "assets": [
       "assets/marker-icon-2x-_ZA0WGCc.png",
