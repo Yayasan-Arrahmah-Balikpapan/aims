@@ -15,14 +15,14 @@
             </span>
         </Link>
     </li>
-    <li>
+    {{-- <li>
         <Link href="divisi" class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group hover:border hover:border-gray-500 border border-transparent">
             @svg('carbon-send-alt', 'text-gray-600 h-6 w-6')
             <span class="ml-3" sidebar-toggle-item="">
                 Informasi
             </span>
         </Link>
-    </li>
+    </li> --}}
     <li>
         <x-link-item :href="route('karyawan.absensi.index')" :active="request()->routeIs('karyawan.absensi.index')">
             @svg('carbon-fingerprint-recognition', 'text-gray-600 h-6 w-6')
@@ -33,6 +33,12 @@
         <x-link-item :href="route('karyawan.cuti.index')" :active="request()->routeIs('karyawan.cuti.index')">
             @svg('carbon-flight-schedule', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Cuti</span>
+        </x-link-item>
+    </li>
+    <li>
+        <x-link-item :href="route('karyawan.kunjungan.index')" :active="request()->routeIs('karyawan.kunjungan.index')">
+            @svg('carbon-taxi', 'text-gray-600 h-6 w-6')
+            <span class="ml-3">Kunjungan</span>
         </x-link-item>
     </li>
     <li>

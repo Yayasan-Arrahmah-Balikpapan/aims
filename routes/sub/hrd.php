@@ -22,8 +22,12 @@ Route::prefix('/hrd')->middleware('role:hrd')->group(function () {
     Route::post('/karyawan/cuti/setujui/{id}', [\App\Http\Controllers\HRD\CutiKaryawanController::class, 'cuti_setujui'])->name('hrd.karyawan.cuti.setujui');
     Route::post('/karyawan/cuti/tolak/{id}', [\App\Http\Controllers\HRD\CutiKaryawanController::class, 'cuti_tolak'])->name('hrd.karyawan.cuti.tolak');
 
+    Route::get('/karyawan/kunjungan', [\App\Http\Controllers\HRD\KunjunganKaryawanController::class, 'index'])->name('hrd.karyawan.kunjungan.index');
+    Route::delete('/karyawan/kunjungan/{id}', [\App\Http\Controllers\HRD\KunjunganKaryawanController::class, 'destroy'])->name('hrd.karyawan.kunjungan.destroy');
+
+
     Route::get('/agenda', [\App\Http\Controllers\HRD\AgendaController::class, 'index'])->name('hrd.agenda.index');
     Route::post('/agenda/store', [\App\Http\Controllers\HRD\AgendaController::class, 'store'])->name('hrd.agenda.store');
-    Route::delete('/agenda/delete', [\App\Http\Controllers\HRD\AgendaController::class, 'delete'])->name('hrd.agenda.delete');
+    Route::delete('/agenda/destroy/{id}', [\App\Http\Controllers\HRD\AgendaController::class, 'destroy'])->name('hrd.agenda.destroy');
 
 });

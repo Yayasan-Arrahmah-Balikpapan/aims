@@ -16,6 +16,10 @@ Route::prefix('/karyawan')->middleware('role:karyawan')->group(function () {
     Route::post('/cuti/store', [\App\Http\Controllers\Karyawan\CutiController::class, 'store'])->name('karyawan.cuti.store');
     Route::delete('/cuti/{id}', [\App\Http\Controllers\Karyawan\CutiController::class, 'destroy'])->name('karyawan.cuti.destroy');
 
+    Route::get('/kunjungan', [\App\Http\Controllers\Karyawan\KunjunganController::class, 'index'])->name('karyawan.kunjungan.index');
+    Route::post('/kunjungan/store', [\App\Http\Controllers\Karyawan\KunjunganController::class, 'store'])->name('karyawan.kunjungan.store');
+    Route::delete('/kunjungan/{id}', [\App\Http\Controllers\Karyawan\KunjunganController::class, 'destroy'])->name('karyawan.kunjungan.destroy');
+
     Route::get('/akun', [\App\Http\Controllers\Karyawan\AkunController::class, 'index'])->name('karyawan.akun.index');
     Route::patch('/akun/update', [\App\Http\Controllers\Karyawan\AkunController::class, 'update'])->name('karyawan.akun.update');
 

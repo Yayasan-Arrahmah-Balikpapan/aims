@@ -24,18 +24,28 @@
         </Link>
     </li>
     <li>
+        <x-link-item :href="route('hrd.agenda.index')" :active="request()->routeIs('hrd.agenda.index')">
+            @svg('carbon-calendar', 'text-gray-600 h-6 w-6')
+            <span class="ml-3">Agenda</span>
+        </x-link-item>
+    </li>
+    <li>
         <x-link-item :href="route('hrd.karyawan.data.index')" :active="request()->routeIs('hrd.karyawan.data.index')">
             @svg('carbon-user-multiple', 'text-gray-600 h-6 w-6')
-            <span class="ml-3" sidebar-toggle-item="">
-                Data Karyawan
-            </span>
+            <span class="ml-3">Data Karyawan</span>
         </x-link-item>
     </li>
     <li>
         <x-link-item-a :href="route('hrd.karyawan.absensi.index')" :active="request()->routeIs('hrd.karyawan.absensi.index')">
             @svg('carbon-event-schedule', 'text-gray-600 h-6 w-6')
-            <span class="ml-3">Absen Karyawan</span>
+            <span class="ml-3">Data Absensi</span>
         </x-link-item-a>
+    </li>
+    <li>
+        <x-link-item :href="route('hrd.karyawan.kunjungan.index')" :active="request()->routeIs('hrd.karyawan.kunjungan.index')">
+            @svg('carbon-taxi', 'text-gray-600 h-6 w-6')
+            <span class="ml-3">Data Kunjungan</span>
+        </x-link-item>
     </li>
     <li>
         <x-link-item :href="route('hrd.karyawan.cuti.index')" :active="request()->routeIs('hrd.karyawan.cuti.index')">
