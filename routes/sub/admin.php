@@ -9,6 +9,11 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
     Route::get('/periode/create', [App\Http\Controllers\Admin\PeriodeController::class, 'create'])->name('admin.periode.create');
     Route::post('/periode', [App\Http\Controllers\Admin\PeriodeController::class, 'store'])->name('admin.periode.store');
     Route::get('/periode/{periode}', [App\Http\Controllers\Admin\PeriodeController::class, 'show'])->name('admin.periode.show');
+    Route::get('/periode/{periode}/notifikasi/{notifikasi}', [App\Http\Controllers\Admin\PeriodeController::class, 'notifikasi'])->name('admin.periode.notifikasi');
+    Route::post('/periode/{periode}/notifikasi/{notifikasi}', [App\Http\Controllers\Admin\PeriodeController::class, 'notifikasi_update'])->name('admin.periode.notifikasi.update');
+    Route::post('/periode/{periode}/biaya', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_store'])->name('admin.periode.biaya.store');
+    Route::post('/periode/{periode}/biaya-daftar', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_daftar_store'])->name('admin.periode.biaya.daftar.store');
+    Route::delete('/periode/{periode}/biaya/{biaya}', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_destroy'])->name('admin.periode.biaya.destroy');
     Route::get('/periode/{periode}/edit', [App\Http\Controllers\Admin\PeriodeController::class, 'edit'])->name('admin.periode.edit');
     Route::put('/periode/{periode}', [App\Http\Controllers\Admin\PeriodeController::class, 'update'])->name('admin.periode.update');
     Route::delete('/periode/{periode}', [App\Http\Controllers\Admin\PeriodeController::class, 'destroy'])->name('admin.periode.destroy');

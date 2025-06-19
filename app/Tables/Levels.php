@@ -55,6 +55,8 @@ class Levels extends AbstractTable
             ->column('nama')
             ->column('slug')
             ->column('created_at')
+            ->export()
+
             ->paginate(10);
 
             // ->searchInput()

@@ -8,7 +8,7 @@
 
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <div class="p-6 w-full">
+        <div class="px-3 w-full">
             <div class="items-center justify-end flex">
                 <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data

@@ -8,7 +8,7 @@
 
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <div class="p-6 w-full">
+        <div class="px-3 w-full">
             <div class="items-center justify-end flex">
                 <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data
@@ -30,14 +30,18 @@
                         <Link href="{{ route('admin.jadwal.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
                             <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
                         </Link>
-                        <Link
+                        <x-splade-form action="{{ route('admin.jadwal.destroy', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}"
+                            method="DELETE"
                             confirm="Konfirmasi Hapus Data"
                             confirm-text="Apakah yakin data {{ $data->nama_jadwal }}, {{ $data->level->nama }} {{ $data->hari_belajar }} dihapus ?"
                             confirm-button="Ya"
                             cancel-button="Tidak"
-                            href="/users/edit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
-                            <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
-                        </Link>
+                            >
+                            @csrf
+                            <button type="submit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
+                                <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
+                            </button>
+                        </x-splade-form>
                     </div>
                 </x-splade-cell>
             </x-splade-table>

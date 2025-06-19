@@ -21,7 +21,12 @@ class Transaksi extends Model
         'nominal_total',
         'nominal_total_pembayaran',
         'data_pembayaran',
-        'payment_gateway_id'
+        'payment_gateway_id',
+        'donasi',
+    ];
+
+    protected $casts = [
+        'data_pembayaran' => 'array',
     ];
 
     public function user()

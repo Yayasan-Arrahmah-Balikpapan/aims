@@ -24,7 +24,7 @@ class PeriodeController extends Controller
                             ->orderBy('created_at', 'desc')
                             ->paginate(10);
 
-                            return view('dashboard.admin.periode.index', compact('unit', 'periode'));
+        return view('dashboard.admin.periode.index', compact('unit', 'periode'));
     }
 
     public function create($unit)
@@ -111,9 +111,13 @@ Tahsin Ar Rahmah Balikpapan',
 
     public function show($unit, $periode)
     {
-        $d_periode = \App\Models\Periode::find($periode);
+        $data_periode = \App\Models\Periode::find($periode);
+        $item_biaya = \App\Models\Biaya::where('periode_id', $periode)->get();
+        $list_notifikasi = \App\Models\Notifikasi::whereHas('unit', function($query) use ($unit) {
+                        $query->where('slug', $unit);
+                    })->orderBy('id', 'asc')->get();
 
-        return view('dashboard.admin.periode.show', compact('unit', 'd_periode'));
+        return view('dashboard.admin.periode.show', compact('unit', 'data_periode', 'item_biaya', 'list_notifikasi'));
     }
 
     public function update(Request $request, $unit, $id)
@@ -136,9 +140,94 @@ Tahsin Ar Rahmah Balikpapan',
         return redirect()->route('admin.periode.index', $unit);
     }
 
+    public function notifikasi($unit, $periode, $notifikasi)
+    {
+        $data_periode = \App\Models\Periode::find($periode);
+        $notifikasi = \App\Models\Notifikasi::whereHas('unit', function($query) use ($unit) {
+                        $query->where('slug', $unit);
+                    })->where('slug', $notifikasi)->first();
+
+        return view('dashboard.admin.periode.notifikasi', compact('unit', 'data_periode','periode', 'notifikasi'));
+    }
+
+    public function notifikasi_update(Request $request, $unit, $periode, $notifikasi)
+    {
+        $notifikasi = \App\Models\Notifikasi::whereHas('unit', function($query) use ($unit) {
+                        $query->where('slug', $unit);
+                    })->where('slug', $notifikasi)->first();
+
+        $notifikasi->update([
+            'pesan_whatsapp' => $request->pesan,
+        ]);
+
+        Toast::title('Pesan Berhasil Diupdate');
+        return redirect()->back();
+    }
+
     public function destroy($unit, $id)
     {
         // Logika untuk menghapus data berdasarkan ID
+    }
+
+     public function biaya_store($unit, $periode, Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nominal' => 'required|numeric|min:0',
+            'wajib_dibayar_awal' => 'required|boolean',
+            'wajib_dibayar_oleh' => 'required|string|max:255',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        \App\Models\Biaya::create([
+            'periode_id' => $periode,
+            'nama' => strtoupper($request->nama),
+            'nominal' => $request->nominal,
+            'wajib_dibayar_awal' => $request->wajib_dibayar_awal,
+            'wajib_dibayar_oleh' => $request->wajib_dibayar_oleh,
+            'status_dicicil' => $request->status_dicicil,
+            'keterangan' => $request->keterangan,
+            'slug' => Str::slug($request->nama),
+        ]);
+
+        Toast::title('Biaya Berhasil Ditambahkan');
+        return redirect()->back();
+    }
+    public function biaya_daftar_store($unit, $periode, Request $request)
+    {
+        $request->validate([
+            'nominal' => 'required|numeric|min:0',
+        ]);
+
+        \App\Models\Biaya::create([
+            'periode_id' => $periode,
+            'nama' => 'DAFTAR',
+            'nominal' => $request->nominal,
+            'wajib_dibayar_awal' => 1,
+            'status_dicicil' => 0,
+            'wajib_dibayar_oleh' => $request->wajib_dibayar_oleh,
+            'slug' => 'daftar',
+        ]);
+
+        Toast::title('Item Biaya Daftar Berhasil Ditambahkan');
+        return redirect()->back();
+    }
+
+    public function biaya_destroy($unit, $periode, $id)
+    {
+        // Logika untuk menghapus data berdasarkan ID
+        try {
+            $biaya = \App\Models\Biaya::find($id);
+            if ($biaya->pembayaran->count() > 0) {
+                Toast::warnig('Biaya ini tidak bisa dihapus karena sudah ada pembayaran, Gagal Dihapus');
+                return redirect()->back();
+            }
+            $biaya->delete();
+            Toast::title('Item Biaya Berhasil Dihapus');
+        } catch (\Exception $e) {
+            Toast::warning('Item Biaya Gagal Dihapus');
+        }
+        return redirect()->back();
     }
 
     public function statistik($unit, $periode)
@@ -187,5 +276,7 @@ Tahsin Ar Rahmah Balikpapan',
             'values' => [530, 120],
         ]);
     }
+
+
 
 }

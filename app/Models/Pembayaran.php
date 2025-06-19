@@ -12,7 +12,10 @@ class Pembayaran extends Model
     protected $fillable = [
         'periode_id',
         'transaksi_id',
-        'biaya_id'
+        'biaya_id',
+        'nominal',
+        'keterangan',
+        'kelas_id',
     ];
 
     public function periode()
@@ -28,5 +31,10 @@ class Pembayaran extends Model
     public function biaya()
     {
         return $this->belongsTo(Biaya::class);
+    }
+
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
     }
 }

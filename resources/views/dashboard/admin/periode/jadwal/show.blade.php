@@ -1,14 +1,15 @@
 <x-layouts.main :unit="$unit">
 
-    <div class="p-4">
-        <h2 class="text-2xl font-bold uppercase">
+    <x-layouts.card>
+        <h2 class="text-xl font-bold uppercase">
             Periode {{ $unit }}  Angkatan {{ $dataperiode->angkatan }}, Tahun {{ $dataperiode->tahun_ajaran }}
         </h2>
-    </div>
+    </x-layouts.card>
 
-    <div class="md:flex p-4">
+    <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <x-layouts.card>
+        <div class="grid grid-cols-1 gap-3 w-full">
+        <x-layouts.card-periode>
             <x-layouts.title>Data Jadwal <text class="uppercase">{{ $unit }}</text>, {{ $jadwal->nama_jadwal }} - {{ $jadwal->periode->nama }} </x-layouts.title>
             <div class="py-4">
                 <div class="mb-4 grid gap-3 sm:grid-cols-2 md:gap-6">
@@ -39,16 +40,15 @@
                 </div>
             </div>
             <div class="flex items-end justify-end pb-2">
-                <Link modal max-width="lg" href="{{ route('admin.jadwal.edit', ['unit' => $unit, 'jadwal'=> $jadwal->id]) }}" title=""
+                <Link modal max-width="lg" href="{{ route('admin.jadwal.edit', ['unit' => $unit, 'periode' => $periode ,'jadwal'=> $jadwal->id]) }}" title=""
                     class="mt-4 sm:mt-0 text-yellow-500 font-medium rounded-lg border border-yellow-500 text-sm px-4 py-1 lg:py-2.5 flex items-center justify-between"
                     role="button">
                     Edit Data
                     <x-carbon-edit class="w-5 h-5 ml-3 text-yellow-500"/>
                 </Link>
             </div>
-
         </x-layouts.card>
-        <x-layouts.card>
+        <x-layouts.card-periode>
             <div class="flex items-start justify-start pb-2">
                 {{-- <Link modal max-width="lg" href="{{ route('admin.jadwal.import', ['unit' => $unit, 'jadwal'=> $jadwal->id]) }}" title=""
                     class="mt-4 sm:mt-0 text-green-500 font-medium rounded-lg border border-green-500 text-sm px-4 py-1 lg:py-2.5 flex items-center justify-between"
@@ -104,6 +104,7 @@
             </x-splade-table>
             @endif
         </x-layouts.card>
+        </div>
 
         @if(session('successCount') || session('failCount'))
             <x-splade-modal opened>

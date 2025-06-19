@@ -77,7 +77,7 @@
                         <Link href="{{ route('admin.periode.statistik', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-primary-700 px-5 py-2.5 text-sm font-medium text-primary-700">
                             Lihat Data  @svg('carbon-arrow-right', 'ml-2 h-5 w-5 text-primary-700')
                         </Link>
-                        <a href="#" class="flex items-center justify-center rounded-lg border border-yellow-400 px-3 py-2.5 text-sm font-medium text-yellow-400">
+                        <a href="{{ route('admin.periode.show', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-yellow-400 px-3 py-2.5 text-sm font-medium text-yellow-400">
                             @svg('carbon-edit', 'h-5 w-5 text-yellow-400')
                         </a>
                     </div>
