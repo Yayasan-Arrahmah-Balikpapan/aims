@@ -20,20 +20,15 @@ class JadwalController extends Controller
     {
         // $jadwal = $this->getJadwalTable($unit);
         $jadwal = \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Jadwal::where('periode_id', $periode)->orderBy('created_at', 'desc'))
-                        ->withGlobalSearch(columns: ['nama_jadwal', 'pengajar.user.name', 'periode.angkatan', 'hari_belajar'])
+                        ->withGlobalSearch(columns: ['nama_jadwal', 'pengajar.kode_nama_pengajar', 'periode.angkatan', 'hari_belajar'])
                         ->column(label: 'Actions')
+                        ->column('nama_jadwal')
                         ->column(
-                            key:'periode.nama',
-                            label:'Periode',
-                        )
-                        ->column(
-                            key:'pengajar.user.name',
+                            key:'pengajar.kode_nama_pengajar',
                             label:'Pengajar',
                             sortable: true
                         )
-                        ->column('jenis_peserta')
                         ->column('batasan_peserta')
-                        ->column('nama_jadwal')
                         ->column(
                             key:'level.nama',
                             label:'Level',
@@ -41,6 +36,7 @@ class JadwalController extends Controller
                         )
                         ->column('hari_belajar', sortable: true)
                         ->column('jam_mulai')
+                        ->column('jenis_peserta')
                         ->column('status_belajar', sortable: true)
                         ->paginate(15)
                     ;
@@ -51,8 +47,8 @@ class JadwalController extends Controller
 
     public function create($unit, $periode)
     {
-        $pengajars = \App\Models\User::selectRaw("id, concat(name, ' (', phone_number, ')') as name")
-            ->whereHas('pengajar.unit', function ($query) use ($unit) {
+        $pengajars = \App\Models\Pengajar::select('id', 'kode_nama_pengajar')
+            ->whereHas('unit', function ($query) use ($unit) {
                 $query->where('slug', $unit);
             })->get();
         $periodes = \App\Models\Periode::select('id', 'nama')->whereHas('unit', function ($query) use ($unit) {
@@ -92,7 +88,7 @@ class JadwalController extends Controller
     {
         $request->validate([
             'periode' => 'required',
-            // 'pengajar' => 'exists:pengajars,id',
+            'pengajar' => 'exists:pengajars,id',
             'level' => 'exists:levels,id',
             'jam_mulai' => 'date_format:H:i',
         ]);
@@ -102,6 +98,11 @@ class JadwalController extends Controller
             $jadwal->periode_id       = $request->periode ?? null;
             $jadwal->pengajar_id      = $request->pengajar ?? null;
             $jadwal->nama_jadwal      = $request->nama_jadwal ?? null;
+            if (is_null($jadwal->nama_jadwal)) {
+                $pengajar = \App\Models\Pengajar::find($request->pengajar);
+                $level = \App\Models\Modules\Level::find($request->level);
+                $jadwal->nama_jadwal = $pengajar->kode_nama_pengajar.' - '.$level->nama.', '.$request->hari_belajar.' '.$request->jam_mulai;
+            }
             $jadwal->hari_belajar     = $request->hari_belajar ?? null;
             $jadwal->jam_mulai        = $request->jam_mulai ?? null;
             $jadwal->jam_selesai      = $request->jam_selesai ?? null;
@@ -115,7 +116,7 @@ class JadwalController extends Controller
         } catch (\Exception $e) {
             Toast::warning('Terjadi kesalahan, data gagal disimpan')->autoDismiss(5);
         }
-        return redirect()->back()->with('success', 'Data jadwal berhasil disimpan');
+        return redirect()->back();
     }
 
     public function show($unit, $periode, $jadwal)

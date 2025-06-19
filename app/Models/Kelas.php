@@ -32,7 +32,6 @@ class Kelas extends Model
     protected $casts = [
         'data_pembayaran' => 'array',
         'data_absensi' => 'array',
-        'status_aktif' => 'boolean',
     ];
 
     public function peserta()

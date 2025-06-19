@@ -57,7 +57,7 @@ class JadwalTahsin extends AbstractTable
             label:'Periode',
         )
         ->column(
-            key:'pengajar.user.name',
+            key:'pengajar.kode_nama_pengajar',
             label:'Pengajar',
             sortable: true
         )

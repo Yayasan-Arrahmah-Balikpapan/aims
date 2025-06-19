@@ -9,9 +9,13 @@
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
         <div class="px-3 w-full">
-            <div class="items-center justify-end flex">
+            <div class="items-center justify-end flex gap-2">
                 <Link modal max-width="lg" href="{{ route('admin.peserta.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
-                    Tambah Data
+                    Tambah Peserta Baru
+                    @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
+                </Link>
+                <Link modal max-width="lg" href="{{ route('admin.peserta.create.pilih', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
+                    Mendaftar Ulang Peserta
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>

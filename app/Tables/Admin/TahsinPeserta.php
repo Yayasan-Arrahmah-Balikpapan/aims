@@ -54,7 +54,7 @@ class TahsinPeserta extends AbstractTable
     public function configure(SpladeTable $table)
     {
         $table
-            ->withGlobalSearch(columns: ['peserta.nama', 'peserta.jenis_peserta', 'jadwal.nama_jadwal', 'jadwal.pengajar.user.name', 'peserta.user.phone_number'])
+            ->withGlobalSearch(columns: ['peserta.nama', 'peserta.jenis_peserta', 'jadwal.nama_jadwal', 'jadwal.pengajar.kode_nama_pengajar', 'peserta.user.phone_number'])
             // ->rowLink(fn (Kelas $kelas) => route('admin.peserta.show', ['unit' => $this->unit, 'periode' => $this->periode,'peserta' => $kelas->id], $kelas))
             // ->column('id', sortable: true)
             ->selectFilter(
@@ -147,7 +147,7 @@ class TahsinPeserta extends AbstractTable
                 label:'Kelas',
             )
             ->column(
-                key:'jadwal.pengajar.user.name',
+                key:'jadwal.pengajar.kode_nama_pengajar',
                 label:'Pengajar',
             )
             ->column(

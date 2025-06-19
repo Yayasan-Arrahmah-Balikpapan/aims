@@ -1,7 +1,9 @@
 <x-splade-modal :unit="$unit">
     <x-splade-form action="{{ route('admin.peserta.store', ['unit' => $unit, 'periode' => $periode]) }}" method="POST" onkeydown="return event.key != 'Enter';"
         :default="[
-            'jenis_peserta' => 'IKHWAN',
+            'jenis_peserta' => 'ikhwan',
+            'penerimaan' => 'umum',
+            'domisili' => '1',
         ]"
     >
         @csrf
@@ -29,7 +31,10 @@
                     </div>
                 </div>
                 <x-splade-input name="nama_peserta" :label="__('Nama peserta')" required/>
-                <x-splade-select name="jenis_peserta" :label="__('Jenis')" :options="$jenis" option-label="nama" option-value="nama" choices />
+                <x-splade-select name="jenis_peserta" :label="__('Gender')" choices>
+                    <option value="ikhwan">Ikhwan / Laki-laki</option>
+                    <option value="akhwat">akhwat / Perempuan</option>
+                </x-splade-select>
                 <div class="border border-gray-300 rounded-md p-4 my-4">
                     <span class="block mb-1 text-gray-700 font-sans"> Tanggal Lahir </span>
                     <div class="grid grid-cols-3 gap-0">
@@ -61,7 +66,7 @@
                         <x-splade-select name="tahun" :label="__('Tahun')" required >
                             <option value="" disabled selected>-- Pilih Tahun</option>
                             @php
-                                $tahun_terakhir = date('Y', strtotime('-12 years'));
+                                $tahun_terakhir = date('Y', strtotime('-3 years'));
                                 $tahun_pertama = 1950;
                             @endphp
                             @for ($i = $tahun_terakhir; $i >= $tahun_pertama; $i--)
@@ -71,6 +76,15 @@
                     </div>
                 </div>
                 <x-splade-select name="jadwal" :label="__('Jadwal')" :options="$jadwals" option-label="nama_jadwal" option-value="id" required choices />
+                <x-splade-select name="penerimaan" :label="__('Peserta')" choices>
+                    <option value="umum">Umum</option>
+                    <option value="warga">Warga</option>
+                    <option value="karyawan">Karyawan</option>
+                </x-splade-select>
+                <x-splade-select name="domisili" :label="__('Domisili')" choices>
+                    <option value="1">Kota Balikpapan</option>
+                    <option value="0">Luar Kota Balikpapan</option>
+                </x-splade-select>
             </x-forms.body>
 
             <x-forms.footer />

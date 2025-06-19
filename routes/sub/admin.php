@@ -36,6 +36,9 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
 
         Route::get('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'index'])->name('admin.peserta.index');
         Route::get('/peserta/create', [App\Http\Controllers\Admin\PesertaController::class, 'create'])->name('admin.peserta.create');
+        Route::get('/peserta/create-pilih', [App\Http\Controllers\Admin\PesertaController::class, 'create_pilih'])->name('admin.peserta.create.pilih');
+        Route::post('/peserta/create-pilih', [App\Http\Controllers\Admin\PesertaController::class, 'store_pilih'])->name('admin.peserta.store.pilih');
+        Route::get('/peserta/data-api', [App\Http\Controllers\Admin\PesertaController::class, 'data_api'])->name('admin.peserta.data.api');
         Route::post('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'store'])->name('admin.peserta.store');
         Route::get('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'show'])->name('admin.peserta.show');
         Route::get('/peserta/{peserta}/edit', [App\Http\Controllers\Admin\PesertaController::class, 'edit'])->name('admin.peserta.edit');

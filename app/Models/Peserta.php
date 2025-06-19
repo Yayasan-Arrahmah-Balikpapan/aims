@@ -11,6 +11,7 @@ class Peserta extends Model
 
     protected $fillable = [
         'periode_id',
+        'unit_id',
         'user_id',
         'uuid',
         'jadwal_id',
