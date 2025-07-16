@@ -25,7 +25,8 @@ class Periode extends Model
         'format_rapot',
         'notifikasi',
         'aktifkan_pendaftaran',
-        'tanggal_tagihan'
+        'tanggal_tagihan',
+        'kategori',
     ];
 
     protected $casts = [
