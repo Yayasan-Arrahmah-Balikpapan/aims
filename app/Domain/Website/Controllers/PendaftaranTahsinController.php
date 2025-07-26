@@ -14,51 +14,24 @@ use App\Models\Periode;
 use App\Models\Transaksi;
 use App\Models\Peserta;
 use App\Models\User;
+use App\Traits\ConvertNotifikasi;
 use Throwable;
 use App\Models\Kelas;
+use Illuminate\Support\Facades\DB;
+
 
 class PendaftaranTahsinController extends Controller
 {
+    use ConvertNotifikasi;
     public $description, $keywords, $sitename;
-    public function __construct()
+    private $notifService;
+    public function __construct( \App\Contracts\NotificationService $notifService)
     {
         $this->description = 'Yayasan Arrahmah Balikpapan. Pusat Belajar Tahsin Tahfizh Di Kota Balikpapan. Belajar Mengaji Al-Quran Secara Terstruktur.';
         $this->keywords = 'Belajar Ngaji, Tahsin, Tahfizh, Balikpapan';
         $this->sitename = 'Pendidikan Al-quran Kota Balikpapan';
-    }
 
-    public function notifwa($nomorhp, $isipesan)
-    {
-        $apikey     = env('WAHA_API_KEY');
-        $url        = env('WAHA_API_URL');
-        $sessionApi = env('WAHA_API_SESSION');
-        $requestApi = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Accept'       => 'application/json',
-            'X-Api-Key'    => $apikey,
-        ]);
-
-        // try {
-            // #1 Send Seen
-            // // $requestApi->post($url.'/api/sendSeen', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
-
-            // #2 Start Typing
-            // $requestApi->post($url.'/api/startTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
-
-            // sleep(1); // jeda seolah olah ngetik
-
-            // #3 Stop Typing
-            // $requestApi->post($url.'/api/stopTyping', [ "session" => $sessionApi, "chatId"  => $nomorhp.'@c.us', ]);
-
-            #4 Send Message
-            $requestApi->get($url.'/api/sendText', [
-                "session" => $sessionApi,
-                "phone"  => $nomorhp.'@c.us',
-                "text"    => $isipesan,
-            ]);
-        // } catch (Throwable $th) {
-        //     // throw $th;
-        // }
+        $this->notifService = $notifService;
     }
 
     public function tahsin_pendaftaran()
@@ -75,37 +48,12 @@ class PendaftaranTahsinController extends Controller
             ;
 
 
-        // Buat session baru untuk pendaftaran tahsin
         $uuid = Str::uuid();
         session()->put('pendaftaran.tahsin.uuid', $uuid);
 
         $json = Storage::disk('public')->get('/data/daerah-indonesia.json');
         $dataindo = json_decode($json, true);
 
-        // $chapterNumber = 41;
-        // $startAyat = 44;
-        // $endAyat = 48;
-
-        // // Request API untuk mendapatkan ayat dari 44 sampai 48
-        // $response = Http::get("https://api.quran.com/api/v4/verses/by_chapter/$chapterNumber", [
-        //     'language' => 'ar',
-        //     'verse_key' => "$chapterNumber:$startAyat-$chapterNumber:$endAyat"
-        // ]);
-
-        // $dataayat = $response->json();
-
-        // $ayat = Cache::remember('ayat', 60, function () {
-        //     $ayat = [];
-        //     for ($i = 44; $i <= 48; $i++) {
-        //         $dataayat = Http::get("http://api.alquran.cloud/v1/ayah/41:{$i}/editions/quran-uthmani");
-        //         $data = $dataayat->json();
-        //         foreach ($data['data'] as $ayat_) {
-        //             $ayat[] = $ayat_['text'];
-        //         }
-        //     }
-        //     return $ayat;
-        // });
-        // dd($ayat);
         $ayat = [
             "وَلَوْ جَعَلْنَٰهُ قُرْءَانًا أَعْجَمِيًّۭا لَّقَالُوا۟ لَوْلَا فُصِّلَتْ ءَايَٰتُهُۥٓ ۖ ءَا۬عْجَمِىٌّۭ وَعَرَبِىٌّۭ ۗ قُلْ هُوَ لِلَّذِينَ ءَامَنُوا۟ هُدًۭى وَشِفَآءٌۭ ۖ وَٱلَّذِينَ لَا يُؤْمِنُونَ فِىٓ ءَاذَانِهِمْ وَقْرٌۭ وَهُوَ عَلَيْهِمْ عَمًى ۚ أُو۟لَٰٓئِكَ يُنَادَوْنَ مِن مَّكَانٍۭ بَعِيدٍۢ",
             "وَلَقَدْ ءَاتَيْنَا مُوسَى ٱلْكِتَٰبَ فَٱخْتُلِفَ فِيهِ ۗ وَلَوْلَا كَلِمَةٌۭ سَبَقَتْ مِن رَّبِّكَ لَقُضِىَ بَيْنَهُمْ ۚ وَإِنَّهُمْ لَفِى شَكٍّۢ مِّنْهُ مُرِيبٍۢ",
@@ -114,9 +62,16 @@ class PendaftaranTahsinController extends Controller
             "وَضَلَّ عَنْهُم مَّا كَانُوا۟ يَدْعُونَ مِن قَبْلُ ۖ وَظَنُّوا۟ مَا لَهُم مِّن مَّحِيصٍۢ"
         ];
 
-        $periode = Periode::where('aktifkan_pendaftaran',1)->first();
+        $periode = Periode::where('aktifkan_pendaftaran',1)
+                        ->where('kategori', 'reguler')
+                            ->whereHas('unit', function($query) {
+                                $query->where('slug', 'tahsin');
+                            })
+                        ->first();
+
+        $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
         if ($periode) {
-            return view('website.pages.lttq.tahsin.pendaftaran', compact('dataindo', 'ayat', 'periode'));
+            return view('website.pages.lttq.tahsin.pendaftaran', compact('dataindo', 'ayat', 'periode', 'data_biaya'));
         } else {
             return view('website.pages.lttq.tahsin.pendaftaran-tutup');
         }
@@ -124,33 +79,17 @@ class PendaftaranTahsinController extends Controller
 
     public function tahsin_pendaftaran_store(Request $request)
     {
+        $periode = Periode::where('aktifkan_pendaftaran',1)
+                        ->where('kategori', 'reguler')
+                            ->whereHas('unit', function($query) {
+                                $query->where('slug', 'tahsin');
+                            })
+                        ->first();
+        $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
 
-        $periode = Periode::where('aktifkan_pendaftaran',1)->first();
         if ($periode) {
-            // $request->validated();
 
-            $data_format = [];
-            $data_payment = [];
-            $total = 0;
-            foreach(json_decode($periode->format_pembayaran, true) as $item){
-                $label = 'pembayaran'.$item['name'];
-                $data_format[] = [
-                    $item['name'] => $request->get($label) ?? 0,
-                ];
-                if($request->get($label) == 1){
-                    $total += $item['value'] ?? 0;
-                }
-
-                if($request->get($label) == 1){
-                    $data_payment['list'][] =
-                        [
-                            'name' => $item['label'],
-                            'nominal' => $item['value'],
-                        ]
-                    ;
-                }
-
-            }
+            $donasi = $request->input('pembayarandonasi') > 0 ? $request->input('pembayarandonasi') : $request->input('pembayarandonasicustom');
 
             $uuid    = session()->get('pendaftaran.tahsin.uuid');
             $ktp     = session()->get('pendaftaran.tahsin.ktp');
@@ -182,67 +121,143 @@ class PendaftaranTahsinController extends Controller
                 ]);
             }
 
-            $biodata[] = [
-                'kota_domisili' => $request->input('kota_domisili') == null ? 'Kota Balikpapan' : $request->input('kota_domisili'),
-                'alamat'        => $request->input('alamat'),
-                'pekerjaan'     => $request->input('pekerjaan'),
-                'pembelajaran'  => $request->input('pembelajaran'),
-                'ktp'           => $ktp,
-                'rekaman'       => $rekaman,
-            ];
-
             $nomor_wa = $user->phone_code.ltrim($user->phone_number, '0');
 
             $peserta = Peserta::where('uuid', $uuid)->first();
             $peserta_kelas = Kelas::where('uuid', $uuid)->first();
 
+            if ($peserta) {
+                Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
+                    ->warning()
+                    ->autoDismiss(10);
+                return redirect()->back();
+            }
+
             if(!$peserta) {
-                $peserta = Peserta::create([
-                    'periode_id'      => $periode->id,
-                    'user_id'         => $user->id,
-                    'uuid'            => $uuid,
-                    'phone_number'    => $nomor_wa,
-                    'nama'            => $request->input('name'),
-                    'jenis_peserta'   => $request->input('jenis_peserta'),
-                    'tanggal_lahir'   => $request->input('tahun') . '-' . $request->input('bulan') . '-' . $request->input('tanggal'),
-                    'biodata'         => json_encode($biodata),
-                    // 'data_pembayaran' => json_encode($data_format),
-                ]);
+                try {
+                    DB::beginTransaction();
 
-                $peserta_kelas = Kelas::create([
-                    'periode_id'      => $periode->id,
-                    'peserta_id'      => $peserta->id,
-                    'uuid'            => $uuid,
-                    'data_pembayaran' => json_encode($data_format),
-                    'data_absensi'    => $periode->format_absensi,
-                ]);
+                    $lock_peserta = Peserta::lockForUpdate()->latest()->first();
+                    $lock_kelas = Kelas::lockForUpdate()->latest()->first();
 
-                $data_payment['kode_unik'] = [
-                                    'name'    => 'KODE UNIK',
-                                    'nominal' => (int)($request->input('bulan').$request->input('tanggal')),
-                                    'keterangan' => 'BBTT - Bulan Tanggal Lahir'
-                                    ];
+                    $peserta = Peserta::create([
+                        'periode_id'      => $periode->id,
+                        'user_id'         => $user->id,
+                        'unit_id'         => $periode->unit_id,
+                        'uuid'            => $uuid,
+                        'phone_number'    => $nomor_wa,
+                        'nama'            => $request->input('name'),
+                        'jenis_peserta'   => $request->input('jenis_peserta'),
+                        'tanggal_lahir'   => $request->input('tahun') . '-' . $request->input('bulan') . '-' . $request->input('tanggal'),
+                        'biodata'         => [
+                                'kota_domisili' => $request->input('kota_domisili'),
+                                'alamat'        => $request->input('alamat'),
+                                'pekerjaan'     => $request->input('pekerjaan'),
+                                'pembelajaran'  => $request->input('pembelajaran'),
+                                'ktp'           => $ktp,
+                                'rekaman'       => $rekaman,
+                        ],
+                    ]);
 
-                // KARENA DATA BARU JADI DIBUAT TRANSAKSI BARU
-                $uuid_transaksi = Str::uuid();
-                Transaksi::create([
-                    'uuid'                     => $uuid_transaksi,
-                    'periode_id'               => $periode->id,
-                    'peserta_id'               => $peserta_kelas->id,
-                    'user_id'                  => $user->id,
-                    'nominal_total'            => $total,
-                    'nominal_total_pembayaran' => $total + (int)($request->input('bulan').$request->input('tanggal')),
-                    'data_pembayaran'          => json_encode($data_payment),
-                    'payment_gateway_id'       => null,
-                ]);
+                    $hitung_data_peserta = Kelas::where('periode_id', $periode->id)
+                                                ->where('status_daftar', 'baru')
+                                                ->count();
+                    $nomor               = $hitung_data_peserta + 1;
+                    $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
+                    $kode_periode        = str_pad($periode->angkatan, 4, '0', STR_PAD_LEFT);
+                    $kode_unit           = $request->input('jenis_peserta') == 'ikhwan' ? 'TI' : 'TA';
+                    $nis_peserta         = $kode_unit.$kode_periode.$kode_peserta;
+
+                    while(Kelas::where('nis_peserta', $nis_peserta)->where('periode_id', $periode->id)->exists()) {
+                        $hitung_data_peserta++;
+                        $nomor               = $hitung_data_peserta + 1;
+                        $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
+                        $nis_peserta         = $kode_unit.$kode_periode.$kode_peserta;
+                    }
+
+                    if($request->input('kota_domisili')  == 'Kota Balikpapan') {
+                        $domisili = 1;
+                    } else {
+                        $domisili = 0;
+                    }
+
+                    $peserta_kelas = Kelas::create([
+                        'periode_id'          => $periode->id,
+                        'peserta_id'          => $peserta->id,
+                        'nis_peserta'         => $nis_peserta,
+                        'kode_unik'           => $hitung_data_peserta + 1,
+                        'uuid'                => $uuid,
+                        'status_daftar'       => 'baru',
+                        'status_pendaftaran'  => 'belum diberikan level',
+                        'status_aktif'        => 'diproses',
+                        'status_uji'          => 'belum ujian',
+                        'status_daftar_ulang' => 'belum daftar ulang',
+                        'status_penerimaan'   => 'umum',
+                        'status_domisili'     => $domisili,
+                        'data_nilai'          => [
+                                                    'rekaman-daftar-baru' => $rekaman,
+                                                ]
+                    ]);
+
+                    $uuid_transaksi = Str::uuid();
+                    $transaksi = Transaksi::create([
+                        'uuid'                     => $uuid_transaksi,
+                        'periode_id'               => $periode->id,
+                        'kelas_id'                 => $peserta_kelas->id,
+                        'peserta_id'               => $peserta->id,
+                        'user_id'                  => $user->id,
+                        'donasi'                   => $donasi,
+                        'kode_unik'                => $nomor,
+                        // 'kode_unik'                => (int)($request->input('bulan').$request->input('tanggal')), // BBTT
+                    ]);
+
+                    $total_nominal = 0;
+                    $total_nominal_pembayaran = 0;
+                    foreach($data_biaya as $item_biaya) {
+                        if($item_biaya->wajib_dibayar_awal == true || $item_biaya->id == $request->input('pembayaran'.$item_biaya->id)){
+                            $data_pembayaran_peserta = \App\Models\Pembayaran::create([
+                                'periode_id' => $periode->id,
+                                'transaksi_id' => $transaksi->id,
+                                'biaya_id' => $item_biaya->id,
+                                'nominal' => $item_biaya->nominal,
+                                'kelas_id' => $peserta_kelas->id
+                            ]);
+                            $total_nominal += $item_biaya->nominal;
+                        }
+                    }
+                    $total_nominal_pembayaran = $total_nominal + $nomor + $donasi;
+
+                    $transaksi->update([
+                        'nominal_total' => $total_nominal,
+                        'nominal_total_pembayaran' => $total_nominal_pembayaran
+                    ]);
+
+                    $data_notifikasi = \App\Models\Notifikasi::where('slug', 'pendaftaran-baru')
+                                    ->where('unit_id',1)
+                                    ->first();
+
+                    $isi_notif_wa = $this->formatWhatsappPesertaKelasDanTransaksi($data_notifikasi->pesan_whatsapp, $peserta_kelas->id, $transaksi->id);
+                    $this->notifService->kirimNotifWa($nomor_wa, $isi_notif_wa);
+
+                    Toast::title('Pendaftaran Berhasil, Segera Lakukan Pembayaran. Terima Kasih')
+                        ->warning()
+                        ->autoDismiss(10);
+
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
+                        ->warning()
+                        ->autoDismiss(10);
+                    // return redirect()->back();
+
+                    return $e;
+                }
             } else {
                 // KARENA DATA BARU TRANSAKSI BARU CUMA SATU
                 $transaksi =Transaksi::where('peserta_id', $peserta_kelas->id)->latest()->first();
                 $uuid_transaksi = $transaksi->uuid;
             }
-
-            $notif_wa = json_decode($periode->notifikasi, true);
-            $this->notifwa($nomor_wa, $notif_wa[0]['pendaftaran']);
 
             return redirect()->route('website.lttq.invoice', ['uuid' => $uuid_transaksi]);
         } else {

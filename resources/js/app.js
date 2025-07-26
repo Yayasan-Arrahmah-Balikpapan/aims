@@ -25,6 +25,7 @@ import HariTanggalJamKecil from "./components/HariTanggalJamKecil.vue";
 import UploadManager from "./components/UploadManager.vue";
 import MapMini from "./components/MapMini.vue";
 import MapMiniMultiMarker from "./components/MapMiniMultiMarker.vue";
+import BiayaDaftar from "./components/pendaftaran/BiayaDaftar.vue";
 
 const el = document.getElementById("app");
 
@@ -34,7 +35,12 @@ createApp({
     .use(SpladePlugin, {
         "max_keep_alive": 10,
         "transform_anchors": false,
-        "progress_bar": true,
+        "progress_bar": {
+                        delay: 250,
+                        color: "#4B5563",
+                        css: true,
+                        spinner: true,
+                    },
         'suppress_compile_errors': true,
         "components": {
             SendOTP,
@@ -56,6 +62,7 @@ createApp({
             UploadManager,
             MapMini,
             MapMiniMultiMarker,
+            BiayaDaftar,
         },
     })
 
