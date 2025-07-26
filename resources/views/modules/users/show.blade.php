@@ -52,6 +52,15 @@
                                         @endforeach
                                     </div>
                                     <div class="border border-b my-4"></div>
+                                    <h3 class="text-sm font-bold p-2">TAHSIN RQ</h3>
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
+                                        @foreach ($roles as $role_)
+                                            @if (strpos($role_->name, 'rq') !== false)
+                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="border border-b my-4"></div>
                                     <h3 class="text-sm font-bold p-2">TAHSIN TLA</h3>
                                     <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
                                         @foreach ($roles as $role_)

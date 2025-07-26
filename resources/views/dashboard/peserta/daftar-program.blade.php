@@ -16,12 +16,11 @@
                                 Informasi
                             </a>
 
-                            <Link href="/dashboard/daftar-program/tla" title=""
-                                class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
-                                role="button">
-
-                            Daftar
-                            </Link>
+                            <a href="#" title=""
+                                class="text-white mt-4 sm:mt-0 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 flex items-center justify-center"
+                                role="button" disabled>
+                                Tutup
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -39,11 +38,11 @@
                                 Informasi
                             </a>
 
-                            <a href="#" title=""
-                                class="text-white mt-4 sm:mt-0 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800 flex items-center justify-center"
-                                role="button" disabled>
-                                Tutup
-                            </a>
+                            <Link href="{{ route('website.lttq.tahsin.pendaftaran') }}" title=""
+                                class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+                                role="button">
+                            Daftar
+                            </Link>
                         </div>
                     </div>
                 </div>

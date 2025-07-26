@@ -197,9 +197,64 @@
                 </div>
 
 
-                <div class="my-8 grow sm:mt-8 lg:mt-0 space-y-4 bg-stone-100 p-4 rounded-lg">
+                <div class="">
+                    <div class="relative overflow-x-auto border rounded-md mb-4">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                            <thead>
+                                <tr class="border-b border-gray-200 dark:border-gray-700">
+                                    <th scope="col"
+                                        class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 ">
+                                        Jenis Pembayaran
+                                    </th>
+                                    <th scope="col"
+                                        class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 text-center">
+                                        Pilihan
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($data_biaya as $item_biaya)
+                                    <tr class="border-b text-sm border-gray-200 0">
+                                        <td class="px-3 py-3 font-semibold uppercase text-gray-900">
+                                            {{ $item_biaya->nama }}
+                                            <div class="font-base text-gray-600">
+                                                Rp. {{ number_format($item_biaya->nominal, 0, ',', '.') }}
+                                            </div>
+                                        </td>
+                                        <td class="px-3 py-3 font-semibold uppercase text-gray-900 text-center">
+                                            @if ($item_biaya->wajib_dibayar_awal == true)
+                                                <div class="flex items-center justify-center">
+                                                    <div class="bg-primary-600 p-1 rounded-md">
+                                                        <x-carbon-checkmark class="h-4 w-4 text-white" />
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <input type="checkbox" v-model="form.pembayaran{{ $item_biaya->id }}" name="pembayaran{{ $item_biaya->id }}"
+                                                    class="w-6 h-6 rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+                                                >
+
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                {{-- <tr class="border-b text-sm border-gray-200 0">
+                                    <td class="px-3 py-3 font-semibold uppercase text-gray-900">
+                                        Kode Unik
+                                        <div class="font-base text-gray-600">
+                                            123
+                                        </div>
+                                    </td>
+                                    <td class="px-3 py-3 font-semibold uppercase text-gray-900 text-center">
+
+                                    </td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+                    </div>
                     {{-- <ListBiayaPendaftaran></ListBiayaPendaftaran> --}}
-                    @php
+                    {{-- @php
                         $total = 0;
                     @endphp
                     @foreach ([
@@ -232,28 +287,13 @@
                                 </dd>
                             </dl>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                     {{-- <dl class="flex items-center justify-between gap-4 border-t border-gray-200 pt-2 dark:border-gray-700">
                         <dt class="text-base font-bold text-gray-900 dark:text-white">Sub Total</dt>
                         <dd id="sub-total" class="text-base font-bold text-gray-900 dark:text-white">Rp 0</dd>
                     </dl> --}}
                 </div>
-                {{-- <x-splade-script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        let total = 0;
-                        function calculateTotal() {
-                            total = 0;
-                            document.querySelectorAll('input[type=checkbox]:checked').forEach((elem) => {
-                                total += parseInt(elem.value);
-                            });
-                            document.getElementById('sub-total').innerText = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(total);
-                        }
-                        document.querySelectorAll('input[type=checkbox]').forEach((elem) => {
-                            elem.addEventListener('change', calculateTotal);
-                        });
-                        calculateTotal();
-                    });
-                </x-splade-script> --}}
+
 
 
 
@@ -295,7 +335,7 @@
                             <p class="text-sm text-gray-500 mb-2">
                                 Dengan ini saya menyetujui aturan-aturan yang berlaku untuk mendaftar diri saya sebagai peserta tahsin Ar Rahmah:
                             </p>
-                            <table class="w-full text-xs  text-gray-700">
+                            <table class="w-full text-xs text-gray-700">
                                 <tbody>
                                     <tr class="border-b">
                                         <td class="px-4">1.</td>
@@ -392,8 +432,6 @@
                     {{-- </div>
                 </x-splade-modal> --}}
             </x-splade-form>
-
-
 
         </div>
     </div>
