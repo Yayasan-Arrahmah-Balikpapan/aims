@@ -42,7 +42,7 @@ class TahsinPeserta extends AbstractTable
      */
     public function for()
     {
-        return Kelas::query()->where('periode_id', $this->periode);
+        return Kelas::where('periode_id', $this->periode);
     }
 
     /**
@@ -56,7 +56,7 @@ class TahsinPeserta extends AbstractTable
         $table
             ->withGlobalSearch(columns: ['peserta.nama', 'peserta.jenis_peserta', 'jadwal.nama_jadwal', 'jadwal.pengajar.kode_nama_pengajar', 'peserta.user.phone_number'])
             // ->rowLink(fn (Kelas $kelas) => route('admin.peserta.show', ['unit' => $this->unit, 'periode' => $this->periode,'peserta' => $kelas->id], $kelas))
-            // ->column('id', sortable: true)
+            ->column('id', sortable: true)
             ->selectFilter(
                 key: 'peserta.jenis_peserta',
                 label: 'Jenis',
@@ -96,6 +96,7 @@ class TahsinPeserta extends AbstractTable
                 key: 'status_aktif',
                 label: 'Status Aktif',
                 options: [
+                    'diproses' => 'Diproses',
                     'aktif' => 'Aktif',
                     'ditangguhkan' => 'Ditangguhkan',
                     'off' => 'Off',

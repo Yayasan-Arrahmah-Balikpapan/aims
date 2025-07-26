@@ -8,14 +8,21 @@ use Illuminate\Http\Request;
 class KehadiranController extends Controller
 {
 
-    public function index($unit, $periode)
+    public function index($unit, $periode, Request $request)
     {
-        $kehadirans = \App\Models\Absen::all();
-        $dataperiode = \App\Models\Periode::find( $periode);
+        $dataperiode = \App\Models\Periode::findOrFail( $periode);
+        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)->paginate(10);
+        $data_level = \App\Models\Modules\Level::where('unit_id', $dataperiode->unit->id )->get();
 
-        // return response()->json($kehadirans);
-        return view('dashboard.admin.periode.kehadiran.index', compact('unit','periode', 'kehadirans', 'dataperiode'));
+        $data_peserta_id = $data_peserta->pluck('id');
 
+        $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
+        return view('dashboard.admin.periode.kehadiran.index', compact('unit','periode', 'dataperiode', 'data_peserta', 'data_absensi_peserta', 'data_level'));
     }
 
     public function create($unit, $periode)

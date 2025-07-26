@@ -15,32 +15,89 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>
-            {{-- <x-splade-table :for="$jadwal">
-                <x-splade-cell actions as="$data">
-                    <div class="flex items-center gap-1">
-
-                        @if ($data->status == 'MENUNGGU KONFIRMASI')
-                            <Link href="/users/edit" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                                <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                            </Link>
-                        @endif
-                        <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
-                            <x-carbon-report class="w-5 h-5 text-sky-500"/>
-                        </Link>
-                        <Link href="{{ route('admin.jadwal.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                            <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                        </Link>
-                        <Link
-                            confirm="Konfirmasi Hapus Data"
-                            confirm-text="Apakah yakin data {{ $data->nama_jadwal }}, {{ $data->level->nama }} {{ $data->hari_belajar }} dihapus ?"
-                            confirm-button="Ya"
-                            cancel-button="Tidak"
-                            href="/users/edit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
-                            <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
-                        </Link>
-                    </div>
-                </x-splade-cell>
-            </x-splade-table> --}}
+            <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead>
+                        <tr class="border-b border-gray-200 ">
+                            <th scope="col" class="px-3 py-3 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
+                                Nama
+                            </th>
+                            <th scope="col" class="px-3 py-3 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
+                                Jadwal
+                            </th>
+                            @for ($i = 1; $i <= 16; $i++)
+                                <th scope="col"
+                                    class="px-3 py-3 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
+                                    {{ $i }}
+                                </th>
+                            @endfor
+                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                Total Hadir
+                            </th>
+                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                Mengikuti Ujian
+                            </th>
+                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                Nilai Ujian
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data_peserta as $item)
+                            <tr class="text-gray-700 border-b border-gray-200 py-4">
+                                <td class="p-4 uppercase font-semibold">
+                                    {{ $item->peserta->nama }}
+                                </td>
+                                <td class="p-4 uppercase font-semibold">
+                                    {{ $item->jadwal->nama_jadwal ?? '' }}
+                                </td>
+                                @for($i = 1; $i <= 16; $i++)
+                                    @php
+                                        $total_hadir = 0;
+                                    @endphp
+                                    <td class="text-center py-4 px-2 uppercase">
+                                        @if (isset($data_absensi_peserta[$item->id.'-'.$i]))
+                                            @if ($data_absensi_peserta[$item->id.'-'.$i] == 1)
+                                                @php
+                                                    $total_hadir += 1;
+                                                @endphp
+                                                <x-carbon-checkmark class="w-6 h-6 text-sky-500" />
+                                            @elseif ($data_absensi_peserta[$item->id.'-'.$i] == 2)
+                                                <x-carbon-close-filled class="w-6 h-6 text-red-600" />
+                                            @elseif ($data_absensi_peserta[$item->id.'-'.$i] == 3 || $data_absensi_peserta[$item->id.'-'.$i] == 4)
+                                                <x-carbon-close-filled class="w-6 h-6 text-yellow-300" />
+                                            @else
+                                                -
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                @endfor
+                                <td class="border-x text-center p-1 uppercase text-xs font-bold">
+                                    {{ $total_hadir }}
+                                </td>
+                                <td class="border-x text-center p-1 uppercase text-xs font-bold ">
+                                    @if ($total_hadir >= 10)
+                                        BOLEH
+                                    @else
+                                        BELUM
+                                        {{-- <Link href="#" class=" text-primary-600 border border-primary-600 rounded-md px-2 py-1">
+                                            <x-carbon-checkmark class="w-4 h-4 text-primary-600" />
+                                        </Link> --}}
+                                    @endif
+                                </td>
+                                <td class="border-x text-center p-1 uppercase text-xs font-bold">
+                                    {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-2 text-gray-500">
+                {{ $data_peserta->links() }}
+            </div>
         </div>
     </div>
 </x-layouts.main>

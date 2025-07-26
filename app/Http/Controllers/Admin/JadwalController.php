@@ -12,6 +12,9 @@ class JadwalController extends Controller
     {
         return match ($unit) {
             'tahsin' => new \App\Tables\Admin\JadwalTahsin(),
+            'rtq' => \App\Tables\Admin\RtqPengajar::class,
+            'tla' => \App\Tables\Admin\TlaPengajar::class,
+            'rq' => \App\Tables\Admin\RqPengajar::class,
             default => new \App\Tables\Admin\JadwalTahsin(),
         };
     }
@@ -61,7 +64,9 @@ class JadwalController extends Controller
                 ['id' => 4, 'nama' => 'KAMIS'],
                 ['id' => 5, 'nama' => 'JUMAT'],
                 ['id' => 6, 'nama' => 'SABTU'],
-                ['id' => 7, 'nama' => 'AHAD']
+                ['id' => 7, 'nama' => 'AHAD'],
+                ['id' => 8, 'nama' => 'SENIN - JUMAT'],
+                ['id' => 9, 'nama' => 'SETIAP HARI'],
             ];
         $status_belajar = [
             ['id' => 1, 'nama' => 'ONLINE'],
@@ -166,7 +171,7 @@ class JadwalController extends Controller
         return view('dashboard.admin.periode.jadwal.edit', compact('unit', 'table', 'jadwal', 'pengajars', 'periodes', 'hari', 'status_belajar', 'level', 'jenis', 'periode'));
     }
 
-    public function update(Request $request, $unit, $jadwal, $periode)
+    public function update($unit, $periode, $jadwal, Request $request)
     {
         $request->validate([
             // 'pengajar' => 'exists:pengajars,id',
@@ -184,6 +189,8 @@ class JadwalController extends Controller
             $jadwal->level_id         = $request->level;
             $jadwal->status_belajar   = $request->status_belajar;
             $jadwal->jenis_peserta    = $request->jenis_peserta;
+            $jadwal->batasan_peserta  = $request->batasan_peserta;
+
             $jadwal->save();
             Toast::message('Data berhasil di update')->autoDismiss(5);
         } catch (\Exception $e) {

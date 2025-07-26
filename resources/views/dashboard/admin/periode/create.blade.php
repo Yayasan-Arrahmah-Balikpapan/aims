@@ -2,6 +2,7 @@
     <x-splade-form action="{{ route('admin.periode.store', ['unit' => $unit]) }}" method="POST" onkeydown="return event.key != 'Enter';"
             :default="[
                 'aktifkan_pendaftaran' => 0,
+                'kategori' => 'reguler',
             ]"
         >
         @csrf
@@ -22,6 +23,7 @@
                     <option value="0">Tutup Pendaftaran</option>
                     <option value="1">Buka Pendaftaran</option>
                 </x-splade-select>
+                <x-splade-select name="kategori" :label="__('Kategori')" :options="$item_kategori" option-label="nama" option-value="slug" choices required/>
             </x-forms.body>
 
             <x-forms.footer />

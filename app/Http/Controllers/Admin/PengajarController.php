@@ -11,11 +11,13 @@ class PengajarController extends Controller
 {
     private function getPengajarClass($unit)
     {
-        if ($unit == 'tahsin') {
-            return \App\Tables\Admin\PengajarTahsin::class;
-        } else {
-            return \App\Tables\Pengajars::class;
-        }
+        return match ($unit) {
+            'tahsin' => \App\Tables\Admin\PengajarTahsin::class,
+            'rtq' => \App\Tables\Admin\RtqPengajar::class,
+            'tla' => \App\Tables\Admin\TlaPengajar::class,
+            'rq' => \App\Tables\Admin\RqPengajar::class,
+            default => \App\Tables\Pengajars::class,
+        };
     }
     public function index($unit)
     {

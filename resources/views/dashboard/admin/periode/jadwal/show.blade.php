@@ -83,19 +83,11 @@
                                 <td class="p-2 uppercase">{{ $peserta->peserta->nama }}</td>
                                 @for($i = 1; $i <= 16; $i++)
                                     <td class="text-center p-2 uppercase text-xs font-bold">
-                                        @if(array_key_exists($i, $peserta->data_absensi))
-                                            {{ $peserta->data_absensi[$i] == "" ? '-' : $peserta->data_absensi[$i] }}
-                                        @else
-                                            -
-                                        @endif
+                                        -
                                     </td>
                                 @endfor
                                 <td class="text-center p-2 uppercase text-xs font-bold">
-                                    @if(array_key_exists('ujian', $peserta->data_absensi))
-                                        {{ $peserta->data_nilai['ujian'] == "" ? '-' : $peserta->data_nilai['ujian'] }}
-                                    @else
-                                        -
-                                    @endif
+                                    -
                                 </td>
                             </tr>
                         @endforeach

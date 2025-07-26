@@ -15,31 +15,98 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>
-            {{-- <x-splade-table :for="$jadwal">
-                <x-splade-cell actions as="$data">
-                    <div class="flex items-center gap-1">
-                        @if ($data->status == 'MENUNGGU KONFIRMASI')
-                            <Link href="/users/edit" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                                <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                            </Link>
-                        @endif
-                        <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
-                            <x-carbon-report class="w-5 h-5 text-sky-500"/>
-                        </Link>
-                        <Link href="{{ route('admin.jadwal.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                            <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                        </Link>
-                        <Link
-                            confirm="Konfirmasi Hapus Data"
-                            confirm-text="Apakah yakin data {{ $data->nama_jadwal }}, {{ $data->level->nama }} {{ $data->hari_belajar }} dihapus ?"
-                            confirm-button="Ya"
-                            cancel-button="Tidak"
-                            href="/users/edit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
-                            <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
-                        </Link>
-                    </div>
-                </x-splade-cell>
-            </x-splade-table> --}}
+            <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead>
+                        <tr class="border-b border-gray-200 ">
+                            <th scope="col" class="p-4 uppercase">
+                                INVOICE
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Peserta
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Jadwal
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Status
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Total Biaya
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Total Transfer
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Bukti
+                            </th>
+                            <th scope="col" class="uppercase">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data_transaksi as $item)
+                            <tr class="text-gray-700 border-b border-gray-200 py-4">
+                                <td class="p-4 uppercase font-semibold">
+                                    {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
+                                </td>
+                                <td class="uppercase">
+                                    {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                </td>
+                                <td class="uppercase">
+                                    {{ $item->kelas->jadwal ? $item->kelas->jadwal->nama_jadwal : '' }}
+                                </td>
+                                <td class="uppercase">
+                                    @if ($item->status == 1)
+                                        <span class="bg-yellow-300 text-gray-900 px-2 py-1 text-xs font-semibold rounded-xl">Menunggu Pembayaran</span>
+                                    @elseif ($item->status == 2)
+                                        <span class="bg-blue-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Menunggu Konfirmasi</span>
+                                    @elseif ($item->status == 3)
+                                        <span class="bg-green-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Lunas</span>
+                                    @elseif ($item->status == 4)
+                                        <span class="bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Kadaluarsa</span>
+                                    @else
+                                        <span class="bg-gray-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Batal</span>
+                                    @endif
+                                </td>
+                                <td class="uppercase">
+                                    Rp. {{ number_format($item->nominal_total, 0, ',', '.') }}
+                                </td>
+                                <td class="uppercase">
+                                    Rp. {{ number_format($item->nominal_total_pembayaran, 0, ',', '.') }}
+                                </td>
+                                <td>
+                                    @if ($item->status != 1)
+                                    <Link modal href="{{ route('admin.transaksi.bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id]) }}"
+                                        class="text-white bg-gray-500 font-medium rounded-lg text-xs px-2 py-1 "
+                                        >
+                                        Lihat Bukti
+                                    </Link>
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="flex items-center justify-center">
+                                        <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-2">
+                                            <x-carbon-view class="w-4 h-4 text-primary-700"/>
+                                        </a>
+                                        @if ($item->status == 2)
+                                            <Link href="{{ route('admin.transaksi.konfirmasi', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id])}}" class="text-white border border-sky-500 bg-sky-500 rounded-md p-2 ml-2">
+                                                <x-carbon-checkmark class="w-4 h-4 text-white"/>
+                                            </Link>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-2 text-xs text-gray-500">
+                {{ $data_transaksi->links() }}
+            </div>
         </div>
     </div>
 </x-layouts.main>

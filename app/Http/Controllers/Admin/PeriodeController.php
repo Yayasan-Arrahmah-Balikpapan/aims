@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 
 class PeriodeController extends Controller
@@ -29,7 +30,10 @@ class PeriodeController extends Controller
 
     public function create($unit)
     {
-        return view('dashboard.admin.periode.create', compact('unit'));
+        $item_kategori = \App\Models\PeriodeKategori::select('nama', 'slug')->get();
+
+
+        return view('dashboard.admin.periode.create', compact('unit', 'item_kategori'));
     }
 
     public function store(Request $request, $unit)
@@ -45,63 +49,20 @@ class PeriodeController extends Controller
         $periode = \App\Models\Periode::create([
             'unit_id'              => $d_unit->id,
             'nama'                 => $request->nama,
-            'slug'                 => Str::slug($request->nama),
+            'slug'                 => Str::slug($request->nama).$request->tahun_ajaran,
             'aktifkan_pendaftaran' => $request->aktifkan_pendaftaran,
             'tahun_ajaran'         => $request->tahun_ajaran,
             'waktu_start'          => $request->waktu_start,
             'waktu_end'            => $request->waktu_end,
             'angkatan'             => $request->angkatan,
+            'kategori'             => $request->kategori,
 
             'form_biodata_daftar'  => json_encode([]),
             'format_nilai'         => json_encode([]),
             'format_rapot'         => json_encode([]),
-            'format_absensi'       => json_encode([
-                                            [
-                                                '1' => '',
-                                                '2' => '',
-                                                '3' => '',
-                                                '4' => '',
-                                                '5' => '',
-                                                '6' => '',
-                                                '7' => '',
-                                                '8' => '',
-                                                '9' => '',
-                                                '10' => '',
-                                                '11' => '',
-                                                '12' => '',
-                                                '13' => '',
-                                                '14' => '',
-                                                '15' => '',
-                                                '16' => '',
-                                            ],
-                                        ]),
-            'format_pembayaran'    => json_encode([
-                                            ['name' => 'pendaftaran', 'label' => 'PENDAFTARAN', 'value' => 100000, 'disabled' => false, 'checked' => false, 'required' => true],
-                                            ['name' => 'spp1', 'label' => 'SPP BULAN I', 'value' => 100000, 'disabled' => false, 'checked' => false, 'required' => true],
-                                            ['name' => 'spp2', 'label' => 'SPP BULAN II', 'value' => 100000, 'disabled' => false, 'checked' => false, 'required' => true],
-                                            ['name' => 'spp3', 'label' => 'SPP BULAN III', 'value' => 100000, 'disabled' => false, 'checked' => false, 'required' => false],
-                                            ['name' => 'spp4', 'label' => 'SPP BULAN IV', 'value' => 100000, 'disabled' => false, 'checked' => false, 'required' => false],
-                                        ]),
-            'notifikasi'    => json_encode([[
-                                                'pendaftaran' => 'Assalamualaikum Warrohmarullah Wabarokatuh
-
-Terima kasih telah mendaftarkan diri sebagai *Calon Peserta Tahsin Baru di angkatan 25*.
-
-Anda akan kami hubungi kembali secara otomatis melalui pesan WhatsApp setelah hasil bacaan Al Qur\'an dikoreksi oleh tim penguji kami beserta konfirmasi transfer pembayaran.
-
-Silahkan akses ke dalam dashbboard sistem kami menggunakan nomor yang telah terdaftar
-https://arrahmahbalikpapan.or.id/akses
-
-Syukron, Jazaakumullah Khoiron Katsiron,
-Wassalamualaikum warahmatullahi wabarakatuh.
-
-Salam,
-Panitia Pendaftaran Baru
-Tahsin Ar Rahmah Balikpapan',
-                                                'penempatan-level' => '',
-                                                'pembayaran-spp' => ''
-        ]]),
-
+            'format_absensi'       => json_encode([]),
+            'format_pembayaran'    => json_encode([]),
+            'notifikasi'           => json_encode([]),
         ]);
 
 
@@ -116,8 +77,9 @@ Tahsin Ar Rahmah Balikpapan',
         $list_notifikasi = \App\Models\Notifikasi::whereHas('unit', function($query) use ($unit) {
                         $query->where('slug', $unit);
                     })->orderBy('id', 'asc')->get();
+        $item_kategori = \App\Models\PeriodeKategori::select('nama', 'slug')->get();
 
-        return view('dashboard.admin.periode.show', compact('unit', 'data_periode', 'item_biaya', 'list_notifikasi'));
+        return view('dashboard.admin.periode.show', compact('unit', 'data_periode', 'item_biaya', 'list_notifikasi', 'item_kategori'));
     }
 
     public function update(Request $request, $unit, $id)
@@ -125,7 +87,10 @@ Tahsin Ar Rahmah Balikpapan',
         $periode = \App\Models\Periode::find($id);
 
         if ($request->aktifkan_pendaftaran == true) {
-            \App\Models\Periode::where('aktifkan_pendaftaran', true)->update(['aktifkan_pendaftaran' => false]);
+            \App\Models\Periode::where('kategori', $request->kategori)
+                    ->where('aktifkan_pendaftaran', true)
+                    ->update(['aktifkan_pendaftaran' => false])
+                    ;
         }
 
         $periode->update([
@@ -134,6 +99,7 @@ Tahsin Ar Rahmah Balikpapan',
             'waktu_start'          => $request->waktu_start,
             'waktu_end'            => $request->waktu_end,
             'angkatan'             => $request->angkatan,
+            'kategori'             => $request->kategori,
         ]);
 
         Toast::title('Data Berhasil Diupdate');
@@ -233,13 +199,92 @@ Tahsin Ar Rahmah Balikpapan',
     public function statistik($unit, $periode)
     {
         $dataperiode = \App\Models\Periode::find($periode);
-        return view('dashboard.admin.periode.statistik', compact('unit', 'periode', 'dataperiode'));
+
+        $cacheKey = 'data_statistik_' . $periode;
+        $data_statistik = Cache::remember($cacheKey, now()->addMinutes(30), function () use ($periode) {
+            $jumlah_peserta = \App\Models\Kelas::where('periode_id', $periode)->count();
+            $jumlah_peserta_daftar_baru = \App\Models\Kelas::where('periode_id', $periode)
+                                    ->where('status_daftar', 'baru')
+                                    ->count();
+            $jumlah_peserta_daftar_ulang = \App\Models\Kelas::where('periode_id', $periode)
+                                    ->where('status_daftar', 'melanjutkan')
+                                    ->count();
+            $jumlah_peserta_ujian = \App\Models\Kelas::where('periode_id', $periode)
+                                    ->where('status_ujian', 'selesai ujian')
+                                    ->count();
+            $jumlah_peserta_ikhwan = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'ikhwan');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->count();
+            $jumlah_peserta_akhwat = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'akhwat');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->count();
+            $jumlah_peserta_daftar_baru_ikhwan = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'ikhwan');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_daftar', 'baru')
+                                    ->count();
+            $jumlah_peserta_daftar_ulang_ikhwan = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'ikhwan');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_daftar', 'melanjutkan')
+                                    ->count();
+            $jumlah_peserta_ujian_ikhwan = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'ikhwan');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_ujian', 'selesai ujian')
+                                    ->count();
+            $jumlah_peserta_daftar_baru_akhwat = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'akhwat');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_daftar', 'baru')
+                                    ->count();
+            $jumlah_peserta_daftar_ulang_akhwat = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'akhwat');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_daftar', 'melanjutkan')
+                                    ->count();
+            $jumlah_peserta_ujian_akhwat = \App\Models\Kelas::whereHas('peserta', function($q){
+                                        $q->where('jenis_peserta', 'akhwat');
+                                    })
+                                    ->where('periode_id', $periode)
+                                    ->where('status_ujian', 'selesai ujian')
+                                    ->count();
+            return [
+                'jumlah_peserta' => $jumlah_peserta,
+                'jumlah_peserta_daftar_baru' => $jumlah_peserta_daftar_baru,
+                'jumlah_peserta_daftar_ulang' => $jumlah_peserta_daftar_ulang,
+                'jumlah_peserta_ujian' => $jumlah_peserta_ujian,
+                'jumlah_peserta_ikhwan' => $jumlah_peserta_ikhwan,
+                'jumlah_peserta_akhwat' => $jumlah_peserta_akhwat,
+                'jumlah_peserta_daftar_baru_ikhwan' => $jumlah_peserta_daftar_baru_ikhwan,
+                'jumlah_peserta_daftar_ulang_ikhwan' => $jumlah_peserta_daftar_ulang_ikhwan,
+                'jumlah_peserta_ujian_ikhwan' => $jumlah_peserta_ujian_ikhwan,
+                'jumlah_peserta_daftar_baru_akhwat' => $jumlah_peserta_daftar_baru_akhwat,
+                'jumlah_peserta_daftar_ulang_akhwat' => $jumlah_peserta_daftar_ulang_akhwat,
+                'jumlah_peserta_ujian_akhwat' => $jumlah_peserta_ujian_akhwat
+            ];
+        });
+
+
+
+
+
+        return view('dashboard.admin.periode.statistik', compact('unit', 'periode', 'dataperiode', 'data_statistik'));
     }
 
     public function getTahsinDashboardChartData1()
     {
         return response()->json([
-            'labels' => ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26'],
+            'labels' => \App\Models\Periode::pluck('nama')->toArray(),
             'datasets' => [
                 [
                     'label' => 'Jumlah Peserta Aktif',

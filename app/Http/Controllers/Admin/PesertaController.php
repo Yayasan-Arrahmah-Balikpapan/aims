@@ -13,9 +13,13 @@ class PesertaController extends Controller
 {
     private function getPesertaTable($unit, $periode)
     {
-        if ($unit == 'tahsin') {
-            return new \App\Tables\Admin\TahsinPeserta($periode, $unit);
-        }
+        return match ($unit) {
+            'tahsin' => new \App\Tables\Admin\TahsinPeserta($periode, $unit),
+            'rtq' => new \App\Tables\Admin\RtqPeserta($periode, $unit),
+            'tla' => new \App\Tables\Admin\TlaPeserta($periode, $unit),
+            'rq' => new  \App\Tables\Admin\RqPeserta($periode, $unit),
+            default => new \App\Tables\Admin\PesertaTahsin($periode, $unit),
+        };
     }
 
     public function index($unit, $periode)

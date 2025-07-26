@@ -13,6 +13,7 @@
                     'waktu_start' => $data_periode->waktu_start,
                     'waktu_end' => $data_periode->waktu_end,
                     'nama' => $data_periode->nama,
+                    'kategori' => $data_periode->kategori,
                 ]"
             >
                 @csrf
@@ -30,6 +31,7 @@
                         <option value="0">Tutup Pendaftaran</option>
                         <option value="1">Buka Pendaftaran</option>
                     </x-splade-select>
+                    <x-splade-select name="kategori" :label="__('Kategori')" :options="$item_kategori" option-label="nama" option-value="slug" choices required/>
                 </div>
                 <div class="flex items-center p-6">
                     <input id="konfirmasi-checkbox" type="checkbox" v-model="form.agree_with_terms" class="w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">

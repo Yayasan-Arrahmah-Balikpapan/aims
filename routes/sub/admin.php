@@ -36,9 +36,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
 
         Route::get('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'index'])->name('admin.peserta.index');
         Route::get('/peserta/create', [App\Http\Controllers\Admin\PesertaController::class, 'create'])->name('admin.peserta.create');
-        Route::get('/peserta/create-pilih', [App\Http\Controllers\Admin\PesertaController::class, 'create_pilih'])->name('admin.peserta.create.pilih');
-        Route::post('/peserta/create-pilih', [App\Http\Controllers\Admin\PesertaController::class, 'store_pilih'])->name('admin.peserta.store.pilih');
-        Route::get('/peserta/data-api', [App\Http\Controllers\Admin\PesertaController::class, 'data_api'])->name('admin.peserta.data.api');
+        Route::get('/peserta/create/pilih', [App\Http\Controllers\Admin\PesertaController::class, 'create_pilih'])->name('admin.peserta.create.pilih');
         Route::post('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'store'])->name('admin.peserta.store');
         Route::get('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'show'])->name('admin.peserta.show');
         Route::get('/peserta/{peserta}/edit', [App\Http\Controllers\Admin\PesertaController::class, 'edit'])->name('admin.peserta.edit');
@@ -63,6 +61,8 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::delete('/kehadiran/{kehadiran}', [App\Http\Controllers\Admin\KehadiranController::class, 'destroy'])->name('admin.kehadiran.destroy');
 
         Route::get('/transaksi', [App\Http\Controllers\Admin\TransaksiController::class, 'index'])->name('admin.transaksi.index');
+        Route::get('/transaksi/bukti-transfer/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'bukti_transfer'])->name('admin.transaksi.bukti-transfer');
+        Route::get('/transaksi/konfirmasi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'konfirmasi'])->name('admin.transaksi.konfirmasi');
         Route::get('/transaksi/create', [App\Http\Controllers\Admin\TransaksiController::class, 'create'])->name('admin.transaksi.create');
         Route::post('/transaksi', [App\Http\Controllers\Admin\TransaksiController::class, 'store'])->name('admin.transaksi.store');
         Route::get('/transaksi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'show'])->name('admin.transaksi.show');

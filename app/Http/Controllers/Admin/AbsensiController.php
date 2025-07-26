@@ -8,12 +8,26 @@ use Illuminate\Http\Request;
 class AbsensiController extends Controller
 {
 
-    public function index($unit, $periode)
+    public function index($unit, $periode, Request $request)
     {
-        $absensi = \App\Models\AbsensiPeserta::all();
-        $dataperiode = \App\Models\Periode::find( $periode);
+        // LOGIC DATA TABEL ABSEN, TRANSAKSI, KEHADIRAN, PEMBAYARAN SESUAI FORMAT KEUANGAN
+        $dataperiode = \App\Models\Periode::with('jadwal')->findOrFail( $periode);
+        $data_jadwal = $dataperiode->jadwal()
+                        ->when($request->has('search'), function($query) use ($request) {
+                            $query->where('nama_jadwal', 'like', '%'.$request->search.'%');
+                        })
+                        ->orderBy('nama_jadwal')
+                        ->paginate(10)
+                        ->withQueryString(); // Mempertahankan parameter URL;
+        $data_jadwal_id = $data_jadwal->pluck('id');
+        $data_absen = \App\Models\Absen::whereIn('jadwal_id', $data_jadwal_id)
+                    ->get()
+                    ->mapWithKeys(function ($item) {
+                        return [$item->jadwal_id.'-'.$item->pertemuan_ke => $item->tanggal_pertemuan];
+                    })
+                    ->toArray();
 
-        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'absensi', 'dataperiode'));
+        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'dataperiode', 'data_jadwal', 'data_absen'));
     }
 
     public function create($unit, $periode)

@@ -47,7 +47,7 @@
             @foreach ($periode as $item)
             <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
                 <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm  sm:p-6">
-                    <p class="text-xl font-semibold text-gray-900">Angkatan {{ $item->angkatan }}</p>
+                    <p class="text-xl font-semibold text-gray-900">{{ $item->nama }}</p>
                     <div class="space-y-4">
                         <div class="space-y-2">
                             <dl class="flex items-center justify-between gap-4">
@@ -67,8 +67,12 @@
                                 <dd class="text-base font-bold {{ $item->aktifkan_pendaftaran == 1 ? 'text-sky-500' : 'text-red-500' }}">{{ $item->aktifkan_pendaftaran == 1 ? 'BUKA' : 'TUTUP' }}</dd>
                             </dl>
                             <dl class="flex items-center justify-between gap-4">
+                                <dt class="text-base font-normal text-gray-500">Kategori</dt>
+                                <dd class="text-base font-medium text-gray-900 uppercase">{{ $item->kategori }}</dd>
+                            </dl>
+                            <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Peserta</dt>
-                                <dd class="text-base font-medium text-gray-900">{{ $item->peserta }}</dd>
+                                <dd class="text-base font-medium text-gray-900">{{ $item->kelas->count() }}</dd>
                             </dl>
                         </div>
                     </div>

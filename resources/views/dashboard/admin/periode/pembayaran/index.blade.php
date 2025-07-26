@@ -15,32 +15,79 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>
-            {{-- <x-splade-table :for="$jadwal">
-                <x-splade-cell actions as="$data">
-                    <div class="flex items-center gap-1">
-
-                        @if ($data->status == 'MENUNGGU KONFIRMASI')
-                            <Link href="/users/edit" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                                <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                            </Link>
-                        @endif
-                        <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
-                            <x-carbon-report class="w-5 h-5 text-sky-500"/>
-                        </Link>
-                        <Link href="{{ route('admin.jadwal.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
-                            <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
-                        </Link>
-                        <Link
-                            confirm="Konfirmasi Hapus Data"
-                            confirm-text="Apakah yakin data {{ $data->nama_jadwal }}, {{ $data->level->nama }} {{ $data->hari_belajar }} dihapus ?"
-                            confirm-button="Ya"
-                            cancel-button="Tidak"
-                            href="/users/edit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
-                            <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
-                        </Link>
-                    </div>
-                </x-splade-cell>
-            </x-splade-table> --}}
+            <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead>
+                        <tr class="border-b border-gray-200 ">
+                            <th scope="col" class="p-4 uppercase">
+                                NIS
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
+                                Peserta
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
+                                Jadwal
+                            </th>
+                            @foreach($data_biaya as $item_biaya)
+                                <th scope="col" class="py-4 px-2 uppercase">
+                                    {{ $item_biaya->nama }}
+                                </th>
+                            @endforeach
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Total
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Donasi
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Total Transfer
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data_peserta as $item)
+                            @php
+                                $total_pembayaran = 0;
+                            @endphp
+                            <tr class="text-gray-700 border-b border-gray-200 py-4">
+                                <td class="p-4 uppercase font-semibold">
+                                    {{ $item->nis_peserta }}
+                                </td>
+                                <td class="py-4 px-2 uppercase">
+                                    {{ $item->peserta->nama }}
+                                </td>
+                                <td class="py-4 px-2 uppercase">
+                                    {{ $item->jadwal->nama_jadwal ?? '' }}
+                                </td>
+                                @foreach($data_biaya as $item_biaya_)
+                                    <td class="py-4 px-2 uppercase">
+                                        @if(isset($data_pembayaran_peserta[$item->id][$item_biaya_->id]))
+                                            @php
+                                                $total_pembayaran += $data_pembayaran_peserta[$item->id][$item_biaya_->id];
+                                            @endphp
+                                            Rp. {{ number_format($data_pembayaran_peserta[$item->id][$item_biaya_->id], 0, ',', '.') }}
+                                        @else
+                                            Rp. 0
+                                        @endif
+                                    </td>
+                                @endforeach
+                                <td class="py-4 px-2 uppercase text-center">
+                                    Rp. {{ number_format($total_pembayaran, 0, ',', '.') }}
+                                </td>
+                                <td class="py-4 px-2 uppercase text-center">
+                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                </td>
+                                <td class="py-4 px-2 uppercase text-center">
+                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-2 text-xs text-gray-500">
+                {{ $data_peserta->links() }}
+            </div>
         </div>
     </div>
 </x-layouts.main>

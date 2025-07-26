@@ -179,11 +179,36 @@ class PembayaranController extends Controller
             default => new \App\Tables\Admin\TahsinPembayaranTransaksi(),
         };
     }
-    public function index($unit, $periode)
+    public function index($unit, $periode, Request $request)
     {
         $table = $this->getPembayaranRekapTable($unit);
         $dataperiode = \App\Models\Periode::find( $periode);
-        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode'));
+        $data_biaya = \App\Models\Biaya::where('periode_id', $dataperiode->id)->get();
+        $data_peserta = Kelas::where('periode_id', $periode)
+                            ->when($request->has('search'), function($q) use ($request) {
+                                $search = $request->search;
+                                $q->whereHas('peserta', function($q) use ($search) {
+                                    $q->where('nis', 'like', "%{$search}%")
+                                        ->orWhere('nama', 'like', "%{$search}%");
+                                });
+                            })
+                            ->paginate(10);
+        $data_biaya_id = $data_biaya->pluck('id');
+        $data_peserta_id = $data_peserta->pluck('id');
+        $data_pembayaran_peserta = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)
+                                ->whereHas('transaksi', function($q) {
+                                    $q->where('status', 3);
+                                })
+                                ->select('kelas_id', 'biaya_id', 'nominal')
+                                ->get()
+                                ->groupBy('kelas_id')
+                                ->map(function ($items, $kelas_id) {
+                                    return $items->mapWithKeys(function ($item) {
+                                        return [$item->biaya_id => $item->nominal];
+                                    });
+                                })
+                                ->toArray();
+        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 'data_pembayaran_peserta'));
     }
 
     public function rekap($unit, $periode)
