@@ -15,7 +15,7 @@
         </Link>
     </li>
     <li>
-        <x-link-item :href="route('penguji.peserta-baru.index', ['unit' => $unit])" :active="request()->routeIs('penguji.peserta.index', ['unit' => $unit])">
+        <x-link-item :href="route('penguji.peserta-baru.index', ['unit' => $unit])" :active="request()->routeIs('penguji.peserta-baru.index', ['unit' => $unit])">
             @svg('carbon-user-certification', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Peserta Baru</span>
         </x-link-item>

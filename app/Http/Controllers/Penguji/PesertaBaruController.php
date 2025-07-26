@@ -12,6 +12,8 @@ use App\Models\Modules\Level;
 use ProtoneMedia\Splade\Facades\Toast;
 use App\Contracts\NotificationService;
 use App\Traits\FormatPesanNotifTahsinDaftarBaruTrait;
+use App\Traits\ConvertNotifikasi;
+
 
 
 
@@ -19,6 +21,8 @@ class PesertaBaruController extends Controller
 {
     use CekUnitTrait;
     use FormatPesanNotifTahsinDaftarBaruTrait;
+    use ConvertNotifikasi;
+
     private $notifService;
 
     public function __construct(NotificationService $notifService)
@@ -28,25 +32,61 @@ class PesertaBaruController extends Controller
     public function index($unit)
     {
         $pesertas = new DataPengujiPesertaBaru($this->cekUnit($unit));
-        return view('dashboard.penguji.peserta-baru.index', compact('pesertas', 'unit'));
+
+        $data_periode = \App\Models\Periode::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->latest()
+                        ->paginate(10);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        return view('dashboard.penguji.peserta-baru.index', compact('pesertas', 'unit', 'data_periode', 'data_pengajar'));
+    }
+
+    public function data($unit, $periode) {
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        $data_peserta_baru = Kelas::where('periode_id', $periode)
+                        ->where('status_daftar', 'baru')
+                        ->latest()
+                        ->paginate(10);
+
+        return view('dashboard.penguji.peserta-baru.data', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode'));
     }
 
 
-    public function show($unit, $id)
+
+    public function show($unit, $periode, $peserta)
     {
-        $data = Kelas::find($id);
-        $datalevel = Level::where('unit_id', $this->cekUnit($unit))->get();
-        return view('dashboard.penguji.peserta-baru.show', compact('data', 'unit', 'datalevel'));
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_peserta = Kelas::find($peserta);
+        $datalevel = Level::where('unit_id', $data_periode->unit_id)->get();
+        return view('dashboard.penguji.peserta-baru.show', compact('data_peserta', 'data_periode', 'unit', 'datalevel'));
     }
 
-    public function update(Request $request, $unit, $id)
+    public function update($unit, $periode, $peserta, Request $request)
     {
-        $nilai[]['level_hasil_penguji'] = $request->status;
-        $pesertaBaru = Kelas::find($id);
-        $pesertaBaru->data_nilai = $nilai;
-        $pesertaBaru->update();
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_notifikasi = \App\Models\Notifikasi::where('unit_id', $data_periode->unit_id)
+                ->where('slug', 'mendapatkan-level')
+                ->first();
+        $peserta_baru = Kelas::findOrFail($peserta);
+        $peserta_baru->update([
+                    'data_nilai' => [
+                        'penempatan-level' => $request->level,
+                    ],
+                    'status_pendaftaran' =>  'belum pilih jadwal'
+                ]);
 
-        $this->notifService->kirimNotifWa($pesertaBaru->peserta->phone_number, $this->NotifTahsinDaftarBaruHasil($request->status, $pesertaBaru->uuid));
+        $isi_notif_wa = $this->formatWhatsappPesertaKelas($data_notifikasi->pesan_whatsapp, $peserta_baru->id);
+        $this->notifService->kirimNotifWa($peserta_baru->peserta->phone_number, $isi_notif_wa);
 
         Toast::title('Hasil Berhasil Disimpan & Notif Hasil Berhasil Dikirim ke peserta baru !');
         return redirect()->back();
