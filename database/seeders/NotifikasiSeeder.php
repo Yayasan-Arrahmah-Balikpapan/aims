@@ -36,7 +36,7 @@ Yayasan Ar Rahmah Balikpapan",
 Assalamu'alaikum,
 
 Peserta: *{Nama}*
-Anda telah mendapatkan level : *{Level}*.
+Anda telah mendapatkan level : *{Level Baru}*.
 
 Masuk ke dashboard dan lanjutan untuk pemilihan. Pilih secepatnya sebelum kuota penuh ya.
 https://arrahmahbalikpapan.or.id/akses

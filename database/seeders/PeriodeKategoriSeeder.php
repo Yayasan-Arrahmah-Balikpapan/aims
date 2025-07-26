@@ -15,5 +15,6 @@ class PeriodeKategoriSeeder extends Seeder
     {
         PeriodeKategori::create(['nama' => 'REGULER', 'slug' => 'reguler', 'keterangan' => 'reguler']);
         PeriodeKategori::create(['nama' => 'EKSKLUSIF', 'slug' => 'eksklusif', 'keterangan' => 'eksklusif']);
+        PeriodeKategori::create(['nama' => 'INTENSIF', 'slug' => 'intensif', 'keterangan' => 'intensif']);
     }
 }
