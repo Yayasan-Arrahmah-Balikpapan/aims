@@ -28,6 +28,16 @@ class Peserta extends Model
         'jenis_peserta'
     ];
 
+    protected $casts = [
+        'biodata' => 'array',
+        'data_pembayaran' => 'array',
+    ];
+
+    public function unit()
+    {
+        return $this->belongsTo(\App\Models\Modules\Unit::class);
+    }
+
     public function periode()
     {
         return $this->belongsTo(Periode::class);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 
 class Kelas extends Model
@@ -12,6 +13,7 @@ class Kelas extends Model
 
     protected $fillable = [
         'uuid',
+        'kode_unik',
         'nis_peserta',
         'peserta_id',
         'jadwal_id',
@@ -32,6 +34,7 @@ class Kelas extends Model
     protected $casts = [
         'data_pembayaran' => 'array',
         'data_absensi' => 'array',
+        'data_nilai' => 'array',
     ];
 
     public function peserta()
@@ -51,7 +54,7 @@ class Kelas extends Model
 
     public function transaksi()
     {
-        return $this->hasMany(Periode::class, 'peserta_id', 'id');
+        return $this->hasMany(Transaksi::class, 'kelas_id');
     }
 
     public function data()
@@ -89,6 +92,17 @@ class Kelas extends Model
     public function peserta_a()
     {
         return $this->belongsTo(Peserta::class, 'peserta_id');
+    }
+
+    public function scopeLevelTahsin($query, $level)
+    {
+        $data_level = Cache::get('level') ?? [];
+        if (!Cache::has('level')) {
+            $data_level = \App\Models\Modules\Level::get()->mapWithKeys(fn ($item) => [$item->id => $item->nama])->toArray();
+            Cache::put('level', $level, now()->addMonth());
+        }
+
+        return $data_level[$level];
     }
 
 }

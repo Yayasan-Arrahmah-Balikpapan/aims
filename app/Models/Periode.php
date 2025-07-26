@@ -53,4 +53,21 @@ class Periode extends Model
     {
         return $this->belongsTo(Periode::class, 'id');
     }
+
+
+    public function jadwal()
+    {
+        return $this->hasMany(Jadwal::class, 'periode_id', 'id');
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'periode_id', 'id');
+    }
+
+    public function peserta()
+    {
+        return $this->hasMany(Peserta::class, 'periode_id', 'id');
+    }
+
 }

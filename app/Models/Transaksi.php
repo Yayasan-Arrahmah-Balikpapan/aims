@@ -14,6 +14,8 @@ class Transaksi extends Model
     protected $fillable = [
         'uuid',
         'periode_id',
+        'kelas_id',
+        'kode_unik',
         'peserta_id',
         'pembayaran_id',
         'user_id',
@@ -44,6 +46,11 @@ class Transaksi extends Model
         return $this->belongsTo(Peserta::class);
     }
 
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class);
+    }
+
     public function pembayaran()
     {
         return $this->hasMany(Pembayaran::class);
@@ -52,5 +59,21 @@ class Transaksi extends Model
     public function payment_gateway()
     {
         return $this->hasOne(PaymentGateway::class, 'id', 'payment_gateway_id');
+    }
+
+
+    public function scopeStatusKeterangan($query, $status = null)
+    {
+        if($status == 1) {
+            return 'Menunggu Pembayaran';
+        } elseif ($status == 2) {
+            return 'Menunggu Konfirmasi';
+        } elseif ($status == 3) {
+            return 'Lunas';
+        } elseif ($status == 4) {
+            return 'Kadaluarsa';
+        } else {
+            return '-';
+        }
     }
 }
