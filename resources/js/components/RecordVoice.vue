@@ -19,7 +19,7 @@
                 <input type="hidden" v-model="audioData">
                 <input type="hidden" name="_token" :value="csrfToken">
                 <a href="#" @click.prevent="uploadAudio" class="border border-green-500 text-green-500 px-4 py-2 rounded-xl hover:bg-green-600 hover:text-white cursor-pointer flex justify-between">
-                    <span>Rekaman Selesai</span> <i class="fas fa-upload pt-1"></i>
+                    <span>Klik Jika Rekaman Selesai</span> <i class="fas fa-upload pt-1"></i>
                 </a>
             </form>
         </div>

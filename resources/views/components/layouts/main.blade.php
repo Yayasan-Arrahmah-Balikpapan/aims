@@ -15,4 +15,6 @@
 </div>
 @if (Request::is('dashboard/karyawan*'))
     @include('components.layouts.nav.karyawan-mobile')
+@elseif (Request::is('dashboard/pengajar*'))
+    @include('components.layouts.nav.pengajar-mobile')
 @endif
