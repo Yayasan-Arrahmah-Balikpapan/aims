@@ -40,7 +40,7 @@
                     <div class="text-end">
                         <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-neutral-200">Invoice #
                         </h2>
-                        <span class="mt-1 block text-gray-500 dark:text-neutral-500 uppercase">
+                        <span class="mt-1 block text-gray-500  uppercase">
                             {{ \Carbon\Carbon::parse($data->created_at)->format('Ymd') }}-{{ $data->id}}
                         </span>
 
@@ -59,8 +59,8 @@
                 <div class="mt-8 grid sm:grid-cols-2 gap-3">
                     <div>
                         <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Kepada:</h3>
-                        <h3 class="text-sm font-medium text-gray-800 dark:text-neutral-200 uppercase">PESERTA TAHSIN {{ $data->peserta->jenis_peserta }}</h3>
-                        <address class="mb-2 not-italic text-gray-500 dark:text-neutral-500">
+                        <h3 class="text-sm font-medium text-gray-800 dark:text-neutral-200 uppercase">PESERTA {{ $data->periode->unit->nama }}</h3>
+                        <address class="mb-2 not-italic text-gray-500 ">
                             {{ $data->peserta->nama }} <br>
                             {{ $data->peserta->phone_number }}<br>
                         </address>
@@ -73,11 +73,11 @@
                             <dl class="grid sm:grid-cols-5 gap-x-3">
                                 <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Tanggal Invoice:
                                 </dt>
-                                <dd class="col-span-2 text-gray-500 dark:text-neutral-500">{{ date('d/m/Y H:i') }}</dd>
+                                <dd class="col-span-2 text-gray-500 ">{{ date('d/m/Y H:i') }}</dd>
                             </dl>
                             <dl class="grid sm:grid-cols-5 gap-x-3">
                                 <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Status Pembayaran:</dt>
-                                <dd class="col-span-2 text-gray-500 font-semibold dark:text-neutral-500 sm:flex sm:justify-center sm:text-center">
+                                <dd class="col-span-2 text-gray-500 font-semibold  sm:flex sm:justify-center sm:text-center">
                                     @if ($data->status == 1)
                                         <span class="bg-yellow-300 text-gray-900 px-2 py-1 rounded text-sm flex">Menunggu Pembayaran</span>
                                     @elseif ($data->status == 2)
@@ -104,8 +104,8 @@
                                         <img class="w-32" src="{{ url('/') }}/assets/img/lttq/tahsin.png">
                                     </a>
                                 </div>
-                                <p class="text-center font-semibold text-lg pt-2">TAHSIN</p>
-                                <p class="text-center font-semibold text-lg pb-2">Angkatan {{ $data->periode->angkatan }}</p>
+                                <p class="text-center font-semibold text-lg pt-2 uppercase">{{ $data->periode->unit->nama }}</p>
+                                <p class="text-center font-semibold text-lg pb-2 uppercase">{{ $data->periode->nama }}</p>
                             </div>
                         </div>
                     </div>
@@ -118,27 +118,28 @@
 
                         </div>
                         <div class="mt-5">
-                            <ul class="mt-3 flex flex-col">
-                                @php
-                                    $list_pembayaran = json_decode($data->data_pembayaran, true);
-                                @endphp
-                                @foreach ($list_pembayaran['list'] as $item)
-                                        <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-neutral-700 dark:text-neutral-200">
-                                            <div class="flex items-center justify-between w-full">
-                                                <span>{{ $item['name'] }}</span>
-                                                <span>RP {{ number_format($item['nominal'], 0, ',', '.') }}</span>
-                                            </div>
-                                        </li>
-
-
+                            <ul class="mt-3 flex flex-col uppercase">
+                                @foreach ( $data_pembayaran  as $item)
+                                    <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                        <div class="flex items-center justify-between w-full">
+                                            <span>{{ $item->biaya->nama }}</span>
+                                            <span>RP {{ number_format($item->biaya->nominal, 0, ',', '.') }}</span>
+                                        </div>
+                                    </li>
                                 @endforeach
-                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-semibold border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200">
+                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
                                     <div class="flex items-center justify-between w-full">
-                                        <span>{{ $list_pembayaran['kode_unik']['name'] }}</span>
-                                        <span>Rp {{  number_format($list_pembayaran['kode_unik']['nominal'], 0, ',', '.') }}</span>
+                                        <span>Infaq</span>
+                                        <span>Rp {{  number_format($data->donasi, 0, ',', '.') }}</span>
                                     </div>
                                 </li>
-                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-lg font-semibold bg-gray-50 border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200">
+                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
+                                    <div class="flex items-center justify-between w-full">
+                                        <span>Kode Unik</span>
+                                        <span>Rp {{  number_format($data->kode_unik, 0, ',', '.') }}</span>
+                                    </div>
+                                </li>
+                                <li class="inline-flex items-center gap-x-2 py-3 px-4 text-lg font-semibold bg-gray-50 border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg">
                                     <div class="flex items-center justify-between w-full">
                                         <span>Total</span>
                                         <span>Rp {{  number_format($data->nominal_total_pembayaran, 0, ',', '.') }}</span>
@@ -148,121 +149,120 @@
                         </div>
                     </div>
                 </div>
-                <!-- End Table -->
-                <div class="flex items-center justify-center">
-                    <div class="mt-6 w-full md:w-2/5">
-                        <div class="space-y-4 ">
-                            <div class="bg-white p-2 md:p-4">
-                                <div class="space-y-2 flex items-center justify-between gap-6 md:space-y-0">
-                                    <div class="w-full min-w-0 flex-1 md:max-w-md">
-                                        <h5 class="text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
-                                            Metode Pembayaran
-                                        </h5>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
-                                                Bank BSI
-                                            </h1>
-                                            <img src="{{ url('/') }}/assets/pembayaran/bsi.png" alt="bsi" class="h-6 mr-2">
-                                        </div>
-                                        <h5 class="text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
-                                            Atas Nama
-                                        </h5>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
-                                                Yayasan Ar Rahmah
-                                            </h1>
-                                        </div>
-                                        <h5 class="text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
-                                            Nomor Rekening
-                                        </h5>
-                                        <div class="flex items-center justify-between mb-4">
-                                            <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
-                                                @php
-                                                    $rekening = '';
-                                                    if ($data->peserta->jenis_peserta == 'ikhwan') {
-                                                        $rekening = '4550000015';
-                                                    } elseif ($data->peserta->jenis_peserta == 'akhwat') {
-                                                        $rekening = '7009999705';
-                                                    }
-                                                @endphp
-                                                {{ $rekening }}
-                                            </h1>
-                                            <button id="copyButton" class="ml-2 border border-gray-200 px-2 py-1 rounded text-sm">Copy</button>
-                                            <x-splade-script>
-                                                document.addEventListener("DOMContentLoaded", function() {
-                                                    document.getElementById('copyButton').addEventListener('click', function() {
-                                                        var tempInput = document.createElement('input');
-                                                        tempInput.value = '{!! $rekening !!}';
-                                                        document.body.appendChild(tempInput);
-                                                        tempInput.select();
-                                                        document.execCommand('copy');
-                                                        document.body.removeChild(tempInput);
-                                                        alert('Nomor Virtual Akun berhasil disalin');
+                @if ($data->status == 1 || $data->status == 2)
+                    <div class="flex items-center justify-center">
+                        <div class="mt-6 w-full md:w-2/5">
+                            <div class="space-y-4 ">
+                                <div class="bg-white p-2 md:p-4">
+                                    <div class="space-y-2 flex items-center justify-between gap-6 md:space-y-0">
+                                        <div class="w-full min-w-0 flex-1 md:max-w-md">
+                                            <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                                                Metode Pembayaran
+                                            </h5>
+                                            <div class="flex items-center justify-between mb-4">
+                                                <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
+                                                    Bank BSI
+                                                </h1>
+                                                <img src="{{ url('/') }}/assets/pembayaran/bsi.png" alt="bsi" class="h-6 mr-2">
+                                            </div>
+                                            <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                                                Atas Nama
+                                            </h5>
+                                            <div class="flex items-center justify-between mb-4">
+                                                <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
+                                                    Yayasan Ar Rahmah
+                                                </h1>
+                                            </div>
+                                            <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                                                Nomor Rekening
+                                            </h5>
+                                            <div class="flex items-center justify-between mb-4">
+                                                <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
+                                                    @php
+                                                        $rekening = '';
+                                                        if ($data->peserta->jenis_peserta == 'ikhwan') {
+                                                            $rekening = '4550000015';
+                                                        } elseif ($data->peserta->jenis_peserta == 'akhwat') {
+                                                            $rekening = '7009999705';
+                                                        }
+                                                    @endphp
+                                                    {{ $rekening }}
+                                                </h1>
+                                                <button id="copyButton" class="ml-2 border border-gray-200 px-2 py-1 rounded text-sm">Copy</button>
+                                                <x-splade-script>
+                                                    document.addEventListener("DOMContentLoaded", function() {
+                                                        document.getElementById('copyButton').addEventListener('click', function() {
+                                                            var tempInput = document.createElement('input');
+                                                            tempInput.value = '{!! $rekening !!}';
+                                                            document.body.appendChild(tempInput);
+                                                            tempInput.select();
+                                                            document.execCommand('copy');
+                                                            document.body.removeChild(tempInput);
+                                                            alert('Nomor Virtual Akun berhasil disalin');
+                                                        });
                                                     });
-                                                });
-                                            </x-splade-script>
-                                        </div>
-                                        <h5 class="text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">
-                                            Total Pembayaran
-                                        </h5>
-                                        <div class="flex items-center justify-between">
-                                            <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
-                                                Rp {{  number_format($data->nominal_total_pembayaran, 0, ',', '.') }}
-                                            </h1>
-                                            <button id="copyButtonTotal" class="ml-2 border border-gray-200 px-2 py-1 rounded text-sm">Copy</button>
-                                            <x-splade-script>
-                                                document.addEventListener("DOMContentLoaded", function() {
-                                                    document.getElementById('copyButtonTotal').addEventListener('click', function() {
-                                                        var tempInput = document.createElement('input');
-                                                        tempInput.value = '{!! $data->nominal_total_pembayaran !!}';
-                                                        document.body.appendChild(tempInput);
-                                                        tempInput.select();
-                                                        document.execCommand('copy');
-                                                        document.body.removeChild(tempInput);
-                                                        alert('Total Nominal berhasil disalin');
+                                                </x-splade-script>
+                                            </div>
+                                            <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                                                Total Pembayaran
+                                            </h5>
+                                            <div class="flex items-center justify-between">
+                                                <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
+                                                    Rp {{  number_format($data->nominal_total_pembayaran, 0, ',', '.') }}
+                                                </h1>
+                                                <button id="copyButtonTotal" class="ml-2 border border-gray-200 px-2 py-1 rounded text-sm">Copy</button>
+                                                <x-splade-script>
+                                                    document.addEventListener("DOMContentLoaded", function() {
+                                                        document.getElementById('copyButtonTotal').addEventListener('click', function() {
+                                                            var tempInput = document.createElement('input');
+                                                            tempInput.value = '{!! $data->nominal_total_pembayaran !!}';
+                                                            document.body.appendChild(tempInput);
+                                                            tempInput.select();
+                                                            document.execCommand('copy');
+                                                            document.body.removeChild(tempInput);
+                                                            alert('Total Nominal berhasil disalin');
+                                                        });
                                                     });
-                                                });
-                                            </x-splade-script>
+                                                </x-splade-script>
+                                            </div>
+                                            <div class="text-gray-700 text-xs p-2">*Wajib mencantumkan kode unik diakhir nominal</div>
                                         </div>
-                                        <div class="text-gray-700 text-xs p-2">*Wajib mencantumkan kode unik diakhir nominal</div>
                                     </div>
                                 </div>
                             </div>
+                            @if ($data->status == 1)
+                                <x-splade-form action="{{ route('website.lttq.invoice.store', ['uuid' => $uuid]) }}"
+                                        confirm-text="Apakah file bukti transfer sudah benar ?"
+                                        confirm="Konfirmasi"
+                                        confirm-button="Benar"
+                                        cancel-button="Belum"
+                                        method="POST">
+                                        @csrf
+                                    <div class="my-4">
+                                        <span class="block mb-1 text-gray-700 font-sans"> Upload Bukti Transfer<span aria-hidden="true" class="text-red-600" title="This field is required">*</span></span>
+                                        <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload>
+                                    </div>
+                                    <div class="flex items-center justify-center">
+                                        <button type="submit" class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </button>
+                                    </div>
+                                </x-splade-form>
+                            @elseif ($data->status == 2)
+                                <div class="text-center">
+                                    <p>
+                                        Terima kasih telah mendaftar.
+                                    </p>
+                                    <p>
+                                        Mohon tunggu konfirmasi pembayaran dari kami.
+                                    </p>
+                                    <p>
+                                        Syukron. Jazakumullah Khoiran.
+                                    </p>
+                                </div>
+                            @endif
                         </div>
-                        @if ($data->status == 1)
-                            <x-splade-form action="{{ route('website.lttq.invoice.store', ['uuid' => $uuid]) }}"
-                                    confirm-text="Apakah file bukti transfer sudah benar ?"
-                                    confirm="Konfirmasi"
-                                    confirm-button="Benar"
-                                    cancel-button="Belum"
-                                    method="POST">
-                                    @csrf
-                                <div class="my-4">
-                                    <span class="block mb-1 text-gray-700 font-sans"> Upload Bukti Transfer<span aria-hidden="true" class="text-red-600" title="This field is required">*</span></span>
-                                    <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload>
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <button type="submit" class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </button>
-                                </div>
-                            </x-splade-form>
-                        @elseif ($data->status == 2)
-                            <div class="text-center">
-                                <p>
-                                    Terima kasih telah mendaftar.
-                                </p>
-                                <p>
-                                    Mohon tunggu konfirmasi pembayaran dari kami.
-                                </p>
-                                <p>
-                                    Syukron. Jazakumullah Khoiran.
-                                </p>
-                            </div>
-                        @endif
                     </div>
-                </div>
+                @endif
             </div>
-            <!-- End Card -->
-
         </div>
     </div>
     <!-- End Invoice -->
