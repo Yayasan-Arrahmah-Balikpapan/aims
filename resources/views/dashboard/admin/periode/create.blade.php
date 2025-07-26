@@ -14,9 +14,9 @@
 
             <x-forms.body >
                 {{-- <x-forms.label>Nama  <x-forms.asterisk /> </x-forms.label> --}}
-                <x-splade-input name="nama" :label="__('Nama Periode')" required min="3" oninvalid="this.setCustomValidity('Harus Diisi, Minimal 3 Huruf')"/>
-                <x-splade-input name="tahun_ajaran" :label="__('Tahun Ajaran')" required min="3" oninvalid="this.setCustomValidity('Harus Diisi, Minimal 3 Huruf')"/>
-                <x-splade-input type="number" name="angkatan" :label="__('Angkatan')" required min="3" oninvalid="this.setCustomValidity('Harus Diisi, Minimal 3 Huruf')"/>
+                <x-splade-input name="nama" :label="__('Nama Periode')" required/>
+                <x-splade-input name="tahun_ajaran" :label="__('Tahun Ajaran')" required/>
+                <x-splade-input type="number" name="angkatan" :label="__('Angkatan')" required/>
                 <x-splade-input name="waktu_start" :label="__('Waktu Mulai')" date />
                 <x-splade-input name="waktu_end" :label="__('Waktu Berakhir')" date />
                 <x-splade-select name="aktifkan_pendaftaran" :label="__('Status Pendaftaran')" choices>
