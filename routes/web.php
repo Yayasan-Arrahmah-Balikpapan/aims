@@ -6,9 +6,10 @@ use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Domain\Website\Controllers\WebController;
 
-Route::get('/rekam', function (){
-    return view('rekam');
+    Route::get('/media-list', [\App\Http\Controllers\Api\MediaController::class, 'list']);
 
+Route::get('/sandbox', function (){
+    return view('sandbox');
 });
 
 Route::get('/veb', function (){
