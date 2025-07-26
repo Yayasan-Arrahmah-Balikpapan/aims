@@ -115,10 +115,27 @@ class PesertaController extends Controller
                 'tanggal_lahir'   => $request->input('tahun') . '-' . $request->input('bulan') . '-' . $request->input('tanggal'),
             ]);
 
+            $hitung_data_peserta = \App\Models\Kelas::where('periode_id', $periode->id)
+                                                ->where('status_daftar', 'baru')
+                                                ->count();
+            $nomor               = $hitung_data_peserta + 1;
+            $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
+            $kode_periode        = str_pad($periode->angkatan, 4, '0', STR_PAD_LEFT);
+            $kode_unit           = $request->input('jenis_peserta') == 'ikhwan' ? 'TI' : 'TA';
+            $nis_peserta         = $kode_unit.$kode_periode.$kode_peserta;
+
+            while(\App\Models\Kelas::where('nis_peserta', $nis_peserta)->where('periode_id', $periode->id)->exists()) {
+                $hitung_data_peserta++;
+                $nomor               = $hitung_data_peserta + 1;
+                $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
+                $nis_peserta         = $kode_unit.$kode_periode.$kode_peserta;
+            }
+
             $peserta_kelas = \App\Models\Kelas::create([
                 'periode_id'          => $periode->id,
                 'peserta_id'          => $peserta->id,
                 'jadwal_id'           => $request->jadwal,
+                'nis_peserta'         => $nis_peserta,
                 'uuid'                => $uuid,
                 'data_pembayaran'     => json_encode($data_format),
                 'data_absensi'        => $periode->format_absensi,
