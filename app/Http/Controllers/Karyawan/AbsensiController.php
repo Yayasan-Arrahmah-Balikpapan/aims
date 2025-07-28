@@ -66,7 +66,7 @@ class AbsensiController extends Controller
     }
     public function datang_store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
 
         $request->validate([
             'latitude' => 'required',
@@ -76,6 +76,18 @@ class AbsensiController extends Controller
             'photo' => 'nullable|image'
         ]);
 
+        // Cek apakah sudah ada absensi datang hari ini
+        $today = Carbon::now('Asia/Makassar')->startOfDay();
+        $existingAbsensi = \App\Models\KaryawanAbsensi::where('user_id', $request->user_id)
+                            ->whereDate('created_at', $today)
+                            ->first();
+
+        if ($existingAbsensi) {
+            return redirect()->back()
+                ->with('error', 'Anda sudah melakukan absensi datang hari ini')
+                ->withInput();
+        }
+
         $photoPath = null;
 
         if ($request->hasFile('photo')) {
@@ -84,14 +96,21 @@ class AbsensiController extends Controller
 
             // Ambil tanggal sekarang dan formatnya
             $now = Carbon::now('Asia/Makassar');
-            $tanggalFormatFolder = $now->format('d-m-Y');
             $tanggalFormatNama = $now->format('Ymd');
 
             // Nama file: userID-tanggal-datang.jpg
             $filename = "{$userId}-{$tanggalFormatNama}-datang.jpg";
 
-            // Folder tujuan
-            $folder = "absensi_photos/{$tanggalFormatFolder}";
+            // Folder tujuan: absensi_photos/tahun/bulan/tanggal
+            $yearFolder = $now->format('Y');
+            $monthFolder = $now->format('m');
+            $dayFolder = $now->format('d');
+            $folder = "absensi_photos/{$yearFolder}/{$monthFolder}/{$dayFolder}";
+
+            // Buat folder jika belum ada
+            if (!Storage::exists("public/{$folder}")) {
+                Storage::makeDirectory("public/{$folder}");
+            }
 
             // Buat gambar dengan kompresi
             $image = $manager->read($request->file('photo'))
@@ -160,14 +179,16 @@ class AbsensiController extends Controller
 
             // Ambil tanggal sekarang dan formatnya
             $now = Carbon::now('Asia/Makassar');
-            $tanggalFormatFolder = $now->format('d-m-Y');
             $tanggalFormatNama = $now->format('Ymd');
 
             // Nama file: userID-tanggal-datang.jpg
             $filename = "{$userId}-{$tanggalFormatNama}-pulang.jpg";
 
-            // Folder tujuan
-            $folder = "absensi_photos/{$tanggalFormatFolder}";
+            // Folder tujuan: absensi_photos/tahun/bulan/tanggal
+            $yearFolder = $now->format('Y');
+            $monthFolder = $now->format('m');
+            $dayFolder = $now->format('d');
+            $folder = "absensi_photos/{$yearFolder}/{$monthFolder}/{$dayFolder}";
 
             // Buat gambar dengan kompresi
             $image = $manager->read($request->file('photo'))
@@ -238,14 +259,16 @@ class AbsensiController extends Controller
 
             // Ambil tanggal sekarang dan formatnya
             $now = Carbon::now('Asia/Makassar');
-            $tanggalFormatFolder = $now->format('d-m-Y');
             $tanggalFormatNama = $now->format('Ymd');
 
             // Nama file: userID-tanggal-datang.jpg
             $filename = "{$userId}-{$tanggalFormatNama}-istirahat-mulai.jpg";
 
-            // Folder tujuan
-            $folder = "absensi_photos/{$tanggalFormatFolder}";
+            // Folder tujuan: absensi_photos/tahun/bulan/tanggal
+            $yearFolder = $now->format('Y');
+            $monthFolder = $now->format('m');
+            $dayFolder = $now->format('d');
+            $folder = "absensi_photos/{$yearFolder}/{$monthFolder}/{$dayFolder}";
 
             // Buat gambar dengan kompresi
             $image = $manager->read($request->file('photo'))
@@ -322,8 +345,11 @@ class AbsensiController extends Controller
             // Nama file: userID-tanggal-datang.jpg
             $filename = "{$userId}-{$tanggalFormatNama}-istirahat-selesai.jpg";
 
-            // Folder tujuan
-            $folder = "absensi_photos/{$tanggalFormatFolder}";
+            // Folder tujuan: absensi_photos/tahun/bulan/tanggal
+            $yearFolder = $now->format('Y');
+            $monthFolder = $now->format('m');
+            $dayFolder = $now->format('d');
+            $folder = "absensi_photos/{$yearFolder}/{$monthFolder}/{$dayFolder}";
 
             // Buat gambar dengan kompresi
             $image = $manager->read($request->file('photo'))
