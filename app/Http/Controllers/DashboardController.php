@@ -36,9 +36,19 @@ class DashboardController extends Controller
 
         $api_token = $user->createToken('api-token')->plainTextToken;
 
+        $data_peserta_id = $data_peserta->pluck('id');
+
+        $data_transaksi = Transaksi::whereIn('kelas_id', $data_peserta_id)
+                        ->get()
+                        ->where('status', '1')
+                        ->mapWithKeys(function($item) {
+                            return ['transaksi'.$item->kelas_id => $item->uuid];
+                        })
+                        ->toArray();
+
         // dd($api_token);
 
-        return view('dashboard', compact('user', 'data_peserta', 'api_token'));
+        return view('dashboard', compact('user', 'data_peserta', 'api_token', 'data_transaksi'));
     }
 
     public function peserta($uuid) {
