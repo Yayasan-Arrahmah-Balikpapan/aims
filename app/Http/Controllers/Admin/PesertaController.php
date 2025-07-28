@@ -146,6 +146,8 @@ class PesertaController extends Controller
                 'status_ujian'        => 'belum ujian',
                 'status_daftar_ulang' => 'belum daftar ulang',
                 'status_domisili'     => $request->domisili,
+                'kode_unik'                => $nomor,
+                // 'kode_unik'                => (int)($request->input('bulan').$request->input('tanggal')), // BBTT
             ]);
 
             DB::commit();
