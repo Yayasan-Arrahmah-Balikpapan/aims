@@ -66,7 +66,7 @@ class AbsensiController extends Controller
     }
     public function datang_store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $request->validate([
             'latitude' => 'required',

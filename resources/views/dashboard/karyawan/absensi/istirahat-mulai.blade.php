@@ -9,16 +9,18 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         #map {
             height: 330px;
             border-radius: 0.5rem;
-        },
+        }
         .leaflet-control-fullscreen-button {
             background-color: white;
-            }
-            .loading-overlay {
+        }
+        .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -45,9 +47,11 @@
     </style>
 </head>
 <body class="bg-gray-100">
+    <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="spinner"></div>
     </div>
+
     <div class="flex justify-center m-6">
         <a href="{{ route('karyawan.absensi.index') }}" class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -62,11 +66,18 @@
             <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Istirahat Mulai</h2>
             <div class="grid grid-cols-2 gap-1">
                 <div>
-                    <div class="flex justify-center">
-                        <video id="video" autoplay class="w-full"></video>
+                    <div class="flex justify-center relative">
+                        <video id="video" autoplay class="w-full" style="display: none;"></video>
+                        <div id="cameraPlaceholder" class="w-full bg-gray-200 flex flex-col items-center justify-center" style="height: 330px;">
+                            <i class="fas fa-camera text-4xl text-gray-500 mb-4"></i>
+                            <p class="text-gray-600 mb-4">Memeriksa izin kamera...</p>
+                            <button type="button" onclick="enableCamera()" id="enableCameraBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center hidden">
+                                <i class="fas fa-camera mr-2"></i> Izinkan Kamera
+                            </button>
+                        </div>
                     </div>
                     <div class="flex justify-center mt-4 text-sm">
-                        <button type="button" onclick="capturePhoto()" class="bg-sky-600 text-white px-4 py-1 rounded-2xl hover:bg-sky-700 flex items-center">
+                        <button type="button" onclick="capturePhoto()" id="captureBtn" class="bg-sky-600 text-white px-4 py-1 rounded-2xl hover:bg-sky-700 flex items-center" disabled>
                             Ambil Foto
                         </button>
                     </div>
@@ -75,7 +86,15 @@
                     </div>
                 </div>
                 <div class="">
-                    <div id="map"></div>
+                    <div id="map" class="flex items-center justify-center bg-gray-200">
+                        <div id="locationPlaceholder" class="text-center p-4">
+                            <i class="fas fa-map-marker-alt text-4xl text-gray-500 mb-4"></i>
+                            <p class="text-gray-600 mb-4">Memeriksa izin lokasi...</p>
+                            <button type="button" onclick="enableLocation()" id="enableLocationBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 flex items-center mx-auto hidden">
+                                <i class="fas fa-map-marker-alt mr-2"></i> Izinkan Lokasi
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -91,18 +110,21 @@
             <input type="file" name="photo" id="photoInput" class="hidden" accept="image/jpeg">
 
             <div class="flex justify-center mt-4">
-                <button type="submit" class="bg-green-600 text-white px-6 py-2 font-bold  rounded hover:bg-green-700">SUBMIT</button>
+                <button type="submit" id="submitBtn" class="bg-green-600 text-white px-6 py-2 font-bold rounded hover:bg-green-700 flex items-center">
+                    <span id="submitText">SUBMIT</span>
+                    <div id="submitSpinner" class="hidden ml-2">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </div>
+                </button>
             </div>
 
             <p class="text-center mt-4 text-red-500 text-sm" id="message"></p>
         </div>
     </form>
 
-
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
-
 
     <script>
         const video = document.getElementById('video');
@@ -113,16 +135,97 @@
         const inputLng = document.getElementById('inputLongitude');
         const inputTime = document.getElementById('inputTime');
         const photoInput = document.getElementById('photoInput');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const locationPlaceholder = document.getElementById('locationPlaceholder');
+        const captureBtn = document.getElementById('captureBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitSpinner = document.getElementById('submitSpinner');
+        const enableCameraBtn = document.getElementById('enableCameraBtn');
+        const enableLocationBtn = document.getElementById('enableLocationBtn');
 
         let photoBlob = null;
         let latitude = '';
         let longitude = '';
+        let mapInitialized = false;
 
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => { video.srcObject = stream; })
-            .catch(() => { message.textContent = 'Tidak dapat mengakses kamera'; });
+        // Check camera permission on page load
+        async function checkCameraPermission() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                // Permission already granted
+                video.srcObject = stream;
+                video.style.display = 'block';
+                cameraPlaceholder.style.display = 'none';
+                captureBtn.disabled = false;
+            } catch (err) {
+                // Permission not granted or error
+                console.log('Camera permission not granted:', err);
+                cameraPlaceholder.querySelector('p').textContent = 'Kamera belum diizinkan';
+                enableCameraBtn.classList.remove('hidden');
+            }
+        }
+
+        // Check geolocation permission on page load
+        function checkLocationPermission() {
+            if (!navigator.permissions) {
+                // Browser doesn't support Permission API, fallback to regular geolocation
+                getLocation();
+                return;
+            }
+
+            navigator.permissions.query({ name: 'geolocation' })
+                .then(permissionStatus => {
+                    if (permissionStatus.state === 'granted') {
+                        // Permission already granted
+                        getLocation();
+                    } else if (permissionStatus.state === 'prompt') {
+                        // Permission not decided yet
+                        locationPlaceholder.querySelector('p').textContent = 'Silakan izinkan akses lokasi';
+                        enableLocationBtn.classList.remove('hidden');
+                    } else {
+                        // Permission denied
+                        locationPlaceholder.querySelector('p').textContent = 'Akses lokasi ditolak';
+                        enableLocationBtn.classList.remove('hidden');
+                    }
+
+                    // Listen for permission changes
+                    permissionStatus.onchange = function() {
+                        if (this.state === 'granted') {
+                            getLocation();
+                        }
+                    };
+                })
+                .catch(err => {
+                    console.log('Error checking location permission:', err);
+                    // Fallback to regular geolocation
+                    getLocation();
+                });
+        }
+
+        function enableCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.style.display = 'block';
+                    cameraPlaceholder.style.display = 'none';
+                    captureBtn.disabled = false;
+                })
+                .catch(err => {
+                    console.error(err);
+                    message.textContent = 'Tidak dapat mengakses kamera: ' + err.message;
+                    cameraPlaceholder.querySelector('p').textContent = 'Gagal mengakses kamera';
+                });
+        }
+
+        function enableLocation() {
+            getLocation();
+        }
 
         function capturePhoto() {
+            if (!video.srcObject) return;
+
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -142,28 +245,51 @@
 
         function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    latitude = pos.coords.latitude;
-                    longitude = pos.coords.longitude;
-                    inputLat.value = latitude;
-                    inputLng.value = longitude;
-                    initMap(latitude, longitude);
-                }, () => {
-                    message.textContent = 'Tidak dapat mengambil lokasi';
-                });
+                locationPlaceholder.querySelector('p').textContent = 'Mengambil lokasi...';
+
+                navigator.geolocation.getCurrentPosition(
+                    pos => {
+                        latitude = pos.coords.latitude;
+                        longitude = pos.coords.longitude;
+                        inputLat.value = latitude;
+                        inputLng.value = longitude;
+
+                        // Hide location placeholder and show map
+                        locationPlaceholder.style.display = 'none';
+                        document.getElementById('map').innerHTML = ''; // Clear placeholder
+                        initMap(latitude, longitude);
+                    },
+                    err => {
+                        console.error(err);
+                        message.textContent = 'Tidak dapat mengambil lokasi: ' + err.message;
+                        locationPlaceholder.querySelector('p').textContent = 'Gagal mengambil lokasi';
+                        enableLocationBtn.classList.remove('hidden');
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
             } else {
                 message.textContent = 'Browser tidak mendukung Geolocation';
+                locationPlaceholder.querySelector('p').textContent = 'Browser tidak mendukung Geolocation';
             }
         }
 
         function initMap(lat, lng) {
+            if (mapInitialized) return;
+
             const map = L.map('map', {
                 fullscreenControl: true
             }).setView([lat, lng], 16);
+
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
+
             L.marker([lat, lng]).addTo(map).bindPopup('Lokasi Anda').openPopup();
+            mapInitialized = true;
 
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
@@ -175,23 +301,45 @@
                 day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
             });
             currentTimeEl.textContent = timeStr;
-            inputTime.value = timeStr;
+            inputTime.value = now.toISOString(); // Store in ISO format for backend
         }
 
-         // Hide loading overlay when page is fully loaded
+        // Form submission handler
+        document.getElementById('absensiForm').addEventListener('submit', function(e) {
+            // Validate required fields
+            // if (!photoInput.files.length) {
+            //     e.preventDefault();
+            //     message.textContent = 'Harap ambil foto terlebih dahulu';
+            //     return;
+            // }
+
+            if (!inputLat.value || !inputLng.value) {
+                e.preventDefault();
+                message.textContent = 'Harap izinkan lokasi terlebih dahulu';
+                return;
+            }
+
+            // Show loading state
+            submitText.textContent = 'Mengirim...';
+            submitSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+        });
+
+        // Initial setup when page loads
         window.addEventListener('load', function() {
+            // Check permissions
+            checkCameraPermission();
+            checkLocationPermission();
+
+            // Update time
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // Hide loading overlay
             setTimeout(() => {
                 loadingOverlay.style.display = 'none';
             }, 500);
         });
-
-
-        getLocation();
-        updateTime();
-        setInterval(updateTime, 1000);
     </script>
-
-
 </body>
 </html>
-
