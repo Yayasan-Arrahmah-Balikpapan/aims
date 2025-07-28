@@ -282,18 +282,27 @@
                                     </Link>
                                 </div>
                             </div>
-                            @if ($item->status_pendaftaran == 'belum pilih jadwal')
+
+
                                 <hr class="my-2" />
                                 <div class="flex items-center justify-center text-center ">
                                     <div class="inline-flex items-center justify-center text-center text-base font-semibold text-gray-900">
-                                        <Link href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
-                                            class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 bg-primary-700 text-white">
-                                            Pilih Jadwal Sekarang
-                                            <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
-                                        </Link>
+                                        @if(isset($data_transaksi['transaksi'.$item->id]))
+                                            <Link href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi['transaksi'.$item->id] ]) }}"
+                                                class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 bg-yellow-400 ">
+                                                Konfirmasi Pembayaran
+                                                <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                            </Link>
+                                        @endif
+                                        @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                            <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
+                                                class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 bg-primary-700 text-white">
+                                                Pilih Jadwal Sekarang
+                                                <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                            </Link>
+                                        @endif
                                     </div>
                                 </div>
-                            @endif
                         </li>
                     @endforeach
                 </ul>
