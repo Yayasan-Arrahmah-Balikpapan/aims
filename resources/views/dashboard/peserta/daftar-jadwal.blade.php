@@ -1,4 +1,20 @@
 <x-app-layout>
+    <x-splade-script>
+        var start = new Date().getTime();
+        document.addEventListener("DOMContentLoaded", function() {
+            setInterval(function() {
+                var now = new Date().getTime();
+                var timeleft = 180000 - (now - start);
+                var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+                document.getElementById('timer').innerText = minutes + "m " + seconds + "s";
+                if (timeleft <= 0) {
+                    location.reload();
+                }
+            }, 1000);
+        });
+    </x-splade-script>
+
     <div class="pt-10 px-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
             <div class="bg-white rounded-lg p-4">
@@ -11,6 +27,7 @@
                 {{-- <input type="text" placeholder="Cari Peserta..."
                     class="w-full max-w-xs border border-gray-300 rounded-lg py-2 px-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     oninput="filterList(this.value)"> --}}
+                <p class="text-sm text-gray-700">Data akan otomatis di perbaruhi pada : <span id="timer"></span></p>
             </div>
             <div class="flow-root">
                 <ul role="list" class="space-y-2">
@@ -33,7 +50,12 @@
                                 </div>
                                 <div class="inline-flex items-center text-base font-semibold text-gray-900">
                                     @if ($data_jumlah_jadwal[$item->id] < $item->batasan_peserta)
-                                        <Link href="{{ route('dashboard.peserta.daftar-jadwal.update', ['peserta' => $peserta->uuid, 'jadwal' => $item->id]) }}"
+                                        <Link
+                                            confirm="Konfirmasi Pilihan Jadwal"
+                                            confirm-text="{{ $item->nama_jadwal }}"
+                                            confirm-button="Ya"
+                                            cancel-button="Batalkan"
+                                            href="{{ route('dashboard.peserta.daftar-jadwal.update', ['peserta' => $peserta->uuid, 'jadwal' => $item->id]) }}"
                                             class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 border-primary-700 bg-primary-700 text-white">
                                             Pilih Jadwal Ini
                                         </Link>
