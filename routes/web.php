@@ -16,6 +16,16 @@ Route::get('/veb', function (){
     return view('veb');
 });
 
+Route::get('/offline', function (){
+    return view('offline');
+});
+
+Route::get('/serviceworker.js', function () {
+    return response()
+        ->view('sw')
+        ->header('Content-Type', 'application/javascript');
+});
+
 Route::get("/lttq/tahsin/pendaftaran/rekaman", [WebController::class, "lttq_tahsin_pendaftaran_rekaman"])->name("website.lttq.tahsin.pendaftaran.rekaman");
 
 Route::prefix('/dashboard/karyawan')->middleware('role:karyawan')->group(function () {
