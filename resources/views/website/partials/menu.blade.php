@@ -46,9 +46,9 @@
                 Informasi
             </x-website.nav>
         </li>
-            <x-website.nav :href="route('website.kontak')" :active="request()->routeIs('website.kontak')">
+            {{-- <x-website.nav :href="route('website.kontak')" :active="request()->routeIs('website.kontak')">
                 Kontak
-            </x-website.nav>
+            </x-website.nav> --}}
         {{-- <li>
             <x-website.nav :href="route('website.quranic-camp')" :active="request()->routeIs('website.quranic-camp')">
                 Quranic Camp 🏕️

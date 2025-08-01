@@ -47,7 +47,7 @@
                     <div class="bg-no-repeat bg-center bg-cover h-full " style="background-image: url({{ url('/') }}/assets/img/masjid.png)">
                     </div>
                 </div>
-                <div class="flow-root m-4 w-full text-sm bg-white rounded-xl border border-gray-300 ">
+                {{-- <div class="flow-root m-4 w-full text-sm bg-white rounded-xl border border-gray-300 ">
                     <div class="divide-y divide-gray-300 relative pl-3 m-4">
                         @php
                         $events = [
@@ -70,7 +70,7 @@
                         @endforeach
                         <div class="absolute top-0 left-0 h-full w-1 bg-gray-300 "></div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -283,26 +283,27 @@
                                 </div>
                             </div>
 
-
+                            @if(isset($data_transaksi['transaksi'.$item->id]) || $item->status_pendaftaran == 'belum pilih jadwal')
                                 <hr class="my-2" />
                                 <div class="flex items-center justify-center text-center ">
                                     <div class="inline-flex items-center justify-center text-center text-base font-semibold text-gray-900">
                                         @if(isset($data_transaksi['transaksi'.$item->id]))
                                             <Link href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi['transaksi'.$item->id] ]) }}"
-                                                class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 bg-yellow-400 ">
+                                                class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-yellow-400 ">
                                                 Konfirmasi Pembayaran
                                                 <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                             </Link>
                                         @endif
                                         @if ($item->status_pendaftaran == 'belum pilih jadwal')
                                             <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
-                                                class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 bg-primary-700 text-white">
+                                                class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
                                                 Pilih Jadwal Sekarang
                                                 <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                             </Link>
                                         @endif
                                     </div>
                                 </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
@@ -314,7 +315,7 @@
 <div class="pt-4">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center justify-center">
-            <img src="https://cdn.discordapp.com/attachments/867731696706387978/1330038315239604288/banner.png?ex=678c8635&is=678b34b5&hm=996e45a700ec7b336c0f0f203566bc765753ef2aa4205fb102bb62198a36e136&" class="w-auto border border-gray-300" alt="Logo">
+            {{-- <img src="https://cdn.discordapp.com/attachments/867731696706387978/1330038315239604288/banner.png?ex=678c8635&is=678b34b5&hm=996e45a700ec7b336c0f0f203566bc765753ef2aa4205fb102bb62198a36e136&" class="w-auto border border-gray-300" alt="Logo"> --}}
         </div>
     </div>
 </div>
@@ -336,7 +337,7 @@
 </div> --}}
 
 
-
+@if ($user->getRoleNames()->isNotEmpty())
 <div class="pt-10 pb-10 px-4">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <h1 class="text-2xl font-bold mb-4">Akses</h1>
@@ -351,6 +352,7 @@
         </div>
     </div>
 </div>
+@endif
 
 {{-- <div class="pt-10 pb-10">
     <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
