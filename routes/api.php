@@ -21,10 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/uploads', [FileUploadController::class, 'index']);
-    Route::post('/uploads', [FileUploadController::class, 'store']);
-    Route::put('/uploads/{fileUpload}', [FileUploadController::class, 'update']);
-    Route::delete('/uploads/{fileUpload}', [FileUploadController::class, 'destroy']);
+    // Route::get('/uploads', [FileUploadController::class, 'index']);
+    // Route::post('/uploads', [FileUploadController::class, 'store']);
+    // Route::put('/uploads/{fileUpload}', [FileUploadController::class, 'update']);
+    // Route::delete('/uploads/{fileUpload}', [FileUploadController::class, 'destroy']);
 
     Route::post('/media-upload', [MediaController::class, 'upload']);
     Route::get('/media-list', [MediaController::class, 'list']);
