@@ -8,8 +8,8 @@
     <link rel="icon" href="{{ asset('favicon.png') }}">
 
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#0d6efd">
-    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="apple-touch-icon" href="{{ asset('logo-yayasan.jpg') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
