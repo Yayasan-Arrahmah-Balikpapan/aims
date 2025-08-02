@@ -61,10 +61,7 @@
                     <x-carbon-chevron-left class="w-4 h-4 ml-2" />
                     Kembali
                 </a>
-                <button type="submit" class="flex justify-between items-center px-3 py-1.5 font-medium rounded-md text-white bg-primary-600">
-                    Simpan
-                    <x-carbon-save class="w-4 h-4 ml-2" />
-                </button>
+                <x-splade-submit label="Simpan" class="px-4 py-2 bg-primary-600 text-white" />
             </div>
         </x-splade-form>
     @endif
