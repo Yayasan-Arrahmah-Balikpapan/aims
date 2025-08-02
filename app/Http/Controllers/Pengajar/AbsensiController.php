@@ -19,12 +19,12 @@ class AbsensiController extends Controller
                         })
                         ->latest()
                         ->paginate(10);
-        // $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
-        //                     $query->where('slug', $unit);
-        //                 })
-        //                 ->where('user_id', auth()->user()->id)
-        //                 ->first();
-        $data_pengajar = \App\Models\Jadwal::where('periode_id', $periode)->paginate(10);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->where('user_id', auth()->user()->id)
+                        ->first();
+        // $data_pengajar = \App\Models\Jadwal::where('periode_id', $periode)->paginate(10);
 
 
         return view('dashboard.pengajar.absensi.index', compact('unit', 'data_periode', 'data_pengajar'));
