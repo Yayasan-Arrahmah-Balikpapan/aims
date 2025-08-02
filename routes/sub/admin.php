@@ -94,6 +94,8 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
     Route::get('/pengajar', [App\Http\Controllers\Admin\PengajarController::class, 'index'])->name('admin.pengajar.index');
     Route::get('/pengajar/create', [App\Http\Controllers\Admin\PengajarController::class, 'create'])->name('admin.pengajar.create');
     Route::post('/pengajar', [App\Http\Controllers\Admin\PengajarController::class, 'store'])->name('admin.pengajar.store');
+    Route::get('/pengajar/import', [App\Http\Controllers\Admin\PengajarController::class, 'import'])->name('admin.pengajar.import');
+    Route::post('/pengajar/import', [App\Http\Controllers\Admin\PengajarController::class, 'import_store'])->name('admin.pengajar.import.store');
     Route::get('/pengajar/{pengajar}', [App\Http\Controllers\Admin\PengajarController::class, 'show'])->name('admin.pengajar.show');
     Route::get('/pengajar/{pengajar}/edit', [App\Http\Controllers\Admin\PengajarController::class, 'edit'])->name('admin.pengajar.edit');
     Route::put('/pengajar/{pengajar}', [App\Http\Controllers\Admin\PengajarController::class, 'update'])->name('admin.pengajar.update');

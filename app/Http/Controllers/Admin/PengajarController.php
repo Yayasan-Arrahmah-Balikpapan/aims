@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use ProtoneMedia\Splade\Facades\Toast;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PengajarController extends Controller
 {
@@ -135,5 +136,26 @@ class PengajarController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function import(Request $request, $unit)
+    {
+        return view('dashboard.admin.pengajar.import', compact('unit'));
+    }
+
+
+    public function import_store(Request $request, $unit)
+    {
+        // $this->validate($request, [
+        //     'file' => 'required|mimes:csv,xls,xlsx'
+        // ]);
+
+        $id_unit = \App\Models\Modules\Unit::where('slug', $unit)->first()->id;
+
+        $file = $request->file('file');
+        Excel::import(new \App\Imports\PengajarImport($id_unit), $file);
+
+        Toast::message('Data berhasil di import')->autoDismiss(5);
+        return redirect()->route('admin.pengajar.index', $unit);
     }
 }
