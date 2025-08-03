@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="pt-10 px-4">
+    <div class="pt-4 px-4">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-            <div class="grid grid-cols-1 px-4 md:grid-cols-3 md:gap-4 dark:bg-gray-900">
+            <div class="grid grid-cols-1 md:grid-cols-3 md:gap-4 dark:bg-gray-900">
                 <!-- Right Content -->
                 <div class="col-span-full sm:col-auto">
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
