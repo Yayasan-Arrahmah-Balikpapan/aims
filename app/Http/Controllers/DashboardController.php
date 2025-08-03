@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
         $key_data_peserta = 'data_peserta_dashboard_' . Auth::id();
         // dd(Cache::forget($key_data_peserta));
-        $data_peserta = Cache::remember($key_data_peserta, now()->addHours(1), function () {
+        $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () {
             return \App\Models\Kelas::whereHas('peserta', function($query) {
                         $query->where('user_id', Auth::id());
                     })
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         $data_peserta_id = $data_peserta->pluck('id');
 
         $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addHours(1), function () use ($data_peserta_id) {
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () use ($data_peserta_id) {
             return Transaksi::whereIn('kelas_id', $data_peserta_id)
                         ->get()
                         ->where('status', '1')
@@ -82,7 +82,7 @@ class DashboardController extends Controller
     public function peserta_data(Request $request) {
 
         $key_data_peserta = 'data_peserta_data_' . Auth::id() . (isset($request->cari) ? '_'.$request->cari : '');
-        $data_peserta = Cache::remember($key_data_peserta, now()->addHours(1), function () use ($request) {
+        $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () use ($request) {
             return \App\Models\Kelas::with('periode', 'periode.unit', 'peserta')
                     ->whereHas('peserta', function($query) {
                         $query->where('user_id', Auth::id());
@@ -103,7 +103,7 @@ class DashboardController extends Controller
     public function peserta_riwayat_pembayaran() {
 
         $key_data_transaksi = 'data_transaksi_riwayat_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addHours(1), function () {
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
             return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
                             ->where('user_id', Auth::id())
                             ->latest()
