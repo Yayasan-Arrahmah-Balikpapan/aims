@@ -9,11 +9,11 @@
 
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#ffffff">
-    <link rel="apple-touch-icon" href="{{ asset('logo-yayasan.jpg') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo-yayasan-512.png') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-    <x-splade-script>
+    {{-- <x-splade-script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/serviceworker.js')
             .then((reg) => console.log('Service Worker Registered', reg))
@@ -47,7 +47,7 @@
     window.addEventListener('appinstalled', () => {
         console.log("Aplikasi sudah diinstall.");
     });
-    </x-splade-script>
+    </x-splade-script> --}}
 
 
     <!-- Fonts -->
@@ -59,10 +59,10 @@
 </head>
 
 <body class="font-sans antialiased">
-    <button id="installBtn"
+    {{-- <button id="installBtn"
             class="hidden px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
         Install Aplikasi
-    </button>
+    </button> --}}
     @splade
 </body>
 

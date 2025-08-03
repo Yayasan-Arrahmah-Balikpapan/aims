@@ -43,4 +43,14 @@
             </div>
         </x-splade-form>
     </x-auth-card>
+    <div class="mt-4 text-center">
+        <button id="installPWA"
+                class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
+                style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 0v12h8V4H6z" clip-rule="evenodd" />
+            </svg>
+            Install Aplikasi
+        </button>
+    </div>
 </x-guest-layout>
