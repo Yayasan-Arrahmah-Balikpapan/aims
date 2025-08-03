@@ -10,7 +10,7 @@
             <Link href="/dashboard/data" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-r border-gray-200">
                 <x-carbon-user-multiple class="w-8 h-8 my-1 {{ request()->url() === route('dashboard.peserta.data') ? 'text-primary-700' : 'text-gray-700' }}" />
                 <span class="text-sm text-gray-600">
-                    Data
+                    Peserta
                 </span>
             </Link>
             <Link href="/dashboard/riwayat-pembayaran" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-r border-gray-200">
