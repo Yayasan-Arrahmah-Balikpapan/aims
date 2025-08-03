@@ -72,7 +72,7 @@ class DashboardController extends Controller
 
         if (!$data_peserta) { abort(404); }
 
-        $user = auth()->user();
+        $user = Auth::user();
         $roles = $this->roleRepo->getData();
         $user  = $this->userRepo->findData($user->id);
 
