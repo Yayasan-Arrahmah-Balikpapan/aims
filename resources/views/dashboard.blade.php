@@ -237,75 +237,100 @@
             </div>
             <div class="flow-root ">
                 <ul role="list" class="divide-y divide-gray-200 space-y-2">
-                    @foreach ($data_peserta as $item)
-                        <li class="p-4 border rounded-md bg-white">
-                            <div class="flex items-center justify-end uppercase space-x-2">
-                                <div class="text-xs">
-                                    STATUS :
-                                </div>
-                                @if ($item->status_aktif == 'diproses')
-                                    <span class="bg-yellow-300 text-gray-900 px-2 py-1 text-xs font-semibold rounded-xl">
-                                        Diproses
-                                    </span>
-                                @elseif ($item->status_aktif == 'aktif')
-                                    <span class="bg-sky-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">
-                                        Aktif
-                                    </span>
-                                @elseif ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off')
-                                    <span class="bg-red-700 text-white px-2 py-1 text-xs font-semibold rounded-xl uppercase">
-                                        {{ $item->status_aktif}}
-                                    </span>
-                                @endif
-                                @if ($item->status_pendaftaran == 'belum pilih jadwal')
-                                    <span class="bg-red-300 text-gray-800 px-2 py-1 text-xs font-semibold rounded-xl">
-                                        Dimohon Segera Memilih Jadwal
-                                    </span>
-                                @endif
-                            </div>
-                            <hr class="my-2" />
-                            <div class="flex items-center">
-                                <div class="shrink-0 px-4">
-                                    <img class="w-12 rounded-full" src="/assets/logo/{{ $item->periode->unit->slug }}.jpg" alt="{{ $item->periode->unit->nama }}">
-                                </div>
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <p class="text-md font-medium text-gray-900 uppercase">
-                                        {{ $item->nis_peserta }} - {{ $item->peserta->nama }}
-                                    </p>
-                                    <p class="text-sm text-gray-500 uppercase">
-                                        {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
-                                    </p>
-                                </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}"
-                                        class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 border-primary-700 text-primary-700 bg-white">
-                                        Lihat
-                                    </Link>
-                                </div>
-                            </div>
-
-                            @if(isset($data_transaksi['transaksi'.$item->id]) || $item->status_pendaftaran == 'belum pilih jadwal')
-                                <hr class="my-2" />
-                                <div class="flex items-center justify-center text-center ">
-                                    <div class="inline-flex items-center justify-center text-center text-base font-semibold text-gray-900">
-                                        @if(isset($data_transaksi['transaksi'.$item->id]))
-                                            <Link href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi['transaksi'.$item->id] ]) }}"
-                                                class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-yellow-400 ">
-                                                Konfirmasi Pembayaran
-                                                <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
-                                            </Link>
-                                        @endif
-                                        @if ($item->status_pendaftaran == 'belum pilih jadwal')
-                                            <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
-                                                class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
-                                                Pilih Jadwal Sekarang
-                                                <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
-                                            </Link>
-                                        @endif
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <div class="rounded-lg border border-gray-300 p-4">
+                                <div class="flex animate-pulse space-x-4">
+                                    <div class="size-10 rounded-full bg-gray-200"></div>
+                                    <div class="flex-1 space-y-6 py-1">
+                                        <div class="h-2 rounded bg-gray-200"></div>
+                                        <div class="space-y-3">
+                                            <div class="grid grid-cols-3 gap-4">
+                                                <div class="col-span-2 h-2 rounded bg-gray-200"></div>
+                                                <div class="col-span-1 h-2 rounded bg-gray-200"></div>
+                                            </div>
+                                            <div class="h-2 rounded bg-gray-200"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            @endif
-                        </li>
-                    @endforeach
+                            </div>
+                        </x-slot:placeholder>
+                        @forelse ($data_peserta as $item)
+                            <li class="p-2 sm:p-4 border rounded-md bg-white">
+                                <div class="flex items-center justify-end uppercase space-x-2">
+                                    <div class="text-xs">
+                                        STATUS :
+                                    </div>
+                                    @if ($item->status_aktif == 'diproses')
+                                        <span class="bg-yellow-300 text-gray-900 px-2 py-1 text-xs font-semibold rounded-xl">
+                                            Diproses
+                                        </span>
+                                    @elseif ($item->status_aktif == 'aktif')
+                                        <span class="bg-sky-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">
+                                            Aktif
+                                        </span>
+                                    @elseif ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off')
+                                        <span class="bg-red-700 text-white px-2 py-1 text-xs font-semibold rounded-xl uppercase">
+                                            {{ $item->status_aktif}}
+                                        </span>
+                                    @endif
+                                    @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                        <span class="bg-red-300 text-gray-800 px-2 py-1 text-xs font-semibold rounded-xl">
+                                            Dimohon Segera Memilih Jadwal
+                                        </span>
+                                    @endif
+                                </div>
+                                <hr class="my-2" />
+                                <div class="flex items-center">
+                                    <div class="shrink-0 px-0 sm:px-4">
+                                        <img class="w-16 rounded-full" src="/assets/logo/{{ $item->periode->unit->slug }}.jpg" alt="{{ $item->periode->unit->nama }}">
+                                    </div>
+                                    <div class="flex-1 min-w-0 ms-4">
+                                        <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}">
+                                            <p class="text-md font-medium text-gray-900 uppercase">
+                                                    {{ $item->nis_peserta }} - {{ $item->peserta->nama }}
+                                            </p>
+                                            <p class="text-sm text-gray-500 uppercase">
+                                                {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                    <div class="hidden sm:block items-center text-base font-semibold text-gray-900">
+                                        <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}"
+                                            class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 border-primary-700 text-primary-700 bg-white">
+                                            Lihat
+                                        </Link>
+                                    </div>
+                                </div>
+
+                                @if(isset($data_transaksi['transaksi'.$item->id]) || $item->status_pendaftaran == 'belum pilih jadwal')
+                                    <hr class="my-2" />
+                                    <div class="flex items-center justify-center text-center ">
+                                        <div class="inline-flex items-center justify-center text-center text-base font-semibold text-gray-900">
+                                            @if(isset($data_transaksi['transaksi'.$item->id]))
+                                                <Link href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi['transaksi'.$item->id] ]) }}"
+                                                    class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-yellow-400 ">
+                                                    Konfirmasi Pembayaran
+                                                    <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                                </Link>
+                                            @endif
+                                            @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                                <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
+                                                    class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
+                                                    Pilih Jadwal Sekarang
+                                                    <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                                </Link>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+                            </li>
+                        @empty
+                            <li class="p-4">
+                                Belum Ada Data Peserta
+                            </li>
+                        @endforelse
+                    </x-splade-lazy>
                 </ul>
             </div>
         </div>
@@ -336,23 +361,47 @@
     </div>
 </div> --}}
 
+<x-splade-lazy>
+    <x-slot:placeholder>
+        <div class="pt-10 pb-10 px-4">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="rounded-lg border border-gray-300 p-4">
+                    <div class="flex animate-pulse space-x-4">
+                        <div class="size-10 rounded-full bg-gray-200"></div>
+                        <div class="flex-1 space-y-6 py-1">
+                            <div class="h-2 rounded bg-gray-200"></div>
+                            <div class="space-y-3">
+                                <div class="grid grid-cols-3 gap-4">
+                                    <div class="col-span-2 h-2 rounded bg-gray-200"></div>
+                                    <div class="col-span-1 h-2 rounded bg-gray-200"></div>
+                                </div>
+                                <div class="h-2 rounded bg-gray-200"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </x-slot:placeholder>
+    @if ($user->getRoleNames()->isNotEmpty())
+    <div class="pt-10 pb-10 px-4">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <h1 class="text-2xl font-bold mb-4">Akses</h1>
+            <div class="border-b border-gray-300 my-4"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
+                @forelse ($user->getRoleNames() as $role)
+                <x-partials.list-item>
+                    <x-slot:title>{{ $role }}</x-slot>
+                    <x-slot:link>@include('components.role.redirect-dashboard')</x-slot>
+                </x-partials.list-item>
+                @empty
 
-@if ($user->getRoleNames()->isNotEmpty())
-<div class="pt-10 pb-10 px-4">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <h1 class="text-2xl font-bold mb-4">Akses</h1>
-        <div class="border-b border-gray-300 my-4"></div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
-            @foreach ($user->getRoleNames() as $role)
-            <x-partials.list-item>
-                <x-slot:title>{{ $role }}</x-slot>
-                <x-slot:link>@include('components.role.redirect-dashboard')</x-slot>
-            </x-partials.list-item>
-            @endforeach
+                @endforelse
+            </div>
         </div>
     </div>
-</div>
-@endif
+    @endif
+</x-splade-lazy>
 
 {{-- <div class="pt-10 pb-10">
     <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">

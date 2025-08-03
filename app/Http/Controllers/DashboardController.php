@@ -32,7 +32,8 @@ class DashboardController extends Controller
                         $query->where('user_id', auth()->user()->id);
                     })
                     ->latest()
-                    ->paginate(5);
+                    ->take(3)
+                    ->get();
 
         $api_token = $user->createToken('api-token')->plainTextToken;
 
