@@ -7,6 +7,10 @@ use App\Repositories\Interface\UserRepoInterface;
 use App\Repositories\Interface\RoleRepoInterface;
 use App\Models\Peserta;
 use App\Models\Transaksi;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+use DebugBar;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -24,38 +28,42 @@ class DashboardController extends Controller
 
     public function index() {
 
-        $user = auth()->user();
+        $user = Auth::user();
         $roles = $this->roleRepo->getData();
         $user  = $this->userRepo->findData($user->id);
 
-        $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
+        $key_data_peserta = 'data_peserta_dashboard_' . Auth::id();
+        // dd(Cache::forget($key_data_peserta));
+        $data_peserta = Cache::remember($key_data_peserta, now()->addHours(1), function () {
+            return \App\Models\Kelas::whereHas('peserta', function($query) {
+                        $query->where('user_id', Auth::id());
                     })
+                    ->with('periode', 'periode.unit', 'peserta')
                     ->latest()
                     ->take(3)
                     ->get();
-
-        $api_token = $user->createToken('api-token')->plainTextToken;
+        });
 
         $data_peserta_id = $data_peserta->pluck('id');
 
-        $data_transaksi = Transaksi::whereIn('kelas_id', $data_peserta_id)
+        $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addHours(1), function () use ($data_peserta_id) {
+            return Transaksi::whereIn('kelas_id', $data_peserta_id)
                         ->get()
                         ->where('status', '1')
                         ->mapWithKeys(function($item) {
                             return ['transaksi'.$item->kelas_id => $item->uuid];
                         })
                         ->toArray();
+        });
 
-        // dd($api_token);
-
-        return view('dashboard', compact('user', 'data_peserta', 'api_token', 'data_transaksi'));
+        return view('dashboard', compact('user', 'data_peserta', 'data_transaksi'));
     }
 
     public function peserta($uuid) {
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
+                        $query->where('user_id', Auth::id());
                     })
                     ->where('uuid', $uuid)
                     ->first();
@@ -73,8 +81,11 @@ class DashboardController extends Controller
 
     public function peserta_data(Request $request) {
 
-        $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
+        $key_data_peserta = 'data_peserta_data_' . Auth::id() . (isset($request->cari) ? '_'.$request->cari : '');
+        $data_peserta = Cache::remember($key_data_peserta, now()->addHours(1), function () use ($request) {
+            return \App\Models\Kelas::with('periode', 'periode.unit', 'peserta')
+                    ->whereHas('peserta', function($query) {
+                        $query->where('user_id', Auth::id());
                     })
                     ->when($request->cari, function($query, $request) {
                         $query->whereHas('peserta', function($query) use ($request) {
@@ -84,13 +95,20 @@ class DashboardController extends Controller
                     })
                     ->latest()
                     ->paginate(10);
+        });
 
         return view('dashboard.peserta.data', compact('data_peserta'));
     }
 
     public function peserta_riwayat_pembayaran() {
 
-        $data_transaksi = Transaksi::where('user_id',auth()->user()->id)->latest()->paginate(10);
+        $key_data_transaksi = 'data_transaksi_riwayat_' . Auth::id();
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addHours(1), function () {
+            return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
+                            ->where('user_id', Auth::id())
+                            ->latest()
+                            ->paginate(10);
+        });
 
         return view('dashboard.peserta.riwayat-pembayaran', compact('data_transaksi'));
     }
