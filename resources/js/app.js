@@ -28,6 +28,7 @@ import UploadManager from "./components/UploadManager.vue";
 import MapMini from "./components/MapMini.vue";
 import MapMiniMultiMarker from "./components/MapMiniMultiMarker.vue";
 import BiayaDaftar from "./components/pendaftaran/BiayaDaftar.vue";
+import PwaInstallButton from './components/PwaInstallButton.vue';
 
 const el = document.getElementById("app");
 
@@ -65,6 +66,7 @@ createApp({
             MapMini,
             MapMiniMultiMarker,
             BiayaDaftar,
+            PwaInstallButton
         },
     })
 
