@@ -1,11 +1,28 @@
 <template>
-    <button
-        v-if="showButton"
-        @click="handleInstall"
-        class="mt-4 w-full bg-blue-500 text-white py-2 rounded"
-    >
-        Install Aplikasi
-    </button>
+    <div v-if="showButton" class="relative p-2 max-w-md mx-auto">
+        <div class="relative p-4 bg-white rounded-lg shadow">
+            <div class="mb-4 text-sm font-light text-gray-500">
+                <h3 class="mb-3 text-2xl font-bold text-gray-900">Pasang Aplikasi</h3>
+                <p>
+                    Aplikasi AIMS - <i>Arrahmah Integrated Management System</i>
+                </p>
+            </div>
+            <div class="justify-between items-center pt-0 space-y-2 sm:flex sm:space-y-0">
+                <a href="#" class="font-medium text-xs text-primary-600 hover:underline">
+                    Petunjuk Pemasangan
+                </a>
+                <div class="items-center space-y-4 sm:space-x-4 sm:flex sm:space-y-0">
+                    <button
+                        type="button"
+                        @click="handleInstall"
+                        class="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300"
+                    >
+                        <i>Install</i> Sekarang
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
