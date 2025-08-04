@@ -1,5 +1,6 @@
 <footer>
     <p class="py-16 lg:py-8 text-sm text-center text-gray-500">
+        arrahmahbalikpapan.or.id
         <Link
             confirm="#"
             confirm-text="rimbaborne"
@@ -7,8 +8,7 @@
             confirm-button="?"
             href="#"
             class="hover:underline">
-            arrahmahbalikpapan.or.id
+            © 2013-{{ date('Y') }}
         </Link>
-        © 2013-{{ date('Y') }}
     </p>
 </footer>
