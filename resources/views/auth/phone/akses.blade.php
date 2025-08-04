@@ -9,16 +9,19 @@
                         cancel-button="Belum"
                         method="POST"
         >
-            <div class="flex items-center justify-center">
-                <div class="text-3xl font-light text-gray-800 py-3">
-                    Akses
+            <div class="text-center items-center justify-center">
+                <div class="text-2xl font-semibold text-gray-800 py-2">
+                    AKSES <u>AIMS</u>
                 </div>
+                <p class="text-sm text-gray-500 italic">
+                    Arrahmah Integrated Management System
+                </p>
             </div>
-            <hr class="my-4" />
+            <hr class="my-2" />
 
             <!-- Email Address -->
             {{-- <x-splade-input id="email" type="email" name="email" label="Nomor Whatsapp Aktif" required autofocus /> --}}
-            <label class="mb-2 flex items-center justify-center text-lg font-semibold text-gray-700 py-3">
+            <label class=" flex items-center justify-center text-md font-semibold text-gray-700 py-3">
                 Masukkan Nomor HP Whatsapp Aktif :
             </label>
             <div class="flex items-center">
@@ -27,7 +30,7 @@
             <div class="flex items-center">
                 <div class="relative w-full">
                     <x-splade-input type="tel" name="phone_number" size="20" minlength="9" maxlength="14"
-                        class="block px-0 w-full text-center italic text-xl text-gray-900 bg-transparent appearance-none peer"
+                        class="block px-0 w-full text-center italic text-lg text-gray-900 bg-transparent appearance-none peer"
                         placeholder="Masukkan Nomor Disini " required />
                 </div>
             </div>
@@ -38,12 +41,9 @@
                 </div>
             </div>
 
-            <div class="flex items-center justify-center py-5">
+            <div class="flex items-center justify-center py-2">
                 <x-splade-submit class="ml-3" label="Klik Untuk Melanjutkan" />
             </div>
         </x-splade-form>
     </x-auth-card>
-    <div class="mt-4 text-center">
-        <PwaInstallButton />
-    </div>
 </x-guest-layout>
