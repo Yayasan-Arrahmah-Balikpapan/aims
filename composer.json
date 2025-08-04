@@ -15,7 +15,6 @@
         "laravel/octane": "^2.5",
         "laravel/pulse": "^1.0@beta",
         "laravel/sanctum": "^4.1",
-        "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",
         "predis/predis": "^3.1",
