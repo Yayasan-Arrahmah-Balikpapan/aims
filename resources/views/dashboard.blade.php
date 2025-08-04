@@ -409,4 +409,8 @@
     </div>
 </div> --}}
 
+<div class="mt-4">
+    <PwaInstallButton />
+</div>
+
 </x-app-layout>
