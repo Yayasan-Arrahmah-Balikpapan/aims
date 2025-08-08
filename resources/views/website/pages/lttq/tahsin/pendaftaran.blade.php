@@ -144,14 +144,16 @@
                     <option value="3">Offline dan Online</option>
                 </x-splade-select>
 
+                <hr class="my-4">
+
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-                <div class="max-w-lg my-8 mx-auto bg-white p-4 rounded shadow">
+                <div class="mb-2">
                     <h1 class="text-lg font-semibold mb-4">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</h1>
                     <div>
                         <div class="py-4">
                             <RecordVoice></RecordVoice>
                         </div>
-                        <div class="border rounded-lg p-2 bg-stone-50" style="height: 300px; overflow: auto;">
+                        <div class="border rounded-lg p-2 bg-stone-50" style="height: 400px; overflow: auto;">
                             <div style="height: 500px;">
                                 <link rel="preconnect" href="https://fonts.googleapis.com">
                                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,7 +161,7 @@
 
                                 @foreach($ayat as $key => $item)
                                     <div class="border-b py-2">
-                                        <p class="text-3xl text-center tracking-wide align-[4px] leading-loose" dir="rtl" style="font-family: 'Scheherazade New', serif;">{{ $item }}</p> <x-carbon-circle-solid class="h-4 w-4 bg-gray-200" /><!-- Menampilkan teks Arabic dalam format Uthmani -->
+                                        <p class="text-4xl text-center tracking-wide align-[4px] leading-loose" dir="rtl" style="font-family: 'Scheherazade New', serif;">{{ $item }}</p> <x-carbon-circle-solid class="h-4 w-4 bg-gray-200" /><!-- Menampilkan teks Arabic dalam format Uthmani -->
                                     </div>
                                 @endforeach
                             </div>
@@ -171,6 +173,8 @@
                     </div>
                 </div>
 
+                <hr class="my-4">
+                <h1 class="text-md mb-2">Pembiayaan</h1>
 
                 <div class="">
                     <div class="relative overflow-x-auto border rounded-md mb-4">
