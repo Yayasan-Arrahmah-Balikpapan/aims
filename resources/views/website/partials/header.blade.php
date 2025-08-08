@@ -1,5 +1,5 @@
-<header>
-    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-5 dark:bg-gray-800">
+<header class="sticky top-0 z-50">
+    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-3 border-b">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <Link href="/" class="flex items-center">
                 <img src="{{ url('/') }}/assets/img/logo-arrahmah.png" class="mr-3 h-10 sm:h-14" alt="Arrahmah Logo" />
@@ -22,3 +22,4 @@
         </div>
     </nav>
 </header>
+

@@ -1,6 +1,8 @@
 @props(['unit'])
 
-<x-layouts.nav />
+<div class="sticky top-0 z-50">
+    <x-layouts.nav />
+</div>
 <div class="flex overflow-hidden bg-gray-50">
     <x-layouts.sidebar :unit="$unit ?? null" />
 

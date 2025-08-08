@@ -1,9 +1,10 @@
 <div class="min-h-screen bg-gray-100">
-    <div class="
+    <header class="
         {{-- max-[640px]:hidden --}}
+        sticky top-0 z-50
     ">
         @include('layouts.navigation')
-    </div>
+    </header>
 
     <!-- Page Content -->
     <main>

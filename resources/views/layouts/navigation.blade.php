@@ -17,10 +17,10 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         <x-nav-link :href="route('dashboard.peserta.data')" :active="request()->routeIs('dashboard.peserta.data')">
-                            {{ __('Data') }}
+                            {{ __('Peserta') }}
                         </x-nav-link>
                         <x-nav-link :href="route('dashboard.peserta.riwayatpembayaran')" :active="request()->routeIs('dashboard.peserta.riwayatpembayaran')">
-                            {{ __('Riwayat Pembayaran') }}
+                            {{ __('Pembayaran') }}
                         </x-nav-link>
                     </div>
                 </div>

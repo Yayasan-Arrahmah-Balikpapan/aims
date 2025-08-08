@@ -1,30 +1,36 @@
-<div class="min-[640px]:hidden">
+<div class="md:hidden">
     <div class="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200">
-        <div class="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
-            <Link href="/dashboard" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-gray-200 border-r">
-                <x-carbon-dashboard class="w-8 h-8 my-1 {{ request()->url() === route('dashboard') ? 'text-primary-700' : 'text-gray-700' }}" />
-                <span class="text-sm text-gray-600">
+        <div class="grid h-full grid-cols-4 mx-auto divide-x font-medium">
+            <x-layouts.nav.link-mobile-nav :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                <x-carbon-dashboard class="w-6 h-6 my-1" />
+                <span class="text-xs">
                     Dashboard
                 </span>
-            </Link>
-            <Link href="/dashboard/data" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-r border-gray-200">
-                <x-carbon-user-multiple class="w-8 h-8 my-1 {{ request()->url() === route('dashboard.peserta.data') ? 'text-primary-700' : 'text-gray-700' }}" />
-                <span class="text-sm text-gray-600">
+            </x-layouts.nav.link-mobile-nav>
+            <x-layouts.nav.link-mobile-nav :href="route('dashboard.peserta.data')" :active="request()->routeIs('dashboard.peserta.data')">
+                <x-carbon-user-multiple class="w-6 h-6 my-1" />
+                <span class="text-xs">
                     Peserta
                 </span>
-            </Link>
-            <Link href="/dashboard/riwayat-pembayaran" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-r border-gray-200">
-                <x-carbon-money class="w-8 h-8 my-1 {{ request()->url() === route('dashboard.peserta.riwayatpembayaran') ? 'text-primary-700' : 'text-gray-700' }}" />
-                <span class="text-sm text-gray-600">
+            </x-layouts.nav.link-mobile-nav>
+            <x-layouts.nav.link-mobile-nav :href="route('dashboard.peserta.riwayatpembayaran')" :active="request()->routeIs('dashboard.peserta.riwayatpembayaran')">
+                <x-carbon-money class="w-6 h-6 my-1" />
+                <span class="text-xs">
                     Pembayaran
                 </span>
-            </Link>
-            <Link href="/profile" type="button" class="inline-flex flex-col items-center justify-center mb-2 border-gray-200">
-                <x-carbon-user-avatar class="w-8 h-8 my-1 {{ request()->url() === route('profile.edit') ? 'text-primary-700' : 'text-gray-700' }}" />
-                <span class="text-sm text-gray-600">
+            </x-layouts.nav.link-mobile-nav>
+            <x-layouts.nav.link-mobile-nav :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                <x-carbon-user-avatar class="w-6 h-6 my-1" />
+                <span class="text-xs">
                     Akun
                 </span>
-            </Link>
+            </x-layouts.nav.link-mobile-nav>
+            {{-- <x-layouts.nav.link-mobile-nav :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
+                <x-carbon-calendar class="w-6 h-6 my-1" />
+                <span class="text-xs">
+                    Agenda
+                </span>
+            </x-layouts.nav.link-mobile-nav> --}}
         </div>
     </div>
 </div>
