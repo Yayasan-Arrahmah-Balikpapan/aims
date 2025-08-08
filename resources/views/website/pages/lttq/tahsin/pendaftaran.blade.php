@@ -146,35 +146,8 @@
 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
                 <div class="max-w-lg my-8 mx-auto bg-white p-4 rounded shadow">
-                    <h1 class="text-lg font-semibold">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</h1>
-                    {{-- <p class="mb-4">Silahkan pilih :</p> --}}
-
-                    <ul class="grid w-full gap-2 mb-4">
-                        {{-- <li>
-                            <input type="radio" id="rekaman-sekarang" name="rekaman" value="rekaman-sekarang" class="hidden peer" required
-                                    onclick="document.getElementById('file-upload').style.display = 'none'; document.getElementById('record-tab').style.display = 'block';">
-                            <label for="rekaman-sekarang" class="inline-flex items-center justify-between w-full p-3 text-gray-700 bg-white border border-gray-400 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-gray-600 hover:text-gray-900 hover:bg-gray-400"
-                            >
-                                <div class="block">
-                                    <div class="w-full">Rekam Tilawah</div>
-                                </div>
-                                <i class="fa-solid fa-microphone"></i>
-                            </label>
-                        </li> --}}
-                        {{-- <li>
-                            <input type="radio" id="rekaman-upload" name="rekaman" value="rekaman-upload" class="hidden peer"
-                                    onclick="document.getElementById('file-upload').style.display = 'block'; document.getElementById('record-tab').style.display = 'none';">
-                            <label for="rekaman-upload" class="inline-flex items-center justify-between w-full p-3 text-gray-700 bg-white border border-gray-400 rounded-lg cursor-pointer peer-checked:text-white peer-checked:bg-gray-600 hover:text-gray-900 hover:bg-gray-400">
-                                <div class="block">
-                                    <div class="w-full">Upload File Rekaman</div>
-                                </div>
-                                <i class="fa-solid fa-file-upload"></i>
-                            </label>
-                        </li> --}}
-                    </ul>
-                    <div id="record-tab"
-                            {{-- style="display: none;" --}}
-                        >
+                    <h1 class="text-lg font-semibold mb-4">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</h1>
+                    <div>
                         <div class="py-4">
                             <RecordVoice></RecordVoice>
                         </div>
