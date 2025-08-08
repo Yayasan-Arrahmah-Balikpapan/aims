@@ -2,7 +2,7 @@
     <div>
         <div v-if="!isUploadSuccessful" class="mb-6 text-center">
             <a v-if="!isRecording" href="#" @click.prevent="startRecording" class="text-red-700 border border-red-700 px-4 py-4 font-semibold rounded-full hover:bg-red-700 hover:text-white cursor-pointer">
-                KLIK REKAM <i class="fas fa-microphone"></i>
+                KLIK REKAM SEKARANG <i class="fas fa-microphone"></i>
             </a>
             <a v-if="isRecording" href="#" @click.prevent="stopRecording" class="bg-red-500 text-white px-4 py-4 rounded-full hover:bg-red-600 cursor-pointer">
                 STOP
