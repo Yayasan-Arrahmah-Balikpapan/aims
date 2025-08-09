@@ -11,5 +11,7 @@
         {{ $slot }}
     </main>
     <x-layouts.footer />
-    @include('layouts.navigation-mobile')
+    @unless(request()->is('dashboard'))
+        @include('layouts.navigation-mobile')
+    @endunless
 </div>

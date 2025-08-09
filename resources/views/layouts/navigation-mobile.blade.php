@@ -14,9 +14,9 @@
                 </span>
             </x-layouts.nav.link-mobile-nav>
             <x-layouts.nav.link-mobile-nav :href="route('dashboard.peserta.riwayatpembayaran')" :active="request()->routeIs('dashboard.peserta.riwayatpembayaran')">
-                <x-carbon-money class="w-6 h-6 my-1" />
+                <x-carbon-list-dropdown class="w-6 h-6 my-1" />
                 <span class="text-xs">
-                    Pembayaran
+                    Aktivitas
                 </span>
             </x-layouts.nav.link-mobile-nav>
             <x-layouts.nav.link-mobile-nav :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">

@@ -40,24 +40,30 @@ class DashboardController extends Controller
                     })
                     ->with('periode', 'periode.unit', 'peserta')
                     ->latest()
-                    ->take(3)
+                    ->take(2)
                     ->get();
         });
 
-        $data_peserta_id = $data_peserta->pluck('id');
-
-        $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () use ($data_peserta_id) {
-            return Transaksi::whereIn('kelas_id', $data_peserta_id)
-                        ->get()
-                        ->where('status', '1')
-                        ->mapWithKeys(function($item) {
-                            return ['transaksi'.$item->kelas_id => $item->uuid];
-                        })
-                        ->toArray();
+        $key_data_peserta_paginate = 'data_peserta_dashboard_paginate' . Auth::id();
+        $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(10), function () {
+            return \App\Models\Kelas::whereHas('peserta', function($query) {
+                        $query->where('user_id', Auth::id());
+                    })
+                    ->with('periode', 'periode.unit', 'peserta')
+                    ->latest()
+                    ->paginate(10);
         });
 
-        return view('dashboard', compact('user', 'data_peserta', 'data_transaksi'));
+        $data_peserta_id = $data_peserta->pluck('id');
+        $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
+            return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
+                            ->where('user_id', Auth::id())
+                            ->latest()
+                            ->paginate(10);
+        });
+
+        return view('dashboard-exp', compact('user', 'data_peserta', 'data_transaksi', 'data_peserta_paginate'));
     }
 
     public function peserta($uuid) {

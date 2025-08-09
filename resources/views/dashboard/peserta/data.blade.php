@@ -37,38 +37,35 @@
                         </x-slot:placeholder>
                         @forelse ($data_peserta as $item)
                             <li class="p-2 sm:p-4 border rounded-md bg-white">
-                                <div class="flex items-center justify-end uppercase space-x-2">
-                                    <div class="text-xs">
-                                        STATUS :
+                                <div class="flex items-center justify-between uppercase ">
+                                    <span class="text-xs sm:text-[16px] font-semibold">{{ $item->nis_peserta }}</span>
+                                    <div class="text-[10px] sm:text-xs">
+                                        Status :
+                                        <span class="px-2 py-0 sm:py-1 ml-1 font-semibold rounded-xl
+                                            {{ $item->status_aktif == 'diproses' ? 'bg-yellow-300 text-gray-900'
+                                            : ($item->status_aktif == 'aktif' ? 'bg-sky-500 text-white'
+                                            : ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off' ? 'bg-red-700 text-white' : '')) }}">
+                                            {{ $item->status_aktif }}
+                                        </span>
+                                        @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                            <span class="bg-red-300 text-gray-800 px-2 py-1 font-semibold rounded-xl">
+                                                Dimohon Segera Memilih Jadwal
+                                            </span>
+                                        @endif
                                     </div>
-                                    @if ($item->status_aktif == 'diproses')
-                                        <span class="bg-yellow-300 text-gray-900 px-2 py-1 text-xs font-semibold rounded-xl">
-                                            Diproses
-                                        </span>
-                                    @elseif ($item->status_aktif == 'aktif')
-                                        <span class="bg-sky-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">
-                                            Aktif
-                                        </span>
-                                    @elseif ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off')
-                                        <span class="bg-red-700 text-white px-2 py-1 text-xs font-semibold rounded-xl uppercase">
-                                            {{ $item->status_aktif}}
-                                        </span>
-                                    @endif
-                                    @if ($item->status_pendaftaran == 'belum pilih jadwal')
-                                        <span class="bg-red-300 text-gray-800 px-2 py-1 text-xs font-semibold rounded-xl">
-                                            Dimohon Segera Memilih Jadwal
-                                        </span>
-                                    @endif
                                 </div>
-                                <hr class="my-2" />
+                                <hr class="my-1 sm:my-2" />
                                 <div class="flex items-center">
                                     <div class="shrink-0 px-0 sm:px-4">
-                                        <img class="w-16 rounded-full" src="/assets/logo/{{ $item->periode->unit->slug }}.jpg" alt="{{ $item->periode->unit->nama }}">
+                                        <img class="w-10 sm:w-16 rounded-full" src="/assets/logo/{{ $item->periode->unit->slug }}.jpg" alt="{{ $item->periode->unit->nama }}">
                                     </div>
                                     <div class="flex-1 min-w-0 ms-4">
                                         <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}">
                                             <p class="text-md font-medium text-gray-900 uppercase">
-                                                {{ $item->nis_peserta }} - {{ $item->peserta->nama }}
+
+                                            </p>
+                                            <p class="text-md font-medium text-gray-900 uppercase">
+                                                    {{ $item->peserta->nama }}
                                             </p>
                                             <p class="text-sm text-gray-500 uppercase">
                                                 {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
@@ -84,12 +81,12 @@
                                 </div>
 
                                 @if(isset($data_transaksi['transaksi'.$item->id]) || $item->status_pendaftaran == 'belum pilih jadwal')
-                                    <hr class="my-2" />
+                                    <hr class="my-1 sm:my-2" />
                                     <div class="flex items-center justify-center text-center ">
-                                        <div class="inline-flex items-center justify-center text-center text-base font-semibold text-gray-900">
+                                        <div class="items-center justify-center text-center text-base font-semibold text-gray-900">
                                             @if(isset($data_transaksi['transaksi'.$item->id]))
                                                 <Link href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi['transaksi'.$item->id] ]) }}"
-                                                    class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-yellow-400 ">
+                                                    class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-yellow-400  text-white ">
                                                     Konfirmasi Pembayaran
                                                     <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                                 </Link>

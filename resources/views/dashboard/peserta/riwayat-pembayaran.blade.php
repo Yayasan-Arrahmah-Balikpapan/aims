@@ -12,48 +12,67 @@
             </div>
             <div class="flow-root">
                 <ul role="list" class="space-y-2">
-                    @foreach ($data_transaksi as $item)
-                        <li class="p-4 border rounded-md bg-white">
-                            <div class="flex items-center justify-between border-b pb-2">
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <p class="text-md font-bold text-gray-900 uppercase">
-                                        INVOICE : {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
-                                    </p>
-                                    {{-- <p class="text-sm text-gray-500 uppercase">
-                                        {{ $item->created_at->format('d F Y') }}
-                                    </p> --}}
+                    <x-splade-lazy>
+                        <x-slot:placeholder>
+                            <div class="rounded-lg border border-gray-300 p-4">
+                                <div class="flex animate-pulse space-x-4">
+                                    <div class="size-10 rounded-full bg-gray-200"></div>
+                                    <div class="flex-1 space-y-6 py-1">
+                                        <div class="h-2 rounded bg-gray-200"></div>
+                                        <div class="space-y-3">
+                                            <div class="grid grid-cols-3 gap-4">
+                                                <div class="col-span-2 h-2 rounded bg-gray-200"></div>
+                                                <div class="col-span-1 h-2 rounded bg-gray-200"></div>
+                                            </div>
+                                            <div class="h-2 rounded bg-gray-200"></div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </x-slot:placeholder>
+                        @foreach ($data_transaksi as $item)
+                            <li class="p-4 border rounded-md bg-white">
+                                <div class="flex items-center justify-between border-b pb-2">
+                                    <div class="flex-1 min-w-0 sm:ms-4">
+                                        <p class="text-sm font-bold text-gray-900 uppercase">
+                                            INVOICE : {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
+                                        </p>
+                                        {{-- <p class="text-sm text-gray-500 uppercase">
+                                            {{ $item->created_at->format('d F Y') }}
+                                        </p> --}}
+                                    </div>
 
-                                @if ($item->status == 1)
-                                    <span class="bg-yellow-300 text-gray-900 px-2 py-1 rounded text-sm flex">Menunggu Pembayaran</span>
-                                @elseif ($item->status == 2)
-                                    <span class="bg-blue-500 text-white px-2 py-1 rounded text-sm flex">Menunggu Konfirmasi</span>
-                                @elseif ($item->status == 3)
-                                    <span class="bg-green-500 text-white px-2 py-1 rounded text-sm flex">LUNAS</span>
-                                @elseif ($item->status == 4)
-                                    <span class="bg-red-500 text-white px-2 py-1 rounded text-sm flex">Kadaluarsa</span>
-                                @endif
-                            </div>
-                            <div class="flex items-center pt-2">
-                                <div class="flex-1 min-w-0 ms-4">
-                                    <Link href="{{ route('dashboard.peserta', ['uuid' => $item->kelas->uuid ]) }}">
-                                        <p class="text-md font-medium text-gray-900 uppercase">
-                                            {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
-                                        </p>
-                                        <p class="text-sm text-gray-500 uppercase">
-                                            {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
-                                        </p>
-                                    </Link>
+                                    @if ($item->status == 1)
+                                        <span class="bg-yellow-300 text-gray-900 px-2 py-1 rounded xs flex">Menunggu Pembayaran</span>
+                                    @elseif ($item->status == 2)
+                                        <span class="bg-blue-500 text-white px-2 py-1 rounded xs flex">Menunggu Konfirmasi</span>
+                                    @elseif ($item->status == 3)
+                                        <span class="bg-green-500 text-white px-2 py-1 rounded xs flex">LUNAS</span>
+                                    @elseif ($item->status == 4)
+                                        <span class="bg-red-500 text-white px-2 py-1 rounded xs flex">Kadaluarsa</span>
+                                    @endif
                                 </div>
-                                <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                                    <Link href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid, 'program' => $item->program_slug]) }}"
-                                        class="text-sm flex font-semibold  border-primary-700 text-primary-700 hover:text-white bg-white  hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                                        Lihat Invoice
-                                    </Link>
+                                <div class="flex items-center pt-2">
+                                    <div class="flex-1 min-w-0 sm:ms-4">
+                                        <Link href="{{ route('dashboard.peserta', ['uuid' => $item->kelas->uuid ]) }}">
+                                            <p class="text-md font-medium text-gray-900 uppercase">
+                                                {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                            </p>
+                                            <p class="text-sm text-gray-500 uppercase">
+                                                {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
+                                            </p>
+                                        </Link>
+                                    </div>
+                                    <div class="inline-flex items-center text-base font-semibold text-gray-900">
+                                        <Link href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid, 'program' => $item->program_slug]) }}"
+                                            class="text-sm flex font-semibold  border-primary-700 text-primary-700 hover:text-white bg-white  hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                                            Lihat Invoice
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    @endforeach
+                            </li>
+                        @endforeach
+                    </x-splade-lazy>
                 </ul>
             </div>
             <div class="flow-root py-4">
