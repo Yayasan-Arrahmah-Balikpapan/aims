@@ -9,7 +9,7 @@
     </h1>
 
     <x-splade-form method="patch" :action="route('profile.update')" :default="$user" class="mt-6 space-y-6" preserve-scroll>
-        <x-splade-input id="name" name="name" type="text" :label="__('Nama')" autofocus autocomplete="name" />
+        <x-splade-input id="name" name="name" type="text" :label="__('Nama')" autocomplete="name" />
         <x-splade-input id="email" name="email" type="email" :label="__('Email')" autocomplete="email" />
 
         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())

@@ -37,11 +37,11 @@ createApp({
     render: renderSpladeApp({ el })
 })
     .use(SpladePlugin, {
-        'view_transitions': true,
-        "max_keep_alive": 10,
+        'view_transitions': false,
+        "max_keep_alive": 15,
         "transform_anchors": false,
         "progress_bar": {
-                        delay: 0,
+                        delay: 1,
                         color: "#4B5563",
                         css: true,
                         spinner: true,
