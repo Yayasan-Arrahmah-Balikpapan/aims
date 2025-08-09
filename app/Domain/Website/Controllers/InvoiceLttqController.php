@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use ProtoneMedia\Splade\Facades\Toast;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -61,6 +63,8 @@ class InvoiceLttqController extends Controller
                     ->autoDismiss(10);
             }
         }
+        Cache::forget('data_peserta_dashboard_' . Auth::id());
+
         return redirect()->back();
         // return view('website.pages.lttq.tahsin');
     }
