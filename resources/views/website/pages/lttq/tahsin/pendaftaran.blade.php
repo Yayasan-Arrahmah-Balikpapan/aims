@@ -148,7 +148,7 @@
 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
                 <div class="mb-2">
-                    <h1 class="text-lg font-semibold mb-4">Rekaman Tilawah Quran Surah Fussilat Ayat 44-48</h1>
+                    <h1 class="text-lg font-semibold mb-4">Rekaman Tilawah Quran Surah Fussilat Ayat 44-46</h1>
                     <div>
                         <div class="py-4">
                             <RecordVoice></RecordVoice>
