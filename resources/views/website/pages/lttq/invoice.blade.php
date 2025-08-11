@@ -9,82 +9,74 @@
  --}}
 
 
-    <div class="bg-gray-100">
-        <div class="text-center py-4 bg-gray-100">
-            <p class="text-md space-x-10">
-                <Link href="{{ url('/') }}" class=" text-gray-600 hover:text-gray-900">
-                    &larr; Kembali
-                </Link>
+<div class="bg-gray-100">
+    <div class="text-center py-4 bg-gray-100">
+        <p class="text-md space-x-10">
+            <Link href="{{ url('/') }}" class=" text-gray-600 hover:text-gray-900">
+                &larr; Kembali
+            </Link>
 
-                @auth
-                    <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
-                        Ke Dashboard &#x02192;
-                    </Link>
-                @endauth
-            </p>
-        </div>
+            @auth
+                <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
+                    Ke Dashboard &#x02192;
+                </Link>
+            @endauth
+        </p>
     </div>
 
     <!-- Invoice -->
-    <div class="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10">
+    <div class="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10 bg-gray-100">
         <div class="sm:w-11/12 lg:w-3/4 mx-auto">
             <!-- Card -->
             <div class="flex flex-col p-4 sm:p-10 bg-white shadow-md rounded-xl dark:bg-neutral-800">
                 <!-- Grid -->
                 <div class="flex justify-between">
-                    <div>
-                        <img src="{{ url('/') }}/assets/img/logo-arrahmah.png" alt="yayasan arrahmah" class="h-12">
-
-                        <h1 class="mt-2 text-lg md:text-xl font-semibold text-gray-800 dark:text-white">
-                            Yayasan Ar Rahmah Balikpapan
-                        </h1>
-                        <h4 class="text-sm md:text-xl font-medium text-gray-500 dark:text-white">
-                            Lembaga Tahsin Tahfizhil Quran
-                        </h4>
-                    </div>
-                    <!-- Col -->
+                    <img src="{{ url('/') }}/assets/img/logo-arrahmah.png" alt="yayasan arrahmah" class="h-12">
 
                     <div class="text-end">
-                        <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-neutral-200">Invoice #
+                        <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-neutral-200">Invoice
                         </h2>
                         <span class="mt-1 block text-gray-500  uppercase">
-                            {{ \Carbon\Carbon::parse($data->created_at)->format('Ymd') }}-{{ $data->id}}
+                            #{{ \Carbon\Carbon::parse($data->created_at)->format('Ymd') }}-{{ $data->id}}
                         </span>
-
-                        {{-- <address class="mt-4 not-italic text-gray-800 dark:text-neutral-200">
-                            45 Roker Terrace<br>
-                            Latheronwheel<br>
-                            KW5 8NW, London<br>
-                            United Kingdom<br>
-                        </address> --}}
                     </div>
-                    <!-- Col -->
                 </div>
-                <!-- End Grid -->
+
+                <div class="text-center pb-4">
+                    <h1 class="mt-2 text-xl sm:text-2xl  font-semibold text-gray-800">
+                        Yayasan Ar Rahmah Balikpapan
+                    </h1>
+                    <h4 class="text-md font-medium text-gray-500">
+                        Lembaga Tahsin Tahfizhil Quran
+                    </h4>
+                </div>
+               <hr>
 
                 <!-- Grid -->
                 <div class="mt-8 grid sm:grid-cols-2 gap-3">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-800 dark:text-neutral-200">Kepada:</h3>
-                        <h3 class="text-sm font-medium text-gray-800 dark:text-neutral-200 uppercase">PESERTA {{ $data->periode->unit->nama }}</h3>
-                        <address class="mb-2 not-italic text-gray-500 ">
-                            {{ $data->peserta->nama }} <br>
-                            {{ $data->peserta->phone_number }}<br>
-                        </address>
+                    <div class="flex gap-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Kepada:</h3>
+                        <div>
+                            <h3 class="text-sm font-medium text-gray-800 uppercase">PESERTA {{ $data->periode->unit->nama }}</h3>
+                            <address class="mb-2 not-italic text-gray-800">
+                                {{ $data->peserta->nama }} <br>
+                                {{ $data->peserta->phone_number }}<br>
+                            </address>
+                        </div>
                     </div>
                     <!-- Col -->
 
                     <div class="sm:text-end space-y-2">
                         <!-- Grid -->
-                        <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-                            <dl class="grid sm:grid-cols-5 gap-x-3">
-                                <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Tanggal Invoice:
+                        <div class="grid grid-cols-1 gap-3 sm:gap-2">
+                            <dl class="flex gap-4">
+                                <dt class="font-semibold text-gray-800 dark:text-neutral-200">Tanggal Invoice :
                                 </dt>
-                                <dd class="col-span-2 text-gray-500 ">{{ date('d/m/Y H:i') }}</dd>
+                                <dd class="text-gray-500">{{ date('d/m/Y H:i') }}</dd>
                             </dl>
-                            <dl class="grid sm:grid-cols-5 gap-x-3">
-                                <dt class="col-span-3 font-semibold text-gray-800 dark:text-neutral-200">Status Pembayaran:</dt>
-                                <dd class="col-span-2 text-gray-500 font-semibold  sm:flex sm:justify-center sm:text-center">
+                            <dl class="flex gap-4">
+                                <dt class="font-semibold text-gray-800 dark:text-neutral-200">Status Pembayaran:</dt>
+                                <dd class="font-semibold  sm:flex sm:justify-center sm:text-center">
                                     @if ($data->status == 1)
                                         <span class="bg-yellow-300 text-gray-900 px-2 py-1 rounded text-sm flex">Menunggu Pembayaran</span>
                                     @elseif ($data->status == 2)

@@ -18,6 +18,8 @@ use App\Traits\ConvertNotifikasi;
 use Throwable;
 use App\Models\Kelas;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class PendaftaranTahsinController extends Controller
@@ -77,6 +79,7 @@ class PendaftaranTahsinController extends Controller
 
     public function tahsin_pendaftaran_store(Request $request)
     {
+        // dd($request->all());
         $periode = Periode::where('aktifkan_pendaftaran',1)
                         ->where('kategori', 'reguler')
                             ->whereHas('unit', function($query) {
@@ -86,10 +89,12 @@ class PendaftaranTahsinController extends Controller
         $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
 
         $donasi = 0;
+        $pembayarandonasi = $request->input('pembayarandonasi') ? $request->input('pembayarandonasi') : 0;
+        $pembayarandonasicustom = $request->input('pembayarandonasicustom') ? $request->input('pembayarandonasicustom') : 0;
 
         if ($periode) {
 
-            $donasi = $request->input('pembayaran_donasi') > 0 ? $request->input('pembayaran_donasi') : $request->input('pembayaran_donasi_custom');
+            $donasi = $pembayarandonasi > 0 ? $pembayarandonasi : $pembayarandonasicustom;
 
             $uuid    = session()->get('pendaftaran.tahsin.uuid');
             $ktp     = session()->get('pendaftaran.tahsin.ktp');
@@ -119,6 +124,8 @@ class PendaftaranTahsinController extends Controller
                     'phone_code'   => $request->input('phone_code') ?? '62',
                     'phone_number' => $request->input('phone_number'),
                 ]);
+
+                Auth::login($user);
             }
 
             $nomor_wa = $user->phone_code.ltrim($user->phone_number, '0');
@@ -239,7 +246,9 @@ class PendaftaranTahsinController extends Controller
                     // $isi_notif_wa = $this->formatWhatsappPesertaKelasDanTransaksi($data_notifikasi->pesan_whatsapp, $peserta_kelas->id, $transaksi->id);
                     // $this->notifService->kirimNotifWa($nomor_wa, $isi_notif_wa);
 
-                    Toast::title('Pendaftaran Berhasil, Segera Lakukan Pembayaran. Terima Kasih')
+                    Toast::title('Pendaftaran Berhasil')
+                        ->autoDismiss(10);
+                    Toast::title('Segera Lakukan Pembayaran. Terima Kasih')
                         ->warning()
                         ->autoDismiss(10);
 
