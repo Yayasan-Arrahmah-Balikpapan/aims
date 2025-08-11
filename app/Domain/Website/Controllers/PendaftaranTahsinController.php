@@ -89,7 +89,7 @@ class PendaftaranTahsinController extends Controller
 
         if ($periode) {
 
-            $donasi = $request->input('pembayarandonasi') > 0 ? $request->input('pembayarandonasi') : $request->input('pembayarandonasicustom');
+            $donasi = $request->input('pembayaran_donasi') > 0 ? $request->input('pembayaran_donasi') : $request->input('pembayaran_donasi_custom');
 
             $uuid    = session()->get('pendaftaran.tahsin.uuid');
             $ktp     = session()->get('pendaftaran.tahsin.ktp');
