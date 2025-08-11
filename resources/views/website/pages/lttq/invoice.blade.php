@@ -9,13 +9,20 @@
  --}}
 
 
-<div class="bg-gray-100">
-    <div class="text-center py-8 bg-gray-100">
-        <p class="text-sm text-gray-600">
-            <Link href="{{ url('/dashboard') }}" class="text-md text-gray-600 hover:text-gray-900">
-            &larr; Kembali
-            </Link>
-        </p>
+    <div class="bg-gray-100">
+        <div class="text-center py-4 bg-gray-100">
+            <p class="text-md space-x-10">
+                <Link href="{{ url('/') }}" class=" text-gray-600 hover:text-gray-900">
+                    &larr; Kembali
+                </Link>
+
+                @auth
+                    <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
+                        Ke Dashboard &#x02192;
+                    </Link>
+                @endauth
+            </p>
+        </div>
     </div>
 
     <!-- Invoice -->
@@ -263,6 +270,18 @@
                     </div>
                 @endif
             </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-100">
+        <div class="text-center py-4 bg-gray-100">
+            <p class="text-md space-x-10">
+                @auth
+                    <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
+                        Ke Dashboard &#x02192;
+                    </Link>
+                @endauth
+            </p>
         </div>
     </div>
     <!-- End Invoice -->

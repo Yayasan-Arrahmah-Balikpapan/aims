@@ -1,15 +1,21 @@
 <div class="min-h-screen bg-gray-100">
 
-    <div class="text-center py-8 bg-gray-100">
-        <p class="text-sm text-gray-600">
-            <Link href="{{ url('/') }}/dashboard" class="text-md text-gray-600 hover:text-gray-900">
+    <div class="text-center py-4 bg-gray-100">
+        <p class="text-md space-x-10">
+            <Link href="{{ url('/') }}" class=" text-gray-600 hover:text-gray-900">
                 &larr; Kembali
             </Link>
+
+            @auth
+                <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
+                    Ke Dashboard &#x02192;
+                </Link>
+            @endauth
         </p>
     </div>
 
     <div class=" flex justify-center items-center p-4 bg-gray-100">
-        <div class="w-full sm:max-w-lg mt-6 px-6 py-4 bg-white shadow-md rounded-lg">
+        <div class="w-full sm:max-w-lg px-6 py-4 bg-white shadow-md rounded-lg">
             <div class="space-y-2 flex items-center justify-center gap-6 md:space-y-0">
                 <a href="#" class="shrink-0 m-4">
                     <img class="w-32" src="{{ url('/') }}/assets/img/lttq/tahsin.png">
