@@ -249,9 +249,9 @@ class PendaftaranTahsinController extends Controller
                     Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
                         ->warning()
                         ->autoDismiss(10);
-                    // return redirect()->back();
+                    return redirect()->back();
 
-                    return $e;
+                    // return $e;
                 }
             } else {
                 // KARENA DATA BARU TRANSAKSI BARU CUMA SATU
