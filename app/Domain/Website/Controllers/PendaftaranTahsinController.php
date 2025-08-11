@@ -85,6 +85,8 @@ class PendaftaranTahsinController extends Controller
                         ->first();
         $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
 
+        $donasi = 0;
+
         if ($periode) {
 
             $donasi = $request->input('pembayarandonasi') > 0 ? $request->input('pembayarandonasi') : $request->input('pembayarandonasicustom');
