@@ -129,6 +129,8 @@
                         </div>
                     </div>
                 </div>
+                @else
+
                 @endif
             </x-splade-lazy>
         </template>
