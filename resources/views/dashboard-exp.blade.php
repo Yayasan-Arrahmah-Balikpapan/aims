@@ -286,7 +286,7 @@
                                         </div>
                                     </div>
                                 </x-slot:placeholder>
-                                @foreach ($data_transaksi as $item)
+                                @forelse ($data_transaksi as $item)
                                     <li class="p-4 border rounded-md bg-white">
                                         <div class="flex items-center justify-between border-b pb-2">
                                             <div class="flex-1 min-w-0 sm:ms-4">
@@ -327,7 +327,11 @@
                                             </div>
                                         </div>
                                     </li>
-                                @endforeach
+                                @empty
+                                    <li class="p-4">
+                                        Belum Ada Riwayat Aktivitas
+                                    </li>
+                                @endforelse
                             </x-splade-lazy>
                         </ul>
                     </div>
