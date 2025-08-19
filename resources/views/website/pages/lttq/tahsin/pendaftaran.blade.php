@@ -410,9 +410,9 @@
                         </div>
 
                         <div class="flex items-center justify-center mt-6">
-                            <button type="submit" class="bg-primary-700 text-medium text-white py-2.5 px-5 rounded-lg flex items-center justify-between">
+                            <x-splade-submit type="submit" class="bg-primary-700 text-medium text-white py-2.5 px-5 rounded-lg flex items-center justify-between">
                                 Daftar & Lanjutkan Pembayaran <x-carbon-chevron-right class="h-8 w-8 pl-2" />
-                            </button>
+                            </x-splade-submit>
                         </div>
                     {{-- </div>
                 </x-splade-modal> --}}
