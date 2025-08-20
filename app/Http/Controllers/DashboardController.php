@@ -33,16 +33,16 @@ class DashboardController extends Controller
         $user  = $this->userRepo->findData($user->id);
 
         $key_data_peserta = 'data_peserta_dashboard_' . Auth::id();
-        // dd(Cache::forget($key_data_peserta));
-        $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () {
-            return \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', Auth::id());
-                    })
-                    ->with('periode', 'periode.unit', 'peserta')
-                    ->latest()
-                    ->take(2)
-                    ->get();
-        });
+        // untuk spill peserta terbaru saja di depan
+        // $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () {
+        //     return \App\Models\Kelas::whereHas('peserta', function($query) {
+        //                 $query->where('user_id', Auth::id());
+        //             })
+        //             ->with('periode', 'periode.unit', 'peserta')
+        //             ->latest()
+        //             ->take(2)
+        //             ->get();
+        // });
 
         $key_data_peserta_paginate = 'data_peserta_dashboard_paginate' . Auth::id();
         $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(10), function () {
@@ -54,7 +54,7 @@ class DashboardController extends Controller
                     ->paginate(10);
         });
 
-        $data_peserta_id = $data_peserta->pluck('id');
+        $data_peserta_id = $data_peserta_paginate->pluck('id');
         $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
         $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
             return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
@@ -63,7 +63,11 @@ class DashboardController extends Controller
                             ->paginate(10);
         });
 
-        return view('dashboard-exp', compact('user', 'data_peserta', 'data_transaksi', 'data_peserta_paginate'));
+        $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(10), function () {
+            return Peserta::where('user_id', Auth::id())->count();
+        });
+
+        return view('dashboard-exp', compact('user',  'data_transaksi', 'data_peserta_paginate', 'count_peserta'));
     }
 
     public function peserta($uuid) {
@@ -117,6 +121,11 @@ class DashboardController extends Controller
         });
 
         return view('dashboard.peserta.riwayat-pembayaran', compact('data_transaksi'));
+    }
+
+    public function agenda(Request $request) {
+
+        return view('dashboard.peserta.agenda');
     }
 
 }

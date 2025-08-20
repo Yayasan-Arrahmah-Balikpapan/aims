@@ -21,73 +21,92 @@
         </template>
 
         <template v-slot:tab-content-0>
-            <x-splade-lazy>
-                <section class="max-w-7xl mx-auto bg-no-repeat bg-bottom bg-cover h-[175px]"
-                    style="background-image: url({{ asset('assets/bg/bg-dashboard.png') }})">
-                    <div class="p-4 sm:px-6 item-center grid md:grid-cols-2 lg:grid-cols-3 text-xs sm:text-lg gap-4">
-                        <div class="col-span-2 sm:col-span-1 bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg rounded-lg shadow-lg p-2 sm:p-6">
-                            <p class="text-gray-600">
-                                <img src="{{ asset('assets/img/dash-1.png') }}" class="h-18" alt="dash-1">
-                            </p>
-                            <p class="text-gray-600">
-                                "Sebaik-baik kalian adalah orang yang belajar Al-Quran dan mengajarkannya."
-                            </p>
-                            <p class="text-gray-600">
-                                Shahih al-Bukhari, 5027.
-                            </p>
+            <div class="bg-white">
+                <section class="max-w-7xl mx-auto bg-no-repeat bg-center bg-cover sm:bg-auto sm:bg-left bg-primary-800 bg-[url('/assets/bg/bg-dashboard.png')] h-[175px] sm:h-[300px] mb-20 sm:mb-32"
+                    style="background-image: url({{ asset('assets/img/masjid.png') }});">
+                    <div class="p-4 sm:px-6 item-center  gap-4">
+                        <div class="mt-36 sm:mt-52 bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-8">
+                            <div class="flex gap-4">
+                                <div class="flex items-center justify-center">
+                                    <span class="bg-sky-500 rounded-full h-6 sm:h-10 w-6 sm:w-10 flex items-center justify-center">
+                                        <x-carbon-user-filled class="sm:h-6 h-4 text-white" />
+                                    </span>
+                                </div>
+                                <div class="grow">
+                                    <h2 class="text-md sm:text-lg text-gray-800 text-md font-bold">{{ auth()->user()->name ?? '-' }}</h2>
+                                    <p class="text-sm sm:text-md text-gray-600">{{ auth()->user()->phone_number }}</p>
+                                </div>
+                                <div class="text-center">
+                                    <h1 class="text-xl sm:text-2xl font-bold text-gray-600"> {{ $count_peserta }}</h1>
+                                    <span class="text-white bg-sky-500 rounded-sm px-2 font-semibold text-[10px]">PESERTA</span>
+                                </div>
+                            </div>
                         </div>
-
-                        {{-- <div class="bg-gradient-to-t from-transparent to-white opacity-90">
-                            <h2 class="text-base font-bold tracking-tight text-gray-900">
-                                Ahlan Wa Sahlan, {{ auth()->user()->name ?? auth()->user()->phone_number }}
-                            </h2>
-                        </div> --}}
                     </div>
                 </section>
-            </x-splade-lazy>
+                <section class="max-w-7xl mx-auto bg-white text-center text-sm">
+                </section>
+                <section class="max-w-7xl mx-auto bg-white text-center text-sm">
+                    <div class="grid grid-cols-4 gap-4 p-6">
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-pendidikan.png') }}" class="h-16 sm:h-24" alt="icon-pendidikan">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Pendidikan LTTQ</span>
+                        </div>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-masjid.png') }}" class="h-16 sm:h-24" alt="icon-masjid">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Masjid</span>
+                        </div>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-tahsin.png') }}" class="h-16 sm:h-24" alt="icon-tahsin">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Tahsin</span>
+                        </div>
+                        <Link href="{{ route('dashboard.peserta.agenda') }}" class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
+                        </Link>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-kajian.png') }}" class="h-16 sm:h-24" alt="icon-kajian">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Kajian</span>
+                        </div>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-infaq-zakat.png') }}" class="h-16 sm:h-24" alt="icon-infaq-zakat">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Fundrising</span>
+                        </div>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-informasi.png') }}" class="h-16 sm:h-24" alt="icon-informasi">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Informasi</span>
+                        </div>
+                        <div class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-lainnya.png') }}" class="h-16 sm:h-24" alt="icon-lainnya">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Lainnya</span>
+                        </div>
+                    </div>
 
-            <section class="max-w-7xl mx-auto sm:pt-6 bg-white text-center text-sm">
-                <div class="grid grid-cols-4 gap-4 p-6">
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-pendidikan.png') }}" class="h-16 sm:h-24" alt="icon-pendidikan">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Pendidikan LTTQ</span>
+                    <div class="px-6 py-2">
+                        <div class="bg-primary-700 px-2 font-medium mx-4 rounded-md flex items-center justify-between text-white text-xs">
+                            Yayasan Ar Rahmah Balikpapan
+                            <x-carbon-chevron-right class="w-6 h-6 my-1" />
+                        </div>
                     </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-masjid.png') }}" class="h-16 sm:h-24" alt="icon-masjid">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Masjid</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-tahsin.png') }}" class="h-16 sm:h-24" alt="icon-tahsin">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Tahsin</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-kajian.png') }}" class="h-16 sm:h-24" alt="icon-kajian">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Kajian</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-infaq-zakat.png') }}" class="h-16 sm:h-24" alt="icon-infaq-zakat">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Fundrising</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-informasi.png') }}" class="h-16 sm:h-24" alt="icon-informasi">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Informasi</span>
-                    </div>
-                    <div class="inline-flex flex-col items-center">
-                        <img src="{{ asset('assets/icon/icon-lainnya.png') }}" class="h-16 sm:h-24" alt="icon-lainnya">
-                        <span class="sm:font-bold font-semibold text-gray-800 ">Lainnya</span>
-                    </div>
+                </section>
+            </div>
+            <section class="max-w-7xl mx-auto p-12 bg-white text-sm">
+                <h2 class="text-xl font-bold pb-2">Daftar</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Link href="{{ route('website.lttq.tahsin.pendaftaran') }}" class="grid grid-cols-2 border rounded-xl shadow-md ">
+                        <img src="{{ asset('assets/banner/1.png') }}" class="rounded-s-xl" alt="1" loading="lazy">
+                        <div class="px-4 py-2 flex flex-col justify-between items-start">
+                            <div class="text-left">
+                                <p class="text-gray-800 text-xl lg:text-3xl font-bold">Program Perbaikan Bacaan Al-Quran</p>
+                                <p class="text-gray-600 text-sm">Angkatan 27</p>
+                            </div>
+                            <div class="flex items-center">
+                                <x-carbon-time-filled class="w-4 text-primary-700 mr-2" />
+                                <p class="text-gray-600 text-xs">Agus-Nov 2025</p>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
-
-                {{-- <div class="px-6 py-2">
-                    <div class="bg-primary-700 px-2 font-medium mx-4 rounded-md flex items-center justify-between text-white text-xs">
-                        Yayasan Ar Rahmah Balikpapan
-                        <x-carbon-chevron-right class="w-6 h-6 my-1" />
-                    </div>
-                </div> --}}
             </section>
 
             <x-splade-lazy>
@@ -133,6 +152,42 @@
 
                 @endif
             </x-splade-lazy>
+
+            <div class="bg-primary-800">
+                <section class="max-w-7xl mx-auto p-12  text-sm">
+                    <h2 class="text-xl font-bold pb-2 text-white">Pendidikan LTTQ</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                        <div class="bg-white rounded-xl shadow-md">
+                            <img src="{{ asset('assets/banner/2.png') }}" class="rounded-t-xl" alt="2" loading="lazy">
+                            <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
+                                <p class="text-gray-800 font-bold text-xl">RTQ PUTRA</p>
+                                <p class="text-gray-600 text-md">Program Pendidikan Asrama Hafalan Al-Quran </p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md">
+                            <img src="{{ asset('assets/banner/3.png') }}" class="rounded-t-xl" alt="3" loading="lazy">
+                            <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
+                                <p class="text-gray-800 font-bold text-xl">RTQ PUTRI</p>
+                                <p class="text-gray-600 text-md">Program Pendidikan Asrama Hafalan Al-Quran </p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md">
+                            <img src="{{ asset('assets/banner/4.png') }}" class="rounded-t-xl" alt="4" loading="lazy">
+                            <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
+                                <p class="text-gray-800 font-bold text-xl">TLA</p>
+                                <p class="text-gray-600 text-md">Program Tahfidz Al-Quran</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-md">
+                            <img src="{{ asset('assets/banner/5.png') }}" class="rounded-t-xl" alt="5" loading="lazy">
+                            <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
+                                <p class="text-gray-800 font-bold text-xl">RQ</p>
+                                <p class="text-gray-600 text-md">Pendidiakn Anak Usia Dini</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </template>
 
         <template v-slot:tab-content-1>
