@@ -25,6 +25,7 @@ Route::prefix('/peserta')->group(function () {
 Route::get('/peserta/{peserta}/daftar-jadwal', [\App\Http\Controllers\Peserta\DaftarJadwalController::class, 'index'])->name('dashboard.peserta.daftar-jadwal');
 Route::get('/peserta/{peserta}/daftar-jadwal/{jadwal}', [\App\Http\Controllers\Peserta\DaftarJadwalController::class, 'store'])->name('dashboard.peserta.daftar-jadwal.update');
 
+Route::get('/agenda', [DashboardController::class, 'agenda'])->name('dashboard.peserta.agenda');
 Route::get('/data', [DashboardController::class, 'peserta_data'])->name('dashboard.peserta.data');
 Route::get('/riwayat-pembayaran', [DashboardController::class, 'peserta_riwayat_pembayaran'])->name('dashboard.peserta.riwayatpembayaran');
 Route::get('/pembayaran/pilih-peserta', [\App\Http\Controllers\Peserta\PembayaranController::class, 'pembayaran_pilih_peserta'])->name('dashboard.peserta.pembayaran.pilih-peserta');

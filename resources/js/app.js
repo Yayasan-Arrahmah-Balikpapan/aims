@@ -30,6 +30,7 @@ import MapMiniMultiMarker from "./components/MapMiniMultiMarker.vue";
 import BiayaDaftar from "./components/pendaftaran/BiayaDaftar.vue";
 import PwaInstallButton from './components/PwaInstallButton.vue';
 import Dashboard from './components/dashboard/Dashboard.vue';
+import Kalender from './components/Kalender.vue';
 
 const el = document.getElementById("app");
 
@@ -69,7 +70,8 @@ createApp({
             MapMiniMultiMarker,
             BiayaDaftar,
             PwaInstallButton,
-            Dashboard
+            Dashboard,
+            Kalender,
         },
     })
 
