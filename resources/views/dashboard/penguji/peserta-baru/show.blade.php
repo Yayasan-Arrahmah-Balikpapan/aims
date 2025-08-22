@@ -125,8 +125,8 @@
                 <div class="col-auto">
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                         <div class="items-center flex space-x-4">
-                            <ul class="flex gap-4">
-                                <li class="col-span-3 py-2">
+                            <ul class="sm:flex gap-4">
+                                <li class="py-2">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0 gap-4">
                                             <p class="text-lg font-normal text-gray-500 truncate ">
@@ -140,7 +140,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="col-span-3 py-2">
+                                <li class="py-2">
                                     <div class="flex items-center space-x-4">
                                         <div class="flex-1 min-w-0">
                                             <p class="text-lg font-normal text-gray-500 truncate ">
