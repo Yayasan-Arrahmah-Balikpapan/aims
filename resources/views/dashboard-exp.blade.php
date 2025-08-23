@@ -90,15 +90,15 @@
                     </div>
                 </section>
             </div>
-            <section class="max-w-7xl mx-auto p-12 bg-white text-sm">
+            <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 bg-white text-sm">
                 <h2 class="text-xl font-bold pb-2">Daftar</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Link href="{{ route('website.lttq.tahsin.pendaftaran') }}" class="grid grid-cols-2 border rounded-xl shadow-md ">
                         <img src="{{ asset('assets/banner/1.png') }}" class="rounded-s-xl" alt="1" loading="lazy">
                         <div class="px-4 py-2 flex flex-col justify-between items-start">
                             <div class="text-left">
-                                <p class="text-gray-800 text-xl lg:text-3xl font-bold">Program Perbaikan Bacaan Al-Quran</p>
-                                <p class="text-gray-600 text-sm">Angkatan 27</p>
+                                <p class="text-gray-800 text-md lg:text-3xl font-bold">Program Perbaikan Bacaan Al-Quran</p>
+                                <p class="text-gray-600 text-sm lg:text-xl">Angkatan 27</p>
                             </div>
                             <div class="flex items-center">
                                 <x-carbon-time-filled class="w-4 text-primary-700 mr-2" />
@@ -154,35 +154,35 @@
             </x-splade-lazy>
 
             <div class="bg-primary-800">
-                <section class="max-w-7xl mx-auto p-12  text-sm">
-                    <h2 class="text-xl font-bold pb-2 text-white">Pendidikan LTTQ</h2>
+                <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 text-sm">
+                    <h2 class="text-md sm:text-xl font-bold pb-2 text-white">Program LTTQ Lainnya</h2>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div class="bg-white rounded-xl shadow-md">
                             <img src="{{ asset('assets/banner/2.png') }}" class="rounded-t-xl" alt="2" loading="lazy">
                             <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
-                                <p class="text-gray-800 font-bold text-xl">RTQ PUTRA</p>
-                                <p class="text-gray-600 text-md">Program Pendidikan Asrama Hafalan Al-Quran </p>
+                                <p class="text-gray-800 font-bold text-md sm:text-xl">RTQ PUTRA</p>
+                                <p class="text-gray-600 text-xs sm:text-lg">Program Pendidikan Asrama Hafalan Al-Quran </p>
                             </div>
                         </div>
                         <div class="bg-white rounded-xl shadow-md">
                             <img src="{{ asset('assets/banner/3.png') }}" class="rounded-t-xl" alt="3" loading="lazy">
                             <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
-                                <p class="text-gray-800 font-bold text-xl">RTQ PUTRI</p>
-                                <p class="text-gray-600 text-md">Program Pendidikan Asrama Hafalan Al-Quran </p>
+                                <p class="text-gray-800 font-bold text-md sm:text-xl">RTQ PUTRI</p>
+                                <p class="text-gray-600 text-xs sm:text-lg">Program Pendidikan Asrama Hafalan Al-Quran </p>
                             </div>
                         </div>
                         <div class="bg-white rounded-xl shadow-md">
                             <img src="{{ asset('assets/banner/4.png') }}" class="rounded-t-xl" alt="4" loading="lazy">
                             <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
-                                <p class="text-gray-800 font-bold text-xl">TLA</p>
-                                <p class="text-gray-600 text-md">Program Tahfidz Al-Quran</p>
+                                <p class="text-gray-800 font-bold text-md sm:text-xl">TLA</p>
+                                <p class="text-gray-600 text-xs sm:text-lg">Program Tahfidz Al-Quran</p>
                             </div>
                         </div>
                         <div class="bg-white rounded-xl shadow-md">
                             <img src="{{ asset('assets/banner/5.png') }}" class="rounded-t-xl" alt="5" loading="lazy">
                             <div class="px-4 py-2 h-28 sm:h-36 flex flex-col justify-between">
-                                <p class="text-gray-800 font-bold text-xl">RQ</p>
-                                <p class="text-gray-600 text-md">Pendidiakn Anak Usia Dini</p>
+                                <p class="text-gray-800 font-bold text-md sm:text-xl">RQ</p>
+                                <p class="text-gray-600 text-xs sm:text-lg">Pendidiakn Anak Usia Dini</p>
                             </div>
                         </div>
                     </div>
