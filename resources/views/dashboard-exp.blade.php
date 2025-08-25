@@ -22,10 +22,10 @@
 
         <template v-slot:tab-content-0>
             <div class="bg-white">
-                <section class="max-w-7xl mx-auto bg-no-repeat bg-center bg-cover bg-primary-800 h-[180px] md:h-[275px] lg:h-[500px] mb-20 sm:mb-32"
+                <section class="max-w-7xl mx-auto bg-no-repeat bg-center bg-cover bg-primary-800 h-[160px] md:h-[275px] lg:h-[500px] mb-10"
                     style="background-image: url({{ asset('assets/banner-dashboard-1.png') }});">
                     <div class="p-4 sm:px-6 item-center gap-4">
-                        <div class="mt-36 md:mt-56 lg:mt-96 bg-white rounded-lg shadow-sm border border-gray-200 p-2 sm:p-8">
+                        <div class="mt-28 md:mt-56 lg:mt-96 bg-white rounded-lg shadow-sm border border-gray-200 p-2 sm:p-8">
                             <div class="flex gap-4">
                                 <div class="flex items-center justify-center">
                                     <span class="bg-sky-500 rounded-full h-6 sm:h-10 w-6 sm:w-10 flex items-center justify-center">
