@@ -55,7 +55,10 @@ class AuthPhoneController extends Controller
         $this->notifService->kirimNotifWa($user->phone_code.ltrim($user->phone_number, '0'), $this->formatPesanAksesWa($kode));
         $this->successSendOTP($nomor);
 
-        return redirect()->route('akses.nomor', ['nomor' => $request->phone_number, 'kode' => $kode]);
+        return redirect()->route('akses.nomor',
+            ['nomor' => $request->phone_number,
+                        // 'kode' => $kode
+                    ]);
     }
 
     public function akses_nomor($nomor)

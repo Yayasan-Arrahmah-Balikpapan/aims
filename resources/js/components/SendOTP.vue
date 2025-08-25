@@ -11,7 +11,7 @@
             </div> -->
             <div class="my-4 pt-4">
                 <a class="rounded-lg text-sm px-4 py-2 mt-5 text-primary-700 hover:text-primary-900" href="#" @click.prevent="confirmSendOTP">
-                     Kode OTP
+                    Kirim Lagi Kode OTP Ke Whatsapp
                     <!-- Kirim Ulang Kode OTP -->
                 </a>
             </div>
