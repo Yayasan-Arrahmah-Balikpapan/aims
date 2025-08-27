@@ -1,6 +1,6 @@
 @props(['unit'])
 
-<div class="sticky top-0 z-50">
+<div class="sticky top-0 z-20">
     <x-layouts.nav />
 </div>
 <div class="flex overflow-hidden bg-gray-50">

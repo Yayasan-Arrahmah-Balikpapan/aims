@@ -146,16 +146,35 @@ class PengajarController extends Controller
 
     public function import_store(Request $request, $unit)
     {
-        // $this->validate($request, [
-        //     'file' => 'required|mimes:csv,xls,xlsx'
-        // ]);
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
 
         $id_unit = \App\Models\Modules\Unit::where('slug', $unit)->first()->id;
 
         $file = $request->file('file');
-        Excel::import(new \App\Imports\PengajarImport($id_unit), $file);
 
-        Toast::message('Data berhasil di import')->autoDismiss(5);
+        try {
+            $import = new \App\Imports\PengajarImport($id_unit);
+            Excel::import($import, $file);
+
+            $results = $import->getImportResults();
+
+            // Tampilkan hasil import menggunakan Toast atau Session
+            $message = "Import selesai! " .
+                    "Berhasil: {$results['imported']}, " .
+                    "Gagal: {$results['failed']}, " .
+                    "Duplikat: {$results['duplicates']}";
+
+            Toast::message($message)->autoDismiss(8);
+
+            // Simpan hasil detail di session untuk ditampilkan di halaman
+            session()->flash('import_results', $results);
+
+        } catch (\Exception $e) {
+            Toast::error('Terjadi kesalahan saat import: ' . $e->getMessage())->autoDismiss(8);
+        }
+
         return redirect()->route('admin.pengajar.index', $unit);
     }
 }
