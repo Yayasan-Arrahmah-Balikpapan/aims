@@ -4,8 +4,8 @@
             <h3 class="text-2xl font-bold text-gray-900">Belum memiliki peserta</h3>
         </div>
     @else
-        <div class="relative overflow-x-auto border border-b-0 border-x-0 rounded-md mb-4 bg-white">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+        <div class="overflow-x-scroll border border-b-0 border-x-0 rounded-md mb-4 bg-white">
+            <table class="text-sm text-left text-gray-500 ">
                 <thead>
                     <tr class="border-b border-gray-200">
                         <th scope="col" class="border-x text-gray-700 font-semibold p-1 text-center bg-stone-100">
@@ -53,8 +53,9 @@
                             $total_hadir = 0
                         @endphp
                         <tr class="text-gray-700 text-sm font-semibold border-b border-gray-300">
-                            <td class="border-x p-1 uppercase bg-stone-100">
-                                {{ $item->nis_peserta }} - {{ $item->peserta->nama }}
+                            <td class="border-x p-2 uppercase bg-stone-100 text-nowrap">
+                                <p class="text-gray-500">{{ $item->nis_peserta }}</p>
+                                <p>{{ $item->peserta->nama }}</p>
                             </td>
                             @for($i = 1; $i <= 16; $i++)
                                 <td class="min-w-16 border-x text-center p-1 uppercase text-xs font-bold ">

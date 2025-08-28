@@ -49,6 +49,9 @@
                 @if (Request::is('dashboard/hrd*'))
                     <x-layouts.sidebar.hrd/>
                 @endif
+                @if (Request::is('dashboard/keuangan*'))
+                    <x-layouts.sidebar.keuangan/>
+                @endif
                 {{-- @role('ketua-divisi-pendidikan')
                     <x-layouts.sidebar.ketua-divisi-pendidikan />
                 @role('ketua-divisi-dkm')

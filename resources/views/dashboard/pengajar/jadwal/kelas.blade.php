@@ -1,5 +1,5 @@
 <x-layouts.main :unit="$unit">
-        <div class="p-4 space-y-2">
+    <div class="p-4 space-y-2">
         <x-layouts.card-periode>
             <x-layouts.title>Kelas <text class="uppercase">{{ $unit }}</text>, {{ $data_kelas->nama_jadwal }} - {{ $data_kelas->periode->nama }} </x-layouts.title>
             <div class="py-4">
@@ -30,10 +30,9 @@
                     </div>
                 </div>
             </div>
-        </x-layouts.card>
+        </x-layouts.card-periode>
         @if ($unit == 'tahsin')
             @include('dashboard.pengajar.jadwal.tahsin-data')
         @endif
-
     </div>
 </x-layouts.main>
