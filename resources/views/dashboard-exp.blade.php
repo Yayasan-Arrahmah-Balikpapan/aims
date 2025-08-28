@@ -109,49 +109,22 @@
                 </div>
             </section>
 
-            <x-splade-lazy>
-                <x-slot:placeholder>
-                    <div class="pt-10 pb-10 px-4">
-                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div class="rounded-lg border border-gray-300 p-4">
-                                <div class="flex animate-pulse space-x-4">
-                                    <div class="size-10 rounded-full bg-gray-200"></div>
-                                    <div class="flex-1 space-y-6 py-1">
-                                        <div class="h-2 rounded bg-gray-200"></div>
-                                        <div class="space-y-3">
-                                            <div class="grid grid-cols-3 gap-4">
-                                                <div class="col-span-2 h-2 rounded bg-gray-200"></div>
-                                                <div class="col-span-1 h-2 rounded bg-gray-200"></div>
-                                            </div>
-                                            <div class="h-2 rounded bg-gray-200"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </x-slot:placeholder>
-                @if ($user->getRoleNames()->isNotEmpty())
+            @if ($user->getRoleNames()->isNotEmpty())
                 <div class="pt-10 pb-10 px-4">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                         <h1 class="text-2xl font-bold mb-4">Akses</h1>
                         <div class="border-b border-gray-300 my-4"></div>
                         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
-                            @forelse ($user->getRoleNames() as $role)
-                            <x-partials.list-item>
-                                <x-slot:title>{{ $role }}</x-slot>
-                                <x-slot:link>@include('components.role.redirect-dashboard')</x-slot>
-                            </x-partials.list-item>
-                            @empty
-
-                            @endforelse
+                            @foreach ($user->getRoleNames() as $role)
+                                <x-partials.list-item>
+                                    <x-slot:title>{{ $role }}</x-slot>
+                                    <x-slot:link>@include('components.role.redirect-dashboard')</x-slot>
+                                </x-partials.list-item>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                @else
-
-                @endif
-            </x-splade-lazy>
+            @endif
 
             <div class="bg-primary-800">
                 <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 text-sm">
