@@ -97,12 +97,13 @@
                 <div v-for="event in eventsForCurrentMonth" :key="event.id"
                     class="bg-white rounded-lg shadow-sm p-4 border-l-4"
                     :class="{
-                        'border-blue-500': event.category === 'lttq',
-                        'border-red-500': event.category === 'deadline',
-                        'border-orange-500': event.category === 'event',
-                        'border-green-500': event.category === 'training',
-                        'border-purple-500': event.category === 'other'
-                    }">
+                            'border-green-500' : event.category === 'Yayasan',
+                            'border-orange-500' : event.category === 'Tahsin',
+                            'border-cyan-500' : event.category === 'TLA',
+                            'border-pink-500' : event.category === 'RTQ Putri',
+                            'border-blue-500' : event.category === 'RTQ Putra',
+                            'border-purple-500' : event.category === 'RQ',
+                        }">
                     <div class="text-sm text-gray-500 mb-1">{{ formatDate(new Date(event.date)) }}</div>
                     <h3 class="font-semibold text-lg mb-2">{{ event.title }}</h3>
                     <p class="text-gray-600 mb-3">{{ event.description }}</p>
@@ -114,11 +115,12 @@
                         </span>
                         <span class="text-xs px-2 py-1 rounded-full text-white"
                             :class="{
-                                'bg-blue-500': event.category === 'lttq',
-                                'bg-red-500': event.category === 'deadline',
-                                'bg-orange-500': event.category === 'event',
-                                'bg-green-500': event.category === 'training',
-                                'bg-purple-500': event.category === 'other'
+                                'bg-green-500' : event.category === 'Yayasan',
+                                'bg-orange-500' : event.category === 'Tahsin',
+                                'bg-cyan-500' : event.category === 'TLA',
+                                'bg-pink-500' : event.category === 'RTQ Putri',
+                                'bg-blue-500' : event.category === 'RTQ Putra',
+                                'bg-purple-500' : event.category === 'RQ',
                             }">
                             {{ event.category }}
                         </span>
@@ -151,21 +153,21 @@ export default {
 
         // Fungsi untuk mengambil tanggal Hijriah untuk tanggal tertentu
         const fetchHijriDateForDay = async (date) => {
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
-            const url = `https://api.aladhan.com/v1/gToH?date=${day}-${month}-${year}`;
+            // const day = date.getDate();
+            // const month = date.getMonth() + 1;
+            // const year = date.getFullYear();
+            // const url = `https://api.aladhan.com/v1/gToH?date=${day}-${month}-${year}`;
 
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                if (data.code === 200) {
-                    const hijri = data.data.hijri;
-                    return toArabicNumbers(hijri.day);
-                }
-            } catch (error) {
-                console.error('Error fetching Hijri date:', error);
-            }
+            // try {
+            //     const response = await fetch(url);
+            //     const data = await response.json();
+            //     if (data.code === 200) {
+            //         const hijri = data.data.hijri;
+            //         return toArabicNumbers(hijri.day);
+            //     }
+            // } catch (error) {
+            //     console.error('Error fetching Hijri date:', error);
+            // }
             return '';
         };
 
@@ -256,11 +258,12 @@ export default {
 
         // Warna default untuk kategori kegiatan
         const categoryColors = {
-            'lttq': 'bg-blue-500',
-            'deadline': 'bg-red-500',
-            'event': 'bg-orange-500',
-            'training': 'bg-green-500',
-            'other': 'bg-purple-500'
+            'Yayasan': 'bg-green-500',
+            'Tahsin': 'bg-orange-500',
+            'TLA': 'bg-cyan-500',
+            'RTQ Putri': 'bg-pink-500',
+            'RTQ Putra': 'bg-blue-500',
+            'RQ': 'bg-purple-500'
         };
 
         // Mengambil data kegiatan dari API
@@ -268,20 +271,358 @@ export default {
             isLoading.value = true;
             try {
                 // Ganti dengan endpoint API Laravel Anda
-                const response = await fetch('/api/events');
+                const response = await fetch('http://localhost:8000/api/events--');
                 const data = await response.json();
                 events.value = data;
             } catch (error) {
                 console.error('Error fetching events:', error);
                 // Data dummy untuk contoh
-                events.value = [{
-                    id: 1,
-                    title: 'Pendaftaran Tahsin Angkatan 27',
-                    date: '2025-08-01',
-                    category: 'lttq',
-                    description: 'Waktu pendaftaran Agustus-November 2025',
-                    time: 'Online'
-                }];
+                // events.value = [{
+                //     id: 1,
+                //     title: 'Pendaftaran Tahsin Angkatan 27',
+                //     date: '2025-08-01',
+                //     category: 'Tahsin',
+                //     description: 'Waktu pendaftaran Agustus-November 2025',
+                //     time: 'Online'
+                // }];
+                events.value = [
+                        {
+                            "id": 1,
+                            "title": "Orientasi Santri Baru RQ",
+                            "date": "2025-07-10",
+                            "category": "RQ",
+                            "description": "Orientasi Santri Baru RQ pada tanggal 10-11 Juli 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 2,
+                            "title": "POMG RTQ Putra",
+                            "date": "2025-07-13",
+                            "category": "RTQ Putra",
+                            "description": "Pertemuan Orang Tua Murid Guru RTQ Putra",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 3,
+                            "title": "Kedatangan Santri Lama RTQ Putri",
+                            "date": "2025-07-15",
+                            "category": "RTQ Putri",
+                            "description": "Kedatangan Santri Lama RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 4,
+                            "title": "Kedatangan Santri Baru RTQ Putri",
+                            "date": "2025-07-20",
+                            "category": "RTQ Putri",
+                            "description": "Kedatangan Santri Baru RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 5,
+                            "title": "Acara Penyambutan Santri RTQ Putri",
+                            "date": "2025-07-21",
+                            "category": "RTQ Putri",
+                            "description": "Acara Penyambutan Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 6,
+                            "title": "Parenting RQ",
+                            "date": "2025-08-09",
+                            "category": "RQ",
+                            "description": "Acara Parenting untuk Santri RQ",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 7,
+                            "title": "Pawai RQ",
+                            "date": "2025-08-15",
+                            "category": "RQ",
+                            "description": "Pawai dalam rangka peringatan HUT RI untuk Santri RQ",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 8,
+                            "title": "Acara Kemerdekaan Yayasan",
+                            "date": "2025-08-16",
+                            "category": "Yayasan",
+                            "description": "Acara Kemerdekaan untuk Yayasan Ar Rahmah",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 9,
+                            "title": "Acara Kemerdekaan Santri RTQ Putri",
+                            "date": "2025-08-23",
+                            "category": "RTQ Putri",
+                            "description": "Acara Kemerdekaan untuk Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 10,
+                            "title": "Ujian Tahsin Akhwat",
+                            "date": "2025-08-23",
+                            "category": "Tahsin",
+                            "description": "Ujian Tahsin untuk Akhwat pada tanggal 23-25 Agustus 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 11,
+                            "title": "Muhadhoroh Santri RTQ Putri",
+                            "date": "2025-08-30",
+                            "category": "RTQ Putri",
+                            "description": "Muhadhoroh untuk Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 12,
+                            "title": "Ujian Tahsin Ikhwan",
+                            "date": "2025-08-31",
+                            "category": "Tahsin",
+                            "description": "Ujian Tahsin untuk Ikhwan",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 13,
+                            "title": "Pembukaan Pendaftaran Tahsin",
+                            "date": "2025-09-05",
+                            "category": "Tahsin",
+                            "description": "Pembukaan Pendaftaran Tahsin",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 14,
+                            "title": "Maulid Nabi Muhammad",
+                            "date": "2025-09-08",
+                            "category": "Umum",
+                            "description": "Peringatan Maulid Nabi Muhammad",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 15,
+                            "title": "Pengumuman Ujian Tahsin Angkatan 26",
+                            "date": "2025-09-13",
+                            "category": "Tahsin",
+                            "description": "Pengumuman hasil Ujian Tahsin Angkatan 26",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 16,
+                            "title": "Rihlah Pengajar Tahsin",
+                            "date": "2025-09-14",
+                            "category": "Tahsin",
+                            "description": "Rihlah (Darmawisata) untuk Pengajar Tahsin",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 17,
+                            "title": "Evaluasi Hafalan Santri RQ",
+                            "date": "2025-09-15",
+                            "category": "RQ",
+                            "description": "Evaluasi Hafalan untuk Santri RQ pada tanggal 15-26 September 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 18,
+                            "title": "Rihlah RTQ Putra",
+                            "date": "2025-09-17",
+                            "category": "RTQ Putra",
+                            "description": "Rihlah (Darmawisata) untuk Santri RTQ Putra",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 19,
+                            "title": "Muhadhoroh RTQ Putri",
+                            "date": "2025-09-26",
+                            "category": "RTQ Putri",
+                            "description": "Muhadhoroh untuk Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 20,
+                            "title": "Rihlah RTQ Putri",
+                            "date": "2025-09-27",
+                            "category": "RTQ Putri",
+                            "description": "Rihlah (Darmawisata) untuk Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 21,
+                            "title": "Pembagian Rapot Santri RQ",
+                            "date": "2025-10-04",
+                            "category": "RQ",
+                            "description": "Pembagian Rapot untuk Santri RQ",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 22,
+                            "title": "Mukhoyyam TLA",
+                            "date": "2025-10-18",
+                            "category": "TLA",
+                            "description": "Mukhoyyam (Perkemahan) TLA pada tanggal 18-19 Oktober 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 23,
+                            "title": "Outing RQ (Perpustakaan)",
+                            "date": "2025-10-22",
+                            "category": "RQ",
+                            "description": "Outing Santri RQ ke Perpustakaan",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 24,
+                            "title": "Peringatan Hari Santri",
+                            "date": "2025-10-22",
+                            "category": "Umum",
+                            "description": "Peringatan Hari Santri Nasional",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 25,
+                            "title": "Santri RTQ Putri Berenang",
+                            "date": "2025-10-25",
+                            "category": "RTQ Putri",
+                            "description": "Kegiatan Berenang untuk Santri RTQ Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 26,
+                            "title": "Peringatan Hari Sumpah Pemuda",
+                            "date": "2025-10-28",
+                            "category": "Umum",
+                            "description": "Peringatan Hari Sumpah Pemuda",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 27,
+                            "title": "Market Day RQ",
+                            "date": "2025-10-28",
+                            "category": "RQ",
+                            "description": "Kegiatan Market Day untuk Santri RQ pada tanggal 28-29 Oktober 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 28,
+                            "title": "Estimasi Kuliah Perdana Tahsin",
+                            "date": "2025-10-19",
+                            "category": "Tahsin",
+                            "description": "Estimasi Kuliah Perdana Tahsin pada tanggal 19 atau 26 Oktober 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 29,
+                            "title": "Outing RQ (Beruang Madu)",
+                            "date": "2025-11-14",
+                            "category": "RQ",
+                            "description": "Outing Santri RQ ke Pusat Konservasi Beruang Madu",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 30,
+                            "title": "Mukhoyyam RTQ Putra & Putri",
+                            "date": "2025-11-22",
+                            "category": "RTQ",
+                            "description": "Mukhoyyam (Perkemahan) untuk Santri RTQ Putra dan Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 31,
+                            "title": "Ujian Akhir Semester RQ",
+                            "date": "2025-11-24",
+                            "category": "RQ",
+                            "description": "Ujian Akhir Semester untuk Santri RQ pada tanggal 24-28 November 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 32,
+                            "title": "Estimasi Imtihan Wisuda TLA",
+                            "date": "2025-11-30",
+                            "category": "TLA",
+                            "description": "Estimasi pelaksanaan Imtihan Wisuda TLA",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 33,
+                            "title": "Ujian Akhir Semester RQ",
+                            "date": "2025-12-01",
+                            "category": "RQ",
+                            "description": "Ujian Akhir Semester untuk Santri RQ pada tanggal 1-5 Desember 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 34,
+                            "title": "Khataman Qubro RTQ Putra",
+                            "date": "2025-12-02",
+                            "category": "RTQ Putra",
+                            "description": "Khataman Qubro untuk Santri RTQ Putra",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 35,
+                            "title": "Ujian Sertifikasi RTQ Putri",
+                            "date": "2025-12-01",
+                            "category": "RTQ Putri",
+                            "description": "Ujian Sertifikasi untuk Santri RTQ Putri pada tanggal 1-9 Desember 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 36,
+                            "title": "Estimasi Imtihan Wisuda TLA",
+                            "date": "2025-12-07",
+                            "category": "TLA",
+                            "description": "Estimasi pelaksanaan Imtihan Wisuda TLA",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 37,
+                            "title": "Ujian Diniyah RTQ Putri",
+                            "date": "2025-12-08",
+                            "category": "RTQ Putri",
+                            "description": "Ujian Diniyah untuk Santri RTQ Putri pada tanggal 8-12 Desember 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 38,
+                            "title": "Pembagian Rapot RQ",
+                            "date": "2025-12-13",
+                            "category": "RQ",
+                            "description": "Pembagian Rapot untuk Santri RQ",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 39,
+                            "title": "Libur Santri RQ",
+                            "date": "2025-12-16",
+                            "category": "RQ",
+                            "description": "Libur Santri RQ dari tanggal 16 Desember 2025 hingga 13 Januari 2026",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 40,
+                            "title": "Liburan Seru Part #7 RQ",
+                            "date": "2025-12-16",
+                            "category": "RQ",
+                            "description": "Liburan Seru Bagian #7 untuk Santri RQ pada tanggal 16-19 Desember 2025",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 41,
+                            "title": "Wisuda RTQ Putra Putri",
+                            "date": "2025-12-20",
+                            "category": "RTQ",
+                            "description": "Wisuda untuk Santri RTQ Putra dan Putri",
+                            "time": "Sepanjang Hari"
+                        },
+                        {
+                            "id": 42,
+                            "title": "Kajian Kastah Tahsin",
+                            "date": "2025-12-21",
+                            "category": "Tahsin",
+                            "description": "Kajian Kastah untuk Tahsin",
+                            "time": "Sepanjang Hari"
+                        }
+                        ];
             } finally {
                 isLoading.value = false;
             }
