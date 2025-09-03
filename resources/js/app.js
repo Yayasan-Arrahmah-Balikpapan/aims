@@ -31,6 +31,10 @@ import BiayaDaftar from "./components/pendaftaran/BiayaDaftar.vue";
 import PwaInstallButton from './components/PwaInstallButton.vue';
 import Dashboard from './components/dashboard/Dashboard.vue';
 import Kalender from './components/Kalender.vue';
+import OneSignalSubscribe from './components/OneSignalSubscribe.vue';
+import NotificationDemo from './components/NotificationDemo.vue'
+import NotificationDropdown from './components/NotificationDropdown.vue'
+import NotificationAuto from './components/NotificationAuto.vue'
 
 const el = document.getElementById("app");
 
@@ -72,6 +76,10 @@ createApp({
             PwaInstallButton,
             Dashboard,
             Kalender,
+            OneSignalSubscribe,
+            NotificationDemo,
+            NotificationDropdown,
+            NotificationAuto,
         },
     })
 

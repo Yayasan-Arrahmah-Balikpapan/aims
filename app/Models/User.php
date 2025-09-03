@@ -12,11 +12,13 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, HasRoles, Notifiable;
     use InteractsWithMedia;
+    use HasPushSubscriptions;
     /**
      * The attributes that are mass assignable.
      *

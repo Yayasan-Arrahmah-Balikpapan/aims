@@ -49,3 +49,15 @@ Route::get('/server-time', function () {
         'time' => now()->setTimezone('Asia/Makassar')->toIso8601String()
     ]);
 });
+
+Route::get('/events', [\App\Http\Controllers\Api\AgendaController::class, 'index']);
+
+
+Route::post('/save-player-id', function (Request $request) {
+    $user = auth()->user();
+    if ($user) {
+        $user->update(['player_id' => $request->player_id]);
+        return response()->json(['status' => 'saved']);
+    }
+    return response()->json(['error' => 'unauthenticated'], 401);
+});
