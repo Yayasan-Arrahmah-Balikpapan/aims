@@ -56,6 +56,16 @@
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
     @spladeHead
+
+    <x-splade-script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></x-splade-script>
+    <x-splade-script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+        appId: "1c0e0bb6-57a8-4bb6-b586-502e678b153b",
+        });
+    });
+    </x-splade-script>
 </head>
 
 <body class="font-sans antialiased">

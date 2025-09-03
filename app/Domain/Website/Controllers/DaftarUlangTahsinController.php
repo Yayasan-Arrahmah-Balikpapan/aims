@@ -99,13 +99,13 @@ class DaftarUlangTahsinController extends Controller
         }
 
         // Log in the user
-        if (auth()->check() && auth()->user()->phone_number == $notelp) {
-            // jika sudah login dengan data yang sama, maka tidak perlu login ulang
-        } else {
-            // jika tidak maka logout terlebih dahulu
-            auth()->logout();
-            auth()->login($user);
-        }
+        // if (auth()->check() && auth()->user()->phone_number == $notelp) {
+        //     // jika sudah login dengan data yang sama, maka tidak perlu login ulang
+        // } else {
+        //     // jika tidak maka logout terlebih dahulu
+        //     auth()->logout();
+        //     auth()->login($user);
+        // }
 
 
         // $chapterNumber = 41;

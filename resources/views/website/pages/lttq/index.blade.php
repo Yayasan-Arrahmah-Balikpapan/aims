@@ -41,7 +41,7 @@
             </h1>
             <div class="py-10">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-y-11 gap-x-7">
-                    <Link href="{{ route('website.lttq.tahsin') }}" class="group lg:col-start-1 lg:col-end-3">
+                    <Link href="{{ route('website.lttq.tahsin.pendaftaran') }}" class="group lg:col-start-1 lg:col-end-3">
                         <div class="border border-gray-3 sm:h-40 h:24 rounded-[20px] bg-gray p-5 sm:mr-5 bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
                             <div class="flex items-center gap-4">
                                 <div class="">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </Link>
-                    <Link href="{{ route('website.lttq.rq') }}" class="group lg:col-start-3 lg:col-end-5">
+                    <Link href="#" class="group lg:col-start-3 lg:col-end-5">
                         <div class="border border-gray-3 sm:h-40 h:24 rounded-[20px] bg-gray p-5 sm:mx-5 bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
                             <div class="flex items-center gap-4">
                                 <div class="">
@@ -64,14 +64,14 @@
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-xl text-dark mb-1">
-                                       Raudhotul Qur'an
+                                        Raudhotul Qur'an
                                     </h4>
                                     <p>Pendidikan Quran anak usia 3-6 Tahun</p>
                                 </div>
                             </div>
                         </div>
                     </Link>
-                    <Link href="{{ route('website.lttq.tla') }}" class="group lg:col-start-5 lg:col-end-7">
+                    <Link href="#" class="group lg:col-start-5 lg:col-end-7">
                         <div class="border border-gray-3 sm:h-40 h:24 rounded-[20px] bg-gray p-5 sm:ml-2 bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
                             <div class="flex items-center gap-4">
                                 <div class="">
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </Link>
-                    <Link href="{{ route('website.lttq.rtq-putra') }}" class="group lg:col-start-2 lg:col-end-4">
+                    <Link href="#" class="group lg:col-start-2 lg:col-end-4">
                         <div class="border border-gray-3 sm:h-40 h:24 rounded-[20px] bg-gray p-5 sm:mr-5 bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
                             <div class="flex items-center gap-4">
                                 <div class="">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </Link>
-                    <Link href="{{ route('website.lttq.rtq-putri') }}" class="group lg:col-start-4 lg:col-end-6">
+                    <Link href="#" class="group lg:col-start-4 lg:col-end-6">
                         <div class="border border-gray-3 sm:h-40 h:24 rounded-[20px] bg-gray p-5 sm:ml-2 bg-white group-hover:drop-shadow-1 group-hover:-translate-y-2 transition-all">
                             <div class="flex items-center gap-4">
                                 <div class="">

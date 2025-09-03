@@ -624,8 +624,20 @@ class WebController extends Controller
             ->openGraphUrl('arrahmahbalikpapan.or.id')
             ->openGraphImage(asset('/assets/img/logo-arrahmah.png'))
             ;
+        $konten = [
+            'instalasi-aims' => 'Instalasi AIMS',
+            'persyaratan-pendaftaran' => 'Persyaratan Pendaftaran',
+            'cara-pendaftaran' => 'Cara Pendaftaran',
+            'petunjuk-pendaftaran' => 'Petunjuk Pendaftaran',
+        ];
+        // $page_title = array_key_exists($slug, $konten) ? $konten[$slug] : $page_title;
+        if( array_key_exists('instalasi-aims', $konten) ) {
+            return view('website.pages.informasi.petunjuk.instalasi-aims');
+        } else {
+            return view('website.pages.informasi.konten');
+        }
 
-        return view('website.pages.informasi.konten');
+
     }
 
     public function informasi_tag_slug($slug)

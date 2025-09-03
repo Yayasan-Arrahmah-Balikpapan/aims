@@ -32,6 +32,12 @@ Route::post("/lttq/tahsin/daftar-ulang/store", [DaftarUlangTahsinController::cla
 Route::get("/lttq/tahsin/daftar-ulang/berhasil", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
 Route::get("/lttq/tahsin/daftar-ulang/gagal", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
 
+Route::get("/lttq/tahsin/daftar-ulang/migrasi", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang"])->name("website.lttq.tahsin.daftar-ulang");
+Route::post("/lttq/tahsin/daftar-ulang/migrasi/store", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_store"])->name("website.lttq.tahsin.daftar-ulang.store");
+Route::get("/lttq/tahsin/daftar-ulang/migrasi/berhasil", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
+Route::get("/lttq/tahsin/daftar-ulang/migrasi/gagal", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
+
+
 Route::get("/lttq/tla", [App\Domain\Website\Controllers\LttqTlaController::class, "index"])->name("website.lttq.tla");
 Route::get("/lttq/rq", [App\Domain\Website\Controllers\LttqRqController::class, "index"])->name("website.lttq.rq");
 
@@ -50,5 +56,12 @@ Route::get("/informasi/{slug}", [WebController::class, "informasi_slug"])->name(
 Route::get("/informasi/tag/{slug}", [WebController::class, "informasi_tag_slug"])->name("website.informasi.tag.slug");
 
 Route::get("/quranic-camp", [WebController::class, "quranic_camp"])->name("website.quranic-camp");
+
+Route::get("/ibadah", [App\Domain\Website\Controllers\IbadahController::class, "index"])->name("website.ibadah");
+Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");
+Route::get("/agenda", [App\Domain\Website\Controllers\AgendaController::class, "index"])->name("website.agenda");
+// Route::get('/agenda', [\App\Http\Controllers\DashboardController::class, 'agenda'])->name('dashboard.peserta.agenda');
+
+
 
 

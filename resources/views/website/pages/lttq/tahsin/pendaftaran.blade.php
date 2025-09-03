@@ -136,6 +136,7 @@
                     <option value="Guru">Guru</option>
                     <option value="Pengajar">Pengajar</option>
                     <option value="Tenaga Kesehatan">Tenaga Kesehatan</option>
+                    <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
                     <option value="Lainnya">Lainnya</option>
                 </x-splade-select>
 

@@ -48,10 +48,10 @@
                 </section>
                 <section class="max-w-7xl mx-auto bg-white text-center text-sm">
                     <div class="grid grid-cols-4 gap-4 p-6">
-                        <div class="inline-flex flex-col items-center">
+                        <Link href="{{ route('website.lttq') }}" class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-pendidikan.png') }}" class="h-16 sm:h-24" alt="icon-pendidikan">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Pendidikan LTTQ</span>
-                        </div>
+                        </Link>
                         <div class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-masjid.png') }}" class="h-16 sm:h-24" alt="icon-masjid">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Masjid</span>
@@ -60,7 +60,11 @@
                             <img src="{{ asset('assets/icon/icon-tahsin.png') }}" class="h-16 sm:h-24" alt="icon-tahsin">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Tahsin</span>
                         </div>
-                        <Link href="{{ route('dashboard.peserta.agenda') }}" class="inline-flex flex-col items-center">
+                        {{-- <Link href="{{ route('dashboard.peserta.agenda') }}" class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
+                        </Link> --}}
+                        <Link href="{{ route('website.agenda') }}" class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
                         </Link>

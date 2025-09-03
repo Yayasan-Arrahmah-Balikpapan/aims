@@ -5,8 +5,31 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SuperAdminController;
 use Illuminate\Support\Facades\Route;
 use App\Domain\Website\Controllers\WebController;
+use Berkayk\OneSignal\OneSignalFacade as OneSignal;
+use Illuminate\Http\Request;
+use App\Models\Subscriber;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PushSubscriptionController;
 
-    Route::get('/media-list', [\App\Http\Controllers\Api\MediaController::class, 'list']);
+Route::post('notifications', [NotificationController::class, 'store']);
+Route::get('notifications', [NotificationController::class, 'index']);
+Route::patch('notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+Route::post('notifications/mark-all-read', [NotificationController::class, 'markAllRead']);
+Route::post('notifications/{id}/dismiss', [NotificationController::class, 'dismiss']);
+
+// Push Subscriptions
+Route::post('subscriptions', [PushSubscriptionController::class, 'update']);
+Route::post('subscriptions/delete', [PushSubscriptionController::class, 'destroy']);
+
+// Manifest file (optional if VAPID is used)
+Route::get('manifest.json', function () {
+    return [
+        'name' => config('app.name'),
+        'gcm_sender_id' => config('webpush.gcm.sender_id'),
+    ];
+});
+
+Route::get('/media-list', [\App\Http\Controllers\Api\MediaController::class, 'list']);
 
 Route::get('/sandbox', function (){
     return view('sandbox');
@@ -14,6 +37,10 @@ Route::get('/sandbox', function (){
 
 Route::get('/veb', function (){
     return view('veb');
+});
+
+Route::get('/test', function (){
+    return view('test');
 });
 
 Route::get('/offline', function (){
@@ -51,6 +78,20 @@ Route::prefix('/dashboard/karyawan')->middleware('role:karyawan')->group(functio
 |
 */
 
+// Route::middleware('auth')->prefix('auth')->name('auth.')->group(function () {
+    Route::post('/save-player-id', function (Request $request) {
+    // Simpan meskipun tidak login
+    Subscriber::updateOrCreate(
+        ['player_id' => $request->player_id],
+        [
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->header('User-Agent'),
+        ]
+    );
+
+    return response()->json(['status' => 'saved']);
+});
+// });
 Route::middleware('splade')->group(function () {
     Route::get('/absen', function (){
         return view('absen');
