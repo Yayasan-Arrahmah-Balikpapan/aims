@@ -27,7 +27,10 @@
                     Error 429
                 </h2>
                 <p class="mb-6 text-lg font-normal text-gray-500">
-                    Terlalu Banyak Percobaan. Mohon Coba Lagi 5 Menit Lagi.
+                    Kami Batasi Proses / Terlalu Banyak Percobaan.
+                </p>
+                <p class="mb-6 text-lg font-normal text-gray-500">
+                    Mohon Coba Lagi 2 Menit Lagi.
                 </p>
                 <div>
                     <a href="{{ route('akses') }}" class="font-semibold text-sm">Kembali</a>

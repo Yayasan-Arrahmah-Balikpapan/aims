@@ -1,9 +1,10 @@
-<option value="62">🇮🇩 Indonesia</option>
-                        <option value="60">🇲🇾 Malaysia</option>
-                        <option value="65">🇸🇬 Singapore</option>
-                        <option value="852">🇭🇰 Hong Kong</option>
-                        <option value="82">🇰🇷 Korea</option>
-                        <option value="81">🇯🇵 Japan</option>
+<option value="62">🇮🇩 Indonesia (62)</option>
+                        <option value="60">🇲🇾 Malaysia (60)</option>
+                        <option value="65">🇸🇬 Singapore (65)</option>
+                        <option value="61">🇦🇺 Australia (61)</option>
+                        <option value="852">🇭🇰 Hong Kong (852)</option>
+                        <option value="82">🇰🇷 Korea (82)</option>
+                        <option value="81">🇯🇵 Japan (81)</option>
                         <option value="93">Afghanistan (+93)</option>
                         <option value="355">Albania (+355)</option>
                         <option value="213">Algeria (+213)</option>
@@ -16,7 +17,6 @@
                         <option value="54">Argentina (+54)</option>
                         <option value="374">Armenia (+374)</option>
                         <option value="297">Aruba (+297)</option>
-                        <option value="61">Australia (+61)</option>
                         <option value="43">Austria (+43)</option>
                         <option value="994">Azerbaijan (+994)</option>
                         <option value="1242">Bahamas (+1242)</option>

@@ -20,7 +20,10 @@ trait ConvertNotifikasi
         $notifikasi = str_replace('{Jadwal}', $data->jadwal ? $data->jadwal->nama_jadwal : '-', $notifikasi);
         $notifikasi = str_replace('{Pengajar}', $data->jadwal ? $data->jadwal->pengajar->nama : '-', $notifikasi);
         $notifikasi = str_replace('{Level}', $data->jadwal ? $data->jadwal->level->nama : '-', $notifikasi);
-        $notifikasi = str_replace('{Level Baru}', $data->data_nilai ? $data->data_nilai['penempatan-level'] : '-', $notifikasi);
+        $notifikasi = str_replace('{Level Baru}', $data->data_nilai
+                                                                    ? $data->data_nilai['penempatan-level'] ?? '-'
+                                                                    : '-',
+                                                                    $notifikasi);
         $notifikasi = str_replace('{Hari}', $data->jadwal ? $data->jadwal->hari_belajar : '', $notifikasi);
         $notifikasi = str_replace('{Jam}', $data->jadwal ? $data->jadwal->jam_mulai : '', $notifikasi);
         $notifikasi = str_replace('{Jenis Pembelajaran}', $data->jadwal ? $data->jadwal->status_belajar : '', $notifikasi);

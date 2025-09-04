@@ -10,7 +10,7 @@
                 </div>
                 <div class="lg:max-w-[490px] w-full py-8">
                     <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                        Lembaga <text class="text-primary-800">Tahsin Tahfizhil</text> Quran
+                        Lembaga <text class="text-sky-800">Tahsin Tahfizhil</text> Quran
                     </h1>
                     <p>
                         “Sesungguhnya orang yang paling utama di antara kalian adalah yang belajar Al-Qur`an dan mengajarkannya.”
@@ -34,7 +34,7 @@
         </div>
       </section>
 
-    <section class="py-10 bg-[url('/assets/bg/bg-dots-1.png')] bg-repeat bg-[#0b661d]">
+    <section class="py-10 bg-[url('/assets/bg/bg-dots-1.png')] bg-repeat bg-sky-800">
         <div class="max-w-[1170px] mx-auto px-4 sm:px-10 xl:px-0">
             <h1 class="text-center text-white text-5xl font-bold py-10">
                 Unit Pendidikan <text class="text-lime-300 "> LTTQ Arrahmah </text>

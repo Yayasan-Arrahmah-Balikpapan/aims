@@ -10,7 +10,7 @@
                 </div>
                 <div class="lg:max-w-[490px] w-full py-8">
                     <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-                        Program <text class="text-primary-800">Sosial</text> Arrahmah
+                        Program <text class="text-orange-700">Sosial</text> Arrahmah
                     </h1>
                     <p>
                         “Sedekah tidak akan mengurangi harta. Allah tidak menambah kepada seorang hamba yang pemaaf melainkan kemuliaan, dan tidaklah seseorang merendah diri karena Allah melainkan Allah akan mengangkat derajatnya.”
@@ -24,7 +24,7 @@
             <dl class="grid max-w-screen-md gap-8 mx-auto text-gray-900 dark:text-white">
                 <div class="flex flex-col items-center justify-center">
                     <dt class="mb-2 text-3xl md:text-4xl font-extrabold">
-                        <x-carbon-location class="text-primary-800 w-16 h-16 lg:w-20 lg:h-20"/>
+                        <x-carbon-location class="text-orange-700 w-16 h-16 lg:w-20 lg:h-20"/>
                     </dt>
                     <dd class="font-light text-gray-500 dark:text-gray-400">Perum. Spinggan Pratama, Balikpapan.</dd>
                 </div>
@@ -32,7 +32,7 @@
         </div>
     </section>
 
-    <section class="py-10 bg-[url('/assets/bg/bg-dots-1.png')] bg-repeat bg-[#0b661d]">
+    <section class="py-10 bg-[url('/assets/bg/bg-dots-1.png')] bg-repeat bg-orange-700">
         <div class="max-w-[1170px] mx-auto px-4 sm:px-10 xl:px-0">
             {{-- <h1 class="text-center text-white text-5xl font-bold py-10">
                 Unit Pendidikan <text class="text-lime-300 "> LTTQ Arrahmah </text>

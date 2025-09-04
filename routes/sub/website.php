@@ -28,14 +28,17 @@ Route::get("/lttq/tahsin/pendaftaran/berhasil", [App\Domain\Website\Controllers\
 Route::get("/lttq/tahsin/pendaftaran/gagal", [App\Domain\Website\Controllers\PendaftaranTahsinController::class, "tahsin_pendaftaran_gagal"])->name("website.lttq.tahsin.pendaftaran.gagal");
 
 Route::get("/lttq/tahsin/daftar-ulang", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang"])->name("website.lttq.tahsin.daftar-ulang");
-Route::post("/lttq/tahsin/daftar-ulang/store", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_store"])->name("website.lttq.tahsin.daftar-ulang.store");
+Route::post("/lttq/tahsin/daftar-ulang/store", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_store"])
+    ->name("website.lttq.tahsin.daftar-ulang.store")
+    ->middleware('throttle:1,1')
+    ;
 Route::get("/lttq/tahsin/daftar-ulang/berhasil", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
 Route::get("/lttq/tahsin/daftar-ulang/gagal", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
 
-Route::get("/lttq/tahsin/daftar-ulang/migrasi", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang"])->name("website.lttq.tahsin.daftar-ulang");
-Route::post("/lttq/tahsin/daftar-ulang/migrasi/store", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_store"])->name("website.lttq.tahsin.daftar-ulang.store");
-Route::get("/lttq/tahsin/daftar-ulang/migrasi/berhasil", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
-Route::get("/lttq/tahsin/daftar-ulang/migrasi/gagal", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
+// Route::get("/lttq/tahsin/daftar-ulang/migrasi", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang"])->name("website.lttq.tahsin.daftar-ulang");
+// Route::post("/lttq/tahsin/daftar-ulang/migrasi/store", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_store"])->name("website.lttq.tahsin.daftar-ulang.store");
+// Route::get("/lttq/tahsin/daftar-ulang/migrasi/berhasil", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
+// Route::get("/lttq/tahsin/daftar-ulang/migrasi/gagal", [App\Domain\Website\Controllers\DaftarUlangTahsinMigrasiController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
 
 
 Route::get("/lttq/tla", [App\Domain\Website\Controllers\LttqTlaController::class, "index"])->name("website.lttq.tla");

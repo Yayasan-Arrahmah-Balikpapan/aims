@@ -1,4 +1,4 @@
-
+<x-app-layout>
 {{-- <x-splade-script>
     document.addEventListener("DOMContentLoaded", function() {
         setInterval(function() {
@@ -10,7 +10,7 @@
 
 
 <div class="bg-gray-100">
-    <div class="text-center py-4 bg-gray-100">
+    {{-- <div class="text-center py-4 bg-gray-100">
         <p class="text-md space-x-10">
             <Link href="{{ url('/') }}" class=" text-gray-600 hover:text-gray-900">
                 &larr; Kembali
@@ -22,14 +22,13 @@
                 </Link>
             @endauth
         </p>
-    </div>
+    </div> --}}
 
     <!-- Invoice -->
     <div class="max-w-7xl px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10 bg-gray-100">
         <div class="sm:w-11/12 lg:w-3/4 mx-auto">
             <!-- Card -->
             <div class="flex flex-col p-4 sm:p-10 bg-white shadow-md rounded-xl dark:bg-neutral-800">
-                <!-- Grid -->
                 <div class="flex justify-between">
                     <img src="{{ url('/') }}/assets/img/logo-arrahmah.png" alt="yayasan arrahmah" class="h-12">
 
@@ -41,7 +40,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="text-center pb-4">
                     <h1 class="mt-2 text-xl sm:text-2xl  font-semibold text-gray-800">
                         Yayasan Ar Rahmah Balikpapan
@@ -50,9 +48,7 @@
                         Lembaga Tahsin Tahfizhil Quran
                     </h4>
                 </div>
-               <hr>
-
-                <!-- Grid -->
+                <hr>
                 <div class="mt-8 grid sm:grid-cols-2 gap-3">
                     <div class="flex gap-4">
                         <h3 class="text-lg font-semibold text-gray-800">Kepada:</h3>
@@ -64,10 +60,7 @@
                             </address>
                         </div>
                     </div>
-                    <!-- Col -->
-
                     <div class="sm:text-end space-y-2">
-                        <!-- Grid -->
                         <div class="grid grid-cols-1 gap-3 sm:gap-2">
                             <dl class="flex gap-4">
                                 <dt class="font-semibold text-gray-800 dark:text-neutral-200">Tanggal Invoice :
@@ -91,7 +84,6 @@
                         </div>
                         <!-- End Grid -->
                     </div>
-                    <!-- Col -->
                 </div>
                 <!-- End Grid -->
                 <div class="flex items-center justify-center mt-6">
@@ -235,14 +227,15 @@
                                         confirm="Konfirmasi"
                                         confirm-button="Benar"
                                         cancel-button="Belum"
-                                        method="POST">
+                                        method="POST"
+                                        >
                                         @csrf
                                     <div class="my-4">
                                         <span class="block mb-1 text-gray-700 font-sans"> Upload Bukti Transfer<span aria-hidden="true" class="text-red-600" title="This field is required">*</span></span>
                                         <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload>
                                     </div>
                                     <div class="flex items-center justify-center">
-                                        <button type="submit" class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </button>
+                                        <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </x-splade-submit>
                                     </div>
                                 </x-splade-form>
                             @elseif ($data->status == 2)
@@ -265,9 +258,12 @@
         </div>
     </div>
 
-    <div class="bg-gray-100">
-        <div class="text-center py-4 bg-gray-100">
-            <p class="text-md space-x-10">
+    <div class="max-w-3xl px-4 sm:px-6 lg:px-8 mx-auto">
+        <div class="text-center py-4 bg-white shadow-md rounded-xl">
+            <p class="text-md my-4">
+                Silahkan masuk ke dashboard untuk melihat data anda.
+            </p>
+            <p class="text-md my-4">
                 @auth
                     <Link href="{{ url('/') }}/dashboard" class="p-2 border rounded-md border-gray-600 text-800 hover:text-primary-900">
                         Ke Dashboard &#x02192;
@@ -289,3 +285,4 @@
     </div>
 </div>
 
+</x-app-layout>
