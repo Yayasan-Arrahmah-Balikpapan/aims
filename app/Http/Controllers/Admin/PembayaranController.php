@@ -208,7 +208,22 @@ class PembayaranController extends Controller
                                     });
                                 })
                                 ->toArray();
-        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 'data_pembayaran_peserta'));
+        $data_transaksi_peserta = \App\Models\Transaksi::whereIn('kelas_id', $data_peserta_id)
+                                ->where('status', 3)
+                                ->get()
+                                ->groupBy('kelas_id')
+                                ->map(function ($items, $kelas_id) {
+                                    return $items->mapWithKeys(function ($item) {
+                                        return [
+                                                'donasi' => $item->donasi,
+                                                'nominal_total' => $item->nominal_total,
+                                                'nominal_total_pembayaran' => $item->nominal_total_pembayaran
+                                                ];
+                                    });
+                                })
+                                ->toArray();
+                                // dd($data_transaksi_peserta);
+        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 'data_pembayaran_peserta', 'data_transaksi_peserta'));
     }
 
     public function rekap($unit, $periode)

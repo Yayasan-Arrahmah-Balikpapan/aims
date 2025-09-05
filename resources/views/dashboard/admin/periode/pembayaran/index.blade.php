@@ -34,6 +34,9 @@
                                 </th>
                             @endforeach
                             <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Potongan
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Total
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
@@ -72,13 +75,16 @@
                                     </td>
                                 @endforeach
                                 <td class="py-4 px-2 uppercase text-center">
+                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                </td>
+                                <td class="py-4 px-2 uppercase text-center">
                                     Rp. {{ number_format($total_pembayaran, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-2 uppercase text-center">
-                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                    Rp. {{ number_format($data_transaksi_peserta[$item->id]['donasi'] ?? 0, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-2 uppercase text-center">
-                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                    Rp. {{ number_format($data_transaksi_peserta[$item->id]['nominal_total_pembayaran'] ?? 0, 0, ',', '.') }}
                                 </td>
                             </tr>
                         @endforeach

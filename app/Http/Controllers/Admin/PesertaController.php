@@ -8,6 +8,8 @@ use App\Tables\Pesertas;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use ProtoneMedia\Splade\Facades\Toast;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PesertaController extends Controller
 {
@@ -121,7 +123,14 @@ class PesertaController extends Controller
             $nomor               = $hitung_data_peserta + 1;
             $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
             $kode_periode        = str_pad($periode->angkatan, 4, '0', STR_PAD_LEFT);
-            $kode_unit           = $request->input('jenis_peserta') == 'ikhwan' ? 'TI' : 'TA';
+            $kode_unit           = match ($unit->slug) {
+                                        'tahsin' => $request->input('jenis_peserta') == 'ikhwan' ? 'TI' : 'TA',
+                                        'rq' => 'RQ',
+                                        'rtq-putra' => 'RA',
+                                        'rtq-putri' => 'RI',
+                                        'tla' => 'TL',
+                                        default => '-',
+                                    };
             $nis_peserta         = $kode_unit.$kode_periode.$kode_peserta;
 
             while(\App\Models\Kelas::where('nis_peserta', $nis_peserta)->where('periode_id', $periode->id)->exists()) {
@@ -134,7 +143,7 @@ class PesertaController extends Controller
             $peserta_kelas = \App\Models\Kelas::create([
                 'periode_id'          => $periode->id,
                 'peserta_id'          => $peserta->id,
-                'jadwal_id'           => $request->jadwal,
+                'jadwal_id'           => $request->jadwal ?? null,
                 'nis_peserta'         => $nis_peserta,
                 'uuid'                => $uuid,
                 'data_pembayaran'     => json_encode($data_format),
@@ -142,7 +151,7 @@ class PesertaController extends Controller
                 'status_penerimaan'   => $request->penerimaan,
                 'status_aktif'        => 'aktif',
                 'status_daftar'       => 'baru',
-                'status_pendaftaran'  => 'selesai pilih jadwal',
+                'status_pendaftaran'  => $request->jadwal ?'selesai pilih jadwal' : 'belum pilih jadwal',
                 'status_ujian'        => 'belum ujian',
                 'status_daftar_ulang' => 'belum daftar ulang',
                 'status_domisili'     => $request->domisili,
@@ -220,5 +229,45 @@ class PesertaController extends Controller
             Toast::warning('Terjadi kesalahan, data gagal dihapus')->autoDismiss(5);
         }
         return redirect()->back();
+    }
+
+    public function import(Request $request, $unit)
+    {
+        return view('dashboard.admin.pengajar.import', compact('unit'));
+    }
+
+
+    public function import_store(Request $request, $unit)
+    {
+        $request->validate([
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $id_unit = \App\Models\Modules\Unit::where('slug', $unit)->first()->id;
+
+        $file = $request->file('file');
+
+        try {
+            $import = new \App\Imports\PengajarImport($id_unit);
+            Excel::import($import, $file);
+
+            $results = $import->getImportResults();
+
+            // Tampilkan hasil import menggunakan Toast atau Session
+            $message = "Import selesai! " .
+                    "Berhasil: {$results['imported']}, " .
+                    "Gagal: {$results['failed']}, " .
+                    "Duplikat: {$results['duplicates']}";
+
+            Toast::message($message)->autoDismiss(8);
+
+            // Simpan hasil detail di session untuk ditampilkan di halaman
+            session()->flash('import_results', $results);
+
+        } catch (\Exception $e) {
+            Toast::error('Terjadi kesalahan saat import: ' . $e->getMessage())->autoDismiss(8);
+        }
+
+        return redirect()->route('admin.pengajar.index', $unit);
     }
 }

@@ -75,7 +75,7 @@
                         </x-splade-select>
                     </div>
                 </div>
-                <x-splade-select name="jadwal" :label="__('Jadwal')" :options="$jadwals" option-label="nama_jadwal" option-value="id" required choices />
+                <x-splade-select name="jadwal" :label="__('Jadwal')" :options="$jadwals" option-label="nama_jadwal" option-value="id" choices />
                 <x-splade-select name="penerimaan" :label="__('Peserta')" choices>
                     <option value="umum">Umum</option>
                     <option value="warga">Warga</option>
