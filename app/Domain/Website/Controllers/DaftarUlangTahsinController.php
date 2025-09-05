@@ -241,16 +241,16 @@ class DaftarUlangTahsinController extends Controller
                 return redirect()->back();
             }
 
-            $hitung_data_peserta = Kelas::where('periode_id', $periode->id)
-                                        ->where('status_daftar', 'baru')
-                                        ->count();
-            // $data_jadwal = Jadwal::find( $request->input('jadwal'));
-            // if($hitung_data_peserta + 1 > $data_jadwal->batasan_peserta){
-            //     Toast::title('Kuota Kelas Sudah Penuh !')
-            //         ->warning()
-            //         ->autoDismiss(10);
-            //     return redirect()->back();
-            // }
+            // NGECEK KUOTA
+            $hitung_data_kelas   = Kelas::where('jadwal_id', $request->input('jadwal'))->count();
+            $data_jadwal         = Jadwal::find( $request->input('jadwal'));
+            $data_bertambah      = $hitung_data_kelas + 1;
+            if($data_bertambah > $data_jadwal->batasan_peserta){
+                Toast::title('Kuota Kelas Sudah Penuh !')
+                    ->warning()
+                    ->autoDismiss(10);
+                return redirect()->back();
+            }
 
             if(!$peserta) {
                 try {
@@ -296,6 +296,7 @@ class DaftarUlangTahsinController extends Controller
                         ],
                     ]);
 
+                    $hitung_data_peserta = Kelas::where('periode_id', $periode->id)->count();
                     $nomor               = $hitung_data_peserta + 1;
                     $kode_peserta        = str_pad($nomor, 4, '0', STR_PAD_LEFT);
                     $kode_periode        = str_pad($periode->angkatan, 4, '0', STR_PAD_LEFT);
