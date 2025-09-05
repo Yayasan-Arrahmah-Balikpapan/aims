@@ -244,13 +244,13 @@ class DaftarUlangTahsinController extends Controller
             $hitung_data_peserta = Kelas::where('periode_id', $periode->id)
                                         ->where('status_daftar', 'baru')
                                         ->count();
-            $data_jadwal = Jadwal::find( $request->input('jadwal'));
-            if($hitung_data_peserta + 1 > $data_jadwal->batasan_peserta){
-                Toast::title('Kuota Kelas Sudah Penuh !')
-                    ->warning()
-                    ->autoDismiss(10);
-                return redirect()->back();
-            }
+            // $data_jadwal = Jadwal::find( $request->input('jadwal'));
+            // if($hitung_data_peserta + 1 > $data_jadwal->batasan_peserta){
+            //     Toast::title('Kuota Kelas Sudah Penuh !')
+            //         ->warning()
+            //         ->autoDismiss(10);
+            //     return redirect()->back();
+            // }
 
             if(!$peserta) {
                 try {
