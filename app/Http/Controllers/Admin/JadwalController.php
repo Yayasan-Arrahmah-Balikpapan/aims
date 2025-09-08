@@ -20,10 +20,63 @@ class JadwalController extends Controller
     }
 
     public function index($unit, $periode)
+
+
     {
+        $data_unit = \App\Models\Modules\Unit::where('slug', $unit)->first();
+        $data_level = \App\Models\Modules\Level::where('unit_id', $data_unit->id)
+                        ->get()
+                        ->mapWithKeys(fn ($item) => [$item->id => $item->nama])
+                        ->toArray();
+        $data_pengajar = \App\Models\Pengajar::where('unit_id', $data_unit->id)
+                        ->get()
+                        ->mapWithKeys(fn ($item) => [$item->id => $item->kode_nama_pengajar])
+                        ->toArray();
+        $data_status_belajar = [
+            'ONLINE' => 'ONLINE',
+            'OFFLINE' => 'OFFLINE',
+            'ONLINE / OFFLINE' => 'ONLINE / OFFLINE',
+        ];
+        $data_hari = [
+            'SENIN' => 'Senin',
+            'SELASA' => 'Selasa',
+            'RABU' => 'Rabu',
+            'KAMIS' => 'Kamis',
+            'JUMAT' => 'Jumat',
+            'SABTU' => 'Sabtu',
+            'MINGGU' => 'Minggu',
+        ];
         // $jadwal = $this->getJadwalTable($unit);
         $jadwal = \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Jadwal::where('periode_id', $periode)->orderBy('created_at', 'desc'))
                         ->withGlobalSearch(columns: ['nama_jadwal', 'pengajar.kode_nama_pengajar', 'periode.angkatan', 'hari_belajar'])
+                        ->selectFilter(
+                            key: 'jenis_peserta',
+                            label: 'Gender',
+                            options: [
+                                'ikhwan' => 'Ikhwan',
+                                'akhwat' => 'Akhwat',
+                            ]
+                        )
+                        ->selectFilter(
+                            key: 'level_id',
+                            label: 'Level',
+                            options: $data_level
+                        )
+                        ->selectFilter(
+                            key: 'pengajar_id',
+                            label: 'Pengajar',
+                            options: $data_pengajar
+                        )
+                        ->selectFilter(
+                            key: 'status_belajar',
+                            label: 'Status Belajar',
+                            options: $data_status_belajar
+                        )
+                        ->selectFilter(
+                            key: 'hari_belajar',
+                            label: 'Hari Belajar',
+                            options: $data_hari
+                        )
                         ->column(label: 'Actions')
                         ->column('nama_jadwal')
                         ->column(
