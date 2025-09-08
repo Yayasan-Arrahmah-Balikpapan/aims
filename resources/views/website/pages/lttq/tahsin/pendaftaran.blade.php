@@ -40,7 +40,7 @@
                 >
                 @csrf
 
-                @auth
+                {{-- @auth
                     <div class="flex items-center">
                         <div class="relative w-full">
                             <x-splade-input type="tel" :label="__('Nomor HP Whatsapp')" name="phone_number" size="20" minlength="8" maxlength="15"
@@ -48,7 +48,7 @@
                                 placeholder="Masukkan Nomor : 08123456xxxx" required disabled />
                         </div>
                     </div>
-                @else
+                @else --}}
                     <div class="flex items-center mt-2">
                         <x-splade-select name="phone_code" :label="__('Nomor HP Whatsapp')" value="62" class="py-0 w-60 text-sm block" choices
                             required>
@@ -67,7 +67,7 @@
                             Contoh : 08123456789
                         </div>
                     </div>
-                @endauth
+                {{-- @endauth --}}
 
                 <x-splade-input id="name" type="text" name="name" :label="__('Nama Peserta')" required autofocus />
                 <x-splade-select name="jenis_peserta" :label="__('Jenis Peserta')" required value="ikhwan" >
