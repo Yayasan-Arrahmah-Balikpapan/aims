@@ -3,6 +3,51 @@
        <label class="text-xl font-semibold uppercase">Periode {{ $data_periode->nama }}</label>
     </x-layouts.card>
     <div class="p-4">
+        <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
+            :default="[
+                    'cari' => request()->query('cari') ?? '',
+                    'jenis_peserta' => request()->query('jenis_peserta') ?? '',
+                    'level' => request()->query('level') ?? '',
+                    'hari' => request()->query('hari') ?? '',
+                    'pengajar' => request()->query('pengajar') ?? '',
+                ],
+            ">
+            <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Nama Peserta" class="flex-grow"/>
+            <x-splade-select name="jenis_peserta">
+                <option value="" disabled selected>-- Jenis</option>
+                <option value="ikhwan">Ikhwan</option>
+                <option value="akhwat">Akhwat</option>
+                <option value="">Semua</option>
+            </x-splade-select>
+            <x-splade-select name="level">
+                <option value="" disabled selected>-- Level</option>
+                @foreach ( $data_level as $level )
+                    <option value="{{ $level->id }}">{{ $level->nama }}</option>
+                @endforeach
+                <option value="">Semua</option>
+            </x-splade-select>
+            <x-splade-select name="pengajar">
+                <option value="" disabled selected>-- Pengajar</option>
+                @foreach ( $data_pengajar as $pengajar )
+                    <option value="{{ $pengajar->id }}">{{ $pengajar->kode_nama_pengajar }}</option>
+                @endforeach
+                <option value="">Semua</option>
+            </x-splade-select>
+            <x-splade-select name="hari">
+                <option value="" disabled selected>-- Hari</option>
+                <option value="SENIN">SENIN</option>
+                <option value="SELASA">SELASA</option>
+                <option value="RABU">RABU</option>
+                <option value="KAMIS">KAMIS</option>
+                <option value="JUMAT">JUMAT</option>
+                <option value="SABTU">SABTU</option>
+                <option value="AHAD">AHAD</option>
+                <option value="">Semua</option>
+            </x-splade-select>
+            <x-splade-submit :label="__('Cari')"/>
+        </x-splade-form>
+    </div>
+    <div class="p-4">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-6">
             <x-splade-lazy>
                 <x-slot:placeholder>

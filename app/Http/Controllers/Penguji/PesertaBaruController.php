@@ -13,6 +13,7 @@ use ProtoneMedia\Splade\Facades\Toast;
 use App\Contracts\NotificationService;
 use App\Traits\FormatPesanNotifTahsinDaftarBaruTrait;
 use App\Traits\ConvertNotifikasi;
+use Illuminate\Support\Facades\Cache;
 
 
 
@@ -23,6 +24,7 @@ class PesertaBaruController extends Controller
     use FormatPesanNotifTahsinDaftarBaruTrait;
     use ConvertNotifikasi;
 
+
     private $notifService;
 
     public function __construct(NotificationService $notifService)
@@ -31,29 +33,36 @@ class PesertaBaruController extends Controller
     }
     public function index($unit)
     {
-        $pesertas = new DataPengujiPesertaBaru($this->cekUnit($unit));
+        $data_periode = Cache::remember('penguji_peserta_baru_periode.'.$unit, now()->addDays(1), function () use ($unit) {
+            return \App\Models\Periode::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->latest()
+                            ->paginate(10);
+        });
+        $data_pengajar = Cache::remember('penguji_peserta_baru_pengajar.'.$unit, now()->addDays(1), function () use ($unit) {
+            return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->first();
+        });
 
-        $data_periode = \App\Models\Periode::whereHas('unit', function($query) use ($unit) {
-                            $query->where('slug', $unit);
-                        })
-                        ->latest()
-                        ->paginate(10);
-        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
-                            $query->where('slug', $unit);
-                        })
-                        ->first();
-
-        return view('dashboard.penguji.peserta-baru.index', compact('pesertas', 'unit', 'data_periode', 'data_pengajar'));
+        return view('dashboard.penguji.peserta-baru.index', compact( 'unit', 'data_periode', 'data_pengajar'));
     }
 
     public function data($unit, $periode) {
-        $data_periode = \App\Models\Periode::find($periode);
-        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
-                            $query->where('slug', $unit);
-                        })
-                        ->first();
+        $data_periode = Cache::remember('penguji_peserta_baru_periode.'.$unit.'.'.$periode, now()->addMinutes(5), function () use ($periode) {
+            return \App\Models\Periode::find($periode);
+        });
+        $data_pengajar = Cache::remember('penguji_peserta_baru_pengajar.'.$unit, now()->addMinutes(5), function () use ($unit) {
+            return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->first();
+        });
 
-        $data_peserta_baru = Kelas::where('periode_id', $periode)
+        $data_peserta_baru =  Kelas::with('peserta', 'jadwal.level')
+                        ->where('periode_id', $periode)
                         ->where('status_daftar', 'baru')
                         ->cari(request()->query('cari'))
                         ->jenisPeserta(request()->query('jenis_peserta'))
@@ -61,16 +70,18 @@ class PesertaBaruController extends Controller
                         // ->level(request()->query('level'))
                         ->latest()
                         ->paginate(10);
-        $data_level = Level::where('unit_id', $data_periode->unit_id)->get();
+
+        $data_level = Cache::remember('penguji_peserta_baru_level.'.$unit.'.'.$periode, now()->addMinutes(5), function () use ($data_periode) {
+            return Level::where('unit_id', $data_periode->unit_id)->get();
+        });
 
         return view('dashboard.penguji.peserta-baru.data', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode', 'data_level'));
     }
 
     public function periksa_index($unit)
     {
-        $pesertas = new DataPengujiPesertaBaru($this->cekUnit($unit));
-
-        $data_periode = \App\Models\Periode::with('kelas', 'kelas.peserta')
+        $data_periode = Cache::remember('penguji_periksa_periode.'.$unit, now()->addDays(1), function () use ($unit) {
+            return \App\Models\Periode::with('kelas', 'kelas.peserta')
                         ->whereHas('unit', function($query) use ($unit) {
                             $query->where('slug', $unit);
                         })
@@ -79,30 +90,41 @@ class PesertaBaruController extends Controller
                         })
                         ->latest()
                         ->paginate(10);
+        });
 
-        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
-                            $query->where('slug', $unit);
-                        })
-                        ->first();
+        $data_pengajar = Cache::remember('penguji_periksa_pengajar.'.$unit, now()->addDays(1), function () use ($unit) {
+            return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->first();
+        });
 
-        return view('dashboard.penguji.peserta-baru.periksa-index', compact('pesertas', 'unit', 'data_periode', 'data_pengajar'));
+        return view('dashboard.penguji.peserta-baru.periksa-index', compact('unit', 'data_periode', 'data_pengajar'));
     }
 
     public function periksa_data($unit, $periode) {
-        $data_periode = \App\Models\Periode::find($periode);
-        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
-                            $query->where('slug', $unit);
-                        })
-                        ->first();
+        $data_periode = Cache::remember('penguji_periksa_periode.'.$unit.'.'.$periode, now()->addMinutes(1), function () use ($periode) {
+            return \App\Models\Periode::find($periode);
+        });
+        $data_pengajar = Cache::remember('penguji_periksa_pengajar.'.$unit, now()->addMinutes(1), function () use ($unit) {
+            return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->first();
+        });
 
-        $data_peserta_baru = Kelas::where('periode_id', $periode)
+        $data_peserta_baru =  Kelas::with('peserta', 'jadwal.level')
+                        ->where('periode_id', $data_periode->id)
                         ->where('status_daftar', 'baru')
                         ->where('status_pendaftaran', 'belum diberikan level')
                         ->cari(request()->query('cari'))
                         ->jenisPeserta(request()->query('jenis_peserta'))
                         ->latest()
                         ->paginate(10);
-        $data_level = Level::where('unit_id', $data_periode->unit_id)->get();
+
+        $data_level = Cache::remember('penguji_periksa_level.'.$unit.'.'.$periode, now()->addMinutes(1), function () use ($data_periode) {
+            return Level::where('unit_id', $data_periode->unit_id)->get();
+        });
 
         return view('dashboard.penguji.peserta-baru.periksa', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode', 'data_level'));
     }

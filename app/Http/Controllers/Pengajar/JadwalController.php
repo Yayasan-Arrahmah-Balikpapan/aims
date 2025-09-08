@@ -29,14 +29,35 @@ class JadwalController extends Controller
             return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
                                 $query->where('slug', $unit);
                             })
-                            ->first();
+                            ->get();
         });
 
-        $data_jadwal = Cache::remember('pengajar_jadwal.'.$unit.'.'.$periode, now()->addHours(1), function () use ($periode) {
-            return \App\Models\Jadwal::where('periode_id', $periode)->with('level')->paginate(10);
+        $data_jadwal = \App\Models\Jadwal::with('pengajar','level', 'periode.unit', 'kelas.peserta')
+                    ->where('periode_id', $periode)
+                    ->when(request()->query('cari'), function($query, $cari) {
+                        $query->where('nama_jadwal', 'like', "%$cari%");
+                    })
+                    ->when(request()->query('jenis_peserta'), function($query, $jenis_peserta) {
+                        $query->whereHas('kelas.peserta', function($query) use ($jenis_peserta) {
+                            $query->where('jenis_peserta', $jenis_peserta);
+                        });
+                    })
+                    ->when(request()->query('level'), function($query, $level) {
+                        $query->where('level_id', $level);
+                    })
+                    ->when(request()->query('hari'), function($query, $hari) {
+                        $query->where('hari_belajar', $hari);
+                    })
+                    ->when(request()->query('pengajar'), function($query, $pengajar) {
+                        $query->where('pengajar_id', $pengajar);
+                    })
+                    ->paginate(10);
+
+        $data_level = Cache::remember('pengajar_jadwal_level.'.$unit.'.'.$periode, now()->addHours(1), function () use ($data_periode) {
+            return \App\Models\Modules\Level::where('unit_id', $data_periode->unit_id)->get();
         });
 
-        return view('dashboard.pengajar.jadwal.data', compact('unit', 'periode', 'data_pengajar', 'data_jadwal', 'data_periode'));
+        return view('dashboard.pengajar.jadwal.data', compact('unit', 'periode', 'data_pengajar', 'data_jadwal', 'data_periode', 'data_level'));
     }
 
     public function data_kelas($unit, $periode, $kelas) {

@@ -136,6 +136,13 @@ class Kelas extends Model
         });
     }
 
+    public function scopeStatusDaftarPeserta($query, $statusdaftar)
+    {
+        return $query->when($statusdaftar, function($query, $statusdaftar) {
+            $query->where('status_daftar', $statusdaftar);
+        });
+    }
+
     public function scopeCariLevel($query, $level)
     {
         return $query->when($level, function($query, $level) {

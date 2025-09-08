@@ -67,16 +67,16 @@
                         @forelse ($data_peserta  as $index => $item)
                             {{-- <p class="text-3xl sm:p-1 font-black text-gray-200 absolute">{{ $index + 1 }}</p> --}}
                             <li class="sm:p-4 p-2 border rounded-md bg-white">
-                                <div class="flex items-center justify-between border-b pb-2">
+                                {{-- <div class="flex items-center justify-between border-b pb-2">
                                     <div class="flex-1 min-w-0 sm:ms-4">
                                         <p class="ml-3 sm:ml-0 text-sm font-bold text-gray-900 uppercase">
-                                            {{-- Level : {{ $item->data_nilai['penempatan-level'] ?? $item->jadwal ? $item->jadwal->level->nama : '--' }} --}}
+                                            Level : {{ $item->data_nilai['penempatan-level'] ?? $item->jadwal ? $item->jadwal->level->nama : '--' }}
                                         </p>
                                     </div>
                                     <span class="inline-block px-2 py-1 {{ $item->status_pendaftaran == 'belum diberikan level' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800'  }} rounded-full text-xs font-semibold">
                                         {{ $item->status_pendaftaran == 'belum diberikan level' ? 'Belum Diperiksa' : 'Selesai Diperiksa'  }}
                                     </span>
-                                </div>
+                                </div> --}}
                                 <div class="flex items-center pt-2">
                                     <div class="flex-1 min-w-0 sm:ms-4">
                                         <Link href="{{ route('penguji.peserta-baru.show', ['unit' => $unit, 'periode' => $periode, 'peserta' => $item->id]) }}">
