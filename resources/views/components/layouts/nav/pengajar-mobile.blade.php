@@ -13,18 +13,24 @@
                     Absensi
                 </span>
             </x-layouts.nav.link-mobile-nav>
-            <x-layouts.nav.link-mobile-nav :href="route('pengajar.jadwal.index', ['unit' => $unit])" :active="request()->routeIs('pengajar.notifikasi.index', ['unit' => $unit])">
+            <x-layouts.nav.link-mobile-nav :href="route('pengajar.jadwal.index', ['unit' => $unit])" :active="request()->routeIs('pengajar.jadwal.index', ['unit' => $unit])">
                 <x-carbon-table-alias class="w-6 h-6 my-1" />
                 <span class="text-xs">
                     Jadwal
                 </span>
             </x-layouts.nav.link-mobile-nav>
-            <x-layouts.nav.link-mobile-nav :href="route('pengajar.akun.index', ['unit' => $unit])" :active="request()->routeIs('pengajar.akun.index', ['unit' => $unit])">
+            <x-layouts.nav.link-mobile-nav :href="route('pengajar.peserta.index', ['unit' => $unit])" :active="request()->routeIs('pengajar.peserta.index', ['unit' => $unit])">
+                <x-carbon-user-multiple class="w-6 h-6 my-1" />
+                <span class="text-xs">
+                    Peserta
+                </span>
+            </x-layouts.nav.link-mobile-nav>
+            {{-- <x-layouts.nav.link-mobile-nav :href="route('pengajar.akun.index', ['unit' => $unit])" :active="request()->routeIs('pengajar.akun.index', ['unit' => $unit])">
                 <x-carbon-user-avatar class="w-6 h-6 my-1" />
                 <span class="text-xs">
                     Akun
                 </span>
-            </x-layouts.nav.link-mobile-nav>
+            </x-layouts.nav.link-mobile-nav> --}}
         </div>
     </div>
 </div>

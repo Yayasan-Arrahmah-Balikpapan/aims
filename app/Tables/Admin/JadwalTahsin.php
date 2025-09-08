@@ -52,6 +52,14 @@ class JadwalTahsin extends AbstractTable
         $table
         ->withGlobalSearch(columns: ['nama_jadwal', 'pengajar.user.name', 'periode.angkatan', 'hari_belajar'])
         ->rowLink(fn (Jadwal $jadwal) => route('admin.jadwal.show', ['unit' => 'tahsin', 'jadwal' => $jadwal->id],$jadwal))
+        ->selectFilter(
+                key: 'peserta.jenis_peserta',
+                label: 'Jenis',
+                options: [
+                    'ikhwan' => 'Ikhwan',
+                    'akhwat' => 'Akhwat',
+                ]
+        )
         ->column(
             key:'periode.nama',
             label:'Periode',

@@ -15,17 +15,24 @@
         </Link>
     </li>
     <li>
+        <x-link-item :href="route('penguji.periksa.index', ['unit' => $unit])" :active="request()->routeIs('penguji.periksa.index', ['unit' => $unit])">
+            @svg('carbon-white-paper', 'text-gray-600 h-6 w-6')
+            <span class="ml-3">Periksa</span>
+        </x-link-item>
+    </li>
+    <li>
         <x-link-item :href="route('penguji.peserta-baru.index', ['unit' => $unit])" :active="request()->routeIs('penguji.peserta-baru.index', ['unit' => $unit])">
             @svg('carbon-user-certification', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Peserta Baru</span>
         </x-link-item>
     </li>
-    {{-- <li>
+    <li>
         <x-link-item :href="route('penguji.peserta.index', ['unit' => $unit])" :active="request()->routeIs('penguji.peserta.index', ['unit' => $unit])">
             @svg('carbon-user-multiple', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Peserta</span>
         </x-link-item>
     </li>
+    {{--
     <li>
         <x-link-item :href="route('penguji.peserta.index', ['unit' => $unit])" :active="request()->routeIs('penguji.peserta.index', ['unit' => $unit])">
             @svg('carbon-settings-services', 'text-gray-600 h-6 w-6')

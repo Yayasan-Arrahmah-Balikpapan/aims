@@ -20,13 +20,185 @@ class PesertaController extends Controller
             'rtq' => new \App\Tables\Admin\RtqPeserta($periode, $unit),
             'tla' => new \App\Tables\Admin\TlaPeserta($periode, $unit),
             'rq' => new  \App\Tables\Admin\RqPeserta($periode, $unit),
-            default => new \App\Tables\Admin\PesertaTahsin($periode, $unit),
+            // default => new \App\Tables\Admin\PesertaTahsin($periode, $unit),
         };
     }
 
     public function index($unit, $periode)
     {
+        $data_unit = \App\Models\Modules\Unit::where('slug', $unit)->first();
+        $data_level = \App\Models\Modules\Level::where('unit_id', $data_unit->id)
+                        ->get()
+                        ->mapWithKeys(fn ($item) => [$item->id => $item->nama])
+                        ->toArray();
+        $data_pengajar = \App\Models\Pengajar::where('unit_id', $data_unit->id)
+                        ->get()
+                        ->mapWithKeys(fn ($item) => [$item->id => $item->kode_nama_pengajar])
+                        ->toArray();
+        $data_status_belajar = [
+            'ONLINE' => 'ONLINE',
+            'OFFLINE' => 'OFFLINE',
+            'ONLINE / OFFLINE' => 'ONLINE / OFFLINE',
+        ];
+        $data_hari = [
+            'SENIN' => 'Senin',
+            'SELASA' => 'Selasa',
+            'RABU' => 'Rabu',
+            'KAMIS' => 'Kamis',
+            'JUMAT' => 'Jumat',
+            'SABTU' => 'Sabtu',
+            'MINGGU' => 'Minggu',
+        ];
+
         $peserta = $this->getPesertaTable($unit, $periode);
+        $peserta =   \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Kelas::where('periode_id', $periode)->orderBy('created_at', 'desc'))
+        ->withGlobalSearch(columns: ['peserta.nama', 'peserta.jenis_peserta', 'jadwal.nama_jadwal', 'jadwal.pengajar.kode_nama_pengajar', 'peserta.user.phone_number'])
+            // ->rowLink(fn (Kelas $kelas) => route('admin.peserta.show', ['unit' => $this->unit, 'periode' => $this->periode,'peserta' => $kelas->id], $kelas))
+            ->column('id', sortable: true)
+            ->selectFilter(
+                key: 'peserta.jenis_peserta',
+                label: 'Jenis',
+                options: [
+                    'ikhwan' => 'Ikhwan',
+                    'akhwat' => 'Akhwat',
+                ]
+            )
+            ->selectFilter(
+                key: 'jadwal.level_id',
+                label: 'Level',
+                options: $data_level
+            )
+            ->selectFilter(
+                key: 'jadwal.pengajar_id',
+                label: 'Pengajar',
+                options: $data_pengajar
+            )
+            ->selectFilter(
+                key: 'jadwal.status_belajar',
+                label: 'Status Belajar',
+                options: $data_status_belajar
+            )
+            ->selectFilter(
+                key: 'jadwal.hari_belajar',
+                label: 'Hari Belajar',
+                options: $data_hari
+            )
+
+            ->selectFilter(
+                key: 'status_daftar',
+                label: 'Status Daftar',
+                options: [
+                    'baru' => 'Baru Daftar',
+                    'melanjutkan' => 'Peserta Lanjutan',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_pendaftaran',
+                label: 'Status Pendaftaran',
+                options: [
+                    'belum diberikan level' => 'Belum Diberikan Level',
+                    'belum pilih jadwal' => 'Belum Pilih Jadwal',
+                    'selesai pilih jadwal' => 'Selesai Pilih Jadwal',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_ujian',
+                label: 'Status Ujian',
+                options: [
+                    'belum ujian' => 'Belum Ujian',
+                    'selesai ujian' => 'Selesai Ujian',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_daftar_ulang',
+                label: 'Status Daftar Ulang',
+                options: [
+                    'belum daftar ulang' => 'Belum Daftar Ulang',
+                    'selesai daftar ulang' => 'Selesai Daftar Ulang',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_aktif',
+                label: 'Status Aktif',
+                options: [
+                    'diproses' => 'Diproses',
+                    'aktif' => 'Aktif',
+                    'ditangguhkan' => 'Ditangguhkan',
+                    'off' => 'Off',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_domisili',
+                label: 'Asal Kota',
+                options: [
+                    '1' => 'Kota Balikpapan',
+                    '0' => 'Luar Kota Balikpapan',
+                ]
+            )
+            ->selectFilter(
+                key: 'status_penerimaan',
+                label: 'Status Penerimaan',
+                options: [
+                    'umum' => 'Umum',
+                    'karyawan' => 'Karyawan',
+                    'pengajar' => 'Pengajar',
+                    'beasiswa' => 'Beasiswa',
+                ]
+            )
+            ->column(label: 'Actions')
+            ->column(
+                key:'nis_peserta',
+                label:'NIS',
+            )
+            ->column(
+                key:'peserta.nama',
+                label:'Nama',
+            )
+            ->column(
+                key:'peserta.user.phone_number',
+                label:'No. Telp',
+            )
+            ->column(
+                key:'peserta.jenis_peserta',
+                label:'Jenis',
+            )
+            ->column(
+                key:'jadwal.nama_jadwal',
+                label:'Kelas',
+            )
+            ->column(
+                key:'jadwal.pengajar.kode_nama_pengajar',
+                label:'Pengajar',
+            )
+            ->column(
+                key:'created_at',
+                label:'Tanggal Daftar',
+            )
+            ->column(
+                key:'status_aktif',
+                label:'Status',
+            )
+            // ->bulkAction(
+            //     label: 'Kirim Notifikasi Pembayaran SPP',
+            //     each: function (Kelas $kelas) {
+            //         Toast::warning('Terjadi kesalahan, data gagal disimpan'.$kelas->id)->autoDismiss(5);
+            //     },
+            //     confirm: 'Touch kelass',
+            //     confirmText: 'Are you sure you want to touch the kelass?',
+            //     confirmButton: 'Yes, touch all selected rows!',
+            //     cancelButton: 'No, do not touch!',
+            // )
+            // ->bulkAction(
+            //     label: 'Kirim Notifikasi Pilih Jadwal',
+            //     each: fn (Kelas $kelas) => $kelas->touch(),
+            //     confirm: 'Touch kelass',
+            //     confirmText: 'Are you sure you want to touch the kelass?',
+            //     confirmButton: 'Yes, touch all selected rows!',
+            //     cancelButton: 'No, do not touch!',
+            // )
+            // ->export()
+            ->paginate(20)
+            ;
         $dataperiode = \App\Models\Periode::find( $periode);
 
         return view('dashboard.admin.periode.peserta.index', compact('unit',  'periode', 'dataperiode', 'peserta'));

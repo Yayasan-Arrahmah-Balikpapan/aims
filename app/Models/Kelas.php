@@ -57,6 +57,11 @@ class Kelas extends Model
         return $this->hasMany(Transaksi::class, 'kelas_id');
     }
 
+    public function level()
+    {
+        return $this->belongsTo(\App\Models\Modules\Level::class, 'level_id', 'id');
+    }
+
     public function data()
     {
         return $this->belongsTo(Kelas::class, 'id');
@@ -103,6 +108,43 @@ class Kelas extends Model
         }
 
         return $data_level[$level];
+    }
+
+    public function scopeCari($query, $cari)
+    {
+        return $query->when($cari, function($query, $cari) {
+            $query->whereHas('peserta', function($query) use ($cari) {
+                $query->where('nama', 'like', "%$cari%");
+            })
+            ->orWhere('nis_peserta', 'like', "%$cari%");
+        });
+    }
+
+    public function scopeJenisPeserta($query, $jenis_peserta)
+    {
+        return $query->when($jenis_peserta, function($query, $jenis_peserta) {
+            $query->whereHas('peserta', function($query) use ($jenis_peserta) {
+                $query->where('jenis_peserta', $jenis_peserta);
+            });
+        });
+    }
+
+    public function scopeStatusPendaftaran($query, $status)
+    {
+        return $query->when($status, function($query, $status) {
+            $query->where('status_pendaftaran', $status);
+        });
+    }
+
+    public function scopeCariLevel($query, $level)
+    {
+        return $query->when($level, function($query, $level) {
+            $query->whereHas('jadwal', function($query) use ($level) {
+                $query->whereHas('level', function($query) use ($level) {
+                    $query->where('id', $level);
+                });
+            });
+        });
     }
 
 }

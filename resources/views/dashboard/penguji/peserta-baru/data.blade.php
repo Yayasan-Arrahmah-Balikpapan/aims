@@ -4,6 +4,45 @@
     </x-layouts.card>
     <div class="p-4">
         <div class="w-full">
+            <div class="container mx-auto">
+                <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
+                    :default="[
+                            'cari' => request()->query('cari') ?? '',
+                            'jenis_peserta' => request()->query('jenis_peserta') ?? '',
+                            'status' => request()->query('status') ?? '',
+                        ],
+
+                    ">
+                    <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Nama Peserta" class="flex-grow"/>
+                    <x-splade-select name="jenis_peserta">
+                        <option value="" disabled selected>-- Jenis</option>
+                        <option value="ikhwan">Ikhwan</option>
+                        <option value="akhwat">Akhwat</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    {{-- <x-splade-select name="peserta">
+                        <option value="" disabled selected>-- Peserta</option>
+                        <option value="baru">Baru</option>
+                        <option value="melanjutkan">Daftar Ulang</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    <x-splade-select name="level">
+                        <option value="" disabled selected>-- Level</option>
+                        @foreach ( $data_level as $level )
+                            <option value="{{ $level->id }}">{{ $level->nama }}</option>
+                        @endforeach
+                        <option value="">Semua</option>
+                    </x-splade-select> --}}
+                    <x-splade-select name="status">
+                        <option value="" disabled selected>-- Status</option>
+                        <option value="belum diberikan level">Belum Diberikan Level</option>
+                        <option value="belum pilih jadwal">Belum Pilih Jadwal</option>
+                        <option value="selesai pilih jadwal">Selesai Pilih Jadwal</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    <x-splade-submit :label="__('Cari')"/>
+                </x-splade-form>
+            </div>
             <div class="flow-root">
                 <ul role="list" class="space-y-2">
                     <x-splade-lazy>
@@ -25,12 +64,12 @@
                             </div>
                         </x-slot:placeholder>
                         @forelse ($data_peserta_baru  as $index => $item)
-                            <p class="text-3xl sm:p-1 font-black text-gray-200 absolute">{{ $index + 1 }}</p>
+                            {{-- <p class="text-3xl sm:p-1 font-black text-gray-200 absolute">{{ $index + 1 }}</p> --}}
                             <li class="sm:p-4 p-2 border rounded-md bg-white">
                                 <div class="flex items-center justify-between border-b pb-2">
                                     <div class="flex-1 min-w-0 sm:ms-4">
                                         <p class="ml-3 sm:ml-0 text-sm font-bold text-gray-900 uppercase">
-                                            Level : {{ $data_peserta->data_nilai['penempatan-level'] ?? '-' }}
+                                            Level : {{ $item->data_nilai['penempatan-level'] ?? $item->jadwal ? $item->jadwal->level->nama : '--' }}
                                         </p>
                                     </div>
                                     <span class="inline-block px-2 py-1 {{ $item->status_pendaftaran == 'belum diberikan level' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800'  }} rounded-full text-xs font-semibold">
@@ -71,7 +110,7 @@
             </div>
 
             <div class="p-2 text-xs text-gray-500">
-                {{ $data_peserta_baru ->links() }}
+                {{ $data_peserta_baru->links() }}
             </div>
         </div>
     </div>

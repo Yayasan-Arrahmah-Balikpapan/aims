@@ -23,14 +23,14 @@
                 <div class="space-y-6">
                     <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4">
                         <p class="text-xl font-semibold text-gray-900 flex justify-end ">Peserta {{ $item->nama }}</p>
-                        <div class="border rounded-md p-2 space-y-2">
-                            <dl class="flex items-center justify-between gap-4">
+                         <div class="border rounded-md p-2 space-y-2">
+                            {{--<dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Kategori</dt>
                                 <dd class="text-base font-medium text-gray-900 uppercase">{{ $item->kategori }}</dd>
-                            </dl>
+                            </dl>--}}
                             <dl class="flex items-center justify-between gap-4">
                                 <dt class="text-base font-normal text-gray-500">Pendaftar</dt>
-                                <dd class="text-base font-medium text-gray-900 uppercase">{{ $item->kelas->count() }}</dd>
+                                <dd class="text-base font-medium text-gray-900 uppercase">{{ $item->kelas->where('status_daftar', 'baru')->count() }}</dd>
                             </dl>
                         </div>
                         <div class="flex w-full items-center justify-start space-x-2">
@@ -44,6 +44,9 @@
                         Belum Ada Data
                 @endforelse
             </x-splade-lazy>
+        </div>
+        <div class="p-2 text-xs text-gray-500">
+            {{ $data_periode ->links() }}
         </div>
     </div>
 </x-layouts.main>

@@ -1,84 +1,115 @@
-<x-layouts.main>
+<x-layouts.main :unit="$unit ?? null">
     <x-layouts.card>
-            <x-splade-form  action="{{ route('admin.user.update', ['id' => $user->id]) }}"
-                            :default="[
-                                'name' => $user->name,
-                                'email' => $user->email,
-                                'role' => $role
-                            ]"
-                            method="PUT" onkeydown="return event.key != 'Enter';">
-                <div class="relative">
-                    <x-forms.header>
-                        Data User
-                    </x-forms.header>
-                    <div class="grid lg:grid-cols-2">
-                        <x-forms.body>
-                            <x-splade-input type="text" name="name"  v-model="form.name" :label="__('Name')" required autofocus />
-                            <x-splade-input type="email" name="email"  v-model="form.email" :label="__('Email')" disabled/>
-                            <x-splade-group name="role" label="Status Akses User" class="pt-3">
-                                <div class="border p-3 rounded-lg">
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
-                                        @foreach ($roles as $role_)
-                                            @if (strpos($role_->name, 'tahla') === false && strpos($role_->name, 'tahsin') === false && strpos($role_->name, 'rtq') === false && strpos($role_->name, 'tla') === false && strpos($role_->name, 'rq') === false)
-                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="border border-b my-4"></div>
-                                    <h3 class="text-sm font-bold p-2">TAHSIN</h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 ">
-                                        @foreach ($roles as $role_)
-                                            @if (strpos($role_->name, 'tahsin') !== false)
-                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="border border-b my-4"></div>
-                                    <h3 class="text-sm font-bold p-2">RTQ</h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
-                                        @foreach ($roles as $role_)
-                                            @if (strpos($role_->name, 'rtq') !== false)
-                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="border border-b my-4"></div>
-                                    <h3 class="text-sm font-bold p-2">TLA</h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
-                                        @foreach ($roles as $role_)
-                                            @if (strpos($role_->name, 'tla') !== false)
-                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                    <div class="border border-b my-4"></div>
-                                    <h3 class="text-sm font-bold p-2">TAHSIN TLA</h3>
-                                    <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap-4 ">
-                                        @foreach ($roles as $role_)
-                                            @if (strpos($role_->name, 'tahla') !== false)
-                                                    <x-splade-checkbox name="role[]" value="{{ $role_->id }}" v-model="form.role" label="{{ $role_->name }}"/>
-                                            @endif
-                                        @endforeach
-                                    </div>
+        <x-layouts.title>Data Peserta Baru</x-layouts.title>
+        <div class="mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 md:gap-4 dark:bg-gray-900">
+                <div class="col-span-full sm:col-auto">
+                    <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                        <div class="items-center flex space-x-4">
+                            <x-carbon-user-avatar-filled-alt class="w-20 h-20 text-primary-700"/>
+                            <div>
+                                <h3 class="mb-1 text-xl font-bold text-gray-900 ">Peserta</h3>
+                                <div class="mb-1 text-sm text-gray-500 uppercase">
+                                    {{ $data_peserta->peserta->nama }}
                                 </div>
-                            </x-splade-group>
-                        </x-forms.body>
-                        <x-forms.body>
-                            <div class="grid justify-items-end">
-                                <Link modal max-width="lg" href="{{ route('admin.user.password', ['id' => $user->id]) }}" class="text-gray-700 flex bg-white border border-gray-500 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-">
-                                    Ganti Password @svg('carbon-password', 'ml-2 h-5 w-5')
-                                </Link>
-                                <div class="pt-4">
-                                    <button type="button" class="text-white bg-red-700 border border-red-500 hover:bg-red-500 font-medium rounded-lg text-sm px-3 py-2.5 me-2 mb-">
-                                        @svg('carbon-trash-can', 'h-5 w-5')
-                                    </button>
+                                <div class="mb-4 text-sm text-gray-500 ">
+                                    {{ $data_peserta->peserta->phone_number }}
                                 </div>
                             </div>
-                        </x-forms.body>
+                        </div>
                     </div>
-                    <x-forms.footer-page />
                 </div>
-            </x-splade-form>
+                <div class="col-span-2">
+                    <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                        <h3 class="mb-4 text-xl font-semibold ">Biodata</h3>
+                        <ul class="grid grid-cols-6 gap-2  dark:divide-gray-700">
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Nama
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate uppercase">
+                                            {{ $data_peserta->peserta->nama }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Tanggal Lahir
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate ">
+                                            {{ $data_peserta->peserta->tanggal_lahir }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Jenis Peserta
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate uppercase ">
+                                            {{ $data_peserta->peserta->jenis_peserta }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Kota
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate ">
+                                            {{ $data_peserta->peserta->biodata['kota_domisili'] ?? '-' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Pekerjaan
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate ">
+                                            {{ $data_peserta->peserta->biodata['pekerjaan'] ?? '-' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-span-3 py-2">
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex-1 min-w-0">
+                                        <p class="text-sm font-normal text-gray-500 truncate ">
+                                            Alamat
+                                        </p>
+                                        <p class="text-base font-semibold text-gray-900 truncate ">
+                                            {{ $data_peserta->peserta->biodata['alamat'] ?? '-' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </x-layouts.card>
+    <div class="p-4 mb-4">
+        <div class="items-center">
+            <Link href="{{ route('penguji.peserta-baru.data', ['unit' => $unit, 'periode' => $data_periode->id]) }}"
+                class="border border-gray-400 bg-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
+                <x-carbon-arrow-left class="w-5 h-5 mr-2"/>
+                Kembali Ke Data
+            </Link>
+        </div>
+    </div>
+
 </x-layouts.main>
 

@@ -8,10 +8,47 @@ use Illuminate\Http\Request;
 class PesertaController extends Controller
 {
 
-    public function index()
+    public function index($unit)
     {
-        $pesertas = \App\Models\Peserta::latest()->get();
-        return view('dashboard.penguji.peserta.index', compact('pesertas'));
+
+        $data_periode = \App\Models\Periode::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->latest()
+                        ->paginate(10);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        return view('dashboard.penguji.peserta.index', compact( 'unit', 'data_periode', 'data_pengajar'));
+    }
+
+    public function data($unit, $periode) {
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        $data_peserta_baru = \App\Models\Kelas::where('periode_id', $periode)
+                        ->cari(request()->query('cari'))
+                        ->jenisPeserta(request()->query('jenis_peserta'))
+                        ->statusPendaftaran(request()->query('status'))
+                        ->cariLevel(request()->query('level'))
+                        ->latest()
+                        ->paginate(10);
+        $data_level = \App\Models\Modules\Level::where('unit_id', $data_periode->unit_id)->get();
+
+        return view('dashboard.penguji.peserta.data', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode', 'data_level'));
+    }
+
+    public function show($unit, $periode, $peserta)
+    {
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_peserta = \App\Models\Kelas::find($peserta);
+        $datalevel = \App\Models\Modules\Level::where('unit_id', $data_periode->unit_id)->get();
+        return view('dashboard.penguji.peserta-baru.show', compact('data_peserta', 'data_periode', 'unit', 'datalevel'));
     }
 
     public function create()

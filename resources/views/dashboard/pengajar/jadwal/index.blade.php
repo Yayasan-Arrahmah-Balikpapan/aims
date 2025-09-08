@@ -49,5 +49,8 @@
                 @endforelse
             </x-splade-lazy>
         </div>
+        <div class="p-2 text-xs text-gray-500">
+            {{ $data_periode->links() }}
+        </div>
     </div>
 </x-layouts.main>

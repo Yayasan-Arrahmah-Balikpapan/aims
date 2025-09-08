@@ -27,4 +27,8 @@ Route::prefix('/pengajar/{unit}')->middleware('role:pengajar-tahsin|pengajar-rtq
     Route::get('/akun/', [App\Http\Controllers\Pengajar\AkunController::class, 'index'])->name('pengajar.akun.index');
     Route::post('/akun/', [App\Http\Controllers\Pengajar\AkunController::class, 'update'])->name('pengajar.akun.update');
 
+    Route::get('/peserta', [App\Http\Controllers\Pengajar\PesertaController::class, 'index'])->name('pengajar.peserta.index');
+    Route::get('/peserta/{periode}/data', [App\Http\Controllers\Pengajar\PesertaController::class, 'data'])->name('pengajar.peserta.data');
+    Route::get('/peserta/{periode}/data/{peserta}', [App\Http\Controllers\Pengajar\PesertaController::class, 'show'])->name('pengajar.peserta.show');
+
 });

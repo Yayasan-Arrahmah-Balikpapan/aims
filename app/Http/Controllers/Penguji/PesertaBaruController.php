@@ -55,10 +55,56 @@ class PesertaBaruController extends Controller
 
         $data_peserta_baru = Kelas::where('periode_id', $periode)
                         ->where('status_daftar', 'baru')
+                        ->cari(request()->query('cari'))
+                        ->jenisPeserta(request()->query('jenis_peserta'))
+                        ->statusPendaftaran(request()->query('status'))
+                        // ->level(request()->query('level'))
+                        ->latest()
+                        ->paginate(10);
+        $data_level = Level::where('unit_id', $data_periode->unit_id)->get();
+
+        return view('dashboard.penguji.peserta-baru.data', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode', 'data_level'));
+    }
+
+    public function periksa_index($unit)
+    {
+        $pesertas = new DataPengujiPesertaBaru($this->cekUnit($unit));
+
+        $data_periode = \App\Models\Periode::with('kelas', 'kelas.peserta')
+                        ->whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->whereHas('kelas', function($query) {
+                            $query->where('status_pendaftaran', 'belum diberikan level');
+                        })
                         ->latest()
                         ->paginate(10);
 
-        return view('dashboard.penguji.peserta-baru.data', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode'));
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        return view('dashboard.penguji.peserta-baru.periksa-index', compact('pesertas', 'unit', 'data_periode', 'data_pengajar'));
+    }
+
+    public function periksa_data($unit, $periode) {
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                            $query->where('slug', $unit);
+                        })
+                        ->first();
+
+        $data_peserta_baru = Kelas::where('periode_id', $periode)
+                        ->where('status_daftar', 'baru')
+                        ->where('status_pendaftaran', 'belum diberikan level')
+                        ->cari(request()->query('cari'))
+                        ->jenisPeserta(request()->query('jenis_peserta'))
+                        ->latest()
+                        ->paginate(10);
+        $data_level = Level::where('unit_id', $data_periode->unit_id)->get();
+
+        return view('dashboard.penguji.peserta-baru.periksa', compact('unit', 'periode', 'data_pengajar', 'data_peserta_baru', 'data_periode', 'data_level'));
     }
 
 
@@ -85,8 +131,12 @@ class PesertaBaruController extends Controller
                     'status_pendaftaran' =>  'belum pilih jadwal'
                 ]);
 
-        $isi_notif_wa = $this->formatWhatsappPesertaKelas($data_notifikasi->pesan_whatsapp, $peserta_baru->id);
-        $this->notifService->kirimNotifWa($peserta_baru->peserta->phone_number, $isi_notif_wa);
+        try {
+            $isi_notif_wa = $this->formatWhatsappPesertaKelas($data_notifikasi->pesan_whatsapp, $peserta_baru->id);
+            $this->notifService->kirimNotifWa($peserta_baru->peserta->phone_number, $isi_notif_wa);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         Toast::title('Hasil Berhasil Disimpan & Notif Hasil Berhasil Dikirim ke peserta baru !');
         return redirect()->back();

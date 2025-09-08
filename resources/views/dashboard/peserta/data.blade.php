@@ -47,11 +47,6 @@
                                             : ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off' ? 'bg-red-700 text-white' : '')) }}">
                                             {{ $item->status_aktif }}
                                         </span>
-                                        @if ($item->status_pendaftaran == 'belum pilih jadwal')
-                                            <span class="bg-red-300 text-gray-800 px-2 py-1 font-semibold rounded-xl">
-                                                Dimohon Segera Memilih Jadwal
-                                            </span>
-                                        @endif
                                     </div>
                                 </div>
                                 <hr class="my-1 sm:my-2" />
@@ -92,6 +87,9 @@
                                                 </Link>
                                             @endif
                                             @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                                <span class="text-gray-800 text-xs px-2 py-0 sm:py-1 font-semibold rounded-xl">
+                                                    Dimohon Segera Memilih Jadwal
+                                                </span>
                                                 <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
                                                     class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
                                                     Pilih Jadwal Sekarang

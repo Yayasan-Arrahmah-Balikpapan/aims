@@ -19,4 +19,6 @@
     @include('components.layouts.nav.karyawan-mobile')
 @elseif (Request::is('dashboard/pengajar*'))
     @include('components.layouts.nav.pengajar-mobile')
+@elseif (Request::is('dashboard/penguji*'))
+    @include('components.layouts.nav.penguji-mobile')
 @endif
