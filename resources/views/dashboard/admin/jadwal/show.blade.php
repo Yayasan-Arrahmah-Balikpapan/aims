@@ -71,7 +71,12 @@
                 <tbody>
                     @foreach($pesertas->resource as $peserta)
                         <tr class="text-gray-900 ">
-                            <td class="p-2 uppercase">{{ $peserta->peserta->nama }}</td>
+                            <td class="p-2 uppercase">
+                                <Link away href="https://wa.me/{{ $peserta->peserta->phone_number }}">
+                                    {{ $peserta->peserta->nama }} <br>
+                                    {{ $peserta->peserta->phone_number }}
+                                </Link>
+                            </td>
                             @for($i = 1; $i <= 16; $i++)
                                 <td class="text-center p-2 uppercase text-xs font-bold">
                                     @if(array_key_exists($i, $peserta->data_absensi))

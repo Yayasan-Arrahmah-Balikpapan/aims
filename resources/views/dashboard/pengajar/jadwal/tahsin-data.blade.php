@@ -54,8 +54,11 @@
                         @endphp
                         <tr class="text-gray-700 text-sm font-semibold border-b border-gray-300">
                             <td class="border-x p-2 uppercase bg-stone-100 text-nowrap">
-                                <p class="text-gray-500">{{ $item->nis_peserta }}</p>
-                                <p>{{ $item->peserta->nama }}</p>
+                                <Link away href="https://wa.me/{{ $item->peserta->phone_number }}">
+                                    <p class="text-gray-500">{{ $item->nis_peserta }}</p>
+                                    <p>{{ $item->peserta->nama }}</p>
+                                    <p class="text-gray-500">{{ $item->peserta->phone_number }}</p>
+                                </Link>
                             </td>
                             @for($i = 1; $i <= 16; $i++)
                                 <td class="min-w-16 border-x text-center p-1 uppercase text-xs font-bold ">
