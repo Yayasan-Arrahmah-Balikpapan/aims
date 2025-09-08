@@ -13,7 +13,7 @@ class DaftarJadwalController extends Controller
     {
         $peserta = \App\Models\Kelas::where('uuid',$peserta)->first();
         $data_jadwal = \App\Models\Jadwal::whereHas('level', function ($query) use ($peserta) {
-                                $query->where('slug', strtolower($peserta->data_nilai['penempatan-level']));
+                                $query->where('nama', $peserta->data_nilai['penempatan-level'] ?? '');
                             })
                     ->whereRaw('LOWER(jenis_peserta) = ?', strtolower($peserta->peserta->jenis_peserta))
                     ->where('periode_id', $peserta->periode->id)
