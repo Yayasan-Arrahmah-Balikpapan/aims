@@ -30,7 +30,7 @@ Route::get("/lttq/tahsin/pendaftaran/gagal", [App\Domain\Website\Controllers\Pen
 Route::get("/lttq/tahsin/daftar-ulang", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang"])->name("website.lttq.tahsin.daftar-ulang");
 Route::post("/lttq/tahsin/daftar-ulang/store", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_store"])
     ->name("website.lttq.tahsin.daftar-ulang.store")
-    ->middleware('throttle:1,1')
+    // ->middleware('throttle:1,1')
     ;
 Route::get("/lttq/tahsin/daftar-ulang/berhasil", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_berhasil"])->name("website.lttq.tahsin.daftar-ulang.berhasil");
 Route::get("/lttq/tahsin/daftar-ulang/gagal", [DaftarUlangTahsinController::class, "tahsin_daftar_ulang_gagal"])->name("website.lttq.tahsin.daftar-ulang.gagal");
