@@ -266,12 +266,13 @@ class DaftarUlangTahsinController extends Controller
                         DB::connection('mysql2')->table('tahsins')
                             ->where('id', $request->id_lama)
                             ->update(['migrasi' => date('Y-m-d H:i:s')]);
-                    } else {
-                        Toast::title('Data Ini Sudah Terdaftar Ulang !')
-                            ->warning()
-                            ->autoDismiss(10);
-                        return redirect()->back();
                     }
+                    // else {
+                    //     Toast::title('Data Ini Sudah Terdaftar Ulang !')
+                    //         ->warning()
+                    //         ->autoDismiss(10);
+                    //     return redirect()->back();
+                    // }
 
                     $lock_peserta = Peserta::lockForUpdate()->latest()->first();
                     $lock_kelas = Kelas::lockForUpdate()->latest()->first();
