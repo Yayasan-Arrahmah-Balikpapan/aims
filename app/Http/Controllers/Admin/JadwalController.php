@@ -44,7 +44,7 @@ class JadwalController extends Controller
             'KAMIS' => 'Kamis',
             'JUMAT' => 'Jumat',
             'SABTU' => 'Sabtu',
-            'MINGGU' => 'Minggu',
+            'AHAD' => 'Ahad',
         ];
         // $jadwal = $this->getJadwalTable($unit);
         $jadwal = \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Jadwal::where('periode_id', $periode)->orderBy('created_at', 'desc'))
