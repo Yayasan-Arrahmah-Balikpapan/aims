@@ -183,15 +183,22 @@ class PembayaranController extends Controller
     {
         $table = $this->getPembayaranRekapTable($unit);
         $dataperiode = \App\Models\Periode::find( $periode);
+        $data_level = \App\Models\Modules\Level::where('unit_id', $dataperiode->unit_id)->get();
         $data_biaya = \App\Models\Biaya::where('periode_id', $dataperiode->id)->get();
         $data_peserta = Kelas::where('periode_id', $periode)
-                            ->when($request->has('search'), function($q) use ($request) {
-                                $search = $request->search;
-                                $q->whereHas('peserta', function($q) use ($search) {
-                                    $q->where('nis', 'like', "%{$search}%")
-                                        ->orWhere('nama', 'like', "%{$search}%");
-                                });
-                            })
+                            // ->when($request->has('search'), function($q) use ($request) {
+                            //     $search = $request->search;
+                            //     $q->whereHas('peserta', function($q) use ($search) {
+                            //         $q->where('nis', 'like', "%{$search}%")
+                            //             ->orWhere('nama', 'like', "%{$search}%");
+                            //     });
+                            // })
+                            ->cari(request()->query('cari'))
+                            ->jenisPeserta(request()->query('jenis_peserta'))
+                            ->statusDaftarPeserta(request()->query('peserta'))
+                            ->statusPendaftaran(request()->query('status'))
+                            ->cariLevel(request()->query('level'))
+                            ->latest()
                             ->paginate(10);
         $data_biaya_id = $data_biaya->pluck('id');
         $data_peserta_id = $data_peserta->pluck('id');
@@ -223,7 +230,7 @@ class PembayaranController extends Controller
                                 })
                                 ->toArray();
                                 // dd($data_transaksi_peserta);
-        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 'data_pembayaran_peserta', 'data_transaksi_peserta'));
+        return view('dashboard.admin.periode.pembayaran.index', compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 'data_pembayaran_peserta', 'data_transaksi_peserta', 'data_level'));
     }
 
     public function rekap($unit, $periode)

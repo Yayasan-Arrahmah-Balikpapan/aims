@@ -15,6 +15,39 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>
+            <div class="container mx-auto">
+                <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
+                    :default="[
+                            'cari' => request()->query('cari') ?? '',
+                            'jenis_peserta' => request()->query('jenis_peserta') ?? '',
+                            'status' => request()->query('status') ?? '',
+                            'peserta' => request()->query('peserta') ?? '',
+                        ],
+                    ">
+                    <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Cari" class="flex-grow"/>
+                    <x-splade-select name="jenis_peserta">
+                        <option value="" disabled selected>-- Jenis</option>
+                        <option value="ikhwan">Ikhwan</option>
+                        <option value="akhwat">Akhwat</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    <x-splade-select name="peserta">
+                        <option value="" disabled selected>-- Peserta</option>
+                        <option value="baru">Baru</option>
+                        <option value="melanjutkan">Daftar Ulang</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    <x-splade-select name="status">
+                        <option value="" disabled selected>-- Status</option>
+                        <option value="1">Menunggu Pembayaran</option>
+                        <option value="2">Menunggu Konfirmasi</option>
+                        <option value="3">Lunas</option>
+                        <option value="4">Kadaluarsa</option>
+                        <option value="">Semua</option>
+                    </x-splade-select>
+                    <x-splade-submit :label="__('Cari')"/>
+                </x-splade-form>
+            </div>
             <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                     <thead>

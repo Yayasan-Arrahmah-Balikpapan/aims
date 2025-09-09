@@ -13,18 +13,24 @@ class TransaksiController extends Controller
     {
         // Logika untuk menampilkan data
         $dataperiode = \App\Models\Periode::find( $periode);
-        $data_transaksi = \App\Models\Transaksi::whereHas('periode', function($query) use ($dataperiode) {
+        $data_transaksi = \App\Models\Transaksi::with(['periode', 'peserta', 'kelas', 'pembayaran'])
+                    ->whereHas('periode', function($query) use ($dataperiode) {
                         $query->where('id', $dataperiode->id);
                     })
-                    ->when($request->search, function($query) use ($request) {
+                    ->when($request->cari, function($query) use ($request) {
                         $query->whereHas('peserta', function($query) use ($request) {
-                            $query->where('nama', 'like', '%'.$request->search.'%')
-                            ->orWhere('nis', 'like', '%'.$request->search.'%');
-                        })
-                        ->orWhereHas('kelas', function($query) use ($request) {
-                            $query->whereHas('jadwal', function($query) use ($request) {
-                                $query->where('nama_jadwal', 'like', '%'.$request->search.'%');
-                            });
+                            $query->where('nama', 'like', '%'.$request->cari.'%')
+                            ->orWhere('nis_peserta', 'like', '%'.$request->cari.'%');
+                        });
+                    })
+                    ->when($request->jenis_peserta, function($query) use ($request) {
+                        $query->whereHas('peserta', function($query) use ($request) {
+                            $query->where('jenis_peserta', $request->jenis_peserta);
+                        });
+                    })
+                    ->when($request->peserta, function($query) use ($request) {
+                        $query->whereHas('kelas', function($query) use ($request) {
+                            $query->where('status_daftar', $request->peserta);
                         });
                     })
                     ->latest()
