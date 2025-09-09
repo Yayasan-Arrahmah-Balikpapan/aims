@@ -7,7 +7,7 @@
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
                         <div class="items-center flex space-x-4">
                             <x-carbon-user-avatar-filled-alt class="w-20 h-20 text-primary-700"/>
-                            <div>
+                            <Link away href="https://wa.me/{{ $data_peserta->peserta->phone_number }}">
                                 <h3 class="mb-1 text-xl font-bold text-gray-900 ">Peserta</h3>
                                 <div class="mb-1 text-sm text-gray-500 uppercase">
                                     {{ $data_peserta->peserta->nama }}
@@ -15,7 +15,7 @@
                                 <div class="mb-4 text-sm text-gray-500 ">
                                     {{ $data_peserta->peserta->phone_number }}
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                     <div class="p-4 mb-4 bg-white border border-gray-200 rounded-lg  2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
