@@ -398,13 +398,16 @@ class PesertaController extends Controller
             'jenis_peserta' => 'required|in:ikhwan,akhwat',
             'phone_number' => 'required|numeric',
             'tanggal_lahir' => 'nullable|date',
-            'jadwal' => 'nullable|exists:jadwals,id',
-        ]);
+            ]);
 
         try {
             DB::beginTransaction();
             $peserta_kelas = \App\Models\Kelas::findOrFail($peserta);
-            $peserta_kelas->jadwal_id = $request->jadwal ?? null;
+            if ($request->jadwal == '0') {
+                $peserta_kelas->jadwal_id = NULL;
+            } else {
+                $peserta_kelas->jadwal_id = $request->jadwal ?? null;
+            }
             $peserta_kelas->save();
 
             $peserta_data = \App\Models\Peserta::find($peserta_kelas->peserta_id);
