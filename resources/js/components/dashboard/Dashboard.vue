@@ -15,7 +15,7 @@
 
     <!-- Desktop Tab Navigation -->
     <div class="hidden md:block bg-white">
-        <div class="max-w-7xl mx-auto flex border-b border-gray-200">
+        <div class="max-w-7xl mx-auto flex border-b border-gray-200 font-extrabold">
             <div v-for="(tab, index) in tabs" :key="index" @click="activeTab = index"
                 :class="[
                     'flex items-center justify-between px-6 py-2 font-medium text-sm focus:outline-none transition-colors duration-200',

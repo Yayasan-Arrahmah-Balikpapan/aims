@@ -52,14 +52,18 @@
                             <img src="{{ asset('assets/icon/icon-pendidikan.png') }}" class="h-16 sm:h-24" alt="icon-pendidikan">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Pendidikan LTTQ</span>
                         </Link>
-                        <div class="inline-flex flex-col items-center">
+                        <Link href="{{ route('website.ibadah') }}" class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-masjid.png') }}" class="h-16 sm:h-24" alt="icon-masjid">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Masjid</span>
-                        </div>
-                        <div class="inline-flex flex-col items-center">
+                        </Link>
+                        <Link href="{{ route('dashboard.peserta.riwayatpembayaran') }}" class="inline-flex flex-col items-center">
+                            <img src="{{ asset('assets/icon/pembayaran-spp.png') }}" class="h-16 sm:h-24" alt="pembayaran-spp">
+                            <span class="sm:font-bold font-semibold text-gray-800 ">Pembayaran SPP</span>
+                        </Link>
+                        {{-- <div class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-tahsin.png') }}" class="h-16 sm:h-24" alt="icon-tahsin">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Tahsin</span>
-                        </div>
+                        </div> --}}
                         {{-- <Link href="{{ route('dashboard.peserta.agenda') }}" class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
@@ -68,7 +72,7 @@
                             <img src="{{ asset('assets/icon/icon-agenda.png') }}" class="h-16 sm:h-24" alt="icon-agenda">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Agenda</span>
                         </Link>
-                        <div class="inline-flex flex-col items-center">
+                        {{-- <div class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-kajian.png') }}" class="h-16 sm:h-24" alt="icon-kajian">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Kajian</span>
                         </div>
@@ -83,7 +87,7 @@
                         <div class="inline-flex flex-col items-center">
                             <img src="{{ asset('assets/icon/icon-lainnya.png') }}" class="h-16 sm:h-24" alt="icon-lainnya">
                             <span class="sm:font-bold font-semibold text-gray-800 ">Lainnya</span>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="px-6 py-2">
@@ -208,7 +212,7 @@
                                     <li class="p-2 sm:p-4 border rounded-md bg-white">
                                         <div class="flex items-center justify-between uppercase ">
                                             <span class="text-xs sm:text-[16px] font-semibold">{{ $item->nis_peserta }}</span>
-                                            <div class="text-[10px] sm:text-xs">
+                                            <div class="text-[10px] sm:text-xs ">
                                                 Status :
                                                 <span class="px-2 py-0 sm:py-1 ml-1 font-semibold rounded-xl
                                                     {{ $item->status_aktif == 'diproses' ? 'bg-yellow-300 text-gray-900'
@@ -216,11 +220,6 @@
                                                     : ($item->status_aktif == 'ditangguhkan' || $item->status_aktif == 'off' ? 'bg-red-700 text-white' : '')) }}">
                                                     {{ $item->status_aktif }}
                                                 </span>
-                                                @if ($item->status_pendaftaran == 'belum pilih jadwal')
-                                                    <span class="bg-red-300 text-gray-800 px-2 py-1 font-semibold rounded-xl">
-                                                        Dimohon Segera Memilih Jadwal
-                                                    </span>
-                                                @endif
                                             </div>
                                         </div>
                                         <hr class="my-1 sm:my-2" />
@@ -261,8 +260,11 @@
                                                         </Link>
                                                     @endif
                                                     @if ($item->status_pendaftaran == 'belum pilih jadwal')
+                                                        <span class="text-gray-800 text-xs px-2 py-0 sm:py-1 font-semibold rounded-xl">
+                                                            Dimohon Segera Memilih Jadwal
+                                                        </span>
                                                         <Link away href="{{ route('dashboard.peserta.daftar-jadwal', ['peserta' => $item->uuid ]) }}"
-                                                            class="text-sm flex font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
+                                                            class="text-sm flex justify-between font-semibold border rounded-lg py-1.5 px-3 bg-primary-700 text-white">
                                                             Pilih Jadwal Sekarang
                                                             <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                                         </Link>
