@@ -110,13 +110,20 @@
                                 <td class="uppercase">
                                     Rp. {{ number_format($item->nominal_total_pembayaran, 0, ',', '.') }}
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     @if ($item->status != 1)
-                                    <Link modal href="{{ route('admin.transaksi.bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id]) }}"
+                                    {{-- <Link modal href="{{ route('admin.transaksi.bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id]) }}"
                                         class="text-white bg-gray-500 font-medium rounded-lg text-xs px-2 py-1 "
                                         >
                                         Lihat Bukti
-                                    </Link>
+                                    </Link> --}}
+                                    <x-splade-toggle>
+                                        <button @click.prevent="toggle" class="text-white bg-gray-500 font-medium rounded-lg text-xs px-2 py-1">Lihat Bukti</button>
+                                        <div v-show="toggled">
+                                            <img src="{{ Storage::url($item->data_pembayaran['bukti_transfer']) }}" alt="bukti transfer" class="w-32" />
+                                            <button @click.prevent="setToggle(false)" class="text-white bg-red-500 font-medium rounded-lg text-xs px-2 py-1">Tutup</button>
+                                        </div>
+                                    </x-splade-toggle>
                                     @else
                                     -
                                     @endif
