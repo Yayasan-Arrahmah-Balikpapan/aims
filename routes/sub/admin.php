@@ -40,7 +40,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::post('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'store'])->name('admin.peserta.store');
         Route::get('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'show'])->name('admin.peserta.show');
         Route::get('/peserta/{peserta}/edit', [App\Http\Controllers\Admin\PesertaController::class, 'edit'])->name('admin.peserta.edit');
-        Route::put('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'update'])->name('admin.peserta.update');
+        Route::post('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'update'])->name('admin.peserta.update');
         Route::delete('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'destroy'])->name('admin.peserta.destroy');
 
         Route::get('/absensi', [App\Http\Controllers\Admin\AbsensiController::class, 'index'])->name('admin.absensi.index');

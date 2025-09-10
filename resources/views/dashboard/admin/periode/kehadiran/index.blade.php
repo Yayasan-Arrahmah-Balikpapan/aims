@@ -46,7 +46,14 @@
                         @foreach ($data_peserta as $item)
                             <tr class="text-gray-700 border-b border-gray-200 py-4">
                                 <td class="p-4 uppercase font-semibold">
-                                    {{ $item->peserta->nama }}
+                                        <Link href="{{ route('admin.peserta.show', ['unit' => $unit, 'periode' => $periode, 'peserta' => $item->id]) }}" >
+                                            <p class="text-gray-900 whitespace-nowrap">
+                                                {{ $item->peserta->nama }}
+                                            </p>
+                                            <p class="text-gray-600 whitespace-nowrap">
+                                                {{ $item->peserta->phone_number }}
+                                            </p>
+                                        </Link>
                                 </td>
                                 <td class="p-4 uppercase font-semibold">
                                     {{ $item->jadwal->nama_jadwal ?? '' }}
@@ -88,7 +95,8 @@
                                     @endif
                                 </td>
                                 <td class="border-x text-center p-1 uppercase text-xs font-bold">
-                                    {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }}
+                                    {{-- {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }} --}}
+                                    -
                                 </td>
                             </tr>
                         @endforeach

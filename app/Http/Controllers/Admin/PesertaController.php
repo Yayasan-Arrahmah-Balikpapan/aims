@@ -377,14 +377,51 @@ class PesertaController extends Controller
         return redirect()->back();
     }
 
-    public function show($unit, $id)
+    public function show($unit, $periode, $peserta)
     {
-        // Logika untuk menampilkan data berdasarkan ID
+        $jadwals = \App\Models\Jadwal::select('id', 'nama_jadwal')
+            ->where('periode_id', $periode)
+            ->get();
+        $data_peserta = \App\Models\Kelas::find($peserta);
+        $dataperiode = \App\Models\Periode::find( $periode);
+        $data_transaksi = \App\Models\Transaksi::where('peserta_id', $peserta)->get();
+        $data_biaya = \App\Models\Biaya::where('periode_id', $data_peserta->periode->id)->get();
+        $data_pembayaran_peserta = \App\Models\Pembayaran::where('kelas_id', $data_peserta->id)->get();
+
+        return view('dashboard.admin.periode.peserta.show', compact('unit','periode', 'jadwals', 'data_peserta', 'dataperiode', 'peserta', 'data_transaksi', 'data_biaya', 'data_pembayaran_peserta'));
     }
 
-    public function update(Request $request, $unit, $id)
+    public function update($unit, $periode, $peserta, Request $request)
     {
-        // Logika untuk memperbarui data berdasarkan ID
+        $request->validate([
+            'nama_peserta' => 'required|string|max:100',
+            'jenis_peserta' => 'required|in:ikhwan,akhwat',
+            'phone_number' => 'required|numeric',
+            'tanggal_lahir' => 'nullable|date',
+            'jadwal' => 'nullable|exists:jadwals,id',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $peserta_kelas = \App\Models\Kelas::findOrFail($peserta);
+            $peserta_kelas->jadwal_id = $request->jadwal ?? null;
+            $peserta_kelas->save();
+
+            $peserta_data = \App\Models\Peserta::find($peserta_kelas->peserta_id);
+            $peserta_data->phone_number = $request->phone_number;
+            $peserta_data->nama = $request->nama_peserta;
+            $peserta_data->jenis_peserta = $request->jenis_peserta;
+            $peserta_data->tanggal_lahir = $request->tanggal_lahir ?? null;
+            $peserta_data->save();
+
+            DB::commit();
+            Toast::success('Data berhasil di update')->autoDismiss(5);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Toast::warning('Terjadi kesalahan, data gagal diupdate')->autoDismiss(5);
+        }
+
+        return redirect()->back();
     }
 
     public function destroy($unit, $periode, $peserta)

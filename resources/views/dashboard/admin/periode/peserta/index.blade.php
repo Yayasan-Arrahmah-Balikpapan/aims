@@ -22,18 +22,18 @@
             <x-splade-table :for="$peserta">
                 <x-splade-cell actions as="$data">
                     <div class="flex items-center gap-1">
-                        @if ($data->status == 'MENUNGGU KONFIRMASI')
-                            <Link href="/users/edit" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
+                        {{-- @if ($data->status == 'MENUNGGU KONFIRMASI')
+                            <Link href="{{ route('admin.peserta.edit', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
                                 <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
                             </Link>
-                        @endif
+                        @endif --}}
                         {{-- <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
                             <x-carbon-report class="w-5 h-5 text-sky-500"/>
                         </Link> --}}
                         <Link href="{{ route('admin.peserta.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
                             <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
                         </Link>
-                        <x-splade-form action="{{ route('admin.peserta.destroy', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}"
+                        {{-- <x-splade-form action="{{ route('admin.peserta.destroy', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}"
                             method="DELETE"
                             confirm="Konfirmasi Hapus Data"
                             confirm-text="Apakah yakin data dihapus ?"
@@ -44,7 +44,7 @@
                             <button type="submit" class="text-red-700 border border-red-700 rounded-md px-2 py-1">
                                 <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
                             </button>
-                        </x-splade-form>
+                        </x-splade-form> --}}
                     </div>
                 </x-splade-cell>
             </x-splade-table>
