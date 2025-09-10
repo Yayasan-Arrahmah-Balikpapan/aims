@@ -18,7 +18,7 @@
                         'nama_peserta' => $data_peserta->peserta->nama ?? null,
                         'tanggal_lahir' => $data_peserta->peserta->tanggal_lahir ?? null,
                         'alamat' => $data_peserta->peserta->biodata['alamat'] ?? null,
-                        'jadwal' => $data_peserta->jadwal_id
+                        'jadwal' => $data_peserta->jadwal_id ?? '0',
                     ]"
                 >
                     @csrf
@@ -44,12 +44,13 @@
                                 <option value="akhwat">akhwat / Perempuan</option>
                             </x-splade-select>
                             <x-splade-input name="tanggal_lahir" :label="__('Tanggal Lahir')" date required/>
-                            {{-- <x-splade-input name="alamat" :label="__('Alamat')" required/> --}}
-                            <x-splade-select name="jadwal" :label="__('Jadwal')" :options="$jadwals" option-label="nama_jadwal" option-value="id" choices />
-                            {{-- <x-splade-select name="domisili" :label="__('Domisili')" choices>
-                                <option value="1">Kota Balikpapan</option>
-                                <option value="0">Luar Kota Balikpapan</option>
-                            </x-splade-select> --}}
+                            <x-splade-select name="jadwal" :label="__('Jadwal')" choices>
+                                <option value="">-- Pilih</option>
+                                @foreach ($jadwals as $jadwal)
+                                    <option value="{{ $jadwal->id }}">{{ $jadwal->nama_jadwal }}</option>
+                                @endforeach
+                                <option value="0">-- BELUM PILIH --</option>
+                            </x-splade-select>
                             <hr class="my-4">
                             <x-splade-submit label="Simpan" />
                         </x-forms.body>
