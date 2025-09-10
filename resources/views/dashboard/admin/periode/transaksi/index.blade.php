@@ -45,6 +45,7 @@
                         <option value="4">Kadaluarsa</option>
                         <option value="">Semua</option>
                     </x-splade-select>
+                    <x-splade-input value="{{ request()->query('tanggal') }}" name="tanggal" placeholder="Tanggal" date range/>
                     <x-splade-submit :label="__('Cari')"/>
                 </x-splade-form>
             </div>
@@ -122,6 +123,12 @@
                                 </td>
                                 <td>
                                     <div class="flex items-center justify-center">
+                                        @if ($item->status == 1)
+                                            <Link href="{{ route('admin.transaksi.konfirmasi', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id])}}" class="relative text-white border border-yellow-400 bg-yellow-400 rounded-md p-2 mr-2">
+                                                <span class="absolute top-0 right-0 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">0</span>
+                                                <x-carbon-notification class="w-4 h-4 mr-1 text-white"/>
+                                            </Link>
+                                        @endif
                                         <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-2">
                                             <x-carbon-view class="w-4 h-4 text-primary-700"/>
                                         </a>

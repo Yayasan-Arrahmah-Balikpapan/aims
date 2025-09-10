@@ -33,6 +33,14 @@ class TransaksiController extends Controller
                             $query->where('status_daftar', $request->peserta);
                         });
                     })
+                    ->when($request->tanggal, function($query) use ($request) {
+                        if (strpos($request->tanggal, ' to ') !== false) {
+                            list($date1, $date2) = explode(' to ', $request->tanggal);
+                            $query->whereBetween('created_at', [$date1.' 00:00:00', $date2.' 23:59:59']);
+                        } else {
+                            $query->whereDate('created_at', '=', $request->tanggal);
+                        }
+                    })
                     ->latest()
                     ->paginate(10);
 
