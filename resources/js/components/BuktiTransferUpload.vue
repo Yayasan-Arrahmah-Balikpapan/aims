@@ -18,6 +18,11 @@
       @init="handleFilePondInit"
       @processfile="handleFileUpload"
     />
+
+    <!-- Div yang akan muncul setelah upload selesai -->
+    <div v-show="showUploadedContent" class="uploaded-content">
+      <slot name="uploaded-content"></slot>
+    </div>
   </div>
 </template>
 
@@ -46,18 +51,25 @@ export default {
   },
   data() {
     return {
-      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      showUploadedContent: false // State untuk mengontrol tampilan div
     }
   },
   methods: {
     handleFilePondInit() {
       console.log("FilePond has initialized");
+      this.showUploadedContent = false; // Pastikan hidden saat inisialisasi
     },
     handleFileUpload(error, file) {
       if (error) {
         console.error("Error during file upload:", error);
+        this.showUploadedContent = false; // Tetap hidden jika error
       } else {
         console.log("File uploaded successfully:", file.serverId);
+        this.showUploadedContent = true; // Tampilkan div setelah upload sukses
+
+        // Emit event ke parent component jika diperlukan
+        this.$emit('upload-complete', file.serverId);
       }
     }
   }
@@ -72,6 +84,14 @@ export default {
 }
 
 .filepond--media-preview {
-    padding-top: 30px;
-  }
+  padding-top: 30px;
+}
+
+/* Style untuk div yang muncul setelah upload */
+.uploaded-content {
+  margin-top: 20px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
 </style>
