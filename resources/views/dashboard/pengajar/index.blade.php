@@ -14,16 +14,16 @@
                             Daftar Baru
                         </h1>
                         <div>
-                            <Link away href="{{ route('website.lttq.tahsin.pendaftaran') }}" class=" border-primary-700 ml-2 border px-2 py-1 rounded text-sm text-primary-700">
+                            <Link away href="{{ route('pengajar.peserta.index', ['unit' => $unit]) }}" class=" border-primary-700 ml-2 border px-2 py-1 rounded text-sm text-primary-700">
                                 FORM
                             </Link>
-                            <button id="copyButton" class="ml-2 border border-gray-400 px-2 py-1 rounded text-sm">Copy Link</button>
+                            <button id="copyButton1" class="ml-2 border border-gray-400 px-2 py-1 rounded text-sm">Copy Link</button>
                         </div>
                         <x-splade-script>
                             document.addEventListener("DOMContentLoaded", function() {
-                                document.getElementById('copyButton').addEventListener('click', function() {
+                                document.getElementById('copyButton1').addEventListener('click', function() {
                                     var tempInput = document.createElement('input');
-                                    tempInput.value = '{!! route('website.lttq.tahsin.pendaftaran')!!}';
+                                    tempInput.value = '{!! route('pengajar.peserta.index', ['unit' => $unit]) !!}';
                                     document.body.appendChild(tempInput);
                                     tempInput.select();
                                     document.execCommand('copy');
@@ -45,18 +45,18 @@
                             <Link away href="https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta/cari" class=" border-primary-700 ml-2 border px-2 py-1 rounded text-sm text-primary-700">
                                 FORM
                             </Link>
-                            <button id="copyButton" class="ml-2 border border-gray-400 px-2 py-1 rounded text-sm">Copy Link</button>
+                            <button id="copyButton2" class="ml-2 border border-gray-400 px-2 py-1 rounded text-sm">Copy Link</button>
                         </div>
                         <x-splade-script>
                             document.addEventListener("DOMContentLoaded", function() {
-                                document.getElementById('copyButton').addEventListener('click', function() {
+                                document.getElementById('copyButton2').addEventListener('click', function() {
                                     var tempInput = document.createElement('input');
                                     tempInput.value = 'https://atthala.arrahmahbalikpapan.or.id/tahsin/daftar-ulang-peserta/cari';
                                     document.body.appendChild(tempInput);
                                     tempInput.select();
                                     document.execCommand('copy');
                                     document.body.removeChild(tempInput);
-                                    alert('Link Pendaftaran {{ $unit }} berhasil disalin');
+                                    alert('Link Daftar Ulang {{ $unit }} berhasil disalin');
                                 });
                             });
                         </x-splade-script>
