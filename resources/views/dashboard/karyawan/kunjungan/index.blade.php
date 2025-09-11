@@ -79,7 +79,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{ $kunjungan->links() }}
+            {{ $kunjungan->appends(request()->query())->links() }}
         </div>
     </x-layouts.card>
 </x-layouts.main>

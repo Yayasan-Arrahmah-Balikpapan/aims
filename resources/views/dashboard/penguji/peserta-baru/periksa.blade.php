@@ -90,7 +90,7 @@
             </div>
 
             <div class="p-2 text-xs text-gray-500">
-                {{ $data_peserta_baru ->links() }}
+                {{ $data_peserta_baru ->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

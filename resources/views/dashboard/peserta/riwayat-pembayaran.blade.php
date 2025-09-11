@@ -80,7 +80,7 @@
                 </ul>
             </div>
             <div class="flow-root py-4">
-                {{ $data_transaksi->links() }}
+                {{ $data_transaksi->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

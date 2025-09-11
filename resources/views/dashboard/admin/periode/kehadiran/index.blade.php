@@ -104,7 +104,7 @@
                 </table>
             </div>
             <div class="p-2 text-gray-500">
-                {{ $data_peserta->links() }}
+                {{ $data_peserta->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

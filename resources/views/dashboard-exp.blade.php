@@ -282,7 +282,7 @@
                         </ul>
                     </div>
                     <div class="flow-root py-4">
-                        {{ $data_peserta_paginate->links() }}
+                        {{ $data_peserta_paginate->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>
@@ -370,7 +370,7 @@
                         </ul>
                     </div>
                     <div class="flow-root py-4">
-                        {{ $data_transaksi->links() }}
+                        {{ $data_transaksi->appends(request()->query())->links() }}
                     </div>
                 </div>
             </div>

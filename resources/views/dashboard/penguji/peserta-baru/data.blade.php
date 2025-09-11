@@ -20,19 +20,6 @@
                         <option value="akhwat">Akhwat</option>
                         <option value="">Semua</option>
                     </x-splade-select>
-                    {{-- <x-splade-select name="peserta">
-                        <option value="" disabled selected>-- Peserta</option>
-                        <option value="baru">Baru</option>
-                        <option value="melanjutkan">Daftar Ulang</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-                    <x-splade-select name="level">
-                        <option value="" disabled selected>-- Level</option>
-                        @foreach ( $data_level as $level )
-                            <option value="{{ $level->id }}">{{ $level->nama }}</option>
-                        @endforeach
-                        <option value="">Semua</option>
-                    </x-splade-select> --}}
                     <x-splade-select name="status">
                         <option value="" disabled selected>-- Status</option>
                         <option value="belum diberikan level">Belum Diberikan Level</option>
@@ -110,7 +97,7 @@
             </div>
 
             <div class="p-2 text-xs text-gray-500">
-                {{ $data_peserta_baru->links() }}
+                {{ $data_peserta_baru->appends(request()->query())->links() }}
             </div>
         </div>
     </div>

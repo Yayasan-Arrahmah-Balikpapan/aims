@@ -142,7 +142,7 @@
             @endforeach
         </div>
         <div class="p-2 text-xs text-gray-500">
-            {{ $data_cuti->links() }}
+            {{ $data_cuti->appends(request()->query())->links() }}
         </div>
     </div>
 

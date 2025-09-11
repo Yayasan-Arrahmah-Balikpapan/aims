@@ -67,7 +67,7 @@
             </x-splade-lazy>
         </div>
         <div class="p-2 text-xs text-gray-500">
-            {{ $data_jadwal->links() }}
+            {{ $data_jadwal->appends(request()->query())->links() }}
         </div>
     </div>
 </x-layouts.main>
