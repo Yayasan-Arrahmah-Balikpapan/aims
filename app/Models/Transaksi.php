@@ -25,10 +25,12 @@ class Transaksi extends Model
         'data_pembayaran',
         'payment_gateway_id',
         'donasi',
+        'potongan',
     ];
 
     protected $casts = [
         'data_pembayaran' => 'array',
+        'potongan' => 'integer',
     ];
 
     public function user()
@@ -60,6 +62,7 @@ class Transaksi extends Model
     {
         return $this->hasOne(PaymentGateway::class, 'id', 'payment_gateway_id');
     }
+
 
 
     public function scopeStatusKeterangan($query, $status = null)

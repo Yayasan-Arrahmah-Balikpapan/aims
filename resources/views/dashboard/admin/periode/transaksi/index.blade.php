@@ -86,7 +86,9 @@
                                     {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
                                 </td>
                                 <td class="uppercase">
-                                    {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                    <Link href="{{ route('admin.peserta.show', ['unit' => $item->periode->unit->slug, 'periode' => $item->periode->id, 'peserta' => $item->kelas->id]) }}" class="text-gray-500 font-semibold">
+                                        {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                    </Link>
                                 </td>
                                 <td class="uppercase">
                                     {{ $item->kelas->jadwal ? $item->kelas->jadwal->nama_jadwal : '' }}
@@ -148,6 +150,9 @@
                                                 <x-carbon-checkmark class="w-4 h-4 text-white"/>
                                             </Link>
                                         @endif
+                                        <Link href="{{ route('admin.transaksi.show', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id]) }}" target="_blank" class="text-yellow-500 border border-yellow-500 rounded-md p-2 ml-2">
+                                            <x-carbon-edit class="w-4 h-4 text-yellow-500"/>
+                                        </Link>
                                     </div>
                                 </td>
                             </tr>

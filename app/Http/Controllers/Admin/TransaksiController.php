@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
+use Illuminate\Support\Facades\DB;
+use Throwable;
+
 
 
 class TransaksiController extends Controller
@@ -13,7 +16,7 @@ class TransaksiController extends Controller
     {
         // Logika untuk menampilkan data
         $dataperiode = \App\Models\Periode::find( $periode);
-        $data_transaksi = \App\Models\Transaksi::with(['periode', 'peserta', 'kelas', 'pembayaran'])
+        $data_transaksi = \App\Models\Transaksi::with(['periode', 'periode.unit', 'kelas', 'kelas.peserta', 'kelas.jadwal', 'pembayaran'])
                     ->whereHas('periode', function($query) use ($dataperiode) {
                         $query->where('id', $dataperiode->id);
                     })
@@ -73,14 +76,84 @@ class TransaksiController extends Controller
         // Logika untuk menyimpan data baru
     }
 
-    public function show($unit, $id)
+    public function show($unit, $periode, $transaksi)
     {
-        // Logika untuk menampilkan data berdasarkan ID
+        $dataperiode = \App\Models\Periode::find( $periode);
+        $data_transaksi = \App\Models\Transaksi::with(['peserta', 'kelas', 'kelas.jadwal', 'pembayaran', 'periode'])->find( $transaksi);
+        $data_biaya = \App\Models\Biaya::where('periode_id', $data_transaksi->periode->id)->get();
+        $data_pembayaran = \App\Models\Pembayaran::where('transaksi_id', $transaksi)->get();
+
+        $biaya_pembayaran = \App\Models\Pembayaran::where('transaksi_id', $transaksi)
+                                ->get()
+                                ->mapWithKeys(function ($item) {
+                                    return ['pembayaran'.$item->biaya_id => true];
+                                })
+                                ->toArray();
+        $biaya_pembayaran['potongan'] = $data_transaksi->potongan;
+        $biaya_pembayaran['donasi'] = $data_transaksi->donasi;
+        // dd($data_transaksi, $data_biaya, $data_pembayaran, $biaya_pembayaran);
+
+        return view('dashboard.admin.periode.transaksi.show', compact('unit','periode', 'dataperiode', 'data_transaksi', 'data_biaya', 'data_pembayaran', 'biaya_pembayaran'));
     }
 
-    public function update(Request $request, $unit, $id)
+    public function update($unit, $periode, $transaksi, Request $request)
     {
-        // Logika untuk memperbarui data berdasarkan ID
+        // dd($request->all());
+
+        $data_periode = \App\Models\Periode::find($periode);
+        $data_biaya = \App\Models\Biaya::where('periode_id', $data_periode->id)->get();
+
+        try {
+            DB::beginTransaction();
+            $data_transaksi = \App\Models\Transaksi::with(['kelas'])->find( $transaksi);
+            $data_transaksi->potongan = $request->input('potongan');
+            $data_transaksi->donasi = $request->input('donasi');
+            $data_transaksi->save();
+
+            $total_nominal = 0;
+            $total_nominal_pembayaran = 0;
+            foreach($data_biaya as $item_biaya) {
+                if($request->input('pembayaran'.$item_biaya->id) == '1'){
+                    $data_pembayaran_peserta = \App\Models\Pembayaran::where([
+                        'periode_id' => $data_periode->id,
+                        'transaksi_id' => $data_transaksi->id,
+                        'biaya_id' => $item_biaya->id,
+                        'kelas_id' => $data_transaksi->kelas->id
+                    ])->firstOrCreate([
+                        'periode_id' => $data_periode->id,
+                        'transaksi_id' => $data_transaksi->id,
+                        'biaya_id' => $item_biaya->id,
+                        'kelas_id' => $data_transaksi->kelas->id,
+                        'nominal' => $item_biaya->nominal,
+                    ]);
+                    $total_nominal += $item_biaya->nominal;
+                }else{
+                    $data_pembayaran_peserta = \App\Models\Pembayaran::where([
+                        'periode_id' => $data_periode->id,
+                        'transaksi_id' => $data_transaksi->id,
+                        'biaya_id' => $item_biaya->id,
+                        'kelas_id' => $data_transaksi->kelas->id
+                    ])->delete();
+                }
+            }
+            $total_nominal_pembayaran = $total_nominal + $data_transaksi->kelas->kode_unik + $request->input('donasi');
+            $total_nominal_pembayaran = $total_nominal_pembayaran - $request->input('potongan');
+
+            $data_transaksi->update([
+                'nominal_total' => $total_nominal,
+                'nominal_total_pembayaran' => $total_nominal_pembayaran
+            ]);
+
+            DB::commit();
+            Toast::title('Update Berhasil !')->autoDismiss(10);
+        } catch (Throwable $e) {
+            DB::rollBack();
+            Toast::title('Terjadi kesalahan, Update Gagal, tanya asif !')
+                    ->warning()
+                    ->autoDismiss(10);
+            throw $e;
+        }
+        return redirect()->back();
     }
 
     public function destroy($unit, $id)
