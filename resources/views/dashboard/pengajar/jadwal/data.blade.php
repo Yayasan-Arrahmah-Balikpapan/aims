@@ -13,37 +13,39 @@
                 ],
             ">
             <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Nama Peserta" class="flex-grow"/>
-            <x-splade-select name="jenis_peserta">
-                <option value="" disabled selected>-- Jenis</option>
-                <option value="ikhwan">Ikhwan</option>
-                <option value="akhwat">Akhwat</option>
-                <option value="">Semua</option>
-            </x-splade-select>
-            <x-splade-select name="level">
-                <option value="" disabled selected>-- Level</option>
-                @foreach ( $data_level as $level )
-                    <option value="{{ $level->id }}">{{ $level->nama }}</option>
-                @endforeach
-                <option value="">Semua</option>
-            </x-splade-select>
-            <x-splade-select name="pengajar">
-                <option value="" disabled selected>-- Pengajar</option>
-                @foreach ( $data_pengajar as $pengajar )
-                    <option value="{{ $pengajar->id }}">{{ $pengajar->kode_nama_pengajar }}</option>
-                @endforeach
-                <option value="">Semua</option>
-            </x-splade-select>
-            <x-splade-select name="hari">
-                <option value="" disabled selected>-- Hari</option>
-                <option value="SENIN">SENIN</option>
-                <option value="SELASA">SELASA</option>
-                <option value="RABU">RABU</option>
-                <option value="KAMIS">KAMIS</option>
-                <option value="JUMAT">JUMAT</option>
-                <option value="SABTU">SABTU</option>
-                <option value="AHAD">AHAD</option>
-                <option value="">Semua</option>
-            </x-splade-select>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-1">
+                <x-splade-select name="jenis_peserta">
+                    <option value="" disabled selected>-- Jenis</option>
+                    <option value="ikhwan">Ikhwan</option>
+                    <option value="akhwat">Akhwat</option>
+                    <option value="">Semua</option>
+                </x-splade-select>
+                <x-splade-select name="level">
+                    <option value="" disabled selected>-- Level</option>
+                    @foreach ( $data_level as $level )
+                        <option value="{{ $level->id }}">{{ $level->nama }}</option>
+                    @endforeach
+                    <option value="">Semua</option>
+                </x-splade-select>
+                <x-splade-select name="pengajar">
+                    <option value="" disabled selected>-- Pengajar</option>
+                    @foreach ( $data_pengajar as $pengajar )
+                        <option value="{{ $pengajar->id }}">{{ $pengajar->kode_nama_pengajar }}</option>
+                    @endforeach
+                    <option value="">Semua</option>
+                </x-splade-select>
+                <x-splade-select name="hari">
+                    <option value="" disabled selected>-- Hari</option>
+                    <option value="SENIN">SENIN</option>
+                    <option value="SELASA">SELASA</option>
+                    <option value="RABU">RABU</option>
+                    <option value="KAMIS">KAMIS</option>
+                    <option value="JUMAT">JUMAT</option>
+                    <option value="SABTU">SABTU</option>
+                    <option value="AHAD">AHAD</option>
+                    <option value="">Semua</option>
+                </x-splade-select>
+            </div>
             <x-splade-submit :label="__('Cari')"/>
         </x-splade-form>
     </div>
@@ -74,6 +76,10 @@
                         <div class="p-4 border rounded-md">
                             <div class="space-y-2">
                                 <dl class="flex items-center justify-between gap-4">
+                                    <dt class="text-base font-normal text-gray-500">Banyak Peserta</dt>
+                                    <dd class="text-base font-medium text-gray-900">{{ $item->kelas->count() }} / {{ $item->batasan_peserta }}</dd>
+                                </dl>
+                                {{-- <dl class="flex items-center justify-between gap-4">
                                     <dt class="text-base font-normal text-gray-500">Jenis Peserta</dt>
                                     <dd class="text-base font-medium text-gray-900">{{ $item->jenis_peserta }}</dd>
                                 </dl>
@@ -96,7 +102,7 @@
                                 <dl class="flex items-center justify-between gap-4">
                                     <dt class="text-base font-normal text-gray-500">Jam Mulai</dt>
                                     <dd class="text-base font-medium text-gray-900">{{ $item->jam_mulai }}</dd>
-                                </dl>
+                                </dl> --}}
                             </div>
                         </div>
                         <div class="flex w-full items-center justify-start space-x-2">

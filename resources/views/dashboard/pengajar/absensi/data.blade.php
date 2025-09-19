@@ -29,10 +29,10 @@
                         <div class="p-4 border rounded-md">
                             <div class="space-y-2">
                                 <dl class="flex items-center justify-between gap-4">
-                                    <dt class="text-base font-normal text-gray-500">Jenis Peserta</dt>
-                                    <dd class="text-base font-medium text-gray-900">{{ $item->jenis_peserta }}</dd>
+                                    <dt class="text-base font-normal text-gray-500">Banyak Peserta</dt>
+                                    <dd class="text-base font-medium text-gray-900">{{ $item->kelas->count() }} / {{ $item->batasan_peserta }}</dd>
                                 </dl>
-                                <dl class="flex items-center justify-between gap-4">
+                                {{-- <dl class="flex items-center justify-between gap-4">
                                     <dt class="text-base font-normal text-gray-500">Level</dt>
                                     <dd class="text-base font-medium text-gray-900">{{ $item->level->nama ?? '-' }}</dd>
                                 </dl>
@@ -51,7 +51,7 @@
                                 <dl class="flex items-center justify-between gap-4">
                                     <dt class="text-base font-normal text-gray-500">Jam Mulai</dt>
                                     <dd class="text-base font-medium text-gray-900">{{ $item->jam_mulai }}</dd>
-                                </dl>
+                                </dl> --}}
                             </div>
                         </div>
                         <div class="flex w-full items-center justify-start space-x-2">

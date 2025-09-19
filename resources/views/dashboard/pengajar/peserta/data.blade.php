@@ -15,32 +15,34 @@
                         ],
                     ">
                     <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Nama Peserta" class="flex-grow"/>
-                    <x-splade-select name="jenis_peserta">
-                        <option value="" disabled selected>-- Jenis</option>
-                        <option value="ikhwan">Ikhwan</option>
-                        <option value="akhwat">Akhwat</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-                    <x-splade-select name="peserta">
-                        <option value="" disabled selected>-- Peserta</option>
-                        <option value="baru">Baru</option>
-                        <option value="melanjutkan">Daftar Ulang</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-                    <x-splade-select name="level">
-                        <option value="" disabled selected>-- Level</option>
-                        @foreach ( $data_level as $level )
-                            <option value="{{ $level->id }}">{{ $level->nama }}</option>
-                        @endforeach
-                        <option value="">Semua</option>
-                    </x-splade-select>
-                    <x-splade-select name="status">
-                        <option value="" disabled selected>-- Status</option>
-                        <option value="belum diberikan level">Belum Diberikan Level</option>
-                        <option value="belum pilih jadwal">Belum Pilih Jadwal</option>
-                        <option value="selesai pilih jadwal">Selesai Pilih Jadwal</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-1">
+                        <x-splade-select name="jenis_peserta">
+                            <option value="" disabled selected>-- Jenis</option>
+                            <option value="ikhwan">Ikhwan</option>
+                            <option value="akhwat">Akhwat</option>
+                            <option value="">Semua</option>
+                        </x-splade-select>
+                        <x-splade-select name="peserta">
+                            <option value="" disabled selected>-- Peserta</option>
+                            <option value="baru">Baru</option>
+                            <option value="melanjutkan">Daftar Ulang</option>
+                            <option value="">Semua</option>
+                        </x-splade-select>
+                        <x-splade-select name="level">
+                            <option value="" disabled selected>-- Level</option>
+                            @foreach ( $data_level as $level )
+                                <option value="{{ $level->id }}">{{ $level->nama }}</option>
+                            @endforeach
+                            <option value="">Semua</option>
+                        </x-splade-select>
+                        <x-splade-select name="status">
+                            <option value="" disabled selected>-- Status</option>
+                            <option value="belum diberikan level">Belum Diberikan Level</option>
+                            <option value="belum pilih jadwal">Belum Pilih Jadwal</option>
+                            <option value="selesai pilih jadwal">Selesai Pilih Jadwal</option>
+                            <option value="">Semua</option>
+                        </x-splade-select>
+                    </div>
                     <x-splade-submit :label="__('Cari')"/>
                 </x-splade-form>
             </div>
