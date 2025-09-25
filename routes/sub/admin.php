@@ -42,6 +42,9 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/peserta/{peserta}/edit', [App\Http\Controllers\Admin\PesertaController::class, 'edit'])->name('admin.peserta.edit');
         Route::post('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'update'])->name('admin.peserta.update');
         Route::delete('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'destroy'])->name('admin.peserta.destroy');
+        Route::get('/peserta/{peserta}/potongan', [App\Http\Controllers\Admin\PesertaController::class, 'potongan'])->name('admin.peserta.potongan');
+        Route::get('/peserta/{peserta}/pembayaran', [App\Http\Controllers\Admin\PesertaController::class, 'pembayaran'])->name('admin.peserta.pembayaran');
+        Route::post('/peserta/{peserta}/pembayaran/store', [App\Http\Controllers\Admin\PesertaController::class, 'pembayaran_store'])->name('admin.peserta.pembayaran.store');
 
         Route::get('/absensi', [App\Http\Controllers\Admin\AbsensiController::class, 'index'])->name('admin.absensi.index');
         Route::get('/absensi/kehadiran', [App\Http\Controllers\Admin\AbsensiController::class, 'kehadiran'])->name('admin.absensi.kehadiran');

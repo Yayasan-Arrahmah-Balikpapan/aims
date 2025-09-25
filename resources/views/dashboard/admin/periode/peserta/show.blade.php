@@ -8,8 +8,8 @@
 
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <div class="w-full grid sm:grid-cols-2 space-x-2 ml-2">
-            <div class="px-3 bg-white border border-gray-200 text-medium dark:text-gray-400 rounded-lg">
+        <div class="w-full flex space-x-2 ml-2">
+            <div class="px-3 lg:w-3/6 bg-white border border-gray-200 text-medium dark:text-gray-400 rounded-lg">
                 <x-splade-form action="{{ route('admin.peserta.update', ['unit' => $unit, 'periode' => $periode, 'peserta' => $peserta]) }}" method="POST" onkeydown="return event.key != 'Enter';"
                     :default="[
                         'phone_number' => $data_peserta->peserta->phone_number ?? null,
@@ -25,6 +25,8 @@
 
                     <div class="relative">
                         <x-forms.body >
+                            <h3 class="text-xl font-semibold text-gray-500">Biodata - {{ $data_peserta->nis_peserta ?? '' }}</h3>
+                            <hr class="my-4">
                             <label class="flex text-gray-700">
                                 Masukkan Nomor HP Whatsapp Aktif :
                             </label>
@@ -58,7 +60,7 @@
                     </div>
                 </x-splade-form>
             </div>
-            <div class="px-3 bg-white border border-gray-200 text-medium text-gray-500 dark:text-gray-400 rounded-lg">
+            <div class="px-3 lg:w-3/6 bg-white border border-gray-200 text-medium text-gray-500 dark:text-gray-400 rounded-lg">
                 <div class="p-4 mb-4  2xl:col-span-2">
                         <div class="flow-root">
                             <h3 class="text-xl font-semibold ">{{ $data_peserta->periode->unit->nama }} {{ $data_peserta->periode->nama }}</h3>
@@ -122,8 +124,13 @@
                                 </table>
                             </div>
 
-                            <h3 class="text-md py-2 text-gray-500 font-semibold uppercase">Pembayaran</h3>
-                            <div class="relative overflow-x-auto border rounded-md mb-4">
+                            <div class="flex justify-between mb-2 items-center">
+                                <h3 class="text-md py-2 text-gray-500 font-semibold uppercase">Pembayaran</h3>
+                                <Link href="{{ route('admin.peserta.pembayaran', ['unit' => $unit, 'periode' => $periode, 'peserta' => $data_peserta->id]) }}" class="flex items-center border border-yellow-500 text-yellow-500 hover:text-white hover:bg-yellow-500 px-2 py-1 rounded text-sm">
+                                    Tambah Data <x-carbon-add-alt class="ml-2 w-4 h-4" />
+                                </Link>
+                            </div>
+                            <div class="border rounded-md mb-4">
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                                     <thead>
                                         <tr class="border-b border-gray-200 dark:border-gray-700">
@@ -167,8 +174,14 @@
                             </div>
 
                             <h3 class="text-md py-2 text-gray-500 font-semibold uppercase">Riwayat Pembayaran</h3>
+
                             @forelse ($data_transaksi as $item)
-                                <li class="p-4 border rounded-md bg-white">
+                                <div class="p-4 border rounded-md bg-white">
+                                    <div class="flex">
+                                        <Link href="{{ route('admin.transaksi.show', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id]) }}" target="_blank" class="text-yellow-500 flex items-center justify-center border border-yellow-500 rounded-md p-1 ml-2">
+                                            Edit <x-carbon-edit class="w-4 h-4 ml-2 text-yellow-500"/>
+                                        </Link>
+                                    </div>
                                     <div class="flex items-center justify-between border-b pb-2">
                                         <div class="flex-1 min-w-0 sm:ms-4">
                                             <p class="text-sm font-bold text-gray-900 uppercase">
@@ -207,15 +220,45 @@
                                             </Link>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
                             @empty
-                                <li class="p-4">
+                                <div class="p-4">
                                     Belum Ada Riwayat Aktivitas
-                                </li>
+                                </div>
                             @endforelse
                         </div>
                     </div>
             </div>
+            {{-- <div class="px-3 lg:w-1/6 bg-white border border-gray-200 text-medium dark:text-gray-400 rounded-lg">
+                <div class="p-4">
+                    <div>
+                        <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                            Tambah Pembayaran
+                        </h5>
+                        <div class="flex items-center justify-between mb-4">
+                            <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
+                                0
+                            </h1>
+                            <div>
+                                <Link modal href="{{ route('admin.peserta.potongan', ['unit' => $unit, 'periode' => $periode ,'peserta' => $peserta]) }}" class=" border-primary-700 ml-2 border px-2 py-1 rounded text-sm text-primary-700">
+                                    Tambah
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-8">
+                    <div class="mt-auto">
+                        <h5 class="text-xs font-medium text-gray-500 uppercase ">
+                            Hapus Permanen
+                        </h5>
+                        <div class="flex items-center justify-between">
+                            <Link href="#" class="border border-red-500 text-red-500 hover:text-white hover:bg-red-500 px-2 py-1 rounded text-sm" onclick="confirm('Yakin ingin menghapus permanen?') || event.stopImmediatePropagation()">
+                                Hapus Data Permanen
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
         </div>
     </div>
 </x-layouts.main>
