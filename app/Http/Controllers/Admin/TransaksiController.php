@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
 
@@ -159,5 +160,11 @@ class TransaksiController extends Controller
     public function destroy($unit, $id)
     {
         // Logika untuk menghapus data berdasarkan ID
+    }
+
+    public function export($unit, $periode)
+    {
+        $data_periode = \App\Models\Periode::find($periode);
+        return Excel::download(new \App\Exports\AdminTransaksi($periode), 'Data_Transaksi_Admin_' . $data_periode->nama . '.xlsx');
     }
 }

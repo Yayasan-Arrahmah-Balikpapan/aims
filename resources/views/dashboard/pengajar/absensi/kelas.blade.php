@@ -42,7 +42,7 @@
                     Pilih Pertemuan Absensi :
                 </div>
                 <div class="flex items-center justify-between space-x-2">
-                    <select v-model="form.ke" id="pertemuan" class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50">
+                    <select required v-model="form.ke" id="pertemuan" class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50">
                         @for ($i = 1; $i <= 16; $i++)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor

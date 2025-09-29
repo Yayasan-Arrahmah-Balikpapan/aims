@@ -9,7 +9,11 @@
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
         <div class="px-3 w-full">
-            <div class="items-center justify-end flex">
+            <div class="items-center justify-end flex space-x-2">
+                <a href="{{ route('admin.transaksi.export', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
+                    Export
+                    @svg('carbon-download', 'ml-2 text-white h-4 w-4')
+                </a>
                 <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
@@ -139,6 +143,7 @@
                                         @if ($item->status == 1)
                                             <Link href="{{ route('admin.transaksi.konfirmasi', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id])}}" class="relative text-white border border-yellow-400 bg-yellow-400 rounded-md p-2 mr-2">
                                                 <span class="absolute top-0 right-0 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">0</span>
+                                                <span class="absolute top-0 right-4 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-500 rounded-full">0</span>
                                                 <x-carbon-notification class="w-4 h-4 mr-1 text-white"/>
                                             </Link>
                                         @endif

@@ -35,6 +35,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::delete('/jadwal/{jadwal}', [App\Http\Controllers\Admin\JadwalController::class, 'destroy'])->name('admin.jadwal.destroy');
 
         Route::get('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'index'])->name('admin.peserta.index');
+        Route::get('/peserta/export', [App\Http\Controllers\Admin\PesertaController::class, 'export'])->name('admin.peserta.export');
         Route::get('/peserta/create', [App\Http\Controllers\Admin\PesertaController::class, 'create'])->name('admin.peserta.create');
         Route::get('/peserta/create/pilih', [App\Http\Controllers\Admin\PesertaController::class, 'create_pilih'])->name('admin.peserta.create.pilih');
         Route::post('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'store'])->name('admin.peserta.store');
@@ -64,6 +65,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::delete('/kehadiran/{kehadiran}', [App\Http\Controllers\Admin\KehadiranController::class, 'destroy'])->name('admin.kehadiran.destroy');
 
         Route::get('/transaksi', [App\Http\Controllers\Admin\TransaksiController::class, 'index'])->name('admin.transaksi.index');
+        Route::get('/transaksi/export', [App\Http\Controllers\Admin\TransaksiController::class, 'export'])->name('admin.transaksi.export');
         Route::get('/transaksi/bukti-transfer/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'bukti_transfer'])->name('admin.transaksi.bukti-transfer');
         Route::get('/transaksi/konfirmasi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'konfirmasi'])->name('admin.transaksi.konfirmasi');
         Route::get('/transaksi/create', [App\Http\Controllers\Admin\TransaksiController::class, 'create'])->name('admin.transaksi.create');
@@ -72,6 +74,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/transaksi/{transaksi}/edit', [App\Http\Controllers\Admin\TransaksiController::class, 'edit'])->name('admin.transaksi.edit');
         Route::put('/transaksi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'update'])->name('admin.transaksi.update');
         Route::delete('/transaksi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'destroy'])->name('admin.transaksi.destroy');
+
 
         Route::get('/pembayaran', [App\Http\Controllers\Admin\PembayaranController::class, 'index'])->name('admin.pembayaran.index');
         Route::get('/pembayaran/rekap', [App\Http\Controllers\Admin\PembayaranController::class, 'rekap'])->name('admin.pembayaran.rekap');

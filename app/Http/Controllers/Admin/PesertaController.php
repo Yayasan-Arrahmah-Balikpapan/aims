@@ -580,4 +580,10 @@ class PesertaController extends Controller
 
         return redirect()->route('admin.pengajar.index', $unit);
     }
+
+    public function export($unit, $periode)
+    {
+        $data_periode = \App\Models\Periode::find($periode);
+        return Excel::download(new \App\Exports\AdminPeserta($periode), 'Data_Peserta_Admin_' . $data_periode->nama . '.xlsx');
+    }
 }
