@@ -16,6 +16,11 @@
                 </Link>
             </div>
             <x-splade-table :for="$jadwal">
+                <x-splade-cell jumlah as="$data_jumlah">
+                    <div class="flex items-center justify-center">
+                        {{ $data_jumlah->kelas ? $data_jumlah->kelas->count() : 0 }}
+                    </div>
+                </x-splade-cell>
                 <x-splade-cell actions as="$data">
                     <div class="flex items-center gap-1">
 

@@ -79,12 +79,13 @@ class JadwalController extends Controller
                         )
                         ->column(label: 'Actions')
                         ->column('nama_jadwal')
+                        ->column(label: 'Jumlah')
+                        ->column('batasan_peserta')
                         ->column(
                             key:'pengajar.kode_nama_pengajar',
                             label:'Pengajar',
                             sortable: true
                         )
-                        ->column('batasan_peserta')
                         ->column(
                             key:'level.nama',
                             label:'Level',
