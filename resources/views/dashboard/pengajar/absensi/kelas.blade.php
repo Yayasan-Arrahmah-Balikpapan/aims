@@ -56,6 +56,10 @@
             @if(request()->has('ke'))
                 @if (request('ke') == 'ujian')
                     @include('dashboard.pengajar.absensi.tahsin-ujian')
+                @elseif (request('ke') == null)
+                    <div class="flex items-center justify-center">
+                        <p>Silahkan Pilih Pertemuan Terlebih Dahulu, kemudian klik tombol pilih.</p>
+                    </div>
                 @else
                     @include('dashboard.pengajar.absensi.tahsin-pertemuan')
                 @endif
