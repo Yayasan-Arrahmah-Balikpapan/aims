@@ -351,8 +351,8 @@
                                         <td class="px-4">7.</td>
                                         <td class="py-2">Peserta wajib mengikuti aturan tambahan jika dikeluarkan sewaktu-waktu oleh pihak LTTQ Ar Rahmah Balikpatan.</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-4">8.</td>
+                                    <tr class="border-b bg-stone-200">
+                                        <td class="px-4 ">8.</td>
                                         <td class="py-2">Peserta yang terdaftar kemudian membatalkan keikutsertaan kegiatan Tahsin di LTTQ Ar Rahmah Balikpatan, Maka refund (pengembalian biaya pembayaran) bisa diberlakukan kecuali Biaya Pendaftaran.</td>
                                     </tr>
                                 </tbody>
