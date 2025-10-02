@@ -23,7 +23,7 @@ class AdminTransaksi implements FromCollection, WithHeadings, WithMapping, Shoul
 
     public function collection()
     {
-        return \App\Models\Transaksi::with(['kelas', 'peserta', 'kelas.jadwal'])->where('periode_id', $this->periode)->get();
+        return \App\Models\Transaksi::with(['kelas', 'peserta', 'kelas.jadwal', 'kelas.jadwal.pengajar'])->where('periode_id', $this->periode)->get();
     }
 
     public function headings(): array
@@ -33,6 +33,11 @@ class AdminTransaksi implements FromCollection, WithHeadings, WithMapping, Shoul
             'No Telp',
             'Jenis',
             'Jadwal',
+            'Pengajar',
+            'Level',
+            'Status Belajar',
+            'Hari',
+            'Jam',
             'Peserta',
             'Total Biaya',
             'Total Transfer',
@@ -75,6 +80,10 @@ class AdminTransaksi implements FromCollection, WithHeadings, WithMapping, Shoul
             "'".$transaksi->peserta->phone_number ?? '',
             strtoupper($transaksi->peserta ? $transaksi->peserta->jenis_peserta : ''),
             $transaksi->kelas->jadwal ? $transaksi->kelas->jadwal->nama_jadwal : '-',
+            $transaksi->kelas->jadwal ? $transaksi->kelas->jadwal->pengajar->kode_nama_pengajar : '-',
+            $transaksi->kelas->jadwal ? $transaksi->kelas->jadwal->status_belajar : '-',
+            $transaksi->kelas->jadwal ? $transaksi->kelas->jadwal->hari_belajar : '-',
+            $transaksi->kelas->jadwal ? $transaksi->kelas->jadwal->jam_mulai : '-',
             $this->getPesertaDaftar($transaksi->kelas->status_daftar ?? ''),
             $transaksi->nominal_total ?? '',
             $transaksi->nominal_total_pembayaran ?? '',

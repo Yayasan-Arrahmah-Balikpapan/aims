@@ -35,6 +35,11 @@ class AdminPeserta implements FromCollection, WithHeadings, WithMapping, ShouldA
             'No Telp',
             'Jenis',
             'Jadwal',
+            'Pengajar',
+            'Level',
+            'Status Belajar',
+            'Hari',
+            'Jam',
             'Peserta',
             'Tanggal Daftar',
         ];
@@ -60,6 +65,10 @@ class AdminPeserta implements FromCollection, WithHeadings, WithMapping, ShouldA
             "'".$peserta_kelas->peserta->phone_number ?? '',
             strtoupper($peserta_kelas->peserta ? $peserta_kelas->peserta->jenis_peserta : ''),
             $peserta_kelas->jadwal ? $peserta_kelas->jadwal->nama_jadwal : '-',
+            $peserta_kelas->jadwal ? $peserta_kelas->jadwal->pengajar->kode_nama_pengajar : '-',
+            $peserta_kelas->jadwal ? $peserta_kelas->jadwal->status_belajar : '-',
+            $peserta_kelas->jadwal ? $peserta_kelas->jadwal->hari_belajar : '-',
+            $peserta_kelas->jadwal ? $peserta_kelas->jadwal->jam_mulai : '-',
             $this->getPesertaDaftar($peserta_kelas->status_daftar ?? ''),
             $peserta_kelas->created_at->format('d-m-Y'),
         ];
