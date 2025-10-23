@@ -1,22 +1,37 @@
 {
+<<<<<<< HEAD
   "_choices-BZ6OvwfT.js": {
     "file": "assets/choices-BZ6OvwfT.js",
+=======
+  "_choices-nJtKd7Wr.js": {
+    "file": "assets/choices-nJtKd7Wr.js",
+>>>>>>> f5a8da6 (hapus data peserta di admin)
     "name": "choices",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js"
     ]
   },
+<<<<<<< HEAD
   "_jodit.min-DsEclr2o.js": {
     "file": "assets/jodit.min-DsEclr2o.js",
+=======
+  "_jodit.min-CnAFeg7N.js": {
+    "file": "assets/jodit.min-CnAFeg7N.js",
+>>>>>>> f5a8da6 (hapus data peserta di admin)
     "name": "jodit.min",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.js"
     ]
   },
+<<<<<<< HEAD
   "_nprogress-qx9BrrnM.js": {
     "file": "assets/nprogress-qx9BrrnM.js",
+=======
+  "_nprogress-B7GtMEvL.js": {
+    "file": "assets/nprogress-B7GtMEvL.js",
+>>>>>>> f5a8da6 (hapus data peserta di admin)
     "name": "nprogress",
     "isDynamicEntry": true,
     "imports": [
@@ -27,6 +42,12 @@
     "file": "assets/CompilerErrorMessages-6b34f14b-Bw41afio.js",
     "name": "CompilerErrorMessages-6b34f14b",
     "src": "node_modules/@protonemedia/laravel-splade/dist/CompilerErrorMessages-6b34f14b.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/@protonemedia/laravel-splade/node_modules/filepond/dist/filepond.esm.js": {
+    "file": "assets/filepond.esm-aVZMFGuW.js",
+    "name": "filepond.esm",
+    "src": "node_modules/@protonemedia/laravel-splade/node_modules/filepond/dist/filepond.esm.js",
     "isDynamicEntry": true
   },
   "node_modules/autosize/dist/autosize.esm.js": {
@@ -74,14 +95,20 @@
     "src": "node_modules/leaflet/dist/images/marker-shadow.png"
   },
   "resources/js/app.js": {
+<<<<<<< HEAD
     "file": "assets/app-BHdVVZlv.js",
+=======
+    "file": "assets/app-Dq_YPOuY.js",
+>>>>>>> f5a8da6 (hapus data peserta di admin)
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
       "node_modules/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.esm.js",
       "node_modules/filepond-plugin-image-validate-size/dist/filepond-plugin-image-validate-size.esm.js",
+      "node_modules/@protonemedia/laravel-splade/node_modules/filepond/dist/filepond.esm.js",
       "node_modules/flatpickr/dist/esm/index.js",
+<<<<<<< HEAD
       "_jodit.min-DsEclr2o.js",
       "_choices-BZ6OvwfT.js",
       "node_modules/autosize/dist/autosize.esm.js",
@@ -92,6 +119,18 @@
     ],
     "css": [
       "assets/app-CJ4WeBzM.css"
+=======
+      "_jodit.min-CnAFeg7N.js",
+      "_choices-nJtKd7Wr.js",
+      "node_modules/autosize/dist/autosize.esm.js",
+      "node_modules/autosize/dist/autosize.esm.js",
+      "node_modules/autosize/dist/autosize.esm.js",
+      "_nprogress-B7GtMEvL.js",
+      "node_modules/@protonemedia/laravel-splade/dist/CompilerErrorMessages-6b34f14b.js"
+    ],
+    "css": [
+      "assets/app-CvL7_lpk.css"
+>>>>>>> f5a8da6 (hapus data peserta di admin)
     ],
     "assets": [
       "assets/marker-icon-2x-_ZA0WGCc.png",
