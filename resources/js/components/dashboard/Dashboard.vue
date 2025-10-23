@@ -1,5 +1,5 @@
 <template>
-    <!-- Mobile Bottom Navigation -->
+    
     <div class="md:hidden">
         <div class="fixed bottom-0 left-0 z-20 w-full h-16 bg-white border-t border-gray-200">
             <div class="grid h-full grid-cols-4 mx-auto divide-x divide-gray-200 font-medium">
