@@ -85,10 +85,22 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="mt-5 flex">
+                        <div class="mt-5 flex justify-between">
                             <a href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi->uuid]) }}" target="_blank" class="flex items-center justify-between text-primary-700 border border-primary-700 rounded-md p-2">
                                 Lihat Invoice <x-carbon-view class="w-4 h-4 ml-2 text-primary-700"/>
                             </a>
+                            <x-splade-form action="{{ route('admin.transaksi.destroy', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->id]) }}"
+                                method="DELETE"
+                                confirm="Konfirmasi Hapus Data"
+                                confirm-text="Data dihapus ?"
+                                confirm-button="Ya"
+                                cancel-button="Tidak"
+                                >
+                                @csrf
+                                <button type="submit" class="text-red-700 border border-red-700 rounded-md p-2">
+                                    <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
+                                </button>
+                            </x-splade-form>
                         </div>
                     </div>
                 </div>

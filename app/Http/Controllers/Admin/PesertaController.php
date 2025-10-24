@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use ProtoneMedia\Splade\Facades\Toast;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Cache;
+
 
 
 class PesertaController extends Controller
@@ -54,7 +56,7 @@ class PesertaController extends Controller
         $peserta =   \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Kelas::where('periode_id', $periode)->orderBy('created_at', 'desc'))
         ->withGlobalSearch(columns: ['peserta.nama', 'peserta.jenis_peserta', 'jadwal.nama_jadwal', 'jadwal.pengajar.kode_nama_pengajar', 'peserta.user.phone_number'])
             // ->rowLink(fn (Kelas $kelas) => route('admin.peserta.show', ['unit' => $this->unit, 'periode' => $this->periode,'peserta' => $kelas->id], $kelas))
-            ->column('id', sortable: true)
+            // ->column('id', sortable: true)
             ->selectFilter(
                 key: 'peserta.jenis_peserta',
                 label: 'Jenis',
@@ -529,12 +531,35 @@ class PesertaController extends Controller
     {
         try {
             $peserta = \App\Models\Kelas::findOrFail($peserta);
-            if ($peserta->kelas->count() > 0) {
-                Toast::warning('Data peserta ini memiliki transaksi pembayaran, belum bisa dihapus. konfirmasi dengan keuangan')->autoDismiss(5);
+            if ($peserta->transaksi->where('status', 3)->count() > 0) {
+                Toast::warning('Data peserta ini memiliki transaksi yang dikonfirmasi, belum bisa dihapus. konfirmasi dengan keuangan')->autoDismiss(5);
                 return redirect()->back();
             }
-            $peserta->delete();
-            Toast::message('Data peserta berhasil di hapus')->autoDismiss(5);
+            $jumlah_pembayaran = 0;
+            $jumlah_transaksi = 0;
+            $data_peserta = $peserta->nis_peserta.' - '.$peserta->peserta->nama.' - '.$peserta->peserta->phone_number;
+
+            DB::beginTransaction();
+            try {
+                $transaksi = \App\Models\Transaksi::where('kelas_id', $peserta->id)->get();
+                $jumlah_transaksi = $transaksi->count();
+                foreach ($transaksi as $trans) {
+                    $pembayaran = \App\Models\Pembayaran::where('transaksi_id', $trans->id)->get();
+                    $jumlah_pembayaran = $pembayaran->count();
+                    foreach ($pembayaran as $pemb) {
+                        $pemb->delete();
+                    }
+                    $trans->delete();
+                }
+                $peserta->delete();
+                Cache::forget('data_transaksi_'.$peserta->peserta->user->id);
+                Cache::forget('data_peserta_'.$peserta->peserta->user->id);
+                Toast::message('Data Peserta Tahsin '.$data_peserta.' berhasil di hapus. Jumlah transaksi: ' . $jumlah_transaksi . ', Jumlah pembayaran: ' . $jumlah_pembayaran)->autoDismiss(5);
+                DB::commit();
+            } catch (\Exception $e) {
+                Toast::warning('Terjadi kesalahan DB::beginTransaction(), data gagal dihapus')->autoDismiss(10);
+                DB::rollBack();
+            }
         } catch (\Exception $e) {
             Toast::warning('Terjadi kesalahan, data gagal dihapus')->autoDismiss(5);
         }

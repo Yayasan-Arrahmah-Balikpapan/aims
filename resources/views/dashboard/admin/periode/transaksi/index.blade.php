@@ -86,8 +86,10 @@
                     <tbody>
                         @foreach ($data_transaksi as $item)
                             <tr class="text-gray-700 border-b border-gray-200 py-4">
-                                <td class="p-4 uppercase font-semibold">
-                                    {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
+                                <td class="p-4 uppercase font-semibold flex">
+                                    <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-1">
+                                        {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
+                                    </a>
                                 </td>
                                 <td class="uppercase">
                                     <Link href="{{ route('admin.peserta.show', ['unit' => $item->periode->unit->slug, 'periode' => $item->periode->id, 'peserta' => $item->kelas->id]) }}" class="text-gray-500 font-semibold">
@@ -147,9 +149,9 @@
                                                 <x-carbon-notification class="w-4 h-4 mr-1 text-white"/>
                                             </Link>
                                         @endif
-                                        <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-2">
+                                        {{-- <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-2">
                                             <x-carbon-view class="w-4 h-4 text-primary-700"/>
-                                        </a>
+                                        </a> --}}
                                         @if ($item->status == 2)
                                             <Link href="{{ route('admin.transaksi.konfirmasi', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $item->id])}}" class="text-white border border-sky-500 bg-sky-500 rounded-md p-2 ml-2">
                                                 <x-carbon-checkmark class="w-4 h-4 text-white"/>

@@ -157,9 +157,19 @@ class TransaksiController extends Controller
         return redirect()->back();
     }
 
-    public function destroy($unit, $id)
+    public function destroy($unit, $periode, $transaksi)
     {
-        // Logika untuk menghapus data berdasarkan ID
+        \App\Models\Transaksi::where('id', $transaksi)
+            ->with('pembayaran')
+            ->first()
+            ->pembayaran()
+            ->each(function ($item) {
+                $item->delete();
+            });
+        \App\Models\Transaksi::where('id', $transaksi)->delete();
+
+        Toast::info('Data berhasil dihapus');
+        return redirect()->route('admin.transaksi.index', ['unit' => $unit,'periode' => $periode]);
     }
 
     public function export($unit, $periode)
