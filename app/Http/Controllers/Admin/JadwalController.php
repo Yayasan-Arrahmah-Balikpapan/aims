@@ -182,7 +182,9 @@ class JadwalController extends Controller
     {
         $jadwal = \App\Models\Jadwal::find($jadwal);
         $dataperiode = \App\Models\Periode::find( $periode);
-        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)->get();
+        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)
+            ->where('jadwal_id', $jadwal->id)
+            ->get();
         $data_peserta_id = $data_peserta->pluck('id');
         $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
             ->get()
