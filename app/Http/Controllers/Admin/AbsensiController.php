@@ -12,13 +12,33 @@ class AbsensiController extends Controller
     {
         // LOGIC DATA TABEL ABSEN, TRANSAKSI, KEHADIRAN, PEMBAYARAN SESUAI FORMAT KEUANGAN
         $dataperiode = \App\Models\Periode::with('jadwal')->findOrFail( $periode);
-        $data_jadwal = $dataperiode->jadwal()
-                        ->when($request->has('search'), function($query) use ($request) {
-                            $query->where('nama_jadwal', 'like', '%'.$request->search.'%');
+        $data_jadwal = \App\Models\Jadwal::with('pengajar', 'level', 'periode.unit', 'kelas.peserta')
+                        ->where('periode_id', $periode)
+                        ->when(request()->query('cari'), function($query, $cari) {
+                            $query->where('nama_jadwal', 'like', strtoupper("%$cari%"));
                         })
-                        ->orderBy('nama_jadwal')
+                        ->when(request()->query('jenis_peserta'), function($query, $jenis_peserta) {
+                            $query->whereHas('kelas.peserta', function($query) use ($jenis_peserta) {
+                                $query->where('jenis_peserta', $jenis_peserta);
+                            });
+                        })
+                        ->when(request()->query('level'), function($query, $level) {
+                            $query->where('level_id', $level);
+                        })
+                        ->when(request()->query('hari'), function($query, $hari) {
+                            $query->where('hari_belajar', $hari);
+                        })
+                        ->when(request()->query('pengajar'), function($query, $pengajar) {
+                            $query->where('pengajar_id', $pengajar);
+                        })
                         ->paginate(10)
                         ->withQueryString(); // Mempertahankan parameter URL;
+
+        $data_level = \App\Models\Modules\Level::where('unit_id', $dataperiode->unit_id)->get();
+        $data_pengajar = \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
+                                $query->where('slug', $unit);
+                            })
+                            ->get();
         $data_jadwal_id = $data_jadwal->pluck('id');
         $data_absen = \App\Models\Absen::whereIn('jadwal_id', $data_jadwal_id)
                     ->get()
@@ -27,7 +47,7 @@ class AbsensiController extends Controller
                     })
                     ->toArray();
 
-        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'dataperiode', 'data_jadwal', 'data_absen'));
+        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'dataperiode', 'data_jadwal', 'data_absen', 'data_level', 'data_pengajar'));
     }
 
     public function create($unit, $periode)

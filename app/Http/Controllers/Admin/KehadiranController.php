@@ -13,7 +13,13 @@ class KehadiranController extends Controller
         $dataperiode = \App\Models\Periode::findOrFail( $periode);
         $data_level = \App\Models\Modules\Level::where('unit_id', $dataperiode->unit->id )->get();
 
-        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)->paginate(10);
+        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)
+                            ->cari(request()->query('cari'))
+                            ->jenisPeserta(request()->query('jenis_peserta'))
+                            ->statusDaftarPeserta(request()->query('peserta'))
+                            ->statusPendaftaran(request()->query('status'))
+                            ->cariLevel(request()->query('level'))
+                            ->paginate(10);
         $data_peserta_id = $data_peserta->pluck('id');
         $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
             ->get()
