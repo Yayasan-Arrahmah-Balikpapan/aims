@@ -182,11 +182,16 @@ class JadwalController extends Controller
     {
         $jadwal = \App\Models\Jadwal::find($jadwal);
         $dataperiode = \App\Models\Periode::find( $periode);
-        $pesertas = \ProtoneMedia\Splade\SpladeTable::
-                                for(\App\Models\Kelas::where('jadwal_id', $jadwal->id)->get())
-                                ->column('peserta.nama')
-                                ;
-        return view('dashboard.admin.periode.jadwal.show', compact('unit', 'jadwal', 'pesertas', 'periode', 'dataperiode'));
+        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)->get();
+        $data_peserta_id = $data_peserta->pluck('id');
+        $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
+
+        return view('dashboard.admin.periode.jadwal.show', compact('unit', 'jadwal', 'periode', 'dataperiode', 'data_peserta', 'data_absensi_peserta' ));
     }
 
     public function edit($unit, $periode, $jadwal)
