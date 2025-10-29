@@ -139,25 +139,69 @@
                                 @endif
                             </div>
                             <h3 class="text-md py-2 text-gray-500 font-semibold uppercase">Absensi</h3>
-                            <div class="relative overflow-x-auto border rounded-md mb-4">
-                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                            <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                     <thead>
-                                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <tr class="border-b border-gray-200 ">
                                             @for ($i = 1; $i <= 16; $i++)
                                                 <th scope="col"
-                                                    class="px-3 py-3 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50  dark:bg-gray-800">
+                                                    class="px-3 py-3 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
                                                     {{ $i }}
                                                 </th>
                                             @endfor
+                                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                                Total Hadir
+                                            </th>
+                                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                                Mengikuti Ujian
+                                            </th>
+                                            <th scope="col" class="border-x text-center p-1 uppercase">
+                                                Nilai Ujian
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                        @for ($i = 1; $i <= 16; $i++)
-                                                <td class="px-3 py-3 text-center">
-                                                    -
+                                        <tr class="text-gray-700 border-b border-gray-200 py-2">
+                                            @for($i = 1; $i <= 16; $i++)
+                                                @php
+                                                    $total_hadir = 0;
+                                                @endphp
+                                                <td class="text-center p-2 uppercase">
+                                                    @if (isset($data_absensi_peserta[$data_peserta->id.'-'.$i]))
+                                                        @if ($data_absensi_peserta[$data_peserta->id.'-'.$i] == 1)
+                                                            @php
+                                                                $total_hadir += 1;
+                                                            @endphp
+                                                            <x-carbon-checkmark class="w-6 h-6 text-sky-500" />
+                                                        @elseif ($data_absensi_peserta[$data_peserta->id.'-'.$i] == 2)
+                                                            <x-carbon-close-filled class="w-6 h-6 text-red-600" />
+                                                        @elseif ($data_absensi_peserta[$data_peserta->id.'-'.$i] == 3 || $data_absensi_peserta[$data_peserta->id.'-'.$i] == 4)
+                                                            <x-carbon-close-filled class="w-6 h-6 text-yellow-300" />
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    @else
+                                                        -
+                                                    @endif
                                                 </td>
                                             @endfor
+                                            <td class="border-x text-center p-1 uppercase text-xs font-bold">
+                                                {{ $total_hadir }}
+                                            </td>
+                                            <td class="border-x text-center p-1 uppercase text-xs font-bold ">
+                                                @if ($total_hadir >= 10)
+                                                    BOLEH
+                                                @else
+                                                    BELUM
+                                                    {{-- <Link href="#" class=" text-primary-600 border border-primary-600 rounded-md px-2 py-1">
+                                                        <x-carbon-checkmark class="w-4 h-4 text-primary-600" />
+                                                    </Link> --}}
+                                                @endif
+                                            </td>
+                                            <td class="border-x text-center p-1 uppercase text-xs font-bold">
+                                                {{-- {{ isset($data_peserta->data_nilai['ujian']) ? $data_peserta->levelTahsin($data_peserta->data_nilai['ujian']) : '-' }} --}}
+                                                -
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -80,13 +80,22 @@ class DashboardController extends Controller
         $data_biaya = \App\Models\Biaya::where('periode_id', $data_peserta->periode->id)->get();
         $data_pembayaran_peserta = \App\Models\Pembayaran::where('kelas_id', $data_peserta->id)->get();
 
+        $data_peserta_id = $data_peserta->pluck('id');
+        $data_absensi_peserta = \App\Models\AbsensiPeserta::where('kelas_id', $data_peserta->id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
+        // dd($data_absensi_peserta);
+
         if (!$data_peserta) { abort(404); }
 
         $user = Auth::user();
         $roles = $this->roleRepo->getData();
         $user  = $this->userRepo->findData($user->id);
 
-        return view('dashboard.peserta.peserta', compact('user', 'data_peserta', 'uuid', 'data_biaya', 'data_pembayaran_peserta'));
+        return view('dashboard.peserta.peserta', compact('user', 'data_peserta', 'uuid', 'data_biaya', 'data_pembayaran_peserta', 'data_absensi_peserta'));
     }
 
     public function peserta_data(Request $request) {
