@@ -142,13 +142,6 @@
                             <th class="text-white">a</th>
                         </tr>
                         <tr>
-                            <th class="col-span-full">
-                                <div class="p-2 text-xs text-gray-500">
-                                    {{ $data_peserta->appends(request()->query())->links() }}
-                                </div>
-                            </th>
-                        </tr>
-                        <tr>
                             <th class="text-white">a</th>
                         </tr>
                         <tr class="border-b border-gray-200 ">
@@ -180,7 +173,9 @@
                     </thead>
                 </table>
             </div>
-            
+            <div class="p-2 mt-2 text-xs text-gray-500">
+                {{ $data_peserta->appends(request()->query())->links() }}
+            </div>
         </div>
     </div>
 </x-layouts.main>
