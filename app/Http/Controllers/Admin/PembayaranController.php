@@ -317,7 +317,7 @@ class PembayaranController extends Controller
         return view('dashboard.admin.periode.pembayaran.index', 
         compact('unit', 'table', 'periode', 'dataperiode', 'data_biaya', 'data_peserta', 'data_biaya_id', 'data_peserta_id', 
                     'data_pembayaran_peserta', 'data_transaksi_peserta', 'data_level', 'data_nominal', 'sum_data_biaya', 'expiration_time',
-                    'total_biaya_periode', 'jumlah_nominal_piutang')
+                    'total_biaya_periode', 'jumlah_nominal_piutang', 'total_biaya_seluruh_peserta')
                 );
     }
 

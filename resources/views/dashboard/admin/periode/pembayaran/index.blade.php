@@ -13,7 +13,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-4">
                     <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-green-500">
                         <h5 class="text-md text-green-500 font-bold">Akumulasi Pendapatan</h5>
-                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($total_biaya_periode ?? 0, 0, ',', '.') }}</p>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($total_biaya_seluruh_peserta ?? 0, 0, ',', '.') }}</p>
                     </div>
                     <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-blue-500">
                         <h5 class="text-md text-blue-500 font-bold">Total Pembayaran</h5>
