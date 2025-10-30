@@ -15,7 +15,7 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link>
             </div>
-            <div class="container mx-auto">
+            <div class="w-full">
                 <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
                     :default="[
                             'cari' => request()->query('cari') ?? '',
@@ -55,6 +55,14 @@
                     <x-splade-submit :label="__('Cari')"/>
                 </x-splade-form>
             </div>
+            <div class="flex justify-end text-sm py-2 font-medium text-gray-500">
+                Data diupdate: {{ \Carbon\Carbon::parse($expiration_time)->subDays(7)->format('d F Y, H:i') }} WITA
+            <div class="flex justify-end text-sm">
+                <Link href="{{ route('admin.pembayaran.reset-data', ['unit' => $unit, 'periode' => $periode]) }}" class="text-blue-500 hover:text-blue-700 focus:underline focus:ring-4 focus:ring-blue-300">
+                    @svg('carbon-reset', 'ml-2 text-blue-500 h-5 w-5')
+                </Link>
+            </div>
+            </div>
             <div class="relative overflow-x-auto border rounded-md mb-4 bg-white">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead>
@@ -74,10 +82,10 @@
                                 </th>
                             @endforeach
                             <th scope="col" class="py-4 px-2 uppercase text-center">
-                                Potongan
+                                Total Bruto
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
-                                Total
+                                Potongan
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Donasi
@@ -115,10 +123,10 @@
                                     </td>
                                 @endforeach
                                 <td class="py-4 px-2 uppercase text-center">
-                                    Rp. {{ number_format(0, 0, ',', '.') }}
+                                    Rp. {{ number_format($total_pembayaran, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-2 uppercase text-center">
-                                    Rp. {{ number_format($total_pembayaran, 0, ',', '.') }}
+                                    Rp. {{ number_format($data_transaksi_peserta[$item->id]['potongan'] ?? 0, 0, ',', '.') }}
                                 </td>
                                 <td class="py-4 px-2 uppercase text-center">
                                     Rp. {{ number_format($data_transaksi_peserta[$item->id]['donasi'] ?? 0, 0, ',', '.') }}
@@ -129,11 +137,48 @@
                             </tr>
                         @endforeach
                     </tbody>
+                    <thead>
+                        <tr>
+                            <th class="text-white">a</th>
+                        </tr>
+                        <tr>
+                            <div class="p-2 text-xs text-gray-500">
+                                {{ $data_peserta->appends(request()->query())->links() }}
+                            </div>
+                        </tr>
+                        <tr>
+                            <th class="text-white">a</th>
+                        </tr>
+                        <tr class="border-b border-gray-200 ">
+                            <th scope="col" class="p-4 uppercase">
+                                Total
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
+                            </th>
+                            @foreach($data_biaya as $item_biaya)
+                                <th scope="col" class="py-4 px-2 uppercase">
+                                    Rp. {{ $sum_data_biaya[$item_biaya->id] ? number_format($sum_data_biaya[$item_biaya->id], 0, ',', '.') : '0' }}
+                                </th>
+                            @endforeach
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Rp. {{ $data_nominal['jumlah_nominal_bruto'] ? number_format($data_nominal['jumlah_nominal_bruto'], 0, ',', '.') : '0' }}
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Rp. {{ $data_nominal['jumlah_nominal_potongan'] ? number_format($data_nominal['jumlah_nominal_potongan'], 0, ',', '.') : '0' }}
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Rp. {{ $data_nominal['jumlah_nominal_donasi'] ? number_format($data_nominal['jumlah_nominal_donasi'], 0, ',', '.') : '0' }}
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Rp. {{ $data_nominal['jumlah_nominal_transfer'] ? number_format($data_nominal['jumlah_nominal_transfer'], 0, ',', '.') : '0' }}
+                            </th>
+                        </tr>
+                    </thead>
                 </table>
             </div>
-            <div class="p-2 text-xs text-gray-500">
-                {{ $data_peserta->appends(request()->query())->links() }}
-            </div>
+            
         </div>
     </div>
 </x-layouts.main>
