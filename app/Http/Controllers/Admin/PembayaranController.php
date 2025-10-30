@@ -235,8 +235,8 @@ class PembayaranController extends Controller
                 ->sum('nominal');
         });
 
-        $total_peserta = Cache::remember('cache_total_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($data_peserta) {
-            return $data_peserta->count();
+        $total_peserta = Cache::remember('cache_total_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($periode) {
+            return Kelas::where('periode_id', $periode)->count();
         });
 
         $total_biaya_seluruh_peserta = Cache::remember('cache_total_biaya_seluruh_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($total_biaya_periode,$total_peserta) {
