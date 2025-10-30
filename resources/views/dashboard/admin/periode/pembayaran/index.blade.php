@@ -142,9 +142,11 @@
                             <th class="text-white">a</th>
                         </tr>
                         <tr>
-                            <div class="p-2 text-xs text-gray-500">
-                                {{ $data_peserta->appends(request()->query())->links() }}
-                            </div>
+                            <th class="col-span-full">
+                                <div class="p-2 text-xs text-gray-500">
+                                    {{ $data_peserta->appends(request()->query())->links() }}
+                                </div>
+                            </th>
                         </tr>
                         <tr>
                             <th class="text-white">a</th>
