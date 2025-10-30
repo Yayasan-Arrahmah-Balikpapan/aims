@@ -198,8 +198,7 @@ class PembayaranController extends Controller
         $data_biaya_id = $data_biaya->pluck('id');
         $data_peserta_id = $data_peserta->pluck('id');
 
-        $data_pembayaran_peserta = Cache::remember('cache_pembayaran_peserta_'. $periode, now()->addDays(7), function () use ($data_peserta_id) {
-            return \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)
+        $data_pembayaran_peserta = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)
                                 ->whereHas('transaksi', function($q) {
                                     $q->where('status', 3);
                                 })
@@ -212,10 +211,8 @@ class PembayaranController extends Controller
                                     });
                                 })
                                 ->toArray();
-        });
         
-        $data_transaksi_peserta = Cache::remember('cache_transaksi_peserta_'. $periode, now()->addDays(7), function () use ($data_peserta_id) {
-            return \App\Models\Transaksi::whereIn('kelas_id', $data_peserta_id)
+        $data_transaksi_peserta = \App\Models\Transaksi::whereIn('kelas_id', $data_peserta_id)
                                     ->where('status', 3)
                                     ->get()
                                     ->groupBy('kelas_id')
@@ -232,7 +229,6 @@ class PembayaranController extends Controller
                                         });
                                     })
                                     ->toArray();
-        });
 
         $total_biaya_periode = Cache::remember('cache_biaya_periode_'. $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
             return \App\Models\Biaya::where('periode_id', $dataperiode->id)
