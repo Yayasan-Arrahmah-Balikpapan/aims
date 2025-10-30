@@ -9,6 +9,34 @@
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
         <div class="px-3 w-full">
+            <div class="w-full mb-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6  gap-4">
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-green-500">
+                        <h5 class="text-md text-green-500 font-bold">Akumulasi Pendapatan</h5>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($total_biaya_periode ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-blue-500">
+                        <h5 class="text-md text-blue-500 font-bold">Total Pembayaran</h5>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($data_nominal['jumlah_nominal_transfer'] ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-yellow-500">
+                        <h5 class="text-md text-yellow-500 font-bold">Total Potongan</h5>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($data_nominal['jumlah_nominal_potongan'] ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-gray-500">
+                        <h5 class="text-md text-gray-500 font-bold">Total Donasi</h5>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($data_nominal['jumlah_nominal_donasi'] ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-gray-500">
+                        <h5 class="text-md text-gray-500 font-bold">Total Kode Unik</h5>
+                        <p class="text-xl font-bold text-gray-600">Rp. {{ number_format($data_nominal['jumlah_nominal_kodeunik'] ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                    <div class="bg-white p-4 space-y-6 rounded-lg shadow-md border border-red-500">
+                        <h5 class="text-md text-red-500 font-bold">Total Piutang</h5>
+                        <p class="text-xl font-bold text-red-700">Rp. {{ number_format($jumlah_nominal_piutang ?? 0, 0, ',', '.') }}</p>
+                    </div>
+                </div>
+            </div>
             <div class="items-center justify-end flex">
                 <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data
