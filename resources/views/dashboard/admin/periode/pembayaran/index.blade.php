@@ -81,8 +81,11 @@
                                     {{ $item_biaya->nama }}
                                 </th>
                             @endforeach
+                            {{-- <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Total Pembayaran
+                            </th> --}}
                             <th scope="col" class="py-4 px-2 uppercase text-center">
-                                Total Bruto
+                                Kode Unik
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Potongan
@@ -90,8 +93,11 @@
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Donasi
                             </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center text-red-600">
+                                Piutang
+                            </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
-                                Total Transfer
+                                Total Pembayaran
                             </th>
                         </tr>
                     </thead>
@@ -101,17 +107,17 @@
                                 $total_pembayaran = 0;
                             @endphp
                             <tr class="text-gray-700 border-b border-gray-200 py-4">
-                                <td class="p-4 uppercase font-semibold">
+                                <td class="p-2 uppercase font-semibold">
                                     {{ $item->nis_peserta }}
                                 </td>
-                                <td class="py-4 px-2 uppercase">
+                                <td class="p-2 uppercase">
                                     {{ $item->peserta->nama }}
                                 </td>
-                                <td class="py-4 px-2 uppercase">
+                                <td class="p-2 uppercase text-xs">
                                     {{ $item->jadwal->nama_jadwal ?? '' }}
                                 </td>
                                 @foreach($data_biaya as $item_biaya_)
-                                    <td class="py-4 px-2 uppercase">
+                                    <td class="p-2 uppercase">
                                         @if(isset($data_pembayaran_peserta[$item->id][$item_biaya_->id]))
                                             @php
                                                 $total_pembayaran += $data_pembayaran_peserta[$item->id][$item_biaya_->id];
@@ -122,16 +128,25 @@
                                         @endif
                                     </td>
                                 @endforeach
-                                <td class="py-4 px-2 uppercase text-center">
+                                {{-- <td class="p-2 uppercase text-center">
                                     Rp. {{ number_format($total_pembayaran, 0, ',', '.') }}
+                                </td> --}}
+                                <td class="p-2 uppercase text-center">
+                                    Rp. {{ number_format($data_transaksi_peserta[$item->id]['kode_unik'] ?? 0, 0, ',', '.') }}
                                 </td>
-                                <td class="py-4 px-2 uppercase text-center">
+                                <td class="p-2 uppercase text-center">
                                     Rp. {{ number_format($data_transaksi_peserta[$item->id]['potongan'] ?? 0, 0, ',', '.') }}
                                 </td>
-                                <td class="py-4 px-2 uppercase text-center">
+                                <td class="p-2 uppercase text-center">
                                     Rp. {{ number_format($data_transaksi_peserta[$item->id]['donasi'] ?? 0, 0, ',', '.') }}
                                 </td>
-                                <td class="py-4 px-2 uppercase text-center">
+                                <td class="p-2 uppercase text-center text-red-600">
+                                    @php
+                                        $piutang = $total_biaya_periode - $total_pembayaran;
+                                    @endphp
+                                    Rp. {{ number_format($piutang ?? 0, 0, ',', '.') }}
+                                </td>
+                                <td class="p-2 uppercase text-center">
                                     Rp. {{ number_format($data_transaksi_peserta[$item->id]['nominal_total_pembayaran'] ?? 0, 0, ',', '.') }}
                                 </td>
                             </tr>
@@ -157,14 +172,20 @@
                                     Rp. {{ $sum_data_biaya[$item_biaya->id] ? number_format($sum_data_biaya[$item_biaya->id], 0, ',', '.') : '0' }}
                                 </th>
                             @endforeach
+                            {{-- <th scope="col" class="py-4 px-2 uppercase text-center">
+                                Rp. {{ $data_nominal['jumlah_nominal_biaya'] ? number_format($data_nominal['jumlah_nominal_biaya'], 0, ',', '.') : '0' }}
+                            </th> --}}
                             <th scope="col" class="py-4 px-2 uppercase text-center">
-                                Rp. {{ $data_nominal['jumlah_nominal_bruto'] ? number_format($data_nominal['jumlah_nominal_bruto'], 0, ',', '.') : '0' }}
+                                Rp. {{ $data_nominal['jumlah_nominal_kodeunik'] ? number_format($data_nominal['jumlah_nominal_kodeunik'], 0, ',', '.') : '0' }}
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Rp. {{ $data_nominal['jumlah_nominal_potongan'] ? number_format($data_nominal['jumlah_nominal_potongan'], 0, ',', '.') : '0' }}
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Rp. {{ $data_nominal['jumlah_nominal_donasi'] ? number_format($data_nominal['jumlah_nominal_donasi'], 0, ',', '.') : '0' }}
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase text-center text-red-600">
+                                Rp. {{ number_format($jumlah_nominal_piutang ?? 0, 0, ',', '.') }}
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase text-center">
                                 Rp. {{ $data_nominal['jumlah_nominal_transfer'] ? number_format($data_nominal['jumlah_nominal_transfer'], 0, ',', '.') : '0' }}
