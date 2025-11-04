@@ -69,8 +69,9 @@ class PendaftaranTahsinController extends Controller
                             })
                         ->first();
 
-        $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
         if ($periode) {
+            $data_biaya = \App\Models\Biaya::where('periode_id', $periode->id)->get();
+
             return view('website.pages.lttq.tahsin.pendaftaran', compact('dataindo', 'ayat', 'periode', 'data_biaya'));
         } else {
             return view('website.pages.lttq.tahsin.pendaftaran-tutup');
