@@ -4,6 +4,9 @@
             <tr>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
                 @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
                     @php
                         $m_i_start = $dataperiode->waktu_start->format('m');
@@ -51,7 +54,16 @@
                 Nama
             </th>
             <th>
-                Jadwal
+                Jenis
+            </th>
+            <th>
+                Level
+            </th>
+            <th>
+                Pengajar
+            </th>
+            <th>
+                Waktu Jadwal
             </th>
             @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
                 @php
@@ -127,7 +139,16 @@
                     {{ $item->peserta->nama }}
                 </td>
                 <td>
-                    {{ $item->jadwal ? $item->jadwal->nama_jadwal : '' }}
+                    {{ isset($item->jadwal) ? ($item->jadwal->jenis_peserta ?? '-') : '-' }}
+                </td>
+                <td>
+                    {{ isset($item->jadwal) ? ($item->jadwal->level->nama ?? '-') : '-' }}
+                </td>
+                <td>
+                    {{ isset($item->jadwal) ? ($item->jadwal->pengajar->kode_nama_pengajar ?? '-') : '-' }}
+                </td>
+                <td>
+                    {{ isset($item->jadwal) ? ($item->jadwal->hari_belajar . ' ' . $item->jadwal->jam_mulai) : '-' }}
                 </td>
                 @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
                     @php
