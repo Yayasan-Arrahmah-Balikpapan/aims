@@ -42,6 +42,49 @@
                 </div>
             </x-splade-form>
         </x-layouts.card>
+        <x-layouts.card>
+            <h4 class="text-xl font-bold px-4">Jenis Absensi</h4>
+            @php
+                $data_jenis_absensi = $data_periode->format_absensi ?? 1;
+            @endphp
+            <x-splade-form action="{{ route('admin.periode.jenisabsensi.update', ['unit' => $unit, 'periode' => $data_periode->id]) }}" method="POST"
+                :default="[
+                    'jenis_absensi' => $data_jenis_absensi['jenis_absensi'] ?? 0,
+                    'jumlah_pertemuan' => $data_jenis_absensi['jumlah_pertemuan'] ?? 0,
+                    'jenis_laporan' => $data_jenis_absensi['jenis_laporan'] ?? 0,
+                ]"
+            >
+                @csrf
+                <div class="relative p-4">
+                    <div class="space-y-2">
+                        <div class="border border-gray-300 rounded-lg p-4">
+                            <x-splade-radio name="jenis_absensi" value="1" :label="__('Berdasarkan Tanggal')" required/>
+                            <div class="flex mt-2" v-show="form.jenis_absensi == 1">
+                                <x-splade-select name="jenis_laporan" :label="__('Jenis Laporan')" required>
+                                    <option value="harian">Harian</option>
+                                    {{-- <option value="mingguan">Mingguan</option> --}}
+                                    <option value="bulanan">Bulanan</option>
+                                </x-splade-select>
+                            </div>
+                        </div>
+                        <div class="border border-gray-300 rounded-lg p-4">
+                            <x-splade-radio name="jenis_absensi" value="2" :label="__('Banyak Pertemuan')" required/>
+                            <div class="flex mt-2" v-show="form.jenis_absensi == 2">
+                                <x-splade-input type="number" name="jumlah_pertemuan" :label="__('Jumlah Pertemuan')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <span class="text-sm text-gray-700">
+                            Catatan: Ini akan mempengaruhi semua format yang tampil pada sistem.
+                        </span>
+                    </div>
+                </div>
+                <div class="flex items-center p-6 border-t border-gray-200 rounded-b ">
+                    <x-splade-submit label="Update"/>
+                </div>
+            </x-splade-form>
+        </x-layouts.card>
     </div>
     <hr class="mt-4">
     <div class="grid grid-cols-1 md:grid-cols-3">

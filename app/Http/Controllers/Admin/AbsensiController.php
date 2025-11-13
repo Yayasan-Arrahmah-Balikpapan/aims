@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class AbsensiController extends Controller
 {
@@ -47,7 +49,14 @@ class AbsensiController extends Controller
                     })
                     ->toArray();
 
-        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'dataperiode', 'data_jadwal', 'data_absen', 'data_level', 'data_pengajar'));
+        $data_absen_tanggal = \App\Models\Absen::whereIn('jadwal_id', $data_jadwal_id)
+                    ->get()
+                    ->mapWithKeys(function ($item) {
+                        return [$item->jadwal_id.'-'.Carbon::parse($item->tanggal_pertemuan)->format('d-m-Y') => $item->tanggal_pertemuan];
+                    })
+                    ->toArray();
+
+        return view('dashboard.admin.periode.absensi.index', compact('unit','periode', 'dataperiode', 'data_jadwal', 'data_absen', 'data_level', 'data_pengajar', 'data_absen_tanggal'));
     }
 
     public function create($unit, $periode)
@@ -106,5 +115,28 @@ class AbsensiController extends Controller
         $absensi->delete();
 
         return redirect()->route('admin.absensi.index')->with('success', 'Data absensi berhasil dihapus');
+    }
+    public function export($unit, $periode, Request $request)
+    {
+        $dataperiode = \App\Models\Periode::with('jadwal')->findOrFail( $periode);
+        $data_jadwal = \App\Models\Jadwal::with('pengajar', 'level', 'periode.unit', 'kelas.peserta')
+                        ->where('periode_id', $periode)
+                        ->get();
+                        
+        $data_jadwal_id = $data_jadwal->pluck('id');
+        $data_absen = \App\Models\Absen::whereIn('jadwal_id', $data_jadwal_id)
+                    ->get()
+                    ->mapWithKeys(function ($item) {
+                        return [$item->jadwal_id.'-'.$item->pertemuan_ke => $item->tanggal_pertemuan];
+                    })
+                    ->toArray();
+
+        $data_absen_tanggal = \App\Models\Absen::whereIn('jadwal_id', $data_jadwal_id)
+                    ->get()
+                    ->mapWithKeys(function ($item) {
+                        return [$item->jadwal_id.'-'.Carbon::parse($item->tanggal_pertemuan)->format('d-m-Y') => $item->tanggal_pertemuan];
+                    })
+                    ->toArray();
+        return Excel::download(new \App\Exports\AdminAbsensi($dataperiode, $data_jadwal, $data_absen, $data_absen_tanggal), 'Data_Absensi_Admin_' . $unit . '_' . $dataperiode->nama . '.xlsx');
     }
 }

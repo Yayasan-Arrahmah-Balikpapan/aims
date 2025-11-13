@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JadwalController extends Controller
 {
@@ -275,5 +276,12 @@ class JadwalController extends Controller
         }
         return redirect()->back()->with('success', 'Data jadwal berhasil dihapus');
     }
+
+    public function export($unit, $periode)
+    {
+        $data_periode = \App\Models\Periode::find($periode);
+        return Excel::download(new \App\Exports\AdminJadwal($periode), 'Data_Jadwal_Admin_' . $unit . '_' . $data_periode->nama . '.xlsx');
+    }
+    
 }
 

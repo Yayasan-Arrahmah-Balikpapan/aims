@@ -130,6 +130,20 @@ class PeriodeController extends Controller
         return redirect()->back();
     }
 
+    public function jenisabsensi_update(Request $request, $unit, $id)
+    {
+        $periode = \App\Models\Periode::find($id);
+        $data_absensi = $periode->format_absensi;
+        $data_absensi['jenis_absensi'] = $request->jenis_absensi;
+        $data_absensi['jenis_laporan'] = $request->jenis_laporan;
+        $data_absensi['jumlah_pertemuan'] = $request->jenis_absensi == '2' ? $request->jumlah_pertemuan : 0;
+        $periode->format_absensi = $data_absensi;
+        $periode->save();
+
+        Toast::title('Data Jenis Absensi Berhasil Diupdate');
+        return redirect()->back();
+    }
+
     public function destroy($unit, $id)
     {
         // Logika untuk menghapus data berdasarkan ID

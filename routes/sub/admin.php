@@ -11,6 +11,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
     Route::get('/periode/{periode}', [App\Http\Controllers\Admin\PeriodeController::class, 'show'])->name('admin.periode.show');
     Route::get('/periode/{periode}/notifikasi/{notifikasi}', [App\Http\Controllers\Admin\PeriodeController::class, 'notifikasi'])->name('admin.periode.notifikasi');
     Route::post('/periode/{periode}/notifikasi/{notifikasi}', [App\Http\Controllers\Admin\PeriodeController::class, 'notifikasi_update'])->name('admin.periode.notifikasi.update');
+    Route::post('/periode/{periode}/jenis-absensi', [App\Http\Controllers\Admin\PeriodeController::class, 'jenisabsensi_update'])->name('admin.periode.jenisabsensi.update');
     Route::post('/periode/{periode}/biaya', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_store'])->name('admin.periode.biaya.store');
     Route::post('/periode/{periode}/biaya-daftar', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_daftar_store'])->name('admin.periode.biaya.daftar.store');
     Route::delete('/periode/{periode}/biaya/{biaya}', [App\Http\Controllers\Admin\PeriodeController::class, 'biaya_destroy'])->name('admin.periode.biaya.destroy');
@@ -26,6 +27,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/tahsin-chart-data-2', [App\Http\Controllers\Admin\PeriodeController::class, 'getTahsinDashboardChartData2'])->name('admin.periode.dashboard.tahsin-chart-data-2');
 
         Route::get('/jadwal', [App\Http\Controllers\Admin\JadwalController::class, 'index'])->name('admin.jadwal.index');
+        Route::get('/jadwal/export', [App\Http\Controllers\Admin\JadwalController::class, 'export'])->name('admin.jadwal.export');
         Route::get('/jadwal/absen', [App\Http\Controllers\Admin\JadwalController::class, 'absen'])->name('admin.jadwal.absen');
         Route::get('/jadwal/create', [App\Http\Controllers\Admin\JadwalController::class, 'create'])->name('admin.jadwal.create');
         Route::post('/jadwal', [App\Http\Controllers\Admin\JadwalController::class, 'store'])->name('admin.jadwal.store');
@@ -48,6 +50,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::post('/peserta/{peserta}/pembayaran/store', [App\Http\Controllers\Admin\PesertaController::class, 'pembayaran_store'])->name('admin.peserta.pembayaran.store');
 
         Route::get('/absensi', [App\Http\Controllers\Admin\AbsensiController::class, 'index'])->name('admin.absensi.index');
+        Route::get('/absensi/export', [App\Http\Controllers\Admin\AbsensiController::class, 'export'])->name('admin.absensi.export');
         Route::get('/absensi/kehadiran', [App\Http\Controllers\Admin\AbsensiController::class, 'kehadiran'])->name('admin.absensi.kehadiran');
         Route::get('/absensi/create', [App\Http\Controllers\Admin\AbsensiController::class, 'create'])->name('admin.absensi.create');
         Route::post('/absensi', [App\Http\Controllers\Admin\AbsensiController::class, 'store'])->name('admin.absensi.store');
@@ -57,6 +60,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::delete('/absensi/{absensi}', [App\Http\Controllers\Admin\AbsensiController::class, 'destroy'])->name('admin.absensi.destroy');
 
         Route::get('/kehadiran', [App\Http\Controllers\Admin\KehadiranController::class, 'index'])->name('admin.kehadiran.index');
+        Route::get('/kehadiran/export', [App\Http\Controllers\Admin\KehadiranController::class, 'export'])->name('admin.kehadiran.export');
         Route::get('/kehadiran/create', [App\Http\Controllers\Admin\KehadiranController::class, 'create'])->name('admin.kehadiran.create');
         Route::post('/kehadiran', [App\Http\Controllers\Admin\KehadiranController::class, 'store'])->name('admin.kehadiran.store');
         Route::get('/kehadiran/{kehadiran}', [App\Http\Controllers\Admin\KehadiranController::class, 'show'])->name('admin.kehadiran.show');

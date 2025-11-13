@@ -31,6 +31,12 @@ class Periode extends Model
 
     protected $casts = [
         'form_biodata_daftar' => 'array',
+        'format_absensi' => 'array',
+        'format_nilai' => 'array',
+        'format_rapot' => 'array',
+        'format_pembayaran' => 'array',
+        'waktu_start' => 'datetime',
+        'waktu_end' => 'datetime',
     ];
 
     public function biaya()

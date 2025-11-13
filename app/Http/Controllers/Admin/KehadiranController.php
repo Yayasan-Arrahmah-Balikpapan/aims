@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class KehadiranController extends Controller
 {
@@ -27,8 +28,15 @@ class KehadiranController extends Controller
                 return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
             })
             ->toArray();
+
+        $data_absensi_tanggal = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
             
-        return view('dashboard.admin.periode.kehadiran.index', compact('unit','periode', 'dataperiode', 'data_peserta', 'data_absensi_peserta', 'data_level'));
+        return view('dashboard.admin.periode.kehadiran.index', compact('unit','periode', 'dataperiode', 'data_peserta', 'data_absensi_peserta','data_absensi_tanggal', 'data_level'));
     }
 
     public function create($unit, $periode)
@@ -82,6 +90,27 @@ class KehadiranController extends Controller
 
         return redirect()->route('admin.kehadiran.index')
                         ->with('success', 'Kehadiran deleted successfully.');
+    }
+    public function export($unit, $periode)
+    {
+        $dataperiode = \App\Models\Periode::findOrFail( $periode);
+        $data_peserta = \App\Models\Kelas::where('periode_id', $periode)
+                            ->get();
+        $data_peserta_id = $data_peserta->pluck('id');
+        $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
+
+        $data_absensi_tanggal = \App\Models\AbsensiPeserta::whereIn('kelas_id', $data_peserta_id)
+            ->get()
+            ->mapWithKeys(function ($item) {
+                return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            })
+            ->toArray();
+        return Excel::download(new \App\Exports\AdminKehadiran($dataperiode, $data_peserta, $data_absensi_peserta, $data_absensi_tanggal), 'Data_Kehadiran_Admin_' . $unit . '_' . $dataperiode->nama . '.xlsx');
     }
 
 }
