@@ -8,8 +8,8 @@
 
     <div class="md:flex p-3">
         @include('dashboard.admin.periode.menu')
-        <div class="w-full flex space-x-2 ml-2">
-            <div class="px-3 lg:w-3/6 bg-white border border-gray-200 text-medium dark:text-gray-400 rounded-lg">
+        <div class="w-full flex space-x-2 lg:ml-2 mt-2 lg:mt-0">
+            <div class="px-3 w-1/1 lg:w-3/6 bg-white border border-gray-200 text-medium dark:text-gray-400 rounded-lg">
                 <x-splade-form action="{{ route('admin.peserta.update', ['unit' => $unit, 'periode' => $periode, 'peserta' => $peserta]) }}" method="POST" onkeydown="return event.key != 'Enter';"
                     :default="[
                         'phone_number' => $data_peserta->peserta->phone_number ?? null,
@@ -19,6 +19,13 @@
                         'tanggal_lahir' => $data_peserta->peserta->tanggal_lahir ?? null,
                         'alamat' => $data_peserta->peserta->biodata['alamat'] ?? null,
                         'jadwal' => $data_peserta->jadwal_id ?? '0',
+                        'status_penerimaan' => $data_peserta->status_penerimaan ?? 'umum',
+                        'status_daftar' => $data_peserta->status_daftar ?? 'baru',
+                        'status_pendaftaran' => $data_peserta->status_pendaftaran ?? 'belum diberikan level',
+                        'status_aktif' => $data_peserta->status_aktif ?? 'diproses',
+                        'status_ujian' => $data_peserta->status_ujian ?? 'belum ujian',
+                        'status_daftar_ulang' => $data_peserta->status_daftar_ulang ?? 'belum daftar ulang',
+                        'status_domisili' => $data_peserta->status_domisili ?? '1'
                     ]"
                 >
                     @csrf
@@ -34,6 +41,11 @@
                                 <div class="relative w-full">
                                     <x-splade-input type="tel" name="phone_number" minlength="9" maxlength="14" placeholder="Masukkan Nomor Disini " required />
                                 </div>
+                            </div>
+                            <div class="flex items-center">
+                                <a href="https://wa.me/{{ $data_peserta->peserta->phone_number }}" target="_blank" class="text-sm text-gray-500 font-bold">
+                                    Klik Link WhatsApp wa.me/{{ $data_peserta->peserta->phone_number }}
+                                </a>
                             </div>
                             <div class="flex items-center justify-end ">
                                 <div class="text-sm text-gray-500">
@@ -53,15 +65,60 @@
                                 @endforeach
                                 <option value="0">-- BELUM PILIH --</option>
                             </x-splade-select>
+                            <x-splade-select name="status_domisili" :label="__('Asal Kota')" :options="[
+                                '1' => 'Kota Balikpapan',
+                                '0' => 'Luar Kota Balikpapan',
+                            ]" choices />
                             <hr class="my-4">
-                            <x-splade-submit label="Simpan" />
+                            <div class="flex gap-2 border border-red-300 p-2 rounded-lg bg-red-50">
+                                <div class="w-full lg:w-1/2">
+                                   <x-splade-select name="status_penerimaan" :label="__('Status Penerimaan')" :options="[
+                                        'umum' => 'Umum',
+                                        'karyawan' => 'Karyawan',
+                                        'pengajar' => 'Pengajar',
+                                        'beasiswa' => 'Beasiswa',
+                                    ]" choices />
+                                    <x-splade-select name="status_daftar" :label="__('Status Daftar')" :options="[
+                                        'baru' => 'Baru',
+                                        'melanjutkan' => 'Peserta Lanjutan',
+                                    ]" choices />
+                                    <x-splade-select name="status_pendaftaran" :label="__('Status Pendaftaran')" :options="[
+                                        'belum diberikan level' => 'Belum Diberikan Level',
+                                        'belum pilih jadwal' => 'Belum Pilih Jadwal',
+                                        'selesai pilih jadwal' => 'Selesai Pilih Jadwal',
+                                    ]" choices />
+                                </div>
+                                <div class="w-1/1 lg:w-1/2">
+                                   <x-splade-select name="status_aktif" :label="__('Status Aktif')" :options="[
+                                        'diproses' => 'Diproses',
+                                        'aktif' => 'Aktif',
+                                        'ditangguhkan' => 'Ditangguhkan',
+                                        'off' => 'Off',
+                                    ]" choices />
+                                    <x-splade-select name="status_ujian" :label="__('Status Ujian')" :options="[
+                                        'belum ujian' => 'Belum Ujian',
+                                        'selesai ujian' => 'Selesai Ujian',
+                                    ]" choices />
+                                    <x-splade-select name="status_daftar_ulang" :label="__('Status Daftar Ulang')" :options="[
+                                        'belum daftar ulang' => 'Belum Daftar Ulang',
+                                        'selesai daftar ulang' => 'Selesai Daftar Ulang',
+                                    ]" choices />
+                                </div>
+                            </div>
+                            <div class="flex gap-2 my-4 border border-green-300 p-2 rounded-lg bg-green-50">
+                                <x-splade-select class="w-full" name="nilai_ujian" :label="__('Nilai Ujian')" :options="[
+                                    'belum ujian' => 'Belum Ujian',
+                                    'selesai ujian' => 'Selesai Ujian',
+                                ]" choices />
+                            </div>
+                            <x-splade-submit class="mt-4" label="Simpan" />
                         </x-forms.body>
 
                     </div>
                 </x-splade-form>
             </div>
-            <div class="px-3 lg:w-3/6 bg-white border border-gray-200 text-medium text-gray-500 dark:text-gray-400 rounded-lg">
-                <div class="p-4 mb-4  2xl:col-span-2">
+            <div class="px-3 w-1/1 lg:w-3/6 bg-white border border-gray-200 text-medium text-gray-500 dark:text-gray-400 rounded-lg">
+                <div class="p-4 mb-4 2xl:col-span-2">
                         <div class="flow-root">
                             <h3 class="text-xl font-semibold ">{{ $data_peserta->periode->unit->nama }} {{ $data_peserta->periode->nama }}</h3>
                             <div class="border my-2 p-4 rounded-lg">
@@ -114,7 +171,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                        @for ($i = 1; $i <= 16; $i++)
+                                            @for ($i = 1; $i <= 16; $i++)
                                                 <td class="px-3 py-3 text-center">
                                                     -
                                                 </td>

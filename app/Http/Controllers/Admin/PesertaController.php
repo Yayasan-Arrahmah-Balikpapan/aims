@@ -415,6 +415,13 @@ class PesertaController extends Controller
             } else {
                 $peserta_kelas->jadwal_id = $request->jadwal ?? null;
             }
+            $peserta_kelas->status_penerimaan = $request->status_penerimaan;
+            $peserta_kelas->status_daftar = $request->status_daftar;
+            $peserta_kelas->status_pendaftaran = $request->status_pendaftaran;
+            $peserta_kelas->status_aktif = $request->status_aktif;
+            $peserta_kelas->status_ujian = $request->status_ujian;
+            $peserta_kelas->status_daftar_ulang = $request->status_daftar_ulang;
+            $peserta_kelas->status_domisili = $request->status_domisili;
             $peserta_kelas->save();
 
             $peserta_data = \App\Models\Peserta::find($peserta_kelas->peserta_id);
@@ -422,6 +429,7 @@ class PesertaController extends Controller
             $peserta_data->nama = $request->nama_peserta;
             $peserta_data->jenis_peserta = $request->jenis_peserta;
             $peserta_data->tanggal_lahir = $request->tanggal_lahir ?? null;
+            
             $peserta_data->save();
 
             DB::commit();
@@ -609,6 +617,6 @@ class PesertaController extends Controller
     public function export($unit, $periode)
     {
         $data_periode = \App\Models\Periode::find($periode);
-        return Excel::download(new \App\Exports\AdminPeserta($periode), 'Data_Peserta_Admin_' . $data_periode->nama . '.xlsx');
+        return Excel::download(new \App\Exports\AdminPeserta($periode), 'Data_Peserta_Admin_' . $unit . '_' . $data_periode->nama . '.xlsx');
     }
 }

@@ -9,6 +9,9 @@
                 Peserta
             </th>
             <th>
+                No Telp
+            </th>
+            <th>
                 Jadwal
             </th>
             @foreach($data_biaya as $item_biaya)
@@ -47,6 +50,9 @@
                 </td>
                 <td>
                     {{ $item->peserta->nama }}
+                </td>
+                <td>
+                    {{ $item->peserta->phone_number }}
                 </td>
                 <td>
                     {{ $item->jadwal->nama_jadwal ?? '' }}
@@ -97,6 +103,8 @@
         <tr>
             <th>
                 Total
+            </th>
+            <th>
             </th>
             <th>
             </th>

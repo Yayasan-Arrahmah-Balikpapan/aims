@@ -106,6 +106,9 @@
                                 Peserta
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase">
+                                No. Telp
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
                                 Jadwal
                             </th>
                             @foreach($data_biaya as $item_biaya)
@@ -139,11 +142,18 @@
                                 $total_pembayaran = 0;
                             @endphp
                             <tr class="text-gray-700 border-b border-gray-200 py-4">
-                                <td class="p-2 uppercase font-semibold">
+                                <td class="p-2 uppercase font-semibold text-xs">
                                     {{ $item->nis_peserta }}
                                 </td>
-                                <td class="p-2 uppercase">
-                                    {{ $item->peserta->nama }}
+                                <td class="p-2 uppercase text-xs">
+                                    <Link href="{{ route('admin.peserta.show', ['unit' => $unit, 'periode' => $periode, 'peserta' => $item->id]) }}" class="text-gray-900 uppercase">
+                                        {{ $item->peserta->nama }}
+                                    </Link>
+                                </td>
+                                <td class="p-2 uppercase text-xs">
+                                    <a href="https://wa.me/{{ $item->peserta->phone_number }}" target="_blank">
+                                        {{ $item->peserta->phone_number }}
+                                    </a>
                                 </td>
                                 <td class="p-2 uppercase text-xs">
                                     {{ $item->jadwal->nama_jadwal ?? '' }}
@@ -186,14 +196,16 @@
                     </tbody>
                     <thead>
                         <tr>
-                            <th class="text-white">a</th>
+                            <th class="text-white">-</th>
                         </tr>
                         <tr>
-                            <th class="text-white">a</th>
+                            <th class="text-white">-</th>
                         </tr>
                         <tr class="border-b border-gray-200 ">
                             <th scope="col" class="p-4 uppercase">
                                 Total
+                            </th>
+                            <th scope="col" class="py-4 px-2 uppercase">
                             </th>
                             <th scope="col" class="py-4 px-2 uppercase">
                             </th>
