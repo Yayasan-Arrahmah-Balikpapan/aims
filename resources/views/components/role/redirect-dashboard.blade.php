@@ -14,6 +14,22 @@
     {{ url('/dashboard/penguji/tahsin') }}
 @elseif ($role === 'pengajar-tahsin')
     {{ url('/dashboard/pengajar/tahsin') }}
+@elseif ($role === 'admin-rtq-putra')
+    {{ url('/dashboard/admin/rtq-putra') }}
+@elseif ($role === 'ketua-unit-rtq-putra')
+    {{ url('/dashboard/ketua/rtq-putra') }}
+@elseif ($role === 'penguji-rtq-putra')
+    {{ url('/dashboard/penguji/rtq-putra') }}
+@elseif ($role === 'pengajar-rtq-putra')
+    {{ url('/dashboard/pengajar/rtq-putra') }}
+@elseif ($role === 'admin-rtq-putri')
+    {{ url('/dashboard/admin/rtq-putri') }}
+@elseif ($role === 'ketua-unit-rtq-putri')
+    {{ url('/dashboard/ketua/rtq-putri') }}
+@elseif ($role === 'penguji-rtq-putri')
+    {{ url('/dashboard/penguji/rtq-putri') }}
+@elseif ($role === 'pengajar-rtq-putri')
+    {{ url('/dashboard/pengajar/rtq-putri') }}
 @elseif ($role === 'admin-rtq')
     {{ url('/dashboard/admin/rtq') }}
 @elseif ($role === 'ketua-unit-rtq')
