@@ -10,7 +10,7 @@ use App\Traits\TableTrait;
 use App\Traits\FilterTable1Trait;
 use App\Models\Kelas;
 use ProtoneMedia\Splade\Facades\Toast;
-
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class PembayaranController extends Controller
@@ -133,38 +133,38 @@ class PembayaranController extends Controller
         return view('modules.pembayaran.data', compact('kelas', 'tableConfig', 'unit'));
     }
 
-    public function export(Request $request)
-    {
-        $columns = [
-            ['key' => 'id', 'label' => 'ID', 'filter' => true],
-            ['key' => 'peserta.nama', 'label' => 'Peserta Name', 'filter' => true],
-            ['key' => 'periode.nama', 'label' => 'Periode Name', 'filter' => true],
-            // ['key' => 'unit.nama', 'label' => 'Unit Name', 'filter' => true],
-            // ['key' => 'jadwal.nama', 'label' => 'Jadwal Name', 'filter' => true],
-            // ['key' => 'pengajar.nama', 'label' => 'Pengajar Name', 'filter' => true],
-            ['key' => 'json.data_pembayaran.pendaftaran', 'label' => 'Payment Registration Status', 'filter' => true],
-            ['key' => 'json.data_absen.1', 'label' => 'Attendance Status', 'filter' => true],
-            ['key' => 'json.data_nilai.ujian', 'label' => 'Exam Status', 'filter' => true],
-            ['key' => 'created_at', 'label' => 'Created At', 'filter' => true, 'filter_type' => 'date_range'],
-        ];
+    // public function export(Request $request)
+    // {
+    //     $columns = [
+    //         ['key' => 'id', 'label' => 'ID', 'filter' => true],
+    //         ['key' => 'peserta.nama', 'label' => 'Peserta Name', 'filter' => true],
+    //         ['key' => 'periode.nama', 'label' => 'Periode Name', 'filter' => true],
+    //         // ['key' => 'unit.nama', 'label' => 'Unit Name', 'filter' => true],
+    //         // ['key' => 'jadwal.nama', 'label' => 'Jadwal Name', 'filter' => true],
+    //         // ['key' => 'pengajar.nama', 'label' => 'Pengajar Name', 'filter' => true],
+    //         ['key' => 'json.data_pembayaran.pendaftaran', 'label' => 'Payment Registration Status', 'filter' => true],
+    //         ['key' => 'json.data_absen.1', 'label' => 'Attendance Status', 'filter' => true],
+    //         ['key' => 'json.data_nilai.ujian', 'label' => 'Exam Status', 'filter' => true],
+    //         ['key' => 'created_at', 'label' => 'Created At', 'filter' => true, 'filter_type' => 'date_range'],
+    //     ];
 
-        $filters = [];
-        foreach ($columns as $column) {
-            if (isset($column['filter']) && $column['filter']) {
-                $key = $column['key'];
-                if (isset($column['filter_type']) && $column['filter_type'] === 'date_range') {
-                    $filters[$key] = [
-                        'start' => $request->get('filter.' . $key . '.start', ''),
-                        'end' => $request->get('filter.' . $key . '.end', ''),
-                    ];
-                } else {
-                    $filters[$key] = $request->get('filter.' . $key, '');
-                }
-            }
-        }
+    //     $filters = [];
+    //     foreach ($columns as $column) {
+    //         if (isset($column['filter']) && $column['filter']) {
+    //             $key = $column['key'];
+    //             if (isset($column['filter_type']) && $column['filter_type'] === 'date_range') {
+    //                 $filters[$key] = [
+    //                     'start' => $request->get('filter.' . $key . '.start', ''),
+    //                     'end' => $request->get('filter.' . $key . '.end', ''),
+    //                 ];
+    //             } else {
+    //                 $filters[$key] = $request->get('filter.' . $key, '');
+    //             }
+    //         }
+    //     }
 
-        // return $this->exportToExcel($filters, KelasExport::class, 'kelas.xlsx');
-    }
+    //     // return $this->exportToExcel($filters, KelasExport::class, 'kelas.xlsx');
+    // }
 
     private function getPembayaranRekapTable($unit)
     {
@@ -230,15 +230,13 @@ class PembayaranController extends Controller
                                     })
                                     ->toArray();
 
-        $total_biaya_periode = Cache::remember('cache_biaya_periode_'. $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+        $total_biaya_periode         = Cache::remember('cache_biaya_periode_'. $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
             return \App\Models\Biaya::where('periode_id', $dataperiode->id)
                 ->sum('nominal');
         });
-
-        $total_peserta = Cache::remember('cache_total_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($periode) {
+        $total_peserta               = Cache::remember('cache_total_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($periode) {
             return Kelas::where('periode_id', $periode)->count();
         });
-
         $total_biaya_seluruh_peserta = Cache::remember('cache_total_biaya_seluruh_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($total_biaya_periode,$total_peserta) {
             return $total_biaya_periode * $total_peserta;
         });
@@ -248,7 +246,7 @@ class PembayaranController extends Controller
                     ->where('status', 3)
                     ->sum('nominal_total_pembayaran');
         });
-        $jumlah_nominal_biaya = Cache::remember('cache_jumlah_nominal_biaya_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+        $jumlah_nominal_biaya    = Cache::remember('cache_jumlah_nominal_biaya_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
             return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
                     ->where('status', 3)
                     ->sum('nominal_total');
@@ -258,7 +256,7 @@ class PembayaranController extends Controller
                     ->where('status', 3)
                     ->sum('kode_unik');
         });
-        $jumlah_nominal_donasi = Cache::remember('cache_jumlah_nominal_donasi_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+        $jumlah_nominal_donasi   = Cache::remember('cache_jumlah_nominal_donasi_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
             return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
                     ->where('status', 3)
                     ->sum('donasi');
@@ -268,14 +266,13 @@ class PembayaranController extends Controller
                     ->where('status', 3)
                     ->sum('potongan');
         });
-        $jumlah_nominal_piutang = Cache::remember('cache_jumlah_nominal_piutang_'. $periode, now()->addDays(7), function () use ($total_biaya_seluruh_peserta,$jumlah_nominal_biaya) {
+        $jumlah_nominal_piutang  = Cache::remember('cache_jumlah_nominal_piutang_'. $periode, now()->addDays(7), function () use ($total_biaya_seluruh_peserta,$jumlah_nominal_biaya) {
             return $total_biaya_seluruh_peserta - $jumlah_nominal_biaya;
         });
 
 
         $cache_biaya = 'cache_sum_biaya_periode_' . $periode;
         $cache_expiration_key = $cache_biaya . '_expiration';
-
         if (Cache::has($cache_biaya)) {
             $sum_data_biaya = Cache::get($cache_biaya);
         } else {
@@ -296,7 +293,6 @@ class PembayaranController extends Controller
             // Simpan waktu kedaluwarsa cache secara manual
             Cache::put($cache_expiration_key, now()->addDays(7), now()->addDays(7));
         }
-        // Mengambil waktu kedaluwarsa cache
         $expiration_time = Cache::get($cache_expiration_key) ? \Carbon\Carbon::parse(Cache::get($cache_expiration_key))->subDays(7) : null;
 
 
@@ -368,5 +364,142 @@ class PembayaranController extends Controller
     {
         $peserta = \App\Models\Peserta::findOrFail($peserta);
         return view('dashboard.admin.pembayaran.peserta', compact('unit', 'peserta'));
+    }
+
+    public function export($unit, $periode, Request $request)
+    {
+        $dataperiode = \App\Models\Periode::find( $periode);
+        $data_level = \App\Models\Modules\Level::where('unit_id', $dataperiode->unit_id)->get();
+        $data_biaya = \App\Models\Biaya::where('periode_id', $dataperiode->id)->get();
+        $data_peserta = Kelas::where('periode_id', $periode)->get();
+        $data_biaya_id = $data_biaya->pluck('id');
+        $data_peserta_id = $data_peserta->pluck('id');
+
+        $data_pembayaran_peserta = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)
+                                ->whereHas('transaksi', function($q) {
+                                    $q->where('status', 3);
+                                })
+                                ->select('kelas_id', 'biaya_id', 'nominal')
+                                ->get()
+                                ->groupBy('kelas_id')
+                                ->map(function ($items, $kelas_id) {
+                                    return $items->mapWithKeys(function ($item) {
+                                        return [$item->biaya_id => $item->nominal];
+                                    });
+                                })
+                                ->toArray();
+        
+        $data_transaksi_peserta = \App\Models\Transaksi::whereIn('kelas_id', $data_peserta_id)
+                                    ->where('status', 3)
+                                    ->get()
+                                    ->groupBy('kelas_id')
+                                    ->map(function ($items, $kelas_id) {
+                                        return $items->mapWithKeys(function ($item) {
+                                            return [
+
+                                                'kode_unik' => $item->kode_unik,
+                                                'potongan' => $item->potongan,
+                                                'donasi' => $item->donasi,
+                                                'nominal_total' => $item->nominal_total,
+                                                'nominal_total_pembayaran' => $item->nominal_total_pembayaran
+                                                ];
+                                        });
+                                    })
+                                    ->toArray();
+
+        $total_biaya_periode         = Cache::remember('cache_biaya_periode_'. $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Biaya::where('periode_id', $dataperiode->id)
+                ->sum('nominal');
+        });
+        $total_peserta               = Cache::remember('cache_total_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($periode) {
+            return Kelas::where('periode_id', $periode)->count();
+        });
+        $total_biaya_seluruh_peserta = Cache::remember('cache_total_biaya_seluruh_peserta_'. $dataperiode->id, now()->addDays(7), function() use ($total_biaya_periode,$total_peserta) {
+            return $total_biaya_periode * $total_peserta;
+        });
+        
+        $jumlah_nominal_transfer = Cache::remember('cache_jumlah_nominal_transfer_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
+                    ->where('status', 3)
+                    ->sum('nominal_total_pembayaran');
+        });
+        $jumlah_nominal_biaya    = Cache::remember('cache_jumlah_nominal_biaya_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
+                    ->where('status', 3)
+                    ->sum('nominal_total');
+        });
+        $jumlah_nominal_kodeunik = Cache::remember('cache_jumlah_nominal_kodeunik_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
+                    ->where('status', 3)
+                    ->sum('kode_unik');
+        });
+        $jumlah_nominal_donasi   = Cache::remember('cache_jumlah_nominal_donasi_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
+                    ->where('status', 3)
+                    ->sum('donasi');
+        });
+        $jumlah_nominal_potongan = Cache::remember('cache_jumlah_nominal_potongan_' . $dataperiode->id, now()->addDays(7), function() use ($dataperiode) {
+            return \App\Models\Transaksi::where('periode_id', $dataperiode->id)
+                    ->where('status', 3)
+                    ->sum('potongan');
+        });
+        $jumlah_nominal_piutang  = Cache::remember('cache_jumlah_nominal_piutang_'. $periode, now()->addDays(7), function () use ($total_biaya_seluruh_peserta,$jumlah_nominal_biaya) {
+            return $total_biaya_seluruh_peserta - $jumlah_nominal_biaya;
+        });
+
+
+        $cache_biaya = 'cache_sum_biaya_periode_' . $periode;
+        $cache_expiration_key = $cache_biaya . '_expiration';
+        if (Cache::has($cache_biaya)) {
+            $sum_data_biaya = Cache::get($cache_biaya);
+        } else {
+            $sum_data_biaya = [];  // Inisialisasi sebagai array kosong
+
+            foreach ($data_biaya as $biaya) {
+                $sum_data_biaya[$biaya->id] = \App\Models\Pembayaran::where('periode_id', $periode)
+                                            ->where('biaya_id', $biaya->id)
+                                            ->whereHas('transaksi', function($q) {
+                                                $q->where('status', 3);
+                                            })
+                                            ->sum('nominal');
+            }
+
+            // Simpan ke cache dengan durasi
+            Cache::put($cache_biaya, $sum_data_biaya, now()->addDays(7));
+
+            // Simpan waktu kedaluwarsa cache secara manual
+            Cache::put($cache_expiration_key, now()->addDays(7), now()->addDays(7));
+        }
+        $expiration_time = Cache::get($cache_expiration_key) ? \Carbon\Carbon::parse(Cache::get($cache_expiration_key))->subDays(7) : null;
+
+
+        $cache_nominal = 'cache_sum_nominal_periode_' . $periode;
+        if (Cache::has($cache_nominal)) {
+            $data_nominal = Cache::get($cache_nominal);
+        } else {
+            $data_nominal = [
+                'jumlah_nominal_transfer' => $jumlah_nominal_transfer,
+                'jumlah_nominal_donasi' => $jumlah_nominal_donasi,
+                'jumlah_nominal_potongan' => $jumlah_nominal_potongan,
+                'jumlah_nominal_biaya' => $jumlah_nominal_biaya,
+                'jumlah_nominal_kodeunik' => $jumlah_nominal_kodeunik,
+            ];
+            Cache::put($cache_nominal, $data_nominal, now()->addDays(7));
+        }
+
+        return Excel::download(new \App\Exports\AdminPembayaran(
+            $dataperiode, 
+            $data_biaya, 
+            $data_peserta, 
+            $data_pembayaran_peserta,
+            $data_transaksi_peserta,
+            $data_level,
+            $data_nominal,
+            $sum_data_biaya,
+            $expiration_time,
+            $total_biaya_periode, 
+            $jumlah_nominal_piutang, 
+            $total_biaya_seluruh_peserta
+        ), 'Data_Pembayaran_Admin_' . $unit . '_' . $dataperiode->nama . '.xlsx');
     }
 }

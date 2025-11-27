@@ -84,6 +84,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/pembayaran/rekap', [App\Http\Controllers\Admin\PembayaranController::class, 'rekap'])->name('admin.pembayaran.rekap');
         Route::get('/pembayaran/transaksi', [App\Http\Controllers\Admin\PembayaranController::class, 'transaksi'])->name('admin.pembayaran.transaksi');
         Route::get('/pembayaran/reset-data', [App\Http\Controllers\Admin\PembayaranController::class, 'hapus_cache'])->name('admin.pembayaran.reset-data');
+        Route::get('/pembayaran/export', [App\Http\Controllers\Admin\PembayaranController::class, 'export'])->name('admin.pembayaran.export');
         Route::get('/pembayaran/peserta/{peserta}', [App\Http\Controllers\Admin\PembayaranController::class, 'peserta'])->name('admin.pembayaran.peserta');
         Route::get('/pembayaran/{pembayaran}', [App\Http\Controllers\Admin\PembayaranController::class, 'show'])->name('admin.pembayaran.show');
         Route::get('/pembayaran/{pembayaran}/edit', [App\Http\Controllers\Admin\PembayaranController::class, 'edit'])->name('admin.pembayaran.edit');
