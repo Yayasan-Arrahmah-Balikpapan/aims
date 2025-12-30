@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "berkayk/onesignal-laravel": "^2.4",
-        "codeat3/blade-carbon-icons": "^2.17",
+        "codeat3/blade-carbon-icons": "^2.38",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^3.11",
         "intervention/image-laravel": "^1.5",
