@@ -16,6 +16,7 @@ class Unit extends Model
         'nama',
         'slug',
         'keterangan',
+        'kode_nis',
     ];
 
     public function user()

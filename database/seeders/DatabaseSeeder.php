@@ -26,5 +26,11 @@ class DatabaseSeeder extends Seeder
         $this->call(LevelSeeder::class);
         $this->call(SuperAdminSeeder::class);
         $this->call(RoleAndPermission::class);
+
+        $this->call(NotifikasiSeeder::class);
+        $this->call(PeriodeKategoriSeeder::class);
+        $this->call(RTQSeeder::class);
+        // $this->call(ContohDataLTTQSeeder::class);
+
     }
 }
