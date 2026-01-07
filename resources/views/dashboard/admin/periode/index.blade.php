@@ -43,47 +43,44 @@
 
 
     <div class="p-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
-            @foreach ($periode as $item)
-            <div class="max-w-4xl flex-1 space-y-4">
-                <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm  sm:p-6">
-                    <p class="sm:text-xl text-md font-semibold text-gray-900">{{ $item->nama }}</p>
-                    <div class="space-y-4">
-                        <div class="space-y-2 text-sm sm:text-base">
-                            <dl class="flex items-center justify-between gap-4">
-                                <dt class="font-normal text-gray-500">Buka Pendaftaran</dt>
-                                <dd class="font-medium text-gray-900">{{ \Carbon\Carbon::parse($item->waktu_start)->format('d-m-Y') }}</dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4">
-                                <dt class="font-normal text-gray-500">Tutup Pendaftaran</dt>
-                                <dd class="font-medium text-gray-900">{{ \Carbon\Carbon::parse($item->waktu_end)->format('d-m-Y') }}</dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4">
-                                <dt class="font-normal text-gray-500">Status Daftar</dt>
-                                <dd class="font-bold {{ $item->aktifkan_pendaftaran == 1 ? 'text-sky-500' : 'text-red-500' }}">{{ $item->aktifkan_pendaftaran == 1 ? 'BUKA' : 'TUTUP' }}</dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4">
-                                <dt class="font-normal text-gray-500">Kategori</dt>
-                                <dd class="font-medium text-gray-900 uppercase">{{ $item->kategori }}</dd>
-                            </dl>
-                            <dl class="flex items-center justify-between gap-4">
-                                <dt class="font-normal text-gray-500">Peserta</dt>
-                                <dd class="font-medium text-gray-900">{{ $item->kelas->count() }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <hr class="border-t border-gray-200 pt-2">
-                    <div class="flex w-full items-center justify-between space-x-2">
-                        <Link href="{{ route('admin.periode.statistik', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-primary-700 px-5 py-2.5 text-sm font-medium text-primary-700">
-                            Lihat Data  @svg('carbon-arrow-right', 'ml-2 h-5 w-5 text-primary-700')
-                        </Link>
-                        <a href="{{ route('admin.periode.show', ['unit' => $unit, 'periode' => $item->id]) }}" class="flex items-center justify-center rounded-lg border border-yellow-400 px-3 py-2.5 text-sm font-medium text-yellow-400">
-                            @svg('carbon-edit', 'h-5 w-5 text-yellow-400')
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Nama</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Buka Pendaftaran</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Tutup Pendaftaran</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Kategori</th>
+                        <th class="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Peserta</th>
+                        <th class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($periode as $item)
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">{{ $item->nama }}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ \Carbon\Carbon::parse($item->waktu_start)->format('d-m-Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ \Carbon\Carbon::parse($item->waktu_end)->format('d-m-Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="font-bold {{ $item->aktifkan_pendaftaran == 1 ? 'text-sky-500' : 'text-red-500' }}">{{ $item->aktifkan_pendaftaran == 1 ? 'BUKA' : 'TUTUP' }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 uppercase">{{ $item->kategori }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $item->kelas->count() }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                            <a href="{{ route('admin.periode.show', ['unit' => $unit, 'periode' => $item->id]) }}" class="inline-flex items-center rounded-lg border border-yellow-400 px-3 py-1 text-sm font-medium text-yellow-400">
+                                Edit @svg('carbon-edit', 'ml-2 h-4 w-4 text-yellow-400')
+                            </a>
+                            <Link href="{{ route('admin.periode.statistik', ['unit' => $unit, 'periode' => $item->id]) }}" class="inline-flex items-center rounded-lg border border-primary-700 px-3 py-1 text-sm font-medium text-primary-700">
+                                Lihat Data @svg('carbon-arrow-right', 'ml-2 h-4 w-4 text-primary-700')
+                            </Link>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 </x-layouts.main>

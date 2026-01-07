@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('pesertas', function (Blueprint $table) {
             // Tambah kolom relasi unit_id
             if (!Schema::hasColumn('pesertas', 'unit_id')) {
-                $table->foreignId('unit_id')->constrained('units')->onDelete('set null');
+                $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
             }
         });
     }

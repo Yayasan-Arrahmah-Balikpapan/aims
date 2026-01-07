@@ -61,9 +61,13 @@ Route::get("/informasi/tag/{slug}", [WebController::class, "informasi_tag_slug"]
 Route::get("/quranic-camp", [WebController::class, "quranic_camp"])->name("website.quranic-camp");
 
 Route::get("/ibadah", [App\Domain\Website\Controllers\IbadahController::class, "index"])->name("website.ibadah");
-Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");
 Route::get("/agenda", [App\Domain\Website\Controllers\AgendaController::class, "index"])->name("website.agenda");
 // Route::get('/agenda', [\App\Http\Controllers\DashboardController::class, 'agenda'])->name('dashboard.peserta.agenda');
+
+//SOSIAL
+Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");
+Route::get("/sosial/fundraising", [App\Domain\Website\Controllers\Sosial\FundraisingController::class, "index"])->name("website.sosial.fundraising.index");
+
 
 
 
