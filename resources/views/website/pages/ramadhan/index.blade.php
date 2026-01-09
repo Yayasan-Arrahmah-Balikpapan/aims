@@ -6,10 +6,10 @@
         <div class="absolute inset-0 bg-gradient-to-br from-[#ffebcd] via-amber-100 to-amber-200 opacity-75"></div>
         <div class="relative max-w-7xl pt-12 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="flex items-center justify-center mb-4">
-                <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-64" alt="">
+                <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-64 sm:h-32" alt="">
             </div>
             <p class="text-lg sm:text-xl max-w-3xl mx-auto mb-8 leading-relaxed font-semibold text-gradient-to-r from-[#1d6a6a] to-primary-800">
-                Mari merayakan bulan suci Ramadhan dengan Yayasan Ar-Rahmah Balikpapan di Masjid Arrahmah Spinggan Pratama, Balikpapan.
+                Mari merayakan bulan suci Ramadhan dengan Yayasan Ar-Rahmah Balikpapan
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a href="#kegiatan" class="p-2 rounded-md flex items-center bg-gradient-to-r bg-[#deaa37] text-white shadow-lg shadow-amber-200">
@@ -61,7 +61,7 @@
                             background: transparent;
                         }
                     </style>
-                    <iframe width="100%" height="600" src="https://www.youtube.com/embed/yUV2bOYYLHk?modestbranding=1&showinfo=0&autoplay=1&mute=1&loop=1&controls=0&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="600" src="https://www.youtube.com/embed/yUV2bOYYLHk?modestbranding=1&showinfo=0&autoplay=1&mute=1&loop=1&controls=0&rel=0" title="Semarak Ramadhan Arrahmah" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
