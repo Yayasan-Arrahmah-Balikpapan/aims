@@ -63,6 +63,7 @@ Route::get("/quranic-camp", [WebController::class, "quranic_camp"])->name("websi
 Route::get("/ibadah", [App\Domain\Website\Controllers\IbadahController::class, "index"])->name("website.ibadah");
 Route::get("/agenda", [App\Domain\Website\Controllers\AgendaController::class, "index"])->name("website.agenda");
 // Route::get('/agenda', [\App\Http\Controllers\DashboardController::class, 'agenda'])->name('dashboard.peserta.agenda');
+Route::get("/ramadhan", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "index"])->name("website.ramadhan");
 
 //SOSIAL
 Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");

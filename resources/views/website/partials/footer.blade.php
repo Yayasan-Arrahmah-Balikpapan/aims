@@ -1,5 +1,5 @@
 
-<footer class="p-4 mt-10 bg-gray-50 sm:p-6 dark:bg-gray-800">
+<footer class="px-4 py-10 bg-gray-50 sm:p-6 dark:bg-gray-800">
     <div class="mx-auto max-w-screen-xl">
         <div class="md:flex md:justify-between flex-row">
             <div class="basis-1/4">

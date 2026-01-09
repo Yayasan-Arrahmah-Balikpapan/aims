@@ -12,6 +12,11 @@ var require_ssr = __commonJS({
   "ssr.js"(exports, module) {
     var vue = { exports: {} };
     var vue_cjs_prod = {};
+    /**
+    * vue v3.5.26
+    * (c) 2018-present Yuxi (Evan) You and Vue contributors
+    * @license MIT
+    **/
     var hasRequiredVue_cjs_prod;
     function requireVue_cjs_prod() {
       if (hasRequiredVue_cjs_prod) return vue_cjs_prod;
@@ -32,15 +37,7 @@ var require_ssr = __commonJS({
           return Object.freeze(n);
         }
         var runtimeDom__namespace = /* @__PURE__ */ _interopNamespaceDefault(runtimeDom);
-        const compileCache = /* @__PURE__ */ new WeakMap();
-        function getCache(options) {
-          let c = compileCache.get(options != null ? options : shared.EMPTY_OBJ);
-          if (!c) {
-            c = /* @__PURE__ */ Object.create(null);
-            compileCache.set(options != null ? options : shared.EMPTY_OBJ, c);
-          }
-          return c;
-        }
+        const compileCache = /* @__PURE__ */ Object.create(null);
         function compileToFunction(template, options) {
           if (!shared.isString(template)) {
             if (template.nodeType) {
@@ -49,9 +46,8 @@ var require_ssr = __commonJS({
               return shared.NOOP;
             }
           }
-          const key = template;
-          const cache = getCache(options);
-          const cached = cache[key];
+          const key = shared.genCacheKey(template, options);
+          const cached = compileCache[key];
           if (cached) {
             return cached;
           }
@@ -73,7 +69,7 @@ var require_ssr = __commonJS({
           const { code } = compilerDom.compile(template, opts);
           const render = new Function("Vue", code)(runtimeDom__namespace);
           render._rc = true;
-          return cache[key] = render;
+          return compileCache[key] = render;
         }
         runtimeDom.registerRuntimeCompiler(compileToFunction);
         exports2.compile = compileToFunction;
@@ -84,6 +80,11 @@ var require_ssr = __commonJS({
       return vue_cjs_prod;
     }
     var vue_cjs = {};
+    /**
+    * vue v3.5.26
+    * (c) 2018-present Yuxi (Evan) You and Vue contributors
+    * @license MIT
+    **/
     var hasRequiredVue_cjs;
     function requireVue_cjs() {
       if (hasRequiredVue_cjs) return vue_cjs;
@@ -104,15 +105,7 @@ var require_ssr = __commonJS({
           return Object.freeze(n);
         }
         var runtimeDom__namespace = /* @__PURE__ */ _interopNamespaceDefault(runtimeDom);
-        const compileCache = /* @__PURE__ */ new WeakMap();
-        function getCache(options) {
-          let c = compileCache.get(options != null ? options : shared.EMPTY_OBJ);
-          if (!c) {
-            c = /* @__PURE__ */ Object.create(null);
-            compileCache.set(options != null ? options : shared.EMPTY_OBJ, c);
-          }
-          return c;
-        }
+        const compileCache = /* @__PURE__ */ Object.create(null);
         function compileToFunction(template, options) {
           if (!shared.isString(template)) {
             if (template.nodeType) {
@@ -122,9 +115,8 @@ var require_ssr = __commonJS({
               return shared.NOOP;
             }
           }
-          const key = template;
-          const cache = getCache(options);
-          const cached = cache[key];
+          const key = shared.genCacheKey(template, options);
+          const cached = compileCache[key];
           if (cached) {
             return cached;
           }
@@ -159,7 +151,7 @@ ${codeFrame}` : message);
           }
           const render = new Function("Vue", code)(runtimeDom__namespace);
           render._rc = true;
-          return cache[key] = render;
+          return compileCache[key] = render;
         }
         runtimeDom.registerRuntimeCompiler(compileToFunction);
         exports2.compile = compileToFunction;
