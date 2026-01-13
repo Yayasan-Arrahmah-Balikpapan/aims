@@ -86,13 +86,8 @@
                     <tbody>
                         @foreach ($data_transaksi as $item)
                             <tr class="text-gray-700 border-b border-gray-200 py-4">
-<<<<<<< HEAD
                                 <td class="p-4 uppercase font-semibold flex">
                                     <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-1">
-=======
-                                <td class="p-4 uppercase font-semibold">
-                                    <a href="{{ route('website.lttq.invoice', ['uuid' => $item->uuid]) }}" target="_blank" class="text-primary-700 border border-primary-700 rounded-md p-2">
->>>>>>> 0eb3c6a (chore: save local changes before sync)
                                         {{ \Carbon\Carbon::parse($item->created_at)->format('Ymd') }}-{{ $item->id}}
                                     </a>
                                 </td>
