@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('units', function (Blueprint $table) {
-            $table->string('kode_nis')->nullable()->after('uuid');
+            $table->string('kode_nis')->nullable()->after('id');
         });
         //
     }
