@@ -13,7 +13,7 @@ var require_ssr = __commonJS({
     var vue = { exports: {} };
     var vue_cjs_prod = {};
     /**
-    * vue v3.5.26
+    * vue v3.5.25
     * (c) 2018-present Yuxi (Evan) You and Vue contributors
     * @license MIT
     **/
@@ -81,7 +81,7 @@ var require_ssr = __commonJS({
     }
     var vue_cjs = {};
     /**
-    * vue v3.5.26
+    * vue v3.5.25
     * (c) 2018-present Yuxi (Evan) You and Vue contributors
     * @license MIT
     **/

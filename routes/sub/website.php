@@ -64,6 +64,13 @@ Route::get("/ibadah", [App\Domain\Website\Controllers\IbadahController::class, "
 Route::get("/agenda", [App\Domain\Website\Controllers\AgendaController::class, "index"])->name("website.agenda");
 // Route::get('/agenda', [\App\Http\Controllers\DashboardController::class, 'agenda'])->name('dashboard.peserta.agenda');
 Route::get("/ramadhan", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "index"])->name("website.ramadhan");
+Route::get("/ramadhan/lomba", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba"])->name("website.ramadhan.lomba");
+Route::get("/ramadhan/lomba/daftar", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_daftar"])->name("website.ramadhan.lomba.daftar");
+Route::post("/ramadhan/lomba/daftar", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_daftar_store"])->name("website.ramadhan.lomba.daftar.store");
+Route::get("/ramadhan/lomba/invoice/{uuid}", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_invoice"])->name("website.ramadhan.lomba.invoice");
+Route::post("/ramadhan/lomba/invoice/{uuid}/store", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_invoice_store"])->name("website.ramadhan.lomba.invoice.store");
+Route::post("/ramadhan/lomba/invoice/{uuid}/store/bukti-transfer", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_invoice_store_bukti_transfer"])->name("website.ramadhan.lomba.invoice.store.buktitransfer");
+
 
 //SOSIAL
 Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");

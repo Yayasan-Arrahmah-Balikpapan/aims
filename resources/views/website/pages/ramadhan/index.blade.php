@@ -16,7 +16,7 @@
                     <x-carbon-calendar class="w-5 h-5 mr-2" />
                     Lihat Jadwal Kegiatan
                 </a>
-                <Link class="p-2 rounded-md flex items-center border border-[#deaa37] text-[#deaa37] bg-white shadow-lg shadow-amber-200 hover:bg-amber-50">
+                <Link href="{{ route('website.ramadhan.lomba') }}" class="p-2 rounded-md flex items-center border border-[#deaa37] text-[#deaa37] bg-white shadow-lg shadow-amber-200 hover:bg-amber-50">
                     <x-carbon-notification class="w-5 h-5 mr-2" />
                     Lomba-lomba
                 </Link>
@@ -24,7 +24,7 @@
             <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
                 <div class="text-center">
                     <div class="text-3xl font-bold text-[#1d6a6a]">Lomba Islami</div>
-                    <div class="text-sm text-gray-600">3-14 Tahun</div>
+                    <div class="text-sm text-gray-600">3-15 Tahun</div>
                 </div>
                 <div class="text-center">
                     <div class="text-3xl font-bold text-[#1d6a6a]">Pawai</div>
@@ -84,13 +84,13 @@
                         <time class="bg-[#1d6a6a] text-heading text-xs  font-medium px-1.5 py-0.5 rounded text-white border border-white">7,8,14,15 Februari 2026</time>
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-heading my-2">Lomba-Lomba Anak
                             <span class="ms-2 bg-[#deaa37] border border-white text-white text-xs font-medium px-1.5 py-0.5 rounded">Untuk UMUM</span></h3>
-                        <p class="mb-4 text-body">Loba Mewarnai, Lomba Adzan, Lomba Tahfizh. Usia Peserta 3-14 tahun</p>
+                        <p class="mb-4 text-body">Lomba Mewarnai, Lomba Adzan, Lomba Tahfizh. </p>
                         <div class="flex items-center gap-4">
-                            <Link href="#" class="inline-flex items-center text-body bg-[#deaa37] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
+                            <Link href="{{ route('website.ramadhan.lomba') }}" class="inline-flex items-center text-body bg-[#deaa37] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
                                 <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Zm-4 1h.01v.01H15V5Zm-2 2h.01v.01H13V7Zm2 2h.01v.01H15V9Zm-2 2h.01v.01H13V11Zm2 2h.01v.01H15V13Zm-2 2h.01v.01H13V15Zm2 2h.01v.01H15V17Zm-2 2h.01v.01H13V19Z"/></svg>
                                 Informasi
                             </Link>
-                            <Link href="#" class="inline-flex items-center text-body bg-[#1d6a6a] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
+                            <Link href="{{ route('website.ramadhan.lomba.daftar') }}" class="inline-flex items-center text-body bg-[#1d6a6a] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
                                 Daftar Lomba <x-carbon-arrow-right class="w-4 h-4 ms-1" />
                             </Link>
                         </div>
