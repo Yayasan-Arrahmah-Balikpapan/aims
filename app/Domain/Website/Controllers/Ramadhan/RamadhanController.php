@@ -110,7 +110,7 @@ Yayasan Arrahmah Balikpapan
 
     public function lomba_daftar_store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $donasi = 0;
         $pembayarandonasi = $request->input('pembayarandonasi') ? $request->input('pembayarandonasi') : 0;
         $pembayarandonasicustom = $request->input('pembayarandonasicustom') ? $request->input('pembayarandonasicustom') : 0;
@@ -148,8 +148,8 @@ Yayasan Arrahmah Balikpapan
             }
 
             if(!$cek_peserta) {
-                // try {
-                //     DB::beginTransaction();
+                try {
+                    DB::beginTransaction();
 
                     $lock_peserta = \App\Models\LombaPeserta::lockForUpdate()->latest()->first();
 
@@ -164,12 +164,12 @@ Yayasan Arrahmah Balikpapan
 
                     $nominal_total = 0;
 
-                    for ($i = 1; $i <= 8; $i++) {
-                        if($request->input('pembayaran'.$i) == '1') {
+                    for ($i = 1; $i <= 3; $i++) {
+                        if (!is_null($request->input('pembayaran'.$i))) {
                             $nominal_total = $nominal_total + 50000;
                             \App\Models\LombaPendaftaran::create([
                             'peserta_id'          => $data_peserta->id,
-                            'cabang_id'           => $i,
+                            'cabang_id'           => $request->input('pembayaran'.$i),
                             'nomor_peserta'       => null,
                             'status'              => 'MENDAFTAR',
                             'biaya'               => 50000,
@@ -254,16 +254,16 @@ Yayasan Arrahmah Balikpapan
                         ->warning()
                         ->autoDismiss(10);
 
-                //     DB::commit();
-                // } catch (\Exception $e) {
-                //     DB::rollBack();
-                //     Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
-                //         ->warning()
-                //         ->autoDismiss(10);
-                //     return redirect()->back();
+                    DB::commit();
+                } catch (\Exception $e) {
+                    DB::rollBack();
+                    Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
+                        ->warning()
+                        ->autoDismiss(10);
+                    return redirect()->back();
 
-                //     // return $e;
-                // }
+                    // return $e;
+                }
             } else {
                 // KARENA DATA BARU TRANSAKSI BARU CUMA SATU
                 $transaksi = \App\Models\LombaTransaksi::where('pendaftaran_id', $cek_peserta->id)->latest()->first();

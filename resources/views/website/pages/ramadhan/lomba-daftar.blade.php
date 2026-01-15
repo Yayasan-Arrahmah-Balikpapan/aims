@@ -49,10 +49,11 @@
                             placeholder="Masukkan Nomor : 08123456xxxx" required />
                     </div>
                 </div>
-                <div class="flex items-center justify-end ">
-                    <div class="text-sm text-gray-500">
-                        Contoh : 08123456789
-                    </div>
+                <div class="flex items-center justify-end text-sm text-gray-500">
+                    Contoh : 08123456789
+                </div>
+                <div class="flex items-center justify-end text-sm text-gray-500">
+                    * Perhatian !, Nomor harus sesuai
                 </div>
 
                 <x-splade-input id="name" type="text" name="name" :label="__('Nama Peserta')" required autofocus />
@@ -105,8 +106,11 @@
 
                 <hr class="my-4">
                 <h1 class="text-lg">Pilih Pendaftaran Jenis Lomba</h1>
-                <h1 class="text-sm mb-2 bg-red-300 p-1 rounded-md">Centang Bagian Kanan Setiap PIlihan Lomba</h1>
-                <h1 class="text-sm mb-2 bg-green-200 p-1 rounded-md">Boleh Pilih Lebih Dari Satu Lomba</h1>
+                <h1 class="text-sm mb-2 bg-red-200 p-2 rounded-md">
+                    * Lomba 1, 2, 3 Pilih Kategori Jika Memilih. <br>
+                    * Lomba 4, 5 Centang Bagian Kanan Jika Memilih.
+                </h1>
+                <h1 class="text-sm mb-2 bg-green-200 p-2 rounded-md">Boleh Pilih Lebih Dari Satu Lomba</h1>
                 <div class="">
                     <div class="relative overflow-x-auto border rounded-md mb-4">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
@@ -117,152 +121,113 @@
                                         Perlombaan
                                     </th>
                                     <th scope="col"
-                                        class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 text-center">
-                                        Pilihan
+                                        class="px-3 py-3 font-bold text-gray-600 text-center bg-gray-50 ">
+                                        Pilih
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA MENGGAMBAR & MEWARNAI A
-                                        <div class="text-gray-600 bg-blue-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 4-6 Tahun - Mewarnai
+                                    <td colspan="2" class="px-3 py-3 font-semibold text-gray-900">
+                                        1. LOMBA MENGGAMBAR & MEWARNAI
+                                        <div class="text-gray-600 bg-blue-50 font-medium p-2 mb-1 rounded-md">
+                                            A. Anak Usia 4-6 Tahun - Mewarnai <br>
+                                            B. Anak Usia 7-10 Tahun - Menggambar & Mewarnai
                                         </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
+                                                RP. 50.000,-
+                                            </div>
+                                            <a href="https://drive.google.com/file/d/1h0SFquNG1kPfw3X8CJh06jJbb-8NW_x7/view?usp=sharing" target="_blank" class="underline text-sm text-primary-700 mb-1 p-2">
+                                                * Info Juknis
+                                            </a>
                                         </div>
+
+
+                                        <x-splade-select name="pembayaran1" :label="__('Pilih Kategori')" >
+                                            <option value="1">A. Anak Usia 4-6 Tahun - Mewarnai</option>
+                                            <option value="2">B. Anak Usia 7-10 Tahun - Menggambar & Mewarnai</option>
+                                        </x-splade-select>
                                     </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
+                                    {{-- <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
                                         <input type="checkbox" v-model="form.pembayaran1" name="pembayaran1"
                                             class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                                         >
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA MENGGAMBAR & MEWARNAI B
-                                        <div class="text-gray-600 bg-blue-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 7-10 Tahun - Menggambar & Mewarnai
+                                    <td colspan="2" class="px-3 py-3 font-semibold text-gray-900">
+                                        2. LOMBA ADZAN & IQOMAH
+                                        <div class="text-gray-600 bg-green-50 font-medium p-2 mb-1 rounded-md">
+                                            A. Anak Usia 5-8 Tahun <br>
+                                            B. Anak Usia 9-12 Tahun <br>
+                                            C. Anak Usia 13-15 Tahun
                                         </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
+
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
+                                                RP. 50.000,-
+                                            </div>
+                                            <a href="https://drive.google.com/file/d/12iwen_CRSegM6HJVR8Wq9rJFpgwr7ddA/view?usp=sharing" target="_blank" class="underline text-sm text-primary-700 mb-1 p-2">
+                                                * Info Juknis
+                                            </a>
                                         </div>
+                                        <x-splade-select name="pembayaran2" :label="__('Pilih Kategori')" >
+                                            <option value="3">A. Anak Usia 5-8 Tahun</option>
+                                            <option value="4">B. Anak Usia 9-12 Tahun</option>
+                                            <option value="5">C. Anak Usia 13-15 Tahun</option>
+                                        </x-splade-select>
                                     </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran2" name="pembayaran2"
-                                            class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                        >
-                                    </td>
-                                </tr>
-                                <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA ADZAN & IQOMAH A
-                                        <div class="text-gray-600 bg-green-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 5-8 Tahun
-                                        </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
-                                        </div>
-                                    </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
+                                    {{-- <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
                                         <input type="checkbox" v-model="form.pembayaran3" name="pembayaran3"
                                             class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                                         >
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA ADZAN & IQOMAH B
-                                        <div class="text-gray-600 bg-green-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 9-12 Tahun
+                                    <td colspan="2" class="px-3 py-3 font-semibold text-gray-900">
+                                        3. LOMBA TAHFIDZ
+                                        <div class="text-gray-600 bg-yellow-50 font-medium p-2 mb-1 rounded-md">
+                                            A. Anak Usia 3-6 Tahun <br>
+                                            B. Anak Usia 7-10 Tahun <br>
+                                            C. Anak Usia 11-15 Tahun
                                         </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
+                                                RP. 50.000,-
+                                            </div>
+                                            <a href="https://drive.google.com/file/d/1dFb7MnYZb82N46qxOq4T6y1lxU1G1kA4/view?usp=sharing" target="_blank" class="underline text-sm text-primary-700 mb-1 p-2">
+                                                * Info Juknis
+                                            </a>
                                         </div>
+                                        <x-splade-select name="pembayaran3" :label="__('Pilih Kategori')" >
+                                            <option value="6">A. 3-6 Tahun</option>
+                                            <option value="7">B. 7-10 Tahun</option>
+                                            <option value="8">C. 11-15 Tahun</option>
+                                        </x-splade-select>
                                     </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran4" name="pembayaran4"
-                                            class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                        >
-                                    </td>
-                                </tr>
-                                <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA ADZAN & IQOMAH C
-                                        <div class="text-gray-600 bg-green-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 13-15 Tahun
-                                        </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
-                                        </div>
-                                    </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran5" name="pembayaran5"
-                                            class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                        >
-                                    </td>
-                                </tr>
-                                <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA TAHFIDZ A
-                                        <div class="text-gray-600 bg-yellow-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 3-6 Tahun
-                                        </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
-                                        </div>
-                                    </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
+                                    {{-- <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
                                         <input type="checkbox" v-model="form.pembayaran6" name="pembayaran6"
                                             class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                                         >
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 <tr class="border-b text-sm border-gray-200 0">
                                     <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA TAHFIDZ B
-                                        <div class="text-gray-600 bg-yellow-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 7-10 Tahun
-                                        </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
-                                        </div>
-                                    </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran7" name="pembayaran7"
-                                            class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                        >
-                                    </td>
-                                </tr>
-                                <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA TAHFIDZ C
-                                        <div class="text-gray-600 bg-yellow-50 font-medium p-1 mb-1 rounded-md">
-                                            Anak Usia 11-15 Tahun
-                                        </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 50.000,-
-                                        </div>
-                                    </td>
-                                    <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran8" name="pembayaran8"
-                                            class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                        >
-                                    </td>
-                                </tr>
-                                <tr class="border-b text-sm border-gray-200 0">
-                                    <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA CERDAS CERMAT (Per-Kelompok)
-                                        <div class="text-gray-600 bg-red-50 font-medium p-1 mb-1 rounded-md">
+                                        4. LOMBA CERDAS CERMAT SD (Per-Kelompok)
+                                        <div class="text-gray-600 bg-red-50 font-medium p-2 mb-1 rounded-md">
                                             Kategori SD Kelas 4-6
                                         </div>
                                         <div id="formsd" class="" v-show="form.pembayaran9">
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasd1" :label="__('Nama Peserta 1')"/>
-                                                <x-splade-input type="text" name="asalsekolahsd1" :label="__('Asal Sekolah Peserta 1')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasd1" :label="__('Asal Sekolah Peserta 1')"/>
                                                 <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasd1" :label="__('Kelas Peserta 1')"/>
+                                                    <x-splade-select name="kelaspesertasd1" :label="__('Kelas Peserta 1')" >
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasd1" :label="__('Jenis Peserta 1')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -271,9 +236,13 @@
                                             </div>
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasd2" :label="__('Nama Peserta 2')"/>
-                                                <x-splade-input type="text" name="asalsekolahsd2" :label="__('Asal Sekolah Peserta 2')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasd2" :label="__('Asal Sekolah Peserta 2')"/>
                                                 <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasd2" :label="__('Kelas Peserta 2')"/>
+                                                    <x-splade-select name="kelaspesertasd2" :label="__('Kelas Peserta 2')" >
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasd2" :label="__('Jenis Peserta 2')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -282,9 +251,13 @@
                                             </div>
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasd3" :label="__('Nama Peserta 3')"/>
-                                                <x-splade-input type="text" name="asalsekolahsd3" :label="__('Asal Sekolah Peserta 3')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasd3" :label="__('Asal Sekolah Peserta 3')"/>
                                                 <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasd3" :label="__('Kelas Peserta 3')"/>
+                                                    <x-splade-select name="kelaspesertasd3" :label="__('Kelas Peserta 3')" >
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasd3" :label="__('Jenis Peserta 3')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -292,8 +265,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 100.000,-
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
+                                                RP. 100.000,-
+                                            </div>
+                                            <a href="https://drive.google.com/file/d/1L_ixrZZRFGlJQGy4cGwoo3yO-Fxi8KoJ/view?usp=sharing" target="_blank" class="underline text-sm text-primary-700 mb-1 p-2">
+                                                * Info Juknis
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
@@ -304,16 +282,20 @@
                                 </tr>
                                 <tr class="border-b text-sm border-gray-200 0">
                                     <td class="px-3 py-3 font-semibold text-gray-900">
-                                        LOMBA CERDAS CERMAT (Per-Kelompok)
-                                        <div class="text-gray-600 bg-red-50 font-medium p-1 mb-1 rounded-md">
+                                        5. LOMBA CERDAS CERMAT SMP (Per-Kelompok)
+                                        <div class="text-gray-600 bg-red-50 font-medium p-2 mb-1 rounded-md">
                                             Kategori SMP Kelas 7-9
                                         </div>
                                         <div id="formsmp" class="" v-show="form.pembayaran10">
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasmp1" :label="__('Nama Peserta 1')"/>
-                                                <x-splade-input type="text" name="asalsekolahsmp1" :label="__('Asal Sekolah Peserta 1')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasmp1" :label="__('Asal Sekolah Peserta 1')"/>
                                                 <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasmp1" :label="__('Kelas Peserta 1')"/>
+                                                    <x-splade-select name="kelaspesertasmp1" :label="__('Kelas Peserta 1')" >
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasmp1" :label="__('Jenis Peserta 1')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -322,9 +304,13 @@
                                             </div>
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasmp2" :label="__('Nama Peserta 2')"/>
-                                                <x-splade-input type="text" name="asalsekolahsmp2" :label="__('Asal Sekolah Peserta 2')"/>
-                                                <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasmp2" :label="__('Kelas Peserta 2')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasmp2" :label="__('Asal Sekolah Peserta 2')"/>
+                                                    <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-select name="kelaspesertasmp2" :label="__('Kelas Peserta 2')" >
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasmp2" :label="__('Jenis Peserta 2')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -333,9 +319,13 @@
                                             </div>
                                             <div class="border rounded-md p-2">
                                                 <x-splade-input type="text" name="namapesertasmp3" :label="__('Nama Peserta 3')"/>
-                                                <x-splade-input type="text" name="asalsekolahsmp3" :label="__('Asal Sekolah Peserta 3')"/>
+                                                <x-splade-input type="text" name="asalsekolahpesertasmp3" :label="__('Asal Sekolah Peserta 3')"/>
                                                 <div class="mb-1 grid grid-cols-2 gap-1">
-                                                    <x-splade-input type="text" name="kelaspesertasmp3" :label="__('Kelas Peserta 3')"/>
+                                                    <x-splade-select name="kelaspesertasmp3" :label="__('Kelas Peserta 3')" >
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                    </x-splade-select>
                                                     <x-splade-select name="jenispesertasmp3" :label="__('Jenis Peserta 3')" >
                                                         <option value="ikhwan">Ikhwan / Laki-laki</option>
                                                         <option value="akhwat">Akhwat / Perempuan</option>
@@ -343,8 +333,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
-                                            RP. 100.000,-
+                                        <div class="flex items-center justify-between">
+                                            <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
+                                                RP. 100.000,-
+                                            </div>
+                                            <a href="https://drive.google.com/file/d/1L_ixrZZRFGlJQGy4cGwoo3yO-Fxi8KoJ/view?usp=sharing" target="_blank" class="underline text-sm text-primary-700 mb-1 p-2">
+                                                * Info Juknis
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
@@ -355,7 +350,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="bg-gray-100 text-xs font-medium text-gray-500 p-1 text-end">* Centang Jika Memilih</p>
+                        <p class="bg-gray-100 text-xs font-medium text-gray-500 p-1 text-end">* Lomba 4, 5 Centang Kotak Bagian Kanan Jika Memilih</p>
                     </div>
 
                 </div>
