@@ -170,7 +170,7 @@
                                             <div class="flex items-center justify-between mb-4">
                                                 <h1 class="text-xl mt-0 font-semibold text-gray-900 hover:underline dark:text-white">
                                                     @php
-                                                        $rekening = '45500000046';
+                                                        $rekening = '4550000046';
                                                         // if ($data->peserta->jenis_peserta == 'ikhwan') {
                                                         //     $rekening = '4550000015';
                                                         // } elseif ($data->peserta->jenis_peserta == 'akhwat') {

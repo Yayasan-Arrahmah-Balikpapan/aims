@@ -2,11 +2,11 @@
 
 @section('content')
 <main>
-    <section class="h-screen bg-[url('/assets/bg/bg-masjid-ramadhan.png')] relative overflow-hidden bg-no-repeat bg-contain bg-bottom bg-fixed">
+    <section class="h-[1000px] sm:h-screen bg-[url('/assets/bg/bg-masjid-ramadhan.png')] relative overflow-hidden bg-no-repeat bg-contain bg-bottom bg-fixed">
         <div class="absolute inset-0 bg-gradient-to-br from-[#ffebcd] via-amber-100 to-amber-200 opacity-75"></div>
         <div class="relative max-w-7xl pt-12 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="flex items-center justify-center mb-4">
-                <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-64 sm:h-32" alt="">
+                <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-40 sm:h-64" alt="">
             </div>
             <p class="text-lg sm:text-xl max-w-3xl mx-auto mb-8 leading-relaxed font-semibold text-gradient-to-r from-[#1d6a6a] to-primary-800">
                 Mari merayakan bulan suci Ramadhan dengan Yayasan Ar-Rahmah Balikpapan
@@ -23,19 +23,19 @@
             </div>
             <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-[#1d6a6a]">Lomba Islami</div>
+                    <div class="text-xl sm:text-3xl font-bold text-[#1d6a6a]">Lomba Islami</div>
                     <div class="text-sm text-gray-600">3-15 Tahun</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-[#1d6a6a]">Pawai</div>
+                    <div class="text-xl sm:text-3xl font-bold text-[#1d6a6a]">Pawai</div>
                     <div class="text-sm text-gray-600">Kegiatan</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-[#1d6a6a]">500+</div>
+                    <div class="text-xl sm:text-3xl font-bold text-[#1d6a6a]">500+</div>
                     <div class="text-sm text-gray-600">Peserta</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-[#1d6a6a]">100%</div>
+                    <div class="text-xl sm:text-3xl font-bold text-[#1d6a6a]">100%</div>
                     <div class="text-sm text-gray-600">Keberkahan</div>
                 </div>
             </div>
@@ -84,14 +84,24 @@
                         <time class="bg-[#1d6a6a] text-heading text-xs  font-medium px-1.5 py-0.5 rounded text-white border border-white">7,8,14,15 Februari 2026</time>
                         <h3 class="flex items-center mb-1 text-lg font-semibold text-heading my-2">Lomba-Lomba Anak
                             <span class="ms-2 bg-[#deaa37] border border-white text-white text-xs font-medium px-1.5 py-0.5 rounded">Untuk UMUM</span></h3>
-                        <p class="mb-4 text-body">Lomba Mewarnai, Lomba Adzan, Lomba Tahfizh. </p>
-                        <div class="flex items-center gap-4">
-                            <Link href="{{ route('website.ramadhan.lomba') }}" class="inline-flex items-center text-body bg-[#deaa37] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
+                        <p class="mb-4 text-body">Lomba Menggambar & Mewarnai, Lomba Adzan & Iqomah, Lomba Tahfidz, Lomba Cerdas Cermat Islami. </p>
+                        <div class="gap-4">
+                            <Link href="{{ route('website.ramadhan.lomba') }}" class="inline-flex items-center text-body bg-gradient-to-r from-[#d28f00] to-[#deaa37] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
                                 <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Zm-4 1h.01v.01H15V5Zm-2 2h.01v.01H13V7Zm2 2h.01v.01H15V9Zm-2 2h.01v.01H13V11Zm2 2h.01v.01H15V13Zm-2 2h.01v.01H13V15Zm2 2h.01v.01H15V17Zm-2 2h.01v.01H13V19Z"/></svg>
                                 Informasi
                             </Link>
-                            <Link href="{{ route('website.ramadhan.lomba.daftar') }}" class="inline-flex items-center text-body bg-[#1d6a6a] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
-                                Daftar Lomba <x-carbon-arrow-right class="w-4 h-4 ms-1" />
+                            <Link href="{{ route('website.ramadhan.lomba.daftar') }}">
+                                <div class="bg-gradient-to-r from-[#1d6a6a] to-primary-800 rounded-lg shadow-md p-2 mt-2" >
+                                    <div class="flex flex-row items-center justify-between">
+                                        <div class="flex-3/4">
+                                            <h3 class="text-white text-lg font-semibold">Daftar Lomba Sekarang!</h3>
+                                            <p class="text-white text-sm font-medium ">Klik Disini</p>
+                                        </div>
+                                        <div class="flex-1/4 flex justify-end">
+                                            <x-carbon-select-window class="h-8 w-8 text-white"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </Link>
                         </div>
 
@@ -140,7 +150,20 @@
                         </span>
                         <time class="bg-[#1d6a6a] text-heading text-xs font-medium px-1.5 py-0.5 rounded text-white border border-white">28 Februari, 1,7,8 Maret 2026</time>
                         <h3 class="my-2 text-lg font-semibold text-heading">Pesrom Anak-anak</h3>
-                        <p class="text-body">Pesantren Ramadhan untuk anak-anak dengan banyak kegiatan islami.</p>
+                        <p class="text-body">Pesantren Ramadhan untuk anak-anak ⁠minimal Usia 6 Tahun dengan banyak kegiatan islami seperti ⁠Memanah, ⁠Tahsin dan Tadarrus, Outbond Mabit, dll</p>
+                        <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSddF4ePb-o_8YnjIqH9GhwLUb8DjCzCxq0xcVj6LqsQn2tnNw/viewform">
+                            <div class="bg-gradient-to-r from-[#01afaf] to-[#deaa37] rounded-lg shadow-md p-2 mt-2" >
+                                <div class="flex flex-row items-center justify-between">
+                                    <div class="flex-3/4">
+                                        <h3 class="text-white text-lg font-semibold">Daftar Sekarang!</h3>
+                                        <p class="text-white text-sm font-medium ">Klik Disini</p>
+                                    </div>
+                                    <div class="flex-1/4 flex justify-end">
+                                        <x-carbon-select-window class="h-8 w-8 text-white"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </li>
                     <li class="mb-10 ms-6">
                         <span class="absolute flex items-center justify-center w-6 h-6 bg-[#deaa37] rounded-full -start-3">

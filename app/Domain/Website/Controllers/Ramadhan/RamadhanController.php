@@ -32,7 +32,7 @@ Ustadzah Widya
 wa.me/6285750223866
 
 Ustad Zaky
-wa.me/6285750223866
+wa.me/6281649329520
 
 Yayasan Arrahmah Balikpapan
     ";
