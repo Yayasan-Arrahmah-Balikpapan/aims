@@ -66,7 +66,7 @@ Yayasan Arrahmah Balikpapan
             ->openGraphUrl('arrahmahbalikpapan.or.id')
             ->openGraphImage(asset('/assets/img/logo-arrahmah.png'))
             ;
-        
+
         return view('website.pages.ramadhan.index');
     }
 
@@ -110,7 +110,7 @@ Yayasan Arrahmah Balikpapan
 
     public function lomba_daftar_store(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $donasi = 0;
         $pembayarandonasi = $request->input('pembayarandonasi') ? $request->input('pembayarandonasi') : 0;
         $pembayarandonasicustom = $request->input('pembayarandonasicustom') ? $request->input('pembayarandonasicustom') : 0;
@@ -173,12 +173,12 @@ Yayasan Arrahmah Balikpapan
                             'nomor_peserta'       => null,
                             'status'              => 'MENDAFTAR',
                             'biaya'               => 50000,
-                        ]); 
+                        ]);
                         }
                     }
 
                     if($request->input('pembayaran9') == '1') {
-                        $nominal_total = $nominal_total + 100000; 
+                        $nominal_total = $nominal_total + 100000;
                         $daftar_peserta_sd = \App\Models\LombaPendaftaran::create([
                             'peserta_id'          => $data_peserta->id,
                             'cabang_id'           => 9,
@@ -187,14 +187,24 @@ Yayasan Arrahmah Balikpapan
                             'biaya'               => 100000,
                         ]);
                         $nama_peserta_sd = $daftar_peserta_sd->data;
-                        $nama_peserta_sd['nama_1'] = $request->input('namapesertasd1');
-                        $nama_peserta_sd['nama_2'] = $request->input('namapesertasd2');
-                        $nama_peserta_sd['nama_3'] = $request->input('namapesertasd3');
+                        $nama_peserta_sd['9']['peserta_1']['nama'] = $request->input('namapesertasd1');
+                        $nama_peserta_sd['9']['peserta_2']['nama'] = $request->input('namapesertasd2');
+                        $nama_peserta_sd['9']['peserta_3']['nama'] = $request->input('namapesertasd3');
+                        $nama_peserta_sd['9']['peserta_1']['jenis'] = $request->input('jenispesertasd1');
+                        $nama_peserta_sd['9']['peserta_2']['jenis'] = $request->input('jenispesertasd2');
+                        $nama_peserta_sd['9']['peserta_3']['jenis'] = $request->input('jenispesertasd3');
+                        $nama_peserta_sd['9']['peserta_1']['asalsekolah'] = $request->input('asalsekolahpesertasd1');
+                        $nama_peserta_sd['9']['peserta_2']['asalsekolah'] = $request->input('asalsekolahpesertasd2');
+                        $nama_peserta_sd['9']['peserta_3']['asalsekolah'] = $request->input('asalsekolahpesertasd3');
+                        $nama_peserta_sd['9']['peserta_1']['kelas'] = $request->input('kelaspesertasd1');
+                        $nama_peserta_sd['9']['peserta_2']['kelas'] = $request->input('kelaspesertasd2');
+                        $nama_peserta_sd['9']['peserta_3']['kelas'] = $request->input('kelaspesertasd3');
+
                         $daftar_peserta_sd->data = $nama_peserta_sd;
                         $daftar_peserta_sd->save();
 
                     }elseif($request->input('pembayaran10') == '1') {
-                        $nominal_total = $nominal_total + 100000; 
+                        $nominal_total = $nominal_total + 100000;
                         $daftar_peserta_smp = \App\Models\LombaPendaftaran::create([
                             'peserta_id'          => $data_peserta->id,
                             'cabang_id'           => 10,
@@ -204,9 +214,18 @@ Yayasan Arrahmah Balikpapan
                         ]);
 
                         $nama_peserta_smp = $daftar_peserta_smp->data;
-                        $nama_peserta_smp['nama_1'] = $request->input('namapesertasmp1');
-                        $nama_peserta_smp['nama_2'] = $request->input('namapesertasmp2');
-                        $nama_peserta_smp['nama_3'] = $request->input('namapesertasmp3');
+                        $nama_peserta_smp['10']['peserta_1']['nama'] = $request->input('namapesertasmp1');
+                        $nama_peserta_smp['10']['peserta_2']['nama'] = $request->input('namapesertasmp2');
+                        $nama_peserta_smp['10']['peserta_3']['nama'] = $request->input('namapesertasmp3');
+                        $nama_peserta_smp['10']['peserta_1']['jenis'] = $request->input('jenispesertasmp1');
+                        $nama_peserta_smp['10']['peserta_2']['jenis'] = $request->input('jenispesertasmp2');
+                        $nama_peserta_smp['10']['peserta_3']['jenis'] = $request->input('jenispesertasmp3');
+                        $nama_peserta_smp['10']['peserta_1']['asalsekolah'] = $request->input('asalsekolahpesertasmp1');
+                        $nama_peserta_smp['10']['peserta_2']['asalsekolah'] = $request->input('asalsekolahpesertasmp2');
+                        $nama_peserta_smp['10']['peserta_3']['asalsekolah'] = $request->input('asalsekolahpesertasmp3');
+                        $nama_peserta_smp['10']['peserta_1']['kelas'] = $request->input('kelaspesertasmp1');
+                        $nama_peserta_smp['10']['peserta_2']['kelas'] = $request->input('kelaspesertasmp2');
+                        $nama_peserta_smp['10']['peserta_3']['kelas'] = $request->input('kelaspesertasmp3');
                         $daftar_peserta_smp->data = $nama_peserta_smp;
                         $daftar_peserta_smp->save();
                     }

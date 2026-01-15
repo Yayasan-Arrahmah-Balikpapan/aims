@@ -257,17 +257,47 @@
                                         <div class="text-gray-600 bg-red-50 font-medium p-1 mb-1 rounded-md">
                                             Kategori SD Kelas 4-6
                                         </div>
-                                        <div class="">
-                                            <x-splade-input type="text" name="namapesertasd1" :label="__('Nama Peserta 1')"/>
-                                            <x-splade-input type="text" name="namapesertasd2" :label="__('Nama Peserta 2')"/>
-                                            <x-splade-input type="text" name="namapesertasd3" :label="__('Nama Peserta 3')"/>
+                                        <div id="formsd" class="" v-show="form.pembayaran9">
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasd1" :label="__('Nama Peserta 1')"/>
+                                                <x-splade-input type="text" name="asalsekolahsd1" :label="__('Asal Sekolah Peserta 1')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasd1" :label="__('Kelas Peserta 1')"/>
+                                                    <x-splade-select name="jenispesertasd1" :label="__('Jenis Peserta 1')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasd2" :label="__('Nama Peserta 2')"/>
+                                                <x-splade-input type="text" name="asalsekolahsd2" :label="__('Asal Sekolah Peserta 2')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasd2" :label="__('Kelas Peserta 2')"/>
+                                                    <x-splade-select name="jenispesertasd2" :label="__('Jenis Peserta 2')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasd3" :label="__('Nama Peserta 3')"/>
+                                                <x-splade-input type="text" name="asalsekolahsd3" :label="__('Asal Sekolah Peserta 3')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasd3" :label="__('Kelas Peserta 3')"/>
+                                                    <x-splade-select name="jenispesertasd3" :label="__('Jenis Peserta 3')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
                                             RP. 100.000,-
                                         </div>
                                     </td>
                                     <td class="px-3 py-3 font-semibold text-gray-900 flex justify-center items-center">
-                                        <input type="checkbox" v-model="form.pembayaran9" name="pembayaran9"
+                                        <input id="inputformsd" type="checkbox" v-model="form.pembayaran9" name="pembayaran9"
                                             class="w-6 h-6 rounded border-gray-500 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
                                         >
                                     </td>
@@ -278,10 +308,40 @@
                                         <div class="text-gray-600 bg-red-50 font-medium p-1 mb-1 rounded-md">
                                             Kategori SMP Kelas 7-9
                                         </div>
-                                        <div class="">
-                                            <x-splade-input type="text" name="namapesertasmp1" :label="__('Nama Peserta 1')"/>
-                                            <x-splade-input type="text" name="namapesertasmp2" :label="__('Nama Peserta 2')"/>
-                                            <x-splade-input type="text" name="namapesertasmp3" :label="__('Nama Peserta 3')"/>
+                                        <div id="formsmp" class="" v-show="form.pembayaran10">
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasmp1" :label="__('Nama Peserta 1')"/>
+                                                <x-splade-input type="text" name="asalsekolahsmp1" :label="__('Asal Sekolah Peserta 1')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasmp1" :label="__('Kelas Peserta 1')"/>
+                                                    <x-splade-select name="jenispesertasmp1" :label="__('Jenis Peserta 1')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasmp2" :label="__('Nama Peserta 2')"/>
+                                                <x-splade-input type="text" name="asalsekolahsmp2" :label="__('Asal Sekolah Peserta 2')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasmp2" :label="__('Kelas Peserta 2')"/>
+                                                    <x-splade-select name="jenispesertasmp2" :label="__('Jenis Peserta 2')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
+                                            <div class="border rounded-md p-2">
+                                                <x-splade-input type="text" name="namapesertasmp3" :label="__('Nama Peserta 3')"/>
+                                                <x-splade-input type="text" name="asalsekolahsmp3" :label="__('Asal Sekolah Peserta 3')"/>
+                                                <div class="mb-1 grid grid-cols-2 gap-1">
+                                                    <x-splade-input type="text" name="kelaspesertasmp3" :label="__('Kelas Peserta 3')"/>
+                                                    <x-splade-select name="jenispesertasmp3" :label="__('Jenis Peserta 3')" >
+                                                        <option value="ikhwan">Ikhwan / Laki-laki</option>
+                                                        <option value="akhwat">Akhwat / Perempuan</option>
+                                                    </x-splade-select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="font-base text-md text-gray-700 border border-gray-500 rounded-md inline-block p-1">
                                             RP. 100.000,-
@@ -297,7 +357,7 @@
                         </table>
                         <p class="bg-gray-100 text-xs font-medium text-gray-500 p-1 text-end">* Centang Jika Memilih</p>
                     </div>
-                    
+
                 </div>
                 <hr>
                 <div class="my-4 bg-stone-100 p-4 rounded-lg font-semibold">
