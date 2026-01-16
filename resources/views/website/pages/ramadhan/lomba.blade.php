@@ -39,7 +39,9 @@
             <div class="w-full">
                 <div class="bg-blue-50 rounded-lg shadow-sm p-4 text-left hover:shadow-lg hover:-translate-y-1 transform transition">
                     <div class="flex items-center">
-                        <x-carbon-pen-fountain class="h-6 w-6 text-[#1d6a6a] mr-4"/>
+                        <div class="bg-gradient-to-b from-[#01afaf] to-[#1d6a6a] rounded-md p-2 mr-4">
+                            <x-carbon-pen-fountain class="h-4 w-4 text-white "/>
+                        </div>
                         <h3 class="text-xl font-semibold text-[#1d6a6a]">LOMBA MENGGAMBAR & MEWARNAI</h3>
                     </div>
                     <hr class="my-2">
@@ -48,23 +50,26 @@
                         <p>Kategori B. Anak Usia 7-10 Tahun - Menggambar & Mewarnai</p>
                     </div>
                     <div class="text-md bg-white text-gray-600 font-semibold p-2 rounded-md">
-                        <p>Infaq Lomba adalah sebesar Rp. 50.000,- /peserta</p>
+                        <p>Infaq Lomba Rp. 50.000,- /peserta</p>
                     </div>
                     <div class="inline-block text-sm bg-slate-200 text-gray-600 font-medium p-2 rounded-md mt-2">
                         ** Usia ditentukan pertanggal 20 Januari 2026
                     </div>
 
-                    <div class="bg-white border rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
+                    <a target="_blank" href="https://drive.google.com/file/d/1h0SFquNG1kPfw3X8CJh06jJbb-8NW_x7/view?usp=sharing"
+                        class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
                         <h2 class="text-md font-semibold text-[#1d6a6a] mr-5">Petunjuk Teknis</h2>
-                        <x-carbon-document-download class="inline h-5 w-5 text-gray-700"/>
-                    </div>
+                        <x-carbon-document-download class="inline h-5 w-5 text-[#1d6a6a]"/>
+                    </a>
                 </div>
             </div>
             <hr class="border-white">
             <div class="w-full">
                 <div class="bg-green-50 rounded-lg shadow-sm p-4 text-left hover:shadow-lg hover:-translate-y-1 transform transition">
                     <div class="flex items-center">
-                        <x-carbon-draggable class="h-6 w-6 text-[#1d6a6a] mr-4"/>
+                        <div class="bg-gradient-to-b from-[#01afaf] to-[#1d6a6a] rounded-md p-2 mr-4">
+                            <x-carbon-tree class="h-4 w-4 text-white "/>
+                        </div>
                         <h3 class="text-xl font-semibold text-[#1d6a6a]">LOMBA ADZAN & IQOMAH</h3>
                     </div>
                     <hr class="my-2">
@@ -74,23 +79,26 @@
                         <p>Kategori C. Anak Usia 13-15 Tahun</p>
                     </div>
                     <div class="text-md bg-white text-gray-600 font-semibold p-2 rounded-md">
-                        <p>Infaq Lomba adalah sebesar Rp. 50.000,- /peserta</p>
+                        <p>Infaq Lomba Rp. 50.000,- /peserta</p>
                     </div>
                     <div class="inline-block text-sm bg-slate-200 text-gray-600 font-medium p-2 rounded-md mt-2">
                         ** Usia ditentukan pertanggal 20 Januari 2026
                     </div>
 
-                    <div class="bg-white border rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
+                    <a target="_blank" href="https://drive.google.com/file/d/12iwen_CRSegM6HJVR8Wq9rJFpgwr7ddA/view?usp=sharing"
+                        class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
                         <h2 class="text-md font-semibold text-[#1d6a6a] mr-5">Petunjuk Teknis</h2>
-                        <x-carbon-document-download class="inline h-5 w-5 text-gray-700"/>
-                    </div>
+                        <x-carbon-document-download class="inline h-5 w-5 text-[#1d6a6a]"/>
+                    </a>
                 </div>
             </div>
             <hr class="border-white">
             <div class="w-full">
                 <div class="bg-yellow-50 rounded-lg shadow-sm p-4 text-left hover:shadow-lg hover:-translate-y-1 transform transition">
                     <div class="flex items-center">
-                        <x-carbon-pen-fountain class="h-6 w-6 text-[#1d6a6a] mr-4"/>
+                        <div class="bg-gradient-to-b from-[#01afaf] to-[#1d6a6a] rounded-md p-2 mr-4">
+                            <x-carbon-ibm-planning-analytics class="h-4 w-4 text-white "/>
+                        </div>
                         <h3 class="text-xl font-semibold text-[#1d6a6a]">LOMBA TAHFIDZ</h3>
                     </div>
                     <hr class="my-2">
@@ -100,23 +108,26 @@
                         <p>Kategori C. Anak Usia 11-15 Tahun</p>
                     </div>
                     <div class="text-md bg-white text-gray-600 font-semibold p-2 rounded-md">
-                        <p>Infaq Lomba adalah sebesar Rp. 50.000,- /peserta</p>
+                        <p>Infaq Lomba Rp. 50.000,- /peserta</p>
                     </div>
                     <div class="inline-block text-sm bg-slate-200 text-gray-600 font-medium p-2 rounded-md mt-2">
                         ** Usia ditentukan pertanggal 20 Januari 2026
                     </div>
 
-                    <div class="bg-white border rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
+                    <a target="_blank" href="https://drive.google.com/file/d/1dFb7MnYZb82N46qxOq4T6y1lxU1G1kA4/view?usp=sharing"
+                        class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
                         <h2 class="text-md font-semibold text-[#1d6a6a] mr-5">Petunjuk Teknis</h2>
-                        <x-carbon-document-download class="inline h-5 w-5 text-gray-700"/>
-                    </div>
+                        <x-carbon-document-download class="inline h-5 w-5 text-[#1d6a6a]"/>
+                    </a>
                 </div>
             </div>
             <hr class="border-white">
             <div class="w-full">
                 <div class="bg-red-50 rounded-lg shadow-sm p-4 text-left hover:shadow-lg hover:-translate-y-1 transform transition">
                     <div class="flex items-center">
-                        <x-carbon-pen-fountain class="h-6 w-6 text-[#1d6a6a] mr-4"/>
+                        <div class="bg-gradient-to-b from-[#01afaf] to-[#1d6a6a] rounded-md p-2 mr-4">
+                            <x-carbon-ibm-api-connect class="h-4 w-4 text-white "/>
+                        </div>
                         <h3 class="text-xl font-semibold text-[#1d6a6a]">LOMBA CERDAS CERMAT</h3>
                     </div>
                     <hr class="my-2">
@@ -126,22 +137,24 @@
                         <p>Kategori SMP Kelas 7-9</p>
                     </div>
                     <div class="text-md bg-white text-gray-600 font-semibold p-2 rounded-md">
-                        <p>Infaq Lomba adalah sebesar Rp. 100.000,- /kelompok</p>
+                        <p>Infaq Lomba Rp. 100.000,- /kelompok</p>
                     </div>
                     <div class="inline-block text-sm bg-slate-200 text-gray-600 font-medium p-2 rounded-md mt-2">
                         ** Usia ditentukan pertanggal 20 Januari 2026
                     </div>
 
-                    <div class="bg-white border rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
+                    <a target="_blank" href="https://drive.google.com/file/d/1L_ixrZZRFGlJQGy4cGwoo3yO-Fxi8KoJ/view?usp=sharing"
+                        class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full sm:w-1/3">
                         <h2 class="text-md font-semibold text-[#1d6a6a] mr-5">Petunjuk Teknis</h2>
-                        <x-carbon-document-download class="inline h-5 w-5 text-gray-700"/>
-                    </div>
+                        <x-carbon-document-download class="inline h-5 w-5 text-[#1d6a6a]"/>
+                    </a>
+
                 </div>
             </div>
             <hr class="border-white">
             <div class="max-w-xl mx-auto w-full">
                 <Link href="{{ route('website.ramadhan.lomba.daftar') }}">
-                    <div class="bg-[#1d6a6a] rounded-lg shadow-md p-4" >
+                    <div class="bg-gradient-to-r from-[#1d6a6a] to-primary-800 rounded-lg shadow-md p-4" >
                         <div class="flex flex-row items-center justify-between">
                             <div class="flex-3/4">
                                 <h3 class="text-white text-lg font-semibold">Daftar Lomba Sekarang!</h3>

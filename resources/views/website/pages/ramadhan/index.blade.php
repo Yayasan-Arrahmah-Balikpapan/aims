@@ -12,7 +12,7 @@
                 Mari merayakan bulan suci Ramadhan dengan Yayasan Ar-Rahmah Balikpapan
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a href="#kegiatan" class="p-2 rounded-md flex items-center bg-gradient-to-r bg-[#deaa37] text-white shadow-lg shadow-amber-200">
+                <a href="#kegiatan" class="p-2 rounded-md flex items-center bg-gradient-to-b from-[#deaa37] to-[#feb10a] text-white shadow-lg shadow-amber-200">
                     <x-carbon-calendar class="w-5 h-5 mr-2" />
                     Lihat Jadwal Kegiatan
                 </a>
@@ -86,7 +86,7 @@
                             <span class="ms-2 bg-[#deaa37] border border-white text-white text-xs font-medium px-1.5 py-0.5 rounded">Untuk UMUM</span></h3>
                         <p class="mb-4 text-body">Lomba Menggambar & Mewarnai, Lomba Adzan & Iqomah, Lomba Tahfidz, Lomba Cerdas Cermat Islami. </p>
                         <div class="gap-4">
-                            <Link href="{{ route('website.ramadhan.lomba') }}" class="inline-flex items-center text-body bg-gradient-to-r from-[#d28f00] to-[#deaa37] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
+                            <Link href="{{ route('website.ramadhan.lomba') }}" class="inline-flex items-center text-body bg-gradient-to-b from-[#deaa37] to-[#feb10a] text-white box-border border border-white rounded-md hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 text-sm px-4 py-2.5 focus:outline-none">
                                 <svg class="w-4 h-4 me-1.5 -ms-0.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Zm-4 1h.01v.01H15V5Zm-2 2h.01v.01H13V7Zm2 2h.01v.01H15V9Zm-2 2h.01v.01H13V11Zm2 2h.01v.01H15V13Zm-2 2h.01v.01H13V15Zm2 2h.01v.01H15V17Zm-2 2h.01v.01H13V19Z"/></svg>
                                 Informasi
                             </Link>
@@ -206,8 +206,10 @@
                         <p class="text-white">Transfer Rekening atau Langsung QRIS</p>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-4 rounded-md border border-gray-300 bg-[#deaa37] flex flex-col items-center justify-center">
-                            <img src="{{ asset('assets/pembayaran/bsi.png') }}" class="mb-4" alt="">
+                        <div class="p-4 rounded-lg bg-gradient-to-b from-[#deaa37] to-[#feb10a] flex flex-col items-center justify-center">
+                            <div class="bg-white p-2 rounded-md">
+                                <img src="{{ asset('assets/pembayaran/bsi.png') }}" class="h-10" alt="">
+                            </div>
                             <div class="text-xl font-bold text-white">556-778-0001</div>
                             <div class="text-xl font-bold text-white">AN. MASJID ARRAHMAH</div>
                             <div class="text-sm text-white font-semibold">Kode Tambahan 3 Digit Terakhir</div>
@@ -219,7 +221,7 @@
                                 <li>Kebersihan, Fasilitas, dll : 555</li>
                             </ul>
                         </div>
-                        <div class="p-4 rounded-md border border-gray-300 bg-[#deaa37] flex flex-col items-center justify-center">
+                        <div class="p-4 rounded-lg bg-gradient-to-b from-[#deaa37] to-[#feb10a] flex flex-col items-center justify-center">
                             <img src="{{ asset('assets/img/qris-ramadhan.png') }}" class="h-52" alt="">
                             <div class="text-xl font-bold text-white">RAMADHAN ARRAHMAH</div>
                             <div class="text-sm text-gray-100">NMID : ID2021139744449A01</div>
@@ -234,12 +236,12 @@
         <div class="relative max-w-4xl pt-12 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-[#1d6a6a]">Yang Sering Ditanyakan</h2>
             <div class="grid grid-cols-1 gap-6 pt-6">
-                <div class="bg-[#deaa37] p-4 rounded-md">
-                    <h3 class="text-lg font-bold text-[#1d6a6a]">Q: Apa tujuan dari program Ramadhan Arrahmah?</h3>
+                <div class="bg-gradient-to-b from-[#deaa37] to-[#feb10a] p-4 rounded-md">
+                    <h3 class="text-lg font-bold text-white">Q: Apa tujuan dari program Ramadhan Arrahmah?</h3>
                     <p class="text-sm text-white">A: Program Ramadhan Arrahmah bertujuan untuk memberikan kesempatan kepada masyarakat untuk mengenalakan potensi diri dalam berbagai bidang kehidupan.</p>
                 </div>
-                <div class="bg-[#deaa37] p-4 rounded-md">
-                    <h3 class="text-lg font-bold text-[#1d6a6a]">Q: Siapa yang harus saya lakukan untuk mengikuti program Ramadhan Arrahmah?</h3>
+                <div class="bg-gradient-to-b from-[#deaa37] to-[#feb10a] p-4 rounded-md">
+                    <h3 class="text-lg font-bold text-white">Q: Siapa yang harus saya lakukan untuk mengikuti program Ramadhan Arrahmah?</h3>
                     <p class="text-sm text-white">A: Anda harus melakukan pendaftaran melalui form yang telah disediakan.</p>
                 </div>
             </div>

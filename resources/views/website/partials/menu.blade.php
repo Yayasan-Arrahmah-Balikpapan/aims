@@ -28,7 +28,7 @@
         </li>
         <li>
             <x-website.nav :href="route('website.lttq')" :active="request()->routeIs('website.lttq')">
-                Pendidikan LTTQ
+                Pendidikan
             </x-website.nav>
         </li>
         <li>
@@ -54,6 +54,11 @@
                 Quranic Camp 🏕️
             </x-website.nav>
         </li> --}}
+        <li>
+            <x-website.nav :href="route('website.ramadhan')" :active="request()->routeIs('website.ramadhan')">
+                Ramadhan ☪️
+            </x-website.nav>
+        </li>
     </ul>
     @auth
         <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 sm:hidden">
