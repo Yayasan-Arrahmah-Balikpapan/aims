@@ -145,6 +145,7 @@
 
 
                                         <x-splade-select name="pembayaran1" :label="__('Pilih Kategori')" >
+                                            <option value="">-</option>
                                             <option value="1">A. Anak Usia 4-6 Tahun - Mewarnai</option>
                                             <option value="2">B. Anak Usia 7-10 Tahun - Menggambar & Mewarnai</option>
                                         </x-splade-select>
@@ -173,6 +174,7 @@
                                             </a>
                                         </div>
                                         <x-splade-select name="pembayaran2" :label="__('Pilih Kategori')" >
+                                            <option value="">-</option>
                                             <option value="3">A. Anak Usia 5-8 Tahun</option>
                                             <option value="4">B. Anak Usia 9-12 Tahun</option>
                                             <option value="5">C. Anak Usia 13-15 Tahun</option>
@@ -201,6 +203,7 @@
                                             </a>
                                         </div>
                                         <x-splade-select name="pembayaran3" :label="__('Pilih Kategori')" >
+                                            <option value="">-</option>
                                             <option value="6">A. 3-6 Tahun</option>
                                             <option value="7">B. 7-10 Tahun</option>
                                             <option value="8">C. 11-15 Tahun</option>
