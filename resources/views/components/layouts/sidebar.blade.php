@@ -28,10 +28,13 @@
                 {{-- @if (Request::is('super-admin*'))
                     <x-layouts.sidebar.super-admin />
                 @endif--}}
+
                 @if (Request::is('super-admin*'))
                     <x-layouts.sidebar.super-admin />
                 @endif
-                @if (Request::is('dashboard/admin*'))
+                @if (Request::is('dashboard/admin-ramadhan*'))
+                    <x-layouts.sidebar.admin-ramadhan/>
+                @elseif (Request::is('dashboard/admin*'))
                     <x-layouts.sidebar.admin :unit="$unit ?? null"/>
                 @endif
                 @if (Request::is('dashboard/pengajar*'))
@@ -52,6 +55,7 @@
                 @if (Request::is('dashboard/keuangan*'))
                     <x-layouts.sidebar.keuangan/>
                 @endif
+
                 {{-- @role('ketua-divisi-pendidikan')
                     <x-layouts.sidebar.ketua-divisi-pendidikan />
                 @role('ketua-divisi-dkm')

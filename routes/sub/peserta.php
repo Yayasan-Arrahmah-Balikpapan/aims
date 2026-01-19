@@ -31,3 +31,8 @@ Route::get('/riwayat-pembayaran', [DashboardController::class, 'peserta_riwayat_
 Route::get('/pembayaran/pilih-peserta', [\App\Http\Controllers\Peserta\PembayaranController::class, 'pembayaran_pilih_peserta'])->name('dashboard.peserta.pembayaran.pilih-peserta');
 Route::get('/pembayaran/form/{uuid}', [\App\Http\Controllers\Peserta\PembayaranController::class, 'pembayaran_form'])->name('dashboard.peserta.pembayaran.form');
 Route::post('/pembayaran/form/{uuid}', [\App\Http\Controllers\Peserta\PembayaranController::class, 'pembayaran_form_store'])->name('dashboard.peserta.pembayaran.form.store');
+
+
+
+#RAMADHAN
+Route::get('/ramadhan', [\App\Http\Controllers\Peserta\Ramadhan\DashboardRamadhanController::class, 'index'])->name('dashboard.peserta.ramadhan.index');

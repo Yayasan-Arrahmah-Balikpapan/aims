@@ -82,6 +82,8 @@
     {{ url('/dashboard/karyawan') }}
 @elseif ($role === 'hrd')
     {{ url('/dashboard/hrd') }}
+@elseif ($role === 'admin-ramadhan')
+    {{ url('/dashboard/admin-ramadhan') }}
 @else
     {{ url('/dashboard') }}
 @endif

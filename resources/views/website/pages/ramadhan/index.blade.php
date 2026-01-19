@@ -2,7 +2,7 @@
 
 @section('content')
 <main>
-    <section class="h-[1000px] sm:h-screen bg-[url('/assets/bg/bg-masjid-ramadhan.png')] relative overflow-hidden bg-no-repeat bg-contain bg-bottom bg-fixed">
+    <section class="h-screen bg-[url('/assets/bg/bg-masjid-ramadhan.png')] relative overflow-hidden bg-no-repeat bg-contain bg-bottom bg-fixed">
         <div class="absolute inset-0 bg-gradient-to-br from-[#ffebcd] via-amber-100 to-amber-200 opacity-75"></div>
         <div class="relative max-w-7xl pt-12 mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="flex items-center justify-center mb-4">
