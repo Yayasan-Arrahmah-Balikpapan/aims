@@ -300,6 +300,7 @@ Yayasan Arrahmah Balikpapan
 
     public function lomba_invoice_store($uuid, Request $request)
     {
+        // dd(session()->get('invoice.buktitransfer'));
         $buktitransfer     = session()->get('invoice.buktitransfer');
         if (!$buktitransfer) {
             Toast::title('Anda Belum Upload Bukti Transfer !')
@@ -313,10 +314,9 @@ Yayasan Arrahmah Balikpapan
 
                     $data_pembayaran = $transaksi->data_pembayaran;
                     $data_pembayaran['bukti_transfer'] = $buktitransfer;
-                    $transaksi->update([
-                        'data_pembayaran' => $data_pembayaran,
-                        'status' => 2
-                    ]);
+                    $transaksi->data_pembayaran = $data_pembayaran;
+                    $transaksi->status = 2;
+                    $transaksi->save();
 
                     DB::commit();
                     Toast::title('Upload Bukti Transfer Berhasil !')

@@ -42,10 +42,9 @@ class InvoiceLttqController extends Controller
 
                     $data_pembayaran = $transaksi->data_pembayaran;
                     $data_pembayaran['bukti_transfer'] = $buktitransfer;
-                    $transaksi->update([
-                        'data_pembayaran' => $data_pembayaran,
-                        'status' => 2
-                    ]);
+                    $transaksi->data_pembayaran = $data_pembayaran;
+                    $transaksi->status = 2;
+                    $transaksi->save();
 
                     DB::commit();
                     Toast::title('Upload Bukti Transfer Berhasil !')
