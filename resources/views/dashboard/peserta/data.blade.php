@@ -38,7 +38,9 @@
                         @forelse ($data_peserta as $item)
                             <li class="p-2 sm:p-4 border rounded-md bg-white">
                                 <div class="flex items-center justify-between uppercase ">
-                                    <span class="text-xs sm:text-[16px] font-semibold">{{ $item->nis_peserta }}</span>
+                                    <span class="text-xs sm:text-[16px] font-semibold">
+                                       Peserta {{ $item->periode->unit->nama }}
+                                    </span>
                                     <div class="text-[10px] sm:text-xs">
                                         Status :
                                         <span class="px-2 py-0 sm:py-1 ml-1 font-semibold rounded-xl
@@ -57,19 +59,16 @@
                                     <div class="flex-1 min-w-0 ms-4">
                                         <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}">
                                             <p class="text-md font-medium text-gray-900 uppercase">
-
-                                            </p>
-                                            <p class="text-md font-medium text-gray-900 uppercase">
-                                                    {{ $item->peserta->nama }}
+                                                {{ $item->peserta->nama }}
                                             </p>
                                             <p class="text-sm text-gray-500 uppercase">
-                                                {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
+                                                {{ $item->nis_peserta }}
                                             </p>
                                         </Link>
                                     </div>
-                                    <div class="hidden sm:block items-center text-base font-semibold text-gray-900">
+                                    <div class="items-center text-base font-semibold text-gray-900">
                                         <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}"
-                                            class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 border-primary-700 text-primary-700 bg-white">
+                                            class="text-sm flex font-semibold border rounded-lg sm:py-2.5 sm:px-5 px-3 py-1.5 border-primary-700 text-primary-700 bg-white">
                                             Lihat
                                         </Link>
                                     </div>

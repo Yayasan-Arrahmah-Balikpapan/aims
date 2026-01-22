@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="col-span-3 py-2">
+                        <li class="col-span-6 py-2">
                             <div class="flex items-center space-x-4">
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-normal text-gray-500 truncate ">

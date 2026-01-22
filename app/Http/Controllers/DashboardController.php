@@ -57,11 +57,20 @@ class DashboardController extends Controller
         $data_peserta_id = $data_peserta_paginate->pluck('id');
         $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
         $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
-            return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
+            return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit', 'pembayaran')
                             ->where('user_id', Auth::id())
                             ->latest()
                             ->paginate(10);
         });
+
+        // $key_data_pembayaran = 'data_pembayaran_dashboard_' . Auth::id();
+        // $data_pembayaran = Cache::remember($key_data_pembayaran, now()->addMinutes(10), function () use ($data_peserta_id) {
+        //     return \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)->get();
+        // });
+
+        // $data_biaya_periode = \App\Models\Biaya::whereIn('periode_id', $data_peserta_paginate->pluck('periode_id'))->get()->groupBy('periode_id');
+
+        // $data_pembayaran = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)->get()->toArray();
 
         $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(10), function () {
             return Peserta::where('user_id', Auth::id())->count();
@@ -88,6 +97,7 @@ class DashboardController extends Controller
             })
             ->toArray();
         // dd($data_absensi_peserta);
+        $data_transaksi = \App\Models\Transaksi::where('kelas_id', $data_peserta->id)->get();
 
         if (!$data_peserta) { abort(404); }
 
@@ -95,7 +105,7 @@ class DashboardController extends Controller
         $roles = $this->roleRepo->getData();
         $user  = $this->userRepo->findData($user->id);
 
-        return view('dashboard.peserta.peserta', compact('user', 'data_peserta', 'uuid', 'data_biaya', 'data_pembayaran_peserta', 'data_absensi_peserta'));
+        return view('dashboard.peserta.peserta', compact('user', 'data_peserta', 'uuid', 'data_biaya', 'data_pembayaran_peserta', 'data_absensi_peserta', 'data_transaksi'));
     }
 
     public function peserta_data(Request $request) {

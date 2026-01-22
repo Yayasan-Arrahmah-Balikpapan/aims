@@ -21,7 +21,7 @@
         </template>
 
         <template v-slot:tab-content-0>
-            <div class="bg-white">
+            <div class="bg-white pb-6">
                 <section class="max-w-7xl mx-auto bg-no-repeat bg-center bg-cover bg-primary-800 h-[160px] md:h-[275px] lg:h-[500px] mb-10"
                     style="background-image: url({{ asset('assets/banner-dashboard-1.png') }});">
                     <div class="p-4 sm:px-6 item-center gap-4">
@@ -44,8 +44,7 @@
                         </div>
                     </div>
                 </section>
-                <section class="max-w-7xl mx-auto bg-white text-center text-sm">
-                </section>
+
                 <section class="max-w-7xl mx-auto bg-white text-center text-sm">
                     <div class="grid grid-cols-4 gap-4 p-6">
                         <Link href="{{ route('website.lttq') }}" class="inline-flex flex-col items-center">
@@ -89,16 +88,36 @@
                             <span class="sm:font-bold font-semibold text-gray-800 ">Lainnya</span>
                         </div> --}}
                     </div>
-
-                    <div class="px-6 py-2">
-                        <div class="bg-primary-700 px-2 font-medium mx-4 rounded-md flex items-center justify-between text-white text-xs">
-                            Yayasan Ar Rahmah Balikpapan
-                            <x-carbon-chevron-right class="w-6 h-6 my-1" />
+                </section>
+                {{-- <section class="max-w-7xl mx-auto bg-white text-sm p-10">
+                    <div class="p-2 sm:p-4 rounded-md bg-amber-50 shadow-md">
+                        <div class="flex items-center">
+                            <div class="shrink-0 px-0 sm:px-4">
+                                <Link href="{{ route('dashboard.peserta.ramadhan.index') }}">
+                                    <img class="w-28 sm:w-32" src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" alt="Semarak Ramadhan">
+                                </Link>
+                            </div>
+                            <div class="flex-1 min-w-0 sm:ms-4 ms-2">
+                                <Link href="{{ route('dashboard.peserta.ramadhan.index') }}">
+                                    <p class="text-md font-medium text-[#1d6a6a] uppercase">
+                                        Program Ramadhan
+                                    </p>
+                                    <p class="text-sm text-gray-500 uppercase">
+                                        1447H / 2026
+                                    </p>
+                                </Link>
+                            </div>
+                            <div class="items-center text-base font-semibold ">
+                                <Link href="{{ route('dashboard.peserta.ramadhan.index') }}"
+                                    class="text-sm flex font-semibold rounded-lg sm:py-2.5 sm:px-5 px-3 py-1.5 text-[#1d6a6a] ">
+                                    <x-carbon-chevron-right class="w-6 h-6 my-1" />
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </section> --}}
             </div>
-            <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 bg-white text-sm">
+            {{-- <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 bg-white text-sm">
                 <h2 class="text-xl font-bold pb-2">Daftar</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Link href="{{ route('website.lttq.tahsin.pendaftaran') }}" class="grid grid-cols-2 border rounded-xl shadow-md ">
@@ -115,7 +134,7 @@
                         </div>
                     </Link>
                 </div>
-            </section>
+            </section> --}}
 
             @if ($user->getRoleNames()->isNotEmpty())
                 <div class="pt-10 pb-10 px-4">
@@ -211,7 +230,9 @@
                                 @forelse ($data_peserta_paginate as $item)
                                     <li class="p-2 sm:p-4 border rounded-md bg-white">
                                         <div class="flex items-center justify-between uppercase ">
-                                            <span class="text-xs sm:text-[16px] font-semibold">{{ $item->nis_peserta }}</span>
+                                            <span class="text-xs sm:text-[16px] font-semibold">
+                                                Peserta {{ $item->periode->unit->nama }}
+                                            </span>
                                             <div class="text-[10px] sm:text-xs ">
                                                 Status :
                                                 <span class="px-2 py-0 sm:py-1 ml-1 font-semibold rounded-xl
@@ -230,19 +251,16 @@
                                             <div class="flex-1 min-w-0 sm:ms-4 ms-2">
                                                 <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}">
                                                     <p class="text-md font-medium text-gray-900 uppercase">
-
-                                                    </p>
-                                                    <p class="text-md font-medium text-gray-900 uppercase">
-                                                            {{ $item->peserta->nama }}
+                                                        {{ $item->peserta->nama }}
                                                     </p>
                                                     <p class="text-sm text-gray-500 uppercase">
-                                                        {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
+                                                        {{ $item->nis_peserta }}
                                                     </p>
                                                 </Link>
                                             </div>
-                                            <div class="hidden sm:block items-center text-base font-semibold text-gray-900">
+                                            <div class="items-center text-base font-semibold text-gray-900">
                                                 <Link href="{{ route('dashboard.peserta', ['uuid' => $item->uuid ]) }}"
-                                                    class="text-sm flex font-semibold border rounded-lg py-2.5 px-5 border-primary-700 text-primary-700 bg-white">
+                                                    class="text-sm flex font-semibold border rounded-lg sm:py-2.5 sm:px-5 px-3 py-1.5 border-primary-700 text-primary-700 bg-white">
                                                     Lihat
                                                 </Link>
                                             </div>
@@ -389,4 +407,9 @@
         </template>
     </Dashboard>
 
+    <div class="fixed bottom-20 right-4 p-0 z-50">
+        <Link href="{{ route('dashboard.peserta.ramadhan.index') }}" class="inline-flex flex-col items-center bg-[#fff3e0] rounded-lg p-1">
+            <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-16 sm:h-24" alt="icon-ramadhan">
+        </Link>
+    </div>
 </x-app-layout>
