@@ -72,7 +72,7 @@ class InvoiceLttqController extends Controller
     {
         // FIX SETELAH PROSES MELELAHKAN
         $request->validate([
-            'buktitransfer' => 'required|image|mimes:jpeg,png,jpg,svg|max:5012', // maksimal 20MB
+            'buktitransfer' => 'required|image|mimes:jpeg,jpg,png,gif,bmp,webp,svg,tiff,ico,heic,heif,avif,jfif,jp2,j2k|max:20480', // maksimal 20MB
         ]);
 
         // Tentukan folder path dengan hierarki tahun/bulan/tanggal
