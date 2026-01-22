@@ -6,6 +6,7 @@
     "license": "EULA",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
         "berkayk/onesignal-laravel": "^2.4",
         "codeat3/blade-carbon-icons": "^2.38",
         "guzzlehttp/guzzle": "^7.2",

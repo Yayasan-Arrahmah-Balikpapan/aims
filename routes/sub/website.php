@@ -50,7 +50,7 @@ Route::get("/lttq/rtq-putri", [WebController::class, "lttq_rtq_putri"])->name("w
 Route::get("/lttq/invoice/{uuid}", [App\Domain\Website\Controllers\InvoiceLttqController::class, "index"])->name("website.lttq.invoice");
 Route::post("/lttq/invoice/{uuid}/store", [App\Domain\Website\Controllers\InvoiceLttqController::class, "store"])->name("website.lttq.invoice.store");
 Route::post("/lttq/invoice/{uuid}/store/bukti-transfer", [App\Domain\Website\Controllers\InvoiceLttqController::class, "store_bukti_transfer"])->name("website.lttq.invoice.store.buktitransfer");
-
+Route::get("/lttq/tahsin/kartu-ujian/{uuid}", [App\Domain\Website\Controllers\LTTQ\Tahsin\KartuUjianTahsinController::class, "index"])->name("website.lttq.tahsin.kartu-ujian");
 
 Route::get("/kontak", [WebController::class, "kontak"])->name("website.kontak");
 Route::get("/yayasan", [WebController::class, "yayasan"])->name("website.yayasan");
