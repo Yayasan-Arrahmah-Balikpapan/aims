@@ -308,6 +308,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($data_biaya as $item_biaya)
+                                            @php
+                                                $cek_biaya_pembayaran = true;
+                                            @endphp
                                             <tr class="border-b text-sm border-gray-200 dark:border-gray-700">
                                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                                     {{ $item_biaya->nama }}
@@ -315,6 +318,9 @@
                                                 <td class="px-3 py-3 uppercase">
                                                     @forelse ($data_pembayaran_peserta as $item_pembayaran)
                                                         @if ($item_biaya->id == $item_pembayaran->biaya_id)
+                                                            @php
+                                                                $cek_biaya_pembayaran = false;
+                                                            @endphp
                                                             @if ($item_pembayaran->transaksi->status == 1)
                                                                 <span class="bg-yellow-300 text-gray-900 px-2 py-1 rounded text-xs">Menunggu Pembayaran</span>
                                                             @elseif ($item_pembayaran->transaksi->status == 2)
@@ -328,6 +334,9 @@
                                                     @empty
                                                         BELUM LUNAS
                                                     @endforelse
+                                                    @if ($cek_biaya_pembayaran == true)
+                                                        <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">Belum Lunas</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -354,7 +363,7 @@
                                         @foreach ($data_transaksi as $item_transaksi)
                                             <tr class="border-b text-sm border-gray-200 dark:border-gray-700">
                                                 <td class="px-3 py-3">
-                                                    <Link class="text-sm font-bold text-gray-900 border border-gray-800 p-1 rounded-sm" href="{{ route('dashboard.peserta', ['uuid' => $item_transaksi->uuid ]) }}">
+                                                    <Link class="text-sm font-bold text-gray-900 border border-gray-800 p-1 rounded-sm" href="{{ route('website.lttq.invoice', ['uuid' => $item_transaksi->uuid ]) }}">
                                                         {{ \Carbon\Carbon::parse($item_transaksi->created_at)->format('Ymd') }}-{{ $item_transaksi->id}}
                                                     </Link>
                                                 </td>
