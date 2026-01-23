@@ -280,6 +280,15 @@
                     </Link>
                 @endauth
             </p>
+            <p class="text-md my-4 pt-2 flex items-center justify-center">
+                @auth
+                    <Link href="{{ route('dashboard.peserta', ['uuid' => $data->peserta->uuid ]) }}" class="flex p-2 bg-slate-100 border rounded-md border-gray-600 text-800 hover:text-primary-900">
+                        Ke Profile Data Peserta
+                        <x-carbon-user class="h-6 w-6 ml-2" />
+                    </Link>
+                @endauth
+            </p>
+        </div>
         </div>
     </div>
     <!-- End Invoice -->
