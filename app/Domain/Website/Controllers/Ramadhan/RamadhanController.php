@@ -132,7 +132,9 @@ Yayasan Arrahmah Balikpapan
                     'phone_code'   => $request->input('phone_code') ?? '62',
                     'phone_number' => $request->input('phone_number'),
                 ]);
+            }
 
+            if (!Auth::check()) {
                 Auth::login($user);
             }
 
