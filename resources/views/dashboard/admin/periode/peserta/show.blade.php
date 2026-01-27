@@ -156,6 +156,75 @@
                                     <div class="text-center">Belum Memilih Jadwal</div>
                                 @endif
                             </div>
+                            <div class="flex items-center justify-end mt-4">
+                                <Link href="#modal-kartu-ujian" class="border p-2  rounded-lg bg-primary-700">
+                                    <p class="text-sm font-medium text-white flex">Akses Kartu Ujian <x-carbon-document-requirements class="w-5 h-5 ml-2 "/></p>
+                                </Link>
+                            </div>
+
+                            <x-splade-modal name="modal-kartu-ujian">
+                                <div class="flex items-center justify-center my-6">
+                                    <div class="items-center justify-center text-base font-semibold text-gray-900">
+                                        @php
+                                            $jumlah_item_biaya = 0;
+                                            $jumlah_item_biaya_terbayar = 0;
+                                        @endphp
+                                        @foreach ($data_biaya as $item_biaya)
+                                            @php
+                                                $jumlah_item_biaya += 1;
+                                            @endphp
+                                            @forelse ($data_pembayaran_peserta as $item_pembayaran)
+                                                @if ($item_biaya->id == $item_pembayaran->biaya_id)
+                                                    @if ($item_pembayaran->transaksi->status == 1)
+                                                        @php
+                                                            // Menunggu Pembayaran
+                                                            // $jumlah_item_biaya_terbayar += 1;
+                                                        @endphp
+                                                    @elseif ($item_pembayaran->transaksi->status == 2)
+                                                        @php
+                                                            // Menunggu Konfirmasi
+                                                            $jumlah_item_biaya_terbayar += 1;
+                                                        @endphp
+                                                    @elseif ($item_pembayaran->transaksi->status == 3)
+                                                        @php
+                                                            // Lunas
+                                                            $jumlah_item_biaya_terbayar += 1;
+                                                        @endphp
+                                                    @elseif ($item_pembayaran->transaksi->status == 4)
+                                                        @php
+                                                            // Kadaluarsa
+                                                        @endphp
+                                                    @endif
+                                                @endif
+                                            @empty
+                                                -
+                                            @endforelse
+                                        @endforeach
+                                        @if ($jumlah_item_biaya == $jumlah_item_biaya_terbayar)
+                                            <span class="text-gray-500 text-xs py-0 sm:py-1 font-semibold rounded-xl">
+                                                Klik Untuk Melihat Kartu Ujian
+                                            </span>
+                                            <a target="_blank" href="{{ route('website.lttq.tahsin.kartu-ujian', ['uuid' => $data_peserta->uuid ]) }}"
+                                                class="text-sm flex justify-between font-semibold border rounded-md py-1.5 px-3 bg-sky-600 text-white">
+                                                Download Kartu Ujian
+                                                <x-carbon-document-requirements class="w-5 h-5 ml-2 "/>
+                                            </a>
+
+                                        @else
+                                            <div>
+                                                <span class="text-gray-500 text-xs py-0 sm:py-1 font-semibold rounded-xl">
+                                                    Anda Belum Menyelesaikan Semua Pembayaran
+                                                </span>
+                                                <Link away href="{{ route('dashboard.peserta.pembayaran.form', ['uuid' => $data_peserta->uuid ]) }}"
+                                                    class="text-sm flex justify-between font-semibold border rounded-lg py-1.5 px-3 bg-red-400 text-white">
+                                                    Klik Form Pembayaran
+                                                    <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                                </Link>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </x-splade-modal>
                             <h3 class="text-md py-2 text-gray-500 font-semibold uppercase">Absensi</h3>
                             <div class="relative overflow-x-auto border rounded-md mb-4">
                                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
