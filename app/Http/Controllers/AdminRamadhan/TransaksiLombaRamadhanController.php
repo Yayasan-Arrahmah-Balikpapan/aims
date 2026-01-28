@@ -67,9 +67,25 @@ Yayasan Arrahmah Balikpapan
             return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
     }
-    public function index()
+    public function index(Request $request)
     {
-        $data_transaksi = \App\Models\LombaTransaksi::with(['user', 'peserta'])->latest()->paginate(10);
+        $data_transaksi = \App\Models\LombaTransaksi::with(['user', 'peserta'])
+                            ->when($request->cari, function($query) use ($request) {
+                                $query->where('nama', 'like', '%'.$request->cari.'%')
+                                ->orWhere('alamat', 'like', '%'.$request->cari.'%');
+                            })
+                            ->when($request->jenis_peserta, function($query) use ($request) {
+                                $query->where('jenis_kelamin', 'like', $request->jenis_peserta);
+                            })
+                            ->when($request->tanggal_lahir, function($query) use ($request) {
+                                if (strpos($request->tanggal, ' to ') !== false) {
+                                    list($date1, $date2) = explode(' to ', $request->tanggal);
+                                    $query->whereBetween('created_at', [$date1.' 00:00:00', $date2.' 23:59:59']);
+                                } else {
+                                    $query->whereDate('created_at', '=', $request->tanggal);
+                                }
+                            })
+                            ->latest()->paginate(10);
         return view('dashboard-ramadhan.admin.transaksi-lomba.index', compact('data_transaksi'));
     }
 
