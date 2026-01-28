@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2  gap-4">
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Lomba Menggambar & Mewarnai - {{ $data_per_cabang[1] + $data_per_cabang[2] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
@@ -39,6 +39,29 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[2] }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="bg-white rounded-lg p-4 ">
+                    <h3 class="text-xl font-bold">Peserta Cerdas Cermat - {{ $data_per_cabang[9] + $data_per_cabang[10] }}</h3>
+                    <table class="w-full text-sm text-left border-gray-200">
+                        <tbody>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                    Kategori SD
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang[9] }}
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                    Kategori SMP
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang[10] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -106,36 +129,13 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="bg-white rounded-lg p-4 ">
-                    <h3 class="text-xl font-bold">Peserta Cerdas Cermat - {{ $data_per_cabang[9] + $data_per_cabang[10] }}</h3>
-                    <table class="w-full text-sm text-left border-gray-200">
-                        <tbody>
-                            <tr class="border-b border-gray-200">
-                                <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
-                                    Kategori SD
-                                </td>
-                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang[9] }}
-                                </td>
-                            </tr>
-                            <tr class="border-b border-gray-200">
-                                <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
-                                    Kategori SMP
-                                </td>
-                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang[10] }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
 
             <div class="items-center justify-end flex space-x-2">
-                {{-- <a href="#" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
+                <a href="{{ route('admin-ramadhan.peserta-lomba.export')}}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Export
                     @svg('carbon-download', 'ml-2 text-white h-4 w-4')
-                </a> --}}
+                </a>
                 {{-- <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Tambah Data
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
@@ -176,6 +176,9 @@
                                 Tanggal Daftar
                             </th>
                             <th scope="col" class="uppercase">
+                                No Telp
+                            </th>
+                            <th scope="col" class="uppercase">
                                 Peserta
                             </th>
                             <th scope="col" class="uppercase">
@@ -202,7 +205,12 @@
                                     {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y - H:i') }}
                                 </td>
                                 <td class="uppercase">
-                                    <Link href="#" class="text-gray-500 font-semibold">
+                                    <span class="text-gray-500 font-semibold">
+                                        {{ $item->user->phone_number }}
+                                    </span>
+                                </td>
+                                <td class="uppercase">
+                                    <span class="text-gray-500 font-semibold">
                                         {{ $item->nama }}
                                     </Link>
                                 </td>

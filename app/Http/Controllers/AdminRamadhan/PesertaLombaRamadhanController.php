@@ -5,6 +5,8 @@ namespace App\Http\Controllers\AdminRamadhan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\SpladeTable;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class PesertaLombaRamadhanController extends Controller
 {
@@ -43,5 +45,10 @@ class PesertaLombaRamadhanController extends Controller
         }
 
         return view('dashboard-ramadhan.admin.peserta-lomba.index', compact('data_peserta_lomba', 'data_per_cabang', 'data_cabang', 'total_pendaftar', 'total_peserta'));
+    }
+
+    public function export()
+    {
+        return Excel::download(new \App\Exports\AdminRamadhanLombaPeserta, 'Data_Peserta_Lomba_144H.xlsx');
     }
 }
