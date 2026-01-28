@@ -20,11 +20,9 @@ class AdminRamadhanLombaPeserta implements FromCollection, WithHeadings, WithMap
     {
         return \App\Models\LombaPeserta::with([
             'user',
-            'pendaftaran.cabang'
+            'pendaftaran.cabang',
+            'transaksi'
         ])
-        ->whereHas('transaksi', function ($q) {
-            $q->whereIn('status', [2, 3]);
-        })
         ->get()
         ->flatMap(function ($lombaPeserta) {
 
@@ -42,11 +40,11 @@ class AdminRamadhanLombaPeserta implements FromCollection, WithHeadings, WithMap
                      * }
                      */
 
-                    $dataCabang = $pendaftaran->data[$pendaftaran->cabang_id] ?? null;
+                    $dataCabang = $pendaftaran->data ?? null;
 
                     if ($dataCabang) {
                         // contoh: nama tim disimpan di key "nama_tim"
-                        $namaTim = $dataCabang['nama_tim']
+                        $namaTim = $dataCabang[$pendaftaran->cabang_id]
                             ?? 'TIM ' . strtoupper($pendaftaran->cabang->nama);
                     }
                 }
@@ -55,10 +53,12 @@ class AdminRamadhanLombaPeserta implements FromCollection, WithHeadings, WithMap
                     'tanggal'   => $pendaftaran->created_at,
                     'telp'      => $lombaPeserta->user->phone_number ?? '',
                     'nama'      => $lombaPeserta->nama ?? '',
+                    'tanggal_lahir'  => $lombaPeserta->tanggal_lahir ?? '',
                     'jenis'     => $lombaPeserta->jenis_kelamin ?? '',
                     'alamat'    => $lombaPeserta->alamat ?? '',
                     'cabang'    => $pendaftaran->cabang->nama ?? '',
                     'nama_tim'  => $namaTim,
+                    'status_pembayaran' => $lombaPeserta->transaksi->status == 1 ? 'Menunggu Pembayaran' : ($lombaPeserta->transaksi->status == 2 ? 'Menunggu Konfirmasi' : 'Lunas'),
                 ];
             });
         });
@@ -70,9 +70,12 @@ class AdminRamadhanLombaPeserta implements FromCollection, WithHeadings, WithMap
             'Tanggal Daftar',
             'No Telp',
             'Nama',
+            'Tanggal Lahir',
             'Jenis',
             'Alamat',
             'Cabang Lomba',
+            'Status Pembayaran',
+            'Nama Tim',
         ];
     }
 
@@ -81,11 +84,14 @@ class AdminRamadhanLombaPeserta implements FromCollection, WithHeadings, WithMap
     {
         return [
             \Carbon\Carbon::parse($row['tanggal'])->format('d-m-Y H:i'),
-            $row['nama'],
             "'" . $row['telp'],
+            $row['nama'],
+            $row['tanggal_lahir'],
             strtoupper($row['jenis']),
             $row['alamat'],
             $row['cabang'],
+            $row['status_pembayaran'],
+            $row['nama_tim'],
         ];
     }
 }
