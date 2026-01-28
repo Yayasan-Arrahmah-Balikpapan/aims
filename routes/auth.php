@@ -61,4 +61,6 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+    Route::patch('/profile/phone/{id}', [\App\Http\Controllers\ProfileController::class, 'update_phone'])->name('phone.update');
 });
