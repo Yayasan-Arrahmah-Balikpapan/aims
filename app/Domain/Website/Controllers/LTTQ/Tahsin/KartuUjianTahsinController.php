@@ -18,8 +18,7 @@ class KartuUjianTahsinController extends Controller
 
          $pdf = Pdf::loadView('website.pages.lttq.tahsin.kartu-ujian', compact('data'))->setPaper('a4', 'potrait');
         // return $pdf->download('medium.pdf');
-        return $pdf->stream($data->nama_peserta . ' - Kartu Ujian Tahsin LTTQ Angkatan ' . $data->periode->angkatan . '.pdf');
-
-        return view('website.pages.lttq.tahsin.kartu-ujian', compact('data'));
+        return $pdf->stream('Kartu Ujian Tahsin LTTQ Angkatan ' . $data->periode->angkatan . ' - '. $data->peserta->nama . '.pdf');
+        // return view('website.pages.lttq.tahsin.kartu-ujian', compact('data'));
     }
 }
