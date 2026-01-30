@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 class JadwalController extends Controller
@@ -39,13 +40,13 @@ class JadwalController extends Controller
             'ONLINE / OFFLINE' => 'ONLINE / OFFLINE',
         ];
         $data_hari = [
-            'SENIN' => 'Senin',
+            'SENIN'  => 'Senin',
             'SELASA' => 'Selasa',
-            'RABU' => 'Rabu',
-            'KAMIS' => 'Kamis',
-            'JUMAT' => 'Jumat',
-            'SABTU' => 'Sabtu',
-            'AHAD' => 'Ahad',
+            'RABU'   => 'Rabu',
+            'KAMIS'  => 'Kamis',
+            'JUMAT'  => 'Jumat',
+            'SABTU'  => 'Sabtu',
+            'AHAD'   => 'Ahad',
         ];
         // $jadwal = $this->getJadwalTable($unit);
         $jadwal = \ProtoneMedia\Splade\SpladeTable::for(\App\Models\Jadwal::where('periode_id', $periode)->orderBy('created_at', 'desc'))
@@ -282,6 +283,24 @@ class JadwalController extends Controller
         $data_periode = \App\Models\Periode::find($periode);
         return Excel::download(new \App\Exports\AdminJadwal($periode), 'Data_Jadwal_Admin_' . $unit . '_' . $data_periode->nama . '.xlsx');
     }
-    
+    public function print_tahsin($unit, $periode, $jadwal)
+    {
+        $data = \App\Models\Jadwal::with('level', 'pengajar', 'level', 'kelas', 'kelas.peserta', 'absen', 'periode')->where('id', $jadwal)->first();
+        if(!$data){
+            abort(404);
+        }
+
+        $id_data_kelas = $data->kelas->pluck('id')->toArray();
+
+        $data_absensi = \App\Models\AbsensiPeserta::with('data_absen')
+                            ->whereIn('kelas_id', $id_data_kelas)
+                            ->get()
+                            ->mapWithKeys(fn ($item) => [$item->kelas_id . '-' . $item->data_absen->pertemuan_ke => $item->absen])
+                            ->toArray();
+
+         $pdf = Pdf::loadView('dashboard.admin.periode.jadwal.print.jadwal-tahsin', compact('data', 'data_absensi'))->setPaper('a4', 'landscape');
+        // return $pdf->download('medium.pdf');
+        return $pdf->stream('Jadwal Tahsin LTTQ Angkatan ' . $data->periode->angkatan . ' - '. $data->nama_jadwal . '.pdf');
+    }
 }
 

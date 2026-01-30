@@ -36,6 +36,9 @@
                         {{-- <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
                             <x-carbon-report class="w-5 h-5 text-sky-500"/>
                         </Link> --}}
+                        <a target="_blank" href="{{ route('admin.jadwal.print_tahsin', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
+                            <x-carbon-printer class="w-5 h-5 text-sky-500"/>
+                        </a>
                         <Link href="{{ route('admin.jadwal.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'jadwal' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
                             <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
                         </Link>

@@ -35,6 +35,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/jadwal/{jadwal}/edit', [App\Http\Controllers\Admin\JadwalController::class, 'edit'])->name('admin.jadwal.edit');
         Route::put('/jadwal/{jadwal}', [App\Http\Controllers\Admin\JadwalController::class, 'update'])->name('admin.jadwal.update');
         Route::delete('/jadwal/{jadwal}', [App\Http\Controllers\Admin\JadwalController::class, 'destroy'])->name('admin.jadwal.destroy');
+        Route::get('/jadwal/{jadwal}/print/tahsin', [App\Http\Controllers\Admin\JadwalController::class, 'print_tahsin'])->name('admin.jadwal.print_tahsin');
 
         Route::get('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'index'])->name('admin.peserta.index');
         Route::get('/peserta/export', [App\Http\Controllers\Admin\PesertaController::class, 'export'])->name('admin.peserta.export');
