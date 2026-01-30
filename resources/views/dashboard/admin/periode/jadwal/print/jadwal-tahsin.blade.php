@@ -29,26 +29,26 @@
     <!-- Konten utama -->
     <div style="padding: 10px;">
         <!-- Tabel untuk absensi -->
-        <table style="width: 100%; border-collapse: collapse; border: 1px solid #e0e0e0; margin-bottom: 10px; font-size: 12px">
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid ; margin-bottom: 10px; font-size: 12px">
             <thead>
                 <tr>
-                    <th style="border: 1px solid #e0e0e0; padding: 5px;">Nama</th>
-                    <th style="border: 1px solid #e0e0e0; width: 100px;">Absen</th>
+                    <th style="border: 1px solid ; padding: 5px;">Nama</th>
+                    <th style="border: 1px solid ; width: 100px;">Absen</th>
                     @for ($i = 1; $i <= 15; $i++)
-                        <th style="border: 1px solid #e0e0e0;">{{ $i }}</th>
+                        <th style="border: 1px solid ;">{{ $i }}</th>
                     @endfor
                 </tr>
             </thead>
             <tbody>
                 @foreach ($data->kelas as $item)
                     <tr>
-                        <td style="border: 1px solid #e0e0e0; padding: 5px; text-transform: uppercase; font-size: 14px">
+                        <td style="border: 1px solid ; padding: 5px; text-transform: uppercase; font-size: 14px">
                             {{ $item->peserta->nama }}<br>
                             {{ $item->peserta->phone_number }}
                         </td>
-                        <td style="border: 1px solid #e0e0e0; padding: 5px; text-align: center"></td>
+                        <td style="border: 1px solid ; padding: 5px; text-align: center"></td>
                         @for ($i = 1; $i <= 15; $i++)
-                            <th style="border: 1px solid #e0e0e0;">
+                            <th style="border: 1px solid ;">
                                 @php
                                     $v_absensi = $data_absensi[$item->id.'-'.$i] ?? '';
                                 @endphp
