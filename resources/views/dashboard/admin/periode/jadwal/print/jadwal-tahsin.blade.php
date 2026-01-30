@@ -7,15 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $data->periode->nama }}</title>
 </head>
-<style>
-    @page {
-        margin: 0px;
-    }
-    body {
-        margin: 0px;
-    }
-</style>
-
 <body style="margin: 0; padding: 10px 20px; font-family: Arial, Helvetica, sans-serif; ">
 
 <div style="width: 100%; margin: 0 auto; background: white; ">
