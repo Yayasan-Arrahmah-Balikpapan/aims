@@ -16,7 +16,7 @@
         </Link>
     </li>
     <li>
-        <x-link-item :href="'#'" :active="request()->routeIs('admin-ramadhan.peserta-lomba.index')">
+        <x-link-item :href="route('admin-irma.anggota-irma.index')" :active="request()->routeIs('admin-ramadhan.peserta-lomba.index')">
             @svg('carbon-user-multiple', 'text-gray-600 h-6 w-6')
             <span class="ml-3">Anggota Irma</span>
         </x-link-item>
