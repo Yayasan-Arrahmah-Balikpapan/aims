@@ -34,6 +34,8 @@
                 @endif
                 @if (Request::is('dashboard/admin-ramadhan*'))
                     <x-layouts.sidebar.admin-ramadhan/>
+                @elseif (Request::is('dashboard/admin-irma*'))
+                    <x-layouts.sidebar.admin-irma/>
                 @elseif (Request::is('dashboard/admin*'))
                     <x-layouts.sidebar.admin :unit="$unit ?? null"/>
                 @endif

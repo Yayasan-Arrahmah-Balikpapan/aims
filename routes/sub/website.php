@@ -71,6 +71,8 @@ Route::get("/ramadhan/lomba/invoice/{uuid}", [App\Domain\Website\Controllers\Ram
 Route::post("/ramadhan/lomba/invoice/{uuid}/store", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_invoice_store"])->name("website.ramadhan.lomba.invoice.store");
 Route::post("/ramadhan/lomba/invoice/{uuid}/store/bukti-transfer", [App\Domain\Website\Controllers\Ramadhan\RamadhanController::class, "lomba_invoice_store_bukti_transfer"])->name("website.ramadhan.lomba.invoice.store.buktitransfer");
 
+// Routing Webite IRMA
+Route::get("/irma", [App\Domain\Website\Controllers\Irma\IrmaController::class, "index"])->name("website.irma");
 
 //SOSIAL
 Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");

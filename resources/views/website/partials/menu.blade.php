@@ -59,6 +59,11 @@
                 Ramadhan ☪️
             </x-website.nav>
         </li>
+        <li>
+            <x-website.nav :href="route('website.irma')" :active="request()->routeIs('website.irma')">
+                IRMA 🚀
+            </x-website.nav>
+        </li>
     </ul>
     @auth
         <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0 sm:hidden">

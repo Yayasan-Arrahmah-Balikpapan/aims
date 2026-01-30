@@ -153,6 +153,7 @@ Route::middleware('splade')->group(function () {
             require __DIR__.'/sub/hrd.php';
 
             require __DIR__.'/sub/admin-ramadhan.php';
+            require __DIR__.'/sub/admin-irma.php';
         });
     });
 
