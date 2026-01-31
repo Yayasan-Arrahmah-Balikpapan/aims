@@ -73,6 +73,8 @@ Route::post("/ramadhan/lomba/invoice/{uuid}/store/bukti-transfer", [App\Domain\W
 
 // Routing Webite IRMA
 Route::get("/irma", [App\Domain\Website\Controllers\Irma\IrmaController::class, "index"])->name("website.irma");
+Route::get("/irma/daftar-anggota", [App\Domain\Website\Controllers\Irma\IrmaController::class, "daftar_anggota"])->name("website.irma.daftar-anggota");
+Route::post("/irma/daftar-anggota", [App\Domain\Website\Controllers\Irma\IrmaController::class, "daftar_anggota_store"])->name("website.irma.daftar-anggota.store");
 
 //SOSIAL
 Route::get("/sosial", [App\Domain\Website\Controllers\SosialController::class, "index"])->name("website.sosial");
