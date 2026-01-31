@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminIrma\AdminIrmaController;
+use App\Http\Controllers\AdminIrma\AnggotaIrmaController;
 
 Route::prefix('/admin-irma')->middleware('role:admin-irma')->group(function () {
-    Route::get('/', [App\Http\Controllers\AdminIrma\AdminIrmaController::class, 'index'])->name('admin-irma.index');
+    Route::get('/', [AdminIrmaController::class, 'index'])->name('admin-irma.index');
     
-    Route::get('/anggota-irma', [App\Http\Controllers\AdminIrma\AnggotaIrmaController::class, 'index'])->name('admin-irma.anggota-irma.index');
+    Route::get('/anggota-irma', [AnggotaIrmaController::class, 'index'])->name('admin-irma.anggota-irma.index');
 });

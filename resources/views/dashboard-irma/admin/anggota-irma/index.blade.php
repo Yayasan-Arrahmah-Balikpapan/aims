@@ -18,191 +18,120 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link> --}}
             </div>
-            <div class="container mx-auto">
-                <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
-                    :default="[
-                            'cari' => request()->query('cari') ?? '',
-                            'jenis_kelamin' => request()->query('jenis_kelamin') ?? '',
-                            'divisi' => request()->query('divisi') ?? '',
-                            'status' => request()->query('status') ?? '',
-                        ]"
-                    >
-                    
-                    {{-- Pencarian Umum (Nama, Sekolah, No HP) --}}
-                    <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Cari nama, sekolah..." class="flex-grow"/>
+            <div class="relative overflow-x-auto border border-gray-200 rounded-lg mb-4 bg-white shadow-sm">
+                <table class="w-full text-sm text-left text-gray-500">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
+                        <tr>
+                            <th scope="col" class="px-4 py-3 text-center w-[50px]">#</th>
+                            <th scope="col" class="px-4 py-3 min-w-[200px]">Nama & Domisili</th>
+                            <th scope="col" class="px-4 py-3 min-w-[150px]">Umur / JK</th>
+                            <th scope="col" class="px-4 py-3 min-w-[180px]">Kontak & Instansi</th>
+                            <th scope="col" class="px-4 py-3 min-w-[160px]">Pendidikan</th>
+                            <th scope="col" class="px-4 py-3 min-w-[150px]">Divisi</th>
+                            <th scope="col" class="px-4 py-3 text-center min-w-[120px]">Status</th>
+                            <th scope="col" class="px-4 py-3 text-center min-w-[140px]">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @forelse($pendaftars as $item)
+                            <tr class="bg-white hover:bg-gray-50 {{ $item->status == 'ditolak' ? 'opacity-60' : '' }}">
+                                <td class="px-4 py-4 text-center font-medium">
+                                    {{ $loop->iteration + ($pendaftars->currentPage() - 1) * $pendaftars->perPage() }}
+                                </td>
+                                <td class="px-4 py-4">
+                                    <div class="font-bold text-gray-900">{{ $item->nama }}</div>
+                                    <div class="text-xs text-gray-500 mt-1 flex items-center">
+                                        @svg('carbon-location', 'w-3 h-3 mr-1') 
+                                        {{ Str::limit($item->alamat ?? 'N/A', 100) }}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4">
+                                    <div class="text-gray-900 text-xs mb-1">{{ $item->umur ?? 'N/A' }} thn</div>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border 
+                                        {{ $item->gender == 'Ikhwan' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-red-50 text-red-700 border-red-200' }}">
+                                        {{ $item->gender == 'Ikhwan' ? 'Ikhwan' : 'Akhwat' }}
+                                    </span>
+                                </td>
+                                <!-- KOLOM BARU: Kontak & Instansi -->
+                                <td class="px-4 py-4">
+                                    <div class="text-xs text-gray-900 mb-1 font-medium">
+                                        {{ Str::limit($item->telepon ?? 'N/A', 14) }}
+                                    </div>
+                                    <div class="text-xs text-gray-600">
+                                        {{ Str::limit($item->instansi ?? 'N/A', 25) }}
+                                    </div>
+                                </td>
+                                <!-- KOLOM PENDIDIKAN -->
+                                <td class="px-4 py-4">
+                                    <div class="text-xs text-gray-900 mb-1 font-medium">
+                                        <span>Kelas/Semester:</span>
+                                        {{ Str::limit($item->kelas_semester ?? 'N/A', 20) }}
+                                    </div>
+                                    <div class="text-xs text-gray-600">
+                                        <span>Jurusan:</span>
+                                        {{ Str::limit($item->jurusan ?? '-', 25) }}
+                                    </div>
+                                </td>
 
-                    {{-- Filter Jenis Kelamin --}}
-                    <x-splade-select name="jenis_kelamin">
-                        <option value="" disabled selected>-- Jenis Kelamin --</option>
-                        <option value="L">Ikhwan</option>
-                        <option value="P">Akhwat</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-
-                    {{-- Filter Divisi (Sesuai Pilihan di Form Pendaftaran) --}}
-                    <x-splade-select name="divisi">
-                        <option value="" disabled selected>-- Divisi --</option>
-                        <option value="dakwah">Dakwah</option>
-                        <option value="media">Media</option>
-                        <option value="sosial">Sosial</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-
-                    {{-- Filter Status Penerimaan --}}
-                    <x-splade-select name="status">
-                        <option value="" disabled selected>-- Status --</option>
-                        <option value="pending">Baru Mendaftar</option>
-                        <option value="diterima">Diterima</option>
-                        <option value="ditolak">Tidak Diterima</option>
-                        <option value="">Semua</option>
-                    </x-splade-select>
-
-                    <x-splade-submit :label="__('Filter')" class="bg-blue-600 hover:bg-blue-700 text-white"/>
-                    
-                    {{-- Tombol Reset (Optional tapi berguna) --}}
-                    <a href="{{ url()->current() }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
-                        Reset
-                    </a>
-                </x-splade-form>
+                                <!-- KOLOM DIVISI & KEAHLIAN -->
+                                <td class="px-4 py-4">
+                                    <div class="text-xs text-gray-900 mb-1 font-medium">
+                                        {{ ucfirst($item->divisi ?? '-') }}
+                                    </div>
+                                    <div class="text-xs text-gray-600">
+                                        <span>Keahlian:</span>
+                                        {{ Str::limit($item->keahlian ?? '-', 25) }}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-4 text-center">
+                                    @php
+                                        $statusConfig = [
+                                            'menunggu verifikasi' => ['bg-yellow-50 text-yellow-700 border-yellow-200', 'bg-yellow-400', 'Menunggu Verifikasi'],
+                                            'diterima' => ['bg-green-50 text-green-700 border-green-200', 'bg-green-500', 'Diterima'],
+                                            'ditolak' => ['bg-red-50 text-red-700 border-red-200', 'bg-red-500', 'Tidak Diterima']
+                                        ];
+                                        $status = $statusConfig[$item->status] ?? ['bg-gray-50 text-gray-700 border-gray-200', 'bg-gray-400', 'Unknown'];
+                                    @endphp
+                                    <span class="inline-flex items-center {{ $status[0] }} text-xs font-medium px-2.5 py-1 rounded-full border">
+                                        <span class="w-2 h-2 me-2 {{ $status[1] }} rounded-full"></span>
+                                        {{ $status[2] }}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-4 text-center">
+                                    <div class="flex justify-center items-center gap-3">
+                                        <button class="text-gray-500 hover:text-blue-600 transition-colors" title="Detail">
+                                            @svg('carbon-view', 'w-5 h-5')
+                                        </button>
+                                        @if($item->status != 'diterima')
+                                            <button class="text-green-600 hover:text-green-800 transition-colors" title="Terima">
+                                                @svg('carbon-checkmark-filled', 'w-5 h-5')
+                                            </button>
+                                            <button class="text-red-600 hover:text-red-800 transition-colors" title="Tolak">
+                                                @svg('carbon-close-filled', 'w-5 h-5')
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="8" class="px-4 py-12 text-center text-gray-500">
+                                    @svg('heroicon-m-inbox', 'w-12 h-12 mx-auto mb-4 text-gray-400')
+                                    <p class="text-lg font-medium text-gray-900">Belum ada pendaftaran</p>
+                                    <p class="text-sm text-gray-500">Silakan tunggu pendaftaran anggota baru</p>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+                
+                <!-- PAGINATION -->
+                @if($pendaftars->hasPages())
+                <div class="px-4 py-3 border-t border-gray-200 bg-white">
+                    {{ $pendaftars->appends(request()->query())->links() }}
+                </div>
+                @endif
             </div>
-        <div class="relative overflow-x-auto border border-gray-200 rounded-lg mb-4 bg-white shadow-sm">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b border-gray-200">
-                    <tr>
-                        <th scope="col" class="px-4 py-3 text-center w-[50px]">#</th>
-                        <th scope="col" class="px-4 py-3 min-w-[200px]">Nama & Domisili</th>
-                        <th scope="col" class="px-4 py-3 min-w-[150px]">TTL / JK</th>
-                        <th scope="col" class="px-4 py-3 min-w-[150px]">Divisi</th>
-                        <th scope="col" class="px-4 py-3 text-center min-w-[120px]">Status</th>
-                        <th scope="col" class="px-4 py-3 text-center min-w-[140px]">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    {{-- DATA 1: IKHWAN - MENUNGGU --}}
-                    <tr class="bg-white hover:bg-gray-50">
-                        <td class="px-4 py-4 text-center font-medium">1</td>
-                        <td class="px-4 py-4">
-                            <div class="font-bold text-gray-900">Ahmad Fulan</div>
-                            <div class="text-xs text-gray-500 mt-1 flex items-center">
-                                @svg('carbon-location', 'w-3 h-3 mr-1') Balikpapan Baru
-                            </div>
-                        </td>
-                        <td class="px-4 py-4">
-                            <div class="text-gray-900 text-xs mb-1">12-05-2005</div>
-                            {{-- Badge Info (Blue) --}}
-                            <span class="inline-flex items-center bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded border border-blue-200">
-                                Ikhwan
-                            </span>
-                        </td>
-                        <td class="px-4 py-4">
-                            {{-- Badge Default/Gray --}}
-                            <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded border border-gray-300">
-                                Dakwah
-                            </span>
-                        </td>
-                        
-                        <td class="px-4 py-4 text-center">
-                            {{-- Badge Warning (Yellow) --}}
-                            <span class="inline-flex items-center bg-yellow-50 text-yellow-700 text-xs font-medium px-2.5 py-1 rounded-full border border-yellow-200">
-                                <span class="w-2 h-2 me-2 bg-yellow-400 rounded-full"></span>
-                                Menunggu
-                            </span>
-                        </td>
-
-                        <td class="px-4 py-4 text-center">
-                            <div class="flex justify-center items-center gap-3">
-                                <button class="text-gray-500 hover:text-blue-600 transition-colors" title="Detail">
-                                    @svg('carbon-view', 'w-5 h-5')
-                                </button>
-                                <button class="text-green-600 hover:text-green-800 transition-colors" title="Terima">
-                                    @svg('carbon-checkmark-filled', 'w-5 h-5')
-                                </button>
-                                <button class="text-red-600 hover:text-red-800 transition-colors" title="Tolak">
-                                    @svg('carbon-close-filled', 'w-5 h-5')
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    {{-- DATA 2: AKHWAT - DITERIMA --}}
-                    <tr class="bg-white hover:bg-gray-50">
-                        <td class="px-4 py-4 text-center font-medium">2</td>
-                        <td class="px-4 py-4">
-                            <div class="font-bold text-gray-900">Siti Fulana</div>
-                            <div class="text-xs text-gray-500 mt-1 flex items-center">
-                                @svg('carbon-location', 'w-3 h-3 mr-1') Kampung Baru
-                            </div>
-                        </td>
-                        <td class="px-4 py-4">
-                            <div class="text-gray-900 text-xs mb-1">20-10-2004</div>
-                            {{-- Badge Pink/Red (Danger/Custom) --}}
-                            <span class="inline-flex items-center bg-red-50 text-red-700 text-xs font-medium px-2 py-0.5 rounded border border-pink-200">
-                                Akhwat
-                            </span>
-                        </td>
-                        <td class="px-4 py-4">
-                            <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded border border-gray-300">
-                                Media
-                            </span>
-                        </td>
-                        
-                        <td class="px-4 py-4 text-center">
-                            {{-- Badge Success (Green) --}}
-                            <span class="inline-flex items-center bg-green-50 text-green-700 text-xs font-medium px-2.5 py-1 rounded-full border border-green-200">
-                                <span class="w-2 h-2 me-2 bg-green-500 rounded-full"></span>
-                                Diterima
-                            </span>
-                        </td>
-
-                        <td class="px-4 py-4 text-center">
-                            <div class="flex justify-center items-center gap-3">
-                                <button class="text-gray-500 hover:text-blue-600 transition-colors" title="Detail">
-                                    @svg('carbon-view', 'w-5 h-5')
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    
-                    {{-- DATA 3: DITOLAK --}}
-                    <tr class="bg-white hover:bg-gray-50 opacity-60">
-                        <td class="px-4 py-4 text-center font-medium">3</td>
-                        <td class="px-4 py-4">
-                            <div class="font-bold text-gray-900">Budi Santoso</div>
-                            <div class="text-xs text-gray-500 mt-1 flex items-center">
-                                @svg('carbon-location', 'w-3 h-3 mr-1') Manggar
-                            </div>
-                        </td>
-                        <td class="px-4 py-4">
-                            <div class="text-gray-900 text-xs mb-1">01-01-2005</div>
-                            <span class="inline-flex items-center bg-blue-50 text-blue-700 text-xs font-medium px-2 py-0.5 rounded border border-blue-200">
-                                Ikhwan
-                            </span>
-                        </td>
-                        <td class="px-4 py-4">
-                            <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2 py-0.5 rounded border border-gray-300">
-                                Sosial
-                            </span>
-                        </td>
-                        
-                        <td class="px-4 py-4 text-center">
-                            {{-- Badge Danger (Red) --}}
-                            <span class="inline-flex items-center bg-red-50 text-red-700 text-xs font-medium px-2.5 py-1 rounded-full border border-red-200">
-                                <span class="w-2 h-2 me-2 bg-red-500 rounded-full   "></span>
-                                Ditolak
-                            </span>
-                        </td>
-
-                        <td class="px-4 py-4 text-center">
-                            <div class="flex justify-center items-center gap-3">
-                                <button class="text-gray-500 hover:text-blue-600 transition-colors" title="Detail">
-                                    @svg('carbon-view', 'w-5 h-5')
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
         </div>
     </div>
             

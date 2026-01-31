@@ -486,109 +486,53 @@
                 </div>
             </div>
 
-            <!-- Right Side - Form -->
+            <!-- Right Side -->
             <div class="w-full lg:w-3/5">
-                <div class="bg-white rounded-2xl p-8 border-2 border-gray-100 shadow-xl">
-                    <form action="#" method="POST" class="space-y-5">
-                        <!-- Nama Lengkap -->
+                <div class="bg-white rounded-2xl p-8 border-2 border-gray-100">
+                    
+                    <div class="flex items-center gap-4 mb-8 text-center lg:text-left">
                         <div>
-                            <label for="nama" class="block text-sm font-bold text-gray-900 mb-2">
-                                Nama Lengkap <span class="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="text" 
-                                id="nama" 
-                                name="nama" 
-                                required
-                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#50C878] focus:outline-none transition-colors"
-                                placeholder="Masukkan nama lengkap"
-                            >
+                            <h2 class="text-2xl font-black text-gray-900">Mulai Daftar!</h2>
+                            <p class="text-gray-700 font-medium">Klik tombol di bawah</p>
                         </div>
-
-                        <!-- Gender -->
-                        <div>
-                            <label for="gender" class="block text-sm font-bold text-gray-900 mb-2">
-                                Jenis Kelamin <span class="text-red-500">*</span>
-                            </label>
-                            <select 
-                                id="gender" 
-                                name="gender" 
-                                required
-                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#50C878] focus:outline-none transition-colors"
-                            >
-                                <option value="">Pilih jenis kelamin</option>
-                                <option value="Laki-laki">Laki-laki</option>
-                                <option value="Perempuan">Perempuan</option>
-                            </select>
-                        </div>
-
-                        <!-- Umur -->
-                        <div>
-                            <label for="umur" class="block text-sm font-bold text-gray-900 mb-2">
-                                Umur <span class="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="number" 
-                                id="umur" 
-                                name="umur" 
-                                required
-                                min="13"
-                                max="30"
-                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#50C878] focus:outline-none transition-colors"
-                                placeholder="Masukkan umur"
-                            >
-                        </div>
-
-                        <!-- Nomor Telepon -->
-                        <div>
-                            <label for="telepon" class="block text-sm font-bold text-gray-900 mb-2">
-                                Nomor Telepon (WhatsApp) <span class="text-red-500">*</span>
-                            </label>
-                            <input 
-                                type="tel" 
-                                id="telepon" 
-                                name="telepon" 
-                                required
-                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#50C878] focus:outline-none transition-colors"
-                                placeholder="08xxxxxxxxxx"
-                            >
-                        </div>
-
-                        <!-- Alamat Rumah -->
-                        <div>
-                            <label for="alamat" class="block text-sm font-bold text-gray-900 mb-2">
-                                Alamat Rumah <span class="text-red-500">*</span>
-                            </label>
-                            <textarea 
-                                id="alamat" 
-                                name="alamat" 
-                                required
-                                rows="4"
-                                class="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#50C878] focus:outline-none transition-colors resize-none"
-                                placeholder="Masukkan alamat lengkap"
-                            ></textarea>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button 
-                            type="submit"
-                            class="w-full py-4 rounded-xl text-white font-black text-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                            style="background: linear-gradient(135deg, #50C878 0%, #0B6E4F 100%);"
-                        >
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <a href="{{ route('website.irma.daftar-anggota') }}" 
+                        class="group inline-block w-full max-w-sm px-8 py-4 rounded-xl text-white font-black text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                        style="background: linear-gradient(135deg, #50C878 0%, #0B6E4F 100%);">
+                            
                             <span class="flex items-center justify-center gap-2">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                <svg class="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
                                 </svg>
                                 Daftar Sekarang
                             </span>
-                        </button>
-
-                        <p class="text-xs text-gray-500 text-center mt-4">
-                            Dengan mendaftar, Anda menyetujui untuk dihubungi oleh tim IRMA melalui WhatsApp atau telepon.
-                        </p>
-                    </form>
+                        </a>
+                    </div>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center" style="background-color: #50C878;">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-700">Dihubungi via WhatsApp dalam 3x24 jam 📱</p>
+                        </div>
+                        
+                        <div class="flex items-center gap-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center" style="background-color: #14B8A6;">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-700">Gratis & mudah prosesnya 📌</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
