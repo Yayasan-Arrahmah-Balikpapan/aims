@@ -19,7 +19,7 @@
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             
             <!-- Left Side - Text Content -->
-            <div class="text-center lg:text-left space-y-8">
+            <div class="text-center lg:text-left space-y-8 order-2 lg:order-1">
                 <!-- Badge -->
                 <div class="inline-flex items-center gap-2 px-4 py-2 bg-white backdrop-blur-sm border-2 border-emerald-200 rounded-full shadow-lg">
                     <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
@@ -73,7 +73,7 @@
             </div>
 
             <!-- Right Side - Logo -->
-            <div class="flex justify-center lg:justify-end">
+            <div class="flex justify-center lg:justify-end order-1 lg:order-2">
                 <div class="relative group">
                     <!-- Glow Effect -->
                     <div class="absolute inset-0 bg-gradient-to-br from-emerald-400/30 to-teal-400/30 blur-3xl rounded-full group-hover:blur-[100px] transition-all duration-500"></div>
@@ -395,9 +395,181 @@
     </div>
 </section>
 
+<!-- Section Divisi -->
+
+<section id="divisi" class="py-24 bg-white">
+    <div class="max-w-screen-xl mx-auto px-6 lg:px-8">
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <span class="inline-block px-4 py-2 mb-4 text-xs font-bold tracking-widest uppercase" style="background-color: #D1F2EB; color: #0B6E4F; border-radius: 9999px; border: 1px solid #50C878;">
+                👥 STRUKTUR ORGANISASI
+            </span>
+            <h2 class="text-5xl md:text-6xl font-black text-gray-900 mb-4">DIVISI KAMI</h2>
+            <div class="flex justify-center gap-2 mt-4">
+                <div style="width: 48px; height: 4px; background-color: #50C878; border-radius: 4px;"></div>
+                <div style="width: 48px; height: 4px; background-color: #14B8A6; border-radius: 4px;"></div>
+                <div style="width: 48px; height: 4px; background-color: #22C55E; border-radius: 4px;"></div>
+            </div>
+            <p class="text-gray-600 font-medium mt-6 max-w-2xl mx-auto">
+                Tiga pilar utama yang menggerakkan roda organisasi IRMA dalam mewujudkan visi dan misi
+            </p>
+        </div>
+
+        <!-- Divisi Grid -->
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Divisi Sosial -->
+            <div class="bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-[#50C878] hover:shadow-xl transition-all duration-300 group">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 p-4" style="background: linear-gradient(135deg, #50C878 0%, #0B6E4F 100%); box-shadow: 0 4px 12px rgba(80, 200, 120, 0.3);">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-2xl font-black text-gray-900 mb-3 group-hover:text-[#50C878] transition-colors">Divisi Sosial</h3>
+                
+                <!-- Badge -->
+                <span class="inline-block px-3 py-1 text-xs font-bold rounded-full mb-4" style="background-color: #D1F2EB; color: #0B6E4F;">PELAYANAN MASYARAKAT</span>
+                
+                <!-- Description -->
+                <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                    Menggerakkan kegiatan sosial dan pelayanan masyarakat, mulai dari bakti sosial, santunan, hingga program pemberdayaan warga sekitar masjid.
+                </p>
+                
+                <!-- Focus Areas -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #D1F2EB;">
+                            <svg class="w-3 h-3 text-[#0B6E4F]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Bakti Sosial & Santunan</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #D1F2EB;">
+                            <svg class="w-3 h-3 text-[#0B6E4F]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Pemberdayaan Masyarakat</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #D1F2EB;">
+                            <svg class="w-3 h-3 text-[#0B6E4F]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Kegiatan Kemanusiaan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divisi Media -->
+            <div class="bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-[#14B8A6] hover:shadow-xl transition-all duration-300 group">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 p-4" style="background: linear-gradient(135deg, #14B8A6 0%, #0D9488 100%); box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-2xl font-black text-gray-900 mb-3 group-hover:text-[#14B8A6] transition-colors">Divisi Media</h3>
+                
+                <!-- Badge -->
+                <span class="inline-block px-3 py-1 text-xs font-bold rounded-full mb-4" style="background-color: #E0F2F1; color: #0D9488;">KREASI & PUBLIKASI</span>
+                
+                <!-- Description -->
+                <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                    Mengelola seluruh konten digital, dokumentasi kegiatan, dan publikasi informasi melalui berbagai platform media sosial dan website.
+                </p>
+                
+                <!-- Focus Areas -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #E0F2F1;">
+                            <svg class="w-3 h-3 text-[#0D9488]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Desain Grafis & Konten</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #E0F2F1;">
+                            <svg class="w-3 h-3 text-[#0D9488]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Dokumentasi & Videografi</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #E0F2F1;">
+                            <svg class="w-3 h-3 text-[#0D9488]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Manajemen Sosial Media</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divisi Dakwah -->
+            <div class="bg-white rounded-2xl p-8 border-2 border-gray-100 hover:border-[#22C55E] hover:shadow-xl transition-all duration-300 group">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 p-4" style="background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                    </svg>
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-2xl font-black text-gray-900 mb-3 group-hover:text-[#22C55E] transition-colors">Divisi Dakwah</h3>
+                
+                <!-- Badge -->
+                <span class="inline-block px-3 py-1 text-xs font-bold rounded-full mb-4" style="background-color: #DCFCE7; color: #16A34A;">SYIAR & EDUKASI</span>
+                
+                <!-- Description -->
+                <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                    Menyelenggarakan kegiatan keagamaan, kajian rutin, dan program edukasi Islam untuk meningkatkan pemahaman dan amal ibadah jamaah.
+                </p>
+                
+                <!-- Focus Areas -->
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #DCFCE7;">
+                            <svg class="w-3 h-3 text-[#16A34A]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Kajian & Halaqah Rutin</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #DCFCE7;">
+                            <svg class="w-3 h-3 text-[#16A34A]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Tahsin & Tahfidz Al-Qur'an</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center" style="background-color: #DCFCE7;">
+                            <svg class="w-3 h-3 text-[#16A34A]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <span class="text-sm text-gray-700">Mentoring Keislaman</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
  <!-- Form Pendaftaran Anggota Baru -->
 
-<section id="pendaftaran" class="py-24 bg-white">
+<section id="pendaftaran" class="py-24 bg-gradient-to-b from-gray-50 to-white">
     <div class="max-w-screen-xl mx-auto px-6 lg:px-8">
         <!-- Header -->
         <div class="text-center mb-10">
