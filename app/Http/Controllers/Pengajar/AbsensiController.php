@@ -103,7 +103,7 @@ class AbsensiController extends Controller
             if ($request->ke == 'ujian') {
                 $data_absensi_default = $data_peserta->mapWithKeys(function ($item) {
                     $ujian = $item->data_nilai;
-                    return ['ujian'.$item->id => $ujian['ujian']];
+                    return ['ujian'.$item->id => $ujian['ujian'] ?? ''];
                 });
             }
         } else {
@@ -148,6 +148,7 @@ class AbsensiController extends Controller
                 $peserta->update([
                     'data_nilai' => [
                         'ujian' => $request->input('ujian'.$peserta->id),
+                        'keteranganhasilujian' => $request->input('keteranganhasilujian'.$peserta->id),
                     ],
                     'status_ujian' => 'selesai ujian',
                 ]);

@@ -31,6 +31,9 @@
                                     <option value="{{ $level->id }}">{{ $level->nama }}</option>
                                 @endforeach
                             </x-splade-select>
+                            <span class="pt-2">Catatan Hasil Ujian</span>
+                            <input name="keteranganhasilujian{{ $item->id }}" value="{{ isset($ket_['keteranganhasilujian']) ? $ket_['keteranganhasilujian'] : '-' }}" placeholder="Catatan Hasil Ujian"
+                                    class="block w-full border focus:border-sky-300 focus:ring focus:ring-sky-200 focus:ring-opacity-50 disabled:opacity-50 border-gray-300 disabled:bg-gray-50 disabled:cursor-not-allowed rounded-md"/>
                         </div>
                     </div>
                 @endforeach

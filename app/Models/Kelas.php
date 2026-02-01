@@ -104,7 +104,7 @@ class Kelas extends Model
         $data_level = Cache::get('level') ?? [];
         if (!Cache::has('level')) {
             $data_level = \App\Models\Modules\Level::get()->mapWithKeys(fn ($item) => [$item->id => $item->nama])->toArray();
-            Cache::put('level', $level, now()->addMonth());
+            Cache::put('level', $data_level, now()->addMonth());
         }
 
         return $data_level[$level];
