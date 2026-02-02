@@ -111,11 +111,15 @@ Yayasan Arrahmah Balikpapan
     {
         $data_transaksi = \App\Models\LombaTransaksi::with(['user', 'peserta'])
                             ->when($request->cari, function($query) use ($request) {
-                                $query->where('nama', 'like', '%'.$request->cari.'%')
-                                ->orWhere('alamat', 'like', '%'.$request->cari.'%');
+                                $query->whereHas('peserta',  function ($q) use ($request) {
+                                    $q->where('nama', 'like', '%'.$request->cari.'%')
+                                    ->orWhere('alamat', 'like', '%'.$request->cari.'%');
+                                });
                             })
                             ->when($request->jenis_peserta, function($query) use ($request) {
-                                $query->where('jenis_kelamin', 'like', $request->jenis_peserta);
+                                $query->whereHas('peserta',  function ($q) use ($request) {
+                                    $q->where('jenis_kelamin', 'like', $request->jenis_peserta);
+                                });
                             })
                             ->when($request->status, function($query) use ($request) {
                                 $query->where('status', 'like', $request->status);
