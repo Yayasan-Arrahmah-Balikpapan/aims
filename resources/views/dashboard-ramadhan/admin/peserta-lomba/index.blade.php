@@ -64,6 +64,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[2] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[2]+$data_per_cabang[2] }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -147,6 +150,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[3] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[3]+$data_per_cabang[3] }}
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -157,6 +163,9 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[4] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[4]+$data_per_cabang[4] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -354,9 +363,9 @@
                                     {{ \Carbon\Carbon::parse($item->created_at)->format('d M Y - H:i') }}
                                 </td>
                                 <td class="uppercase">
-                                    <span class="text-gray-500 font-semibold">
+                                    <a href="https://wa.me/{{ $item->user->phone_number }}" class="text-primary-700 border border-primary-700 p-2 rounded-md font-semibold">
                                         {{ $item->user->phone_number }}
-                                    </span>
+                                    </a>
                                 </td>
                                 <td class="uppercase">
                                     <span class="text-gray-500 font-semibold">
@@ -436,9 +445,9 @@
                                             </Link>
                                         @endif --}}
 
-                                        <Link href="#" target="_blank" class="text-yellow-500 border border-yellow-500 rounded-md p-2 ml-2">
+                                        {{-- <Link href="#" target="_blank" class="text-yellow-500 border border-yellow-500 rounded-md p-2 ml-2">
                                             <x-carbon-edit class="w-4 h-4 text-yellow-500"/>
-                                        </Link>
+                                        </Link> --}}
                                         <x-splade-form action="{{ route('admin-ramadhan.peserta-lomba.destroy', ['peserta' => $item->id]) }}" method="delete"
                                             confirm
                                         >
