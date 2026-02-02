@@ -103,7 +103,7 @@
                                     @endfor
                                 @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
                                     <th></th>
-                                @else 
+                                @else
                                     <th></th>
                                 @endif
                                 <th></th>
@@ -157,7 +157,7 @@
                                     @else
                                         <th scope="col"
                                             class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
-                                            
+
                                         </th>
                                     @endif
                                 @endfor
@@ -168,7 +168,7 @@
                                         {{ $i }}
                                     </th>
                                 @endfor
-                            @else 
+                            @else
                                 <th scope="col" class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
                                     Belum Pilih Format Absensi
                                 </th>
@@ -275,7 +275,7 @@
 
                                         </td>
                                     @endfor
-                                @else 
+                                @else
                                     <td class="text-center p-2 uppercase">
                                         Belum Pilih Format Absensi
                                     </td>
@@ -294,8 +294,7 @@
                                     @endif
                                 </td>
                                 <td class="border-x text-center p-1 uppercase text-xs font-bold">
-                                    {{-- {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }} --}}
-                                    -
+                                    {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }}
                                 </td>
                             </tr>
                         @endforeach

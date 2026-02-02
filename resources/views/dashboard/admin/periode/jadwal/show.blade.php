@@ -131,8 +131,7 @@
                                         @endif
                                     </td>
                                     <td class="border-x text-center p-1 uppercase text-xs font-bold">
-                                        {{-- {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }} --}}
-                                        -
+                                        {{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }}
                                     </td>
                                 </tr>
                             @endforeach
