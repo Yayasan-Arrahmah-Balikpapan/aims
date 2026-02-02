@@ -154,9 +154,9 @@ Yayasan Arrahmah Balikpapan
         $data_transaksi->data_pembayaran = $notif_pembayaran;
         $data_transaksi->save();
 
-        // $nowa = $data_transaksi->user->phone_code.ltrim($data_transaksi->user->phone_number, '0');
+        $nowa = $data_transaksi->user->phone_code.ltrim($data_transaksi->user->phone_number, '0');
 
-        // $this->kirimNotifWaPembayaran($nowa, $data_transaksi->uuid);
+        $this->kirimNotifWaPembayaran($nowa, $data_transaksi->uuid);
 
         Toast::info('Notifikasi berhasil dikirim '.$data_transaksi->peserta->nama);
         return redirect()->back();
