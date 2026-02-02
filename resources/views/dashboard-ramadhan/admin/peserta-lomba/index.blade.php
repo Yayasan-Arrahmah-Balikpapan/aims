@@ -34,6 +34,9 @@
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     Peserta
                                 </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Total
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +49,9 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[1] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[1]+$data_per_cabang[1] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -75,6 +81,9 @@
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     Peserta
                                 </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Total
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +97,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[9] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[9]+$data_per_cabang[9] }}
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -98,6 +110,9 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[10] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[10]+$data_per_cabang[10] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -115,6 +130,9 @@
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     Peserta
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Total
                                 </th>
                             </tr>
                         </thead>
@@ -151,6 +169,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[5] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[5]+$data_per_cabang[5] }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,6 +189,9 @@
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     Peserta
                                 </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Total
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -181,6 +205,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[6] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[6]+$data_per_cabang[6] }}
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -191,6 +218,9 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[7] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[7]+$data_per_cabang[7] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -203,6 +233,9 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[8] }}
                                 </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[8]+$data_per_cabang[8] }}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -211,7 +244,7 @@
 
             <div class="items-center justify-end flex space-x-2">
                 <a href="{{ route('admin-ramadhan.peserta-lomba.export')}}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
-                    Export
+                    Export Semua Peserta
                     @svg('carbon-download', 'ml-2 text-white h-4 w-4')
                 </a>
                 {{-- <Link modal max-width="lg" href="{{ route('admin.jadwal.create', ['unit' => $unit, 'periode' => $periode]) }}" class="text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
