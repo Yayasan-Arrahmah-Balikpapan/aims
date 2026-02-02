@@ -5,13 +5,28 @@ namespace App\Http\Controllers\AdminRamadhan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\SpladeTable;
+use ProtoneMedia\Splade\Facades\Toast;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 
 
 class PesertaLombaRamadhanController extends Controller
 {
     public function index(Request $request)
     {
+        $sortBy  = $request->get('sort_by', 'created_at'); // default kolom
+        $sortDir = $request->get('sort_dir', 'desc');      // default arah
+
+        // whitelist kolom yang boleh di-sort
+        $allowedSorts = ['created_at', 'nama', 'tanggal_lahir'];
+
+        if (! in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'created_at';
+        }
+
+        if (! in_array(strtolower($sortDir), ['asc', 'desc'])) {
+            $sortDir = 'desc';
+        }
         $data_peserta_lomba = \App\Models\LombaPeserta::with(['user', 'pendaftaran', 'pendaftaran.cabang'])
                             ->when($request->cari, function($query) use ($request) {
                                 $query->where('nama', 'like', '%'.$request->cari.'%')
@@ -28,11 +43,13 @@ class PesertaLombaRamadhanController extends Controller
                                     $query->whereDate('created_at', '=', $request->tanggal);
                                 }
                             })
+                            ->orderBy($sortBy, $sortDir)
                             ->latest()->paginate(15);
         $total_pendaftar    = \App\Models\LombaPeserta::count();
         $total_peserta      = \App\Models\LombaPeserta::whereHas('transaksi', function ($q2) { $q2->whereIn('status', [2, 3]); })->count();
 
         $data_cabang = \App\Models\LombaCabang::where('event_id', 1)->get();
+
         $data_per_cabang = [];
         foreach ($data_cabang as $cabang) {
             $data_per_cabang[$cabang->id] = \App\Models\LombaPeserta::
@@ -44,11 +61,49 @@ class PesertaLombaRamadhanController extends Controller
                 })->count();
         }
 
-        return view('dashboard-ramadhan.admin.peserta-lomba.index', compact('data_peserta_lomba', 'data_per_cabang', 'data_cabang', 'total_pendaftar', 'total_peserta'));
+        $data_per_cabang_pendaftar = [];
+        foreach ($data_cabang as $cabang_pendaftar) {
+            $data_per_cabang_pendaftar[$cabang_pendaftar->id] = \App\Models\LombaPeserta::
+                whereHas('pendaftaran', function ($q) use ($cabang_pendaftar) {
+                    $q->where('cabang_id', $cabang_pendaftar->id);
+                })->count();
+        }
+
+        return view('dashboard-ramadhan.admin.peserta-lomba.index', compact('data_peserta_lomba', 'data_per_cabang', 'data_cabang', 'total_pendaftar', 'total_peserta', 'data_per_cabang_pendaftar'));
     }
 
     public function export()
     {
         return Excel::download(new \App\Exports\AdminRamadhanLombaPeserta, 'Data_Peserta_Lomba_144H.xlsx');
     }
+
+    public function destroy($peserta)
+    {
+        try {
+            DB::transaction(function () use ($peserta) {
+                $peserta_lomba = \App\Models\LombaPeserta::with([
+                    'pendaftaran',
+                    'transaksi'
+                ])->findOrFail($peserta);
+
+                // 1. hapus transaksi dulu
+                $peserta_lomba->transaksi()->delete();
+
+                // 2. hapus pendaftaran
+                $peserta_lomba->pendaftaran()->delete();
+
+                // 3. hapus peserta
+                $peserta_lomba->delete();
+
+            });
+            Toast::message('Data berhasil di hapus')->autoDismiss(10);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Toast::warning('Data gagal di hapus')->autoDismiss(10);
+            throw $th;
+        }
+        return redirect()->back();
+
+    }
+
 }

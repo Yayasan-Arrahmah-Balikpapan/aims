@@ -24,10 +24,25 @@
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Lomba Menggambar & Mewarnai - {{ $data_per_cabang[1] + $data_per_cabang[2] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Pendaftar
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Peserta
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori A
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[1] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[1] }}
@@ -36,6 +51,9 @@
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori B
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[2] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[2] }}
@@ -47,10 +65,25 @@
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Cerdas Cermat - {{ $data_per_cabang[9] + $data_per_cabang[10] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Pendaftar
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Peserta
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori SD
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[9] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[9] }}
@@ -59,6 +92,9 @@
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori SMP
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[10] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[10] }}
@@ -70,10 +106,25 @@
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Lomba Adzan & Iqomah - {{ $data_per_cabang[3] + $data_per_cabang[4] + $data_per_cabang[5] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Pendaftar
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Peserta
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori A
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[3] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[3] }}
@@ -84,12 +135,18 @@
                                     Kategori B
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[4] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[4] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori C
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[5] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[5] }}
@@ -101,10 +158,25 @@
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Lomba Tahfidz - {{ $data_per_cabang[6] + $data_per_cabang[7] + $data_per_cabang[8] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Pendaftar
+                                </th>
+                                <th class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    Peserta
+                                </th>
+                            </tr>
+                        </thead>
                         <tbody>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori A
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[6] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[6] }}
@@ -115,12 +187,18 @@
                                     Kategori B
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[7] }}
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[7] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
                                     Kategori C
+                                </td>
+                                <td class="px-3 py-3 uppercase text-gray-900 font-medium">
+                                    {{ $data_per_cabang_pendaftar[8] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang[8] }}
@@ -141,6 +219,25 @@
                     @svg('carbon-add-filled', 'ml-2 text-white h-4 w-4')
                 </Link> --}}
             </div>
+            @php
+                $currentSortBy  = request('sort_by', 'created_at');
+                $currentSortDir = request('sort_dir', 'desc');
+
+                function sortLink($column) {
+                    $dir = request('sort_dir') === 'asc' ? 'desc' : 'asc';
+
+                    return request()->fullUrlWithQuery([
+                        'sort_by'  => $column,
+                        'sort_dir' => $dir,
+                    ]);
+                }
+
+                function sortIcon($column) {
+                    if (request('sort_by') !== $column) return '';
+
+                    return request('sort_dir') === 'asc' ? '↑' : '↓';
+                }
+            @endphp
             <div class="container mx-auto">
                 <x-splade-form method="GET" class="sm:flex items-center sm:space-x-2 border border-gray-300 rounded-lg p-2 mb-2"
                     :default="[
@@ -173,25 +270,37 @@
                     <thead>
                         <tr class="border-b border-gray-200 ">
                             <th scope="col" class="p-4 uppercase">
-                                Tanggal Daftar
+                                <a href="{{ sortLink('created_at') }}" class="flex items-center gap-1">
+                                    Tanggal Daftar
+                                    <span>{{ sortIcon('created_at') }}</span>
+                                </a>
                             </th>
                             <th scope="col" class="uppercase">
                                 No Telp
                             </th>
                             <th scope="col" class="uppercase">
-                                Peserta
+                                <a href="{{ sortLink('nama') }}" class="flex items-center gap-1">
+                                    Peserta
+                                    <span>{{ sortIcon('nama') }}</span>
+                                </a>
                             </th>
                             <th scope="col" class="uppercase">
                                 Jenis
                             </th>
                             <th scope="col" class="uppercase">
-                                Tanggal Lahir
+                                <a href="{{ sortLink('tanggal_lahir') }}" class="flex items-center gap-1">
+                                    Tanggal Lahir
+                                    <span>{{ sortIcon('tanggal_lahir') }}</span>
+                                </a>
                             </th>
                             <th scope="col" class="uppercase">
                                 Cabang
                             </th>
                             <th scope="col" class="uppercase">
-                                Status Proses
+                                Proses
+                            </th>
+                            <th scope="col" class="uppercase">
+                                Pembayaran
                             </th>
                             <th scope="col" class="uppercase">
 
@@ -256,6 +365,19 @@
                                         @endforeach
                                     </div>
                                 </td>
+                                <td class="uppercase">
+                                    @if ($item->transaksi->status == 1)
+                                        <span class="bg-yellow-300 text-gray-900 px-2 py-1 text-xs font-semibold rounded-xl">Menunggu Pembayaran</span>
+                                    @elseif ($item->transaksi->status == 2)
+                                        <span class="bg-blue-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Menunggu Konfirmasi</span>
+                                    @elseif ($item->transaksi->status == 3)
+                                        <span class="bg-green-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Lunas</span>
+                                    @elseif ($item->transaksi->status == 4)
+                                        <span class="bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Kadaluarsa</span>
+                                    @else
+                                        <span class="bg-gray-500 text-white px-2 py-1 text-xs font-semibold rounded-xl">Batal</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <div class="flex items-center justify-center">
                                         {{-- @if ($item->status == 1)
@@ -274,9 +396,19 @@
                                             </Link>
                                         @endif --}}
 
-                                        {{-- <Link href="#" target="_blank" class="text-yellow-500 border border-yellow-500 rounded-md p-2 ml-2">
+                                        <Link href="#" target="_blank" class="text-yellow-500 border border-yellow-500 rounded-md p-2 ml-2">
                                             <x-carbon-edit class="w-4 h-4 text-yellow-500"/>
-                                        </Link> --}}
+                                        </Link>
+                                        <x-splade-form action="{{ route('admin-ramadhan.peserta-lomba.destroy', ['peserta' => $item->id]) }}" method="delete"
+                                            confirm
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="text-red-500 border border-red-500 rounded-md p-2 ml-2">
+                                                <x-carbon-trash-can class="w-4 h-4 text-red-500"/>
+                                            </button>
+                                        </x-splade-form>
                                     </div>
                                 </td>
                             </tr>
