@@ -35,7 +35,7 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Total
+                                    Menunggu Konfirmasi
                                 </th>
                             </tr>
                         </thead>
@@ -51,7 +51,7 @@
                                     {{ $data_per_cabang[1] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[1]+$data_per_cabang[1] }}
+                                    {{ $data_per_cabang_pendaftar[1]-$data_per_cabang[1] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -65,7 +65,7 @@
                                     {{ $data_per_cabang[2] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[2]+$data_per_cabang[2] }}
+                                    {{ $data_per_cabang_pendaftar[2]-$data_per_cabang[2] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -82,10 +82,10 @@
                                     Pendaftar
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Peserta
+                                    Kelompok
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Total
+                                    Menunggu Konfirmasi
                                 </th>
                             </tr>
                         </thead>
@@ -101,7 +101,7 @@
                                     {{ $data_per_cabang[9] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[9]+$data_per_cabang[9] }}
+                                    {{ $data_per_cabang_pendaftar[9]-$data_per_cabang[9] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -115,7 +115,7 @@
                                     {{ $data_per_cabang[10] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[10]+$data_per_cabang[10] }}
+                                    {{ $data_per_cabang_pendaftar[10]-$data_per_cabang[10] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -135,7 +135,7 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Total
+                                    Menunggu Konfirmasi
                                 </th>
                             </tr>
                         </thead>
@@ -151,7 +151,7 @@
                                     {{ $data_per_cabang[3] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[3]+$data_per_cabang[3] }}
+                                    {{ $data_per_cabang_pendaftar[3]-$data_per_cabang[3] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -165,7 +165,7 @@
                                     {{ $data_per_cabang[4] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[4]+$data_per_cabang[4] }}
+                                    {{ $data_per_cabang_pendaftar[4]-$data_per_cabang[4] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -179,7 +179,7 @@
                                     {{ $data_per_cabang[5] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[5]+$data_per_cabang[5] }}
+                                    {{ $data_per_cabang_pendaftar[5]-$data_per_cabang[5] }}
                                 </td>
                             </tr>
                         </tbody>
@@ -199,7 +199,7 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Total
+                                    Menunggu Konfirmasi
                                 </th>
                             </tr>
                         </thead>
@@ -215,7 +215,7 @@
                                     {{ $data_per_cabang[6] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[6]+$data_per_cabang[6] }}
+                                    {{ $data_per_cabang_pendaftar[6]-$data_per_cabang[6] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -229,7 +229,7 @@
                                     {{ $data_per_cabang[7] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[7]+$data_per_cabang[7] }}
+                                    {{ $data_per_cabang_pendaftar[7]-$data_per_cabang[7] }}
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -243,7 +243,7 @@
                                     {{ $data_per_cabang[8] }}
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    {{ $data_per_cabang_pendaftar[8]+$data_per_cabang[8] }}
+                                    {{ $data_per_cabang_pendaftar[8]-$data_per_cabang[8] }}
                                 </td>
                             </tr>
                         </tbody>
