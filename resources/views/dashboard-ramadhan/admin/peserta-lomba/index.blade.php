@@ -252,7 +252,7 @@
             </div>
 
             <div class="items-center justify-end flex space-x-2">
-                <a href="{{ route('admin-ramadhan.peserta-lomba.export')}}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
+                <a target="_blank" href="{{ route('admin-ramadhan.peserta-lomba.export')}}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Export Semua Peserta
                     @svg('carbon-download', 'ml-2 text-white h-4 w-4')
                 </a>
