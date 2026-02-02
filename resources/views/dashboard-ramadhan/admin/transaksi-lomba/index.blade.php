@@ -125,9 +125,16 @@
                                 <td>
                                     <div class="flex items-center justify-center">
                                         @if ($item->status == 1)
-                                            <Link href="{{ route('admin-ramadhan.transaksi-lomba.konfirmasi', ['transaksi' => $item->id])}}" class="relative text-white border border-yellow-400 bg-yellow-400 rounded-md p-2 mr-2">
-                                                <span class="absolute top-0 right-0 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">0</span>
-                                                <span class="absolute top-0 right-4 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-500 rounded-full">0</span>
+                                            <Link href="{{ route('admin-ramadhan.transaksi-lomba.notif-pengingat-pembayaran', ['transaksi' => $item->id])}}" class="relative text-white border border-yellow-400 bg-yellow-400 rounded-md p-2 mr-2"
+                                                    confirm="Konfirmasi"
+                                                    confirm-text="Kirim Notif Pengingat Pembayaran ?"
+                                                    confirm-button="Yes"
+                                                    cancel-button="Cancel"
+                                                    >
+                                                <span class="absolute top-0 right-0 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-500 rounded-full">
+                                                    {{ isset($item->data_pembayaran['notif_pengingat_pembayaran']) ? $item->data_pembayaran['notif_pengingat_pembayaran'] : '0' }}
+                                                </span>
+                                                {{-- <span class="absolute top-0 right-4 inline-flex items-center justify-center px-1 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-sky-500 rounded-full">0</span> --}}
                                                 <x-carbon-notification class="w-4 h-4 mr-1 text-white"/>
                                             </Link>
                                         @endif

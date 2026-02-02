@@ -67,6 +67,46 @@ Yayasan Arrahmah Balikpapan
             return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
         }
     }
+
+    public function kirimNotifWaPembayaran($nomorhp, $uuid){
+
+    $isipesan = "Assalamualaikum Wr. Wb.,
+Ini adalah notifikasi automatis.
+Segera lakukan pembayaran sesuai dengan invoice yang telah diberikan.
+
+Invoice Anda:
+".url('/ramadhan/lomba/invoice/'.$uuid)."
+
+Untuk informasi lebih lanjut, silakan hubungi admin kami.
+
+Kontak CS Lomba :
+
+Ustadzah Widya
+wa.me/6285750223866
+
+Ustad Zaky
+wa.me/6281649329520
+
+Yayasan Arrahmah Balikpapan
+    ";
+        $url        = env('WA_API_URL');
+        $requestApi = Http::withBasicAuth(env('WA_API_USER'), env('WA_API_PASSWORD'))
+                            ->withHeaders([
+                                'Content-Type' => 'application/json',
+                                'Accept'       => 'application/json',
+                            ]);
+
+        try {
+            $response = $requestApi->post($url . '/send/message', [
+                "phone" => $nomorhp . '@s.whatsapp.net',
+                "message" => $isipesan,
+            ]);
+            $message = json_decode($response->body());
+            return response()->json(['success' => true, 'message' => $message], 200);
+        } catch (Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
     public function index(Request $request)
     {
         $data_transaksi = \App\Models\LombaTransaksi::with(['user', 'peserta'])
@@ -76,6 +116,9 @@ Yayasan Arrahmah Balikpapan
                             })
                             ->when($request->jenis_peserta, function($query) use ($request) {
                                 $query->where('jenis_kelamin', 'like', $request->jenis_peserta);
+                            })
+                            ->when($request->status, function($query) use ($request) {
+                                $query->where('status', 'like', $request->status);
                             })
                             ->when($request->tanggal_lahir, function($query) use ($request) {
                                 if (strpos($request->tanggal, ' to ') !== false) {
@@ -100,6 +143,22 @@ Yayasan Arrahmah Balikpapan
         $this->kirimNotifWa($nowa, $data_transaksi->peserta_id);
 
         Toast::info('Data berhasil dikonfirmasi '.$data_transaksi->peserta->nama);
+        return redirect()->back();
+    }
+
+    public function notif_pengingat_pembayaran($transaksi)
+    {
+        $data_transaksi = \App\Models\LombaTransaksi::find($transaksi);
+        $notif_pembayaran = $data_transaksi->data_pembayaran;
+        $notif_pembayaran['notif_pengingat_pembayaran'] = isset($notif_pembayaran['notif_pengingat_pembayaran']) ? $notif_pembayaran['notif_pengingat_pembayaran'] + 1 : 1;
+        $data_transaksi->data_pembayaran = $notif_pembayaran;
+        $data_transaksi->save();
+
+        // $nowa = $data_transaksi->user->phone_code.ltrim($data_transaksi->user->phone_number, '0');
+
+        // $this->kirimNotifWaPembayaran($nowa, $data_transaksi->uuid);
+
+        Toast::info('Notifikasi berhasil dikirim '.$data_transaksi->peserta->nama);
         return redirect()->back();
     }
 }
