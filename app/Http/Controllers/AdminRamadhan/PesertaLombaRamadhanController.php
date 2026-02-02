@@ -35,6 +35,11 @@ class PesertaLombaRamadhanController extends Controller
                             ->when($request->jenis_peserta, function($query) use ($request) {
                                 $query->where('jenis_kelamin', 'like', $request->jenis_peserta);
                             })
+                            ->when($request->cabang, function($query) use ($request) {
+                                $query->whereHas('pendaftaran', function ($q) use ($request) {
+                                    $q->whereIn('cabang_id', $request->cabang);
+                                });
+                            })
                             ->when($request->tanggal_lahir, function($query) use ($request) {
                                 if (strpos($request->tanggal, ' to ') !== false) {
                                     list($date1, $date2) = explode(' to ', $request->tanggal);
@@ -43,6 +48,7 @@ class PesertaLombaRamadhanController extends Controller
                                     $query->whereDate('created_at', '=', $request->tanggal);
                                 }
                             })
+
                             ->orderBy($sortBy, $sortDir)
                             ->latest()->paginate(15);
         $total_pendaftar    = \App\Models\LombaPeserta::count();

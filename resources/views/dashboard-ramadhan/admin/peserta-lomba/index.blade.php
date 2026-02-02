@@ -244,9 +244,16 @@
                             'cari' => request()->query('cari') ?? '',
                             'jenis_peserta' => request()->query('jenis_peserta') ?? '',
                             'status' => request()->query('status') ?? '',
+                            'cabang' => request()->query('cabang'),
                         ],
                     ">
                     <x-splade-input value="{{ request()->query('cari') }}" name="cari" placeholder="Cari" class="flex-grow"/>
+                    <x-splade-select name="cabang" multiple>
+                        <option value="">-- Cabang Lomba</option>
+                        @foreach ( $data_cabang as $item_cabang_f)
+                            <option value="{{ $item_cabang_f->id }}">{!! $item_cabang_f->nama !!}</option>
+                        @endforeach
+                    </x-splade-select>
                     <x-splade-select name="jenis_peserta">
                         <option value="" disabled selected>-- Jenis</option>
                         <option value="ikhwan">Ikhwan</option>
