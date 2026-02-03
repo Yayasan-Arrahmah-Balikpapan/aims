@@ -107,31 +107,48 @@ class AbsensiController extends Controller
                 });
             }
         } else {
-            $data_absen = Cache::remember('pengajar_absensi.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($kelas) {
-                return \App\Models\Absen::where('jadwal_id', $kelas)
-                    ->get();
-            });
+            // $data_absen = Cache::remember('pengajar_absensi.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($kelas) {
+            //     return \App\Models\Absen::where('jadwal_id', $kelas)
+            //         ->get();
+            // });
+            //  $data_absen_id = $data_absen->pluck('id');
+            //  $data_absensi_peserta = Cache::remember('pengajar_absensi-peserta.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen_id) {
+            //     return \App\Models\AbsensiPeserta::whereIn('absen_id', $data_absen_id)
+            //         ->get()
+            //         ->mapWithKeys(function ($item) {
+            //             return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
+            //         })
+            //         ->toArray();
+            // });
+            // $data_pertemuan_tanggal = Cache::remember('pengajar_pertemuan-tanggal.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen) {
+            //     return $data_absen->mapWithKeys(function ($item) {
+            //         return [$item->pertemuan_ke => $item->tanggal_pertemuan];
+            //     })
+            //     ->toArray();
+            //     });
+            // $data_pertemuan_tilawah = Cache::remember('pengajar_pertemuan-tilawah.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen) {
+            //     return $data_absen->mapWithKeys(function ($item) {
+            //         return [$item->pertemuan_ke => $item->tilawah];
+            //     })
+            //     ->toArray();
+            // });
+
+            $data_absen = \App\Models\Absen::where('jadwal_id', $kelas)->get();
             $data_absen_id = $data_absen->pluck('id');
-            $data_absensi_peserta = Cache::remember('pengajar_absensi-peserta.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen_id) {
-                return \App\Models\AbsensiPeserta::whereIn('absen_id', $data_absen_id)
-                    ->get()
-                    ->mapWithKeys(function ($item) {
-                        return [$item->kelas_id.'-'.$item->data_absen->pertemuan_ke => $item->absen];
-                    })
-                    ->toArray();
-            });
-            $data_pertemuan_tanggal = Cache::remember('pengajar_pertemuan-tanggal.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen) {
-                return $data_absen->mapWithKeys(function ($item) {
-                    return [$item->pertemuan_ke => $item->tanggal_pertemuan];
+            $data_absensi_peserta = \App\Models\AbsensiPeserta::whereIn('absen_id', $data_absen_id)
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [$item->kelas_id.'.'.$item->data_absen->pertemuan_ke => $item->absen];
                 })
                 ->toArray();
-            });
-            $data_pertemuan_tilawah = Cache::remember('pengajar_pertemuan-tilawah.'.$kelas.Auth::id(), now()->addMinutes(10), function () use ($data_absen) {
-                return $data_absen->mapWithKeys(function ($item) {
-                    return [$item->pertemuan_ke => $item->tilawah];
-                })
-                ->toArray();
-            });
+            $data_pertemuan_tanggal = $data_absen->mapWithKeys(function ($item) {
+                return [$item->pertemuan_ke => $item->tanggal_pertemuan];
+            })
+            ->toArray();
+            $data_pertemuan_tilawah = $data_absen->mapWithKeys(function ($item) {
+                return [$item->pertemuan_ke => $item->tilawah];
+            })
+            ->toArray();
         }
 
         // dd($data_pertemuan_tanggal);
