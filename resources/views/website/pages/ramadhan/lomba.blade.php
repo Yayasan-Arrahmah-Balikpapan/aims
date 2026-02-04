@@ -13,14 +13,14 @@
                     <x-carbon-alarm class="flex-1/4 h-8 w-8 mr-4"/>
                     <div class="flex-3/4">
                         <h2 class="text-md font-semibold">Pendaftaran</h2>
-                        <p class="text-sm font-medium">14 Januari - 10 Februari 2026</p>
+                        <p class="text-sm font-medium">14 Januari - 3 Februari 2026</p>
                     </div>
                 </div>
                 <div class="bg-[#deaa37] rounded-md p-4 text-white flex flex-row items-center mt-2">
                     <x-carbon-event class="flex-1/4 h-8 w-8 mr-4"/>
                     <div class="flex-3/4">
                         <h2 class="text-md font-semibold">Perlombaan</h2>
-                        <p class="text-sm font-medium">7,8,14,15 Februari 2026</p>
+                        <p class="text-sm font-medium">14 & 15 Februari 2026</p>
                     </div>
                 </div>
                 <div class="bg-[#deaa37] rounded-md p-4 text-white flex flex-row items-center mt-2">
