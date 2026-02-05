@@ -105,7 +105,7 @@ Yayasan Arrahmah Balikpapan
         $uuid = Str::uuid();
         session()->put('pendaftaran.lomba.ramadhan.uuid', $uuid);
 
-        return view('website.pages.ramadhan.lomba-daftar-tutup');
+        return view('website.pages.ramadhan.lomba-daftar');
     }
 
     public function lomba_daftar_store(Request $request)
