@@ -107,34 +107,6 @@
                                         <p class="text-sm font-medium text-gray-700">Jadwal</p>
                                         <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->nama_jadwal ?? '-' }}</p>
                                     </div>
-                                    {{-- <div class="flex items-center justify-between uppercase pb-4">
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Pengajar</p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->pengajar->kode_nama_pengajar ?? '-' }}</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Kategori</p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->periode->kategori }}</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Belajar</p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->status_belajar ?? '-' }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between uppercase">
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Hari</p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->hari_belajar ?? '-' }}</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Waktu </p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->jam_mulai }} WITA</p>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <p class="text-sm font-medium text-gray-700">Level</p>
-                                            <p class="text-md font-bold text-gray-800">{{ $data_peserta->jadwal->level ? $data_peserta->jadwal->level->nama : '-' }}</p>
-                                        </div>
-                                    </div> --}}
                                 @else
                                     <div class="text-center">Belum Memilih Jadwal</div>
                                 @endif
@@ -332,7 +304,7 @@
                                                             @endif
                                                         @endif
                                                     @empty
-                                                        BELUM LUNAS
+                                                        -
                                                     @endforelse
                                                     @if ($cek_biaya_pembayaran == true)
                                                         <span class="bg-red-500 text-white px-2 py-1 rounded text-xs">Belum Lunas</span>

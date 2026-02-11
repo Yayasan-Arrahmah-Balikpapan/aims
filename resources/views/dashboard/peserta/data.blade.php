@@ -62,7 +62,7 @@
                                                 {{ $item->peserta->nama }}
                                             </p>
                                             <p class="text-sm text-gray-500 uppercase">
-                                                {{ $item->nis_peserta }}
+                                                {{ $item->periode->nama }}
                                             </p>
                                         </Link>
                                     </div>
@@ -95,6 +95,22 @@
                                                     <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                                 </Link>
                                             @endif
+                                        </div>
+                                    </div>
+                                @endif
+
+                                @if ($item->status_daftar_ulang == 'belum daftar ulang' && $item->status_ujian == 'selesai ujian' && $data_periode_pendaftaran)
+                                    <hr class="my-1 sm:my-2" />
+                                    <div class="flex items-center justify-center text-center ">
+                                        <div class="items-center justify-center text-center text-base font-semibold text-gray-900">
+                                            <span class="text-gray-500 text-xs py-0 sm:py-1 font-semibold rounded-xl">
+                                                Anda Belum Melakukan Pendaftaran Ulang
+                                            </span>
+                                            <Link away href="{{ route('dashboard.peserta.lttq.tahsin.daftar-ulang.form', ['peserta' => $item->uuid ]) }}"
+                                                class="text-sm flex justify-between font-semibold border rounded-lg py-1.5 px-3 bg-sky-600 text-white">
+                                                Klik Form Daftar Ulang
+                                                <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                            </Link>
                                         </div>
                                     </div>
                                 @endif

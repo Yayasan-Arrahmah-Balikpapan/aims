@@ -89,7 +89,7 @@
                         </div> --}}
                     </div>
                 </section>
-                {{-- <section class="max-w-7xl mx-auto bg-white text-sm p-10">
+                <section class="max-w-7xl mx-auto bg-white text-sm p-10">
                     <div class="p-2 sm:p-4 rounded-md bg-amber-50 shadow-md">
                         <div class="flex items-center">
                             <div class="shrink-0 px-0 sm:px-4">
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                     </div>
-                </section> --}}
+                </section>
             </div>
             {{-- <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 bg-white text-sm">
                 <h2 class="text-xl font-bold pb-2">Daftar</h2>
@@ -254,7 +254,7 @@
                                                         {{ $item->peserta->nama }}
                                                     </p>
                                                     <p class="text-sm text-gray-500 uppercase">
-                                                        {{ $item->nis_peserta }}
+                                                        {{ $item->periode->nama }}
                                                     </p>
                                                 </Link>
                                             </div>
@@ -287,6 +287,21 @@
                                                             <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
                                                         </Link>
                                                     @endif
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if ($item->status_daftar_ulang == 'belum daftar ulang' && $item->status_ujian == 'selesai ujian' && $data_periode_pendaftaran)
+                                            <hr class="my-1 sm:my-2" />
+                                            <div class="flex items-center justify-center text-center ">
+                                                <div class="items-center justify-center text-center text-base font-semibold text-gray-900">
+                                                    <span class="text-gray-500 text-xs py-0 sm:py-1 font-semibold rounded-xl">
+                                                        Anda Belum Melakukan Pendaftaran Ulang
+                                                    </span>
+                                                    <Link away href="{{ route('dashboard.peserta.lttq.tahsin.daftar-ulang.form', ['peserta' => $item->uuid ]) }}"
+                                                        class="text-sm flex justify-between font-semibold border rounded-lg py-1.5 px-3 bg-sky-600 text-white">
+                                                        Klik Form Daftar Ulang
+                                                        <x-carbon-arrow-right class="w-5 h-5 ml-2 "/>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         @endif
@@ -364,7 +379,7 @@
                                             <div class="flex-1 min-w-0 sm:ms-4">
                                                 <Link href="{{ route('dashboard.peserta', ['uuid' => $item->kelas->uuid ]) }}">
                                                     <p class="text-md font-medium text-gray-900 uppercase">
-                                                        {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                                        {{ $item->kelas->peserta->nama }}
                                                     </p>
                                                     <p class="text-sm text-gray-500 uppercase">
                                                         {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
@@ -398,7 +413,7 @@
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div class="flex md:flex-row flex-col">
-                        <div class="flow-root">
+                        <div class="flow-root mx-4">
                             <div class="space-y-6">
                                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                                     <div class="" dusk="update-profile-information">
@@ -409,12 +424,6 @@
                                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                                     <div class="" dusk="update-profile-information">
                                         @include('profile.partials.update-phone')
-                                    </div>
-                                </div>
-
-                                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                                    <div class="" dusk="update-password">
-                                        @include('profile.partials.update-password-form')
                                     </div>
                                 </div>
 

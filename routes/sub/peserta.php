@@ -22,6 +22,10 @@ Route::prefix('/peserta')->group(function () {
 
 });
 
+Route::get('/peserta/lttq/tahsin/daftar-ulang', [\App\Http\Controllers\Peserta\TahsinDaftarUlangController::class, 'index'])->name('dashboard.peserta.lttq.tahsin.daftar-ulang');
+Route::get('/peserta/{peserta}/lttq/tahsin/daftar-ulang', [\App\Http\Controllers\Peserta\TahsinDaftarUlangController::class, 'form'])->name('dashboard.peserta.lttq.tahsin.daftar-ulang.form');
+Route::post('/peserta/{peserta}/lttq/tahsin/daftar-ulang/store', [\App\Http\Controllers\Peserta\TahsinDaftarUlangController::class, 'form_store'])->name('dashboard.peserta.lttq.tahsin.daftar-ulang.form-store');
+
 Route::get('/peserta/{peserta}/daftar-jadwal', [\App\Http\Controllers\Peserta\DaftarJadwalController::class, 'index'])->name('dashboard.peserta.daftar-jadwal');
 Route::get('/peserta/{peserta}/daftar-jadwal/{jadwal}', [\App\Http\Controllers\Peserta\DaftarJadwalController::class, 'store'])->name('dashboard.peserta.daftar-jadwal.update');
 
