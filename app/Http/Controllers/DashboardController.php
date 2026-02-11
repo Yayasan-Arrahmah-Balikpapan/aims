@@ -45,7 +45,7 @@ class DashboardController extends Controller
         // });
 
         $key_data_peserta_paginate = 'data_peserta_dashboard_paginate' . Auth::id();
-        $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(10), function () {
+        $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(1), function () {
             return \App\Models\Kelas::whereHas('peserta', function($query) {
                         $query->where('user_id', Auth::id());
                     })
@@ -56,7 +56,7 @@ class DashboardController extends Controller
 
         $data_peserta_id = $data_peserta_paginate->pluck('id');
         $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(1), function () {
             return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit', 'pembayaran')
                             ->where('user_id', Auth::id())
                             ->latest()
@@ -72,11 +72,20 @@ class DashboardController extends Controller
 
         // $data_pembayaran = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)->get()->toArray();
 
-        $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(10), function () {
+        $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(1), function () {
             return Peserta::where('user_id', Auth::id())->count();
         });
 
-        return view('dashboard-exp', compact('user',  'data_transaksi', 'data_peserta_paginate', 'count_peserta'));
+        $data_periode_pendaftaran =  \App\Models\Periode::
+            where('kategori', 'reguler')
+                ->whereHas('unit', function($query) {
+                    $query->where('slug', 'tahsin');
+                })
+            ->where('aktifkan_pendaftaran',1)
+            // ->latest()
+            ->first();
+
+        return view('dashboard-exp', compact('user',  'data_transaksi', 'data_peserta_paginate', 'count_peserta', 'data_periode_pendaftaran'));
     }
 
     public function peserta($uuid) {
@@ -111,7 +120,7 @@ class DashboardController extends Controller
     public function peserta_data(Request $request) {
 
         $key_data_peserta = 'data_peserta_data_' . Auth::id() . (isset($request->cari) ? '_'.$request->cari : '');
-        $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () use ($request) {
+        $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(0), function () use ($request) {
             return \App\Models\Kelas::with('periode', 'periode.unit', 'peserta')
                     ->whereHas('peserta', function($query) {
                         $query->where('user_id', Auth::id());
@@ -126,7 +135,16 @@ class DashboardController extends Controller
                     ->paginate(10);
         });
 
-        return view('dashboard.peserta.data', compact('data_peserta'));
+        $data_periode_pendaftaran =  \App\Models\Periode::
+            where('kategori', 'reguler')
+                ->whereHas('unit', function($query) {
+                    $query->where('slug', 'tahsin');
+                })
+            ->where('aktifkan_pendaftaran',1)
+            // ->latest()
+            ->first();
+
+        return view('dashboard.peserta.data', compact('data_peserta', 'data_periode_pendaftaran'));
     }
 
     public function peserta_riwayat_pembayaran() {
