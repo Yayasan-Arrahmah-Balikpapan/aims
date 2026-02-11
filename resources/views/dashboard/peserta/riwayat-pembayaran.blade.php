@@ -56,7 +56,7 @@
                                     <div class="flex-1 min-w-0 sm:ms-4">
                                         <Link href="{{ route('dashboard.peserta', ['uuid' => $item->kelas->uuid ]) }}">
                                             <p class="text-md font-medium text-gray-900 uppercase">
-                                                {{ $item->kelas->nis_peserta }} - {{ $item->kelas->peserta->nama }}
+                                                {{ $item->kelas->peserta->nama }}
                                             </p>
                                             <p class="text-sm text-gray-500 uppercase">
                                                 {{ $item->periode->unit->nama }} {{ $item->periode->nama }}
