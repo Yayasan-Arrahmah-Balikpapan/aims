@@ -290,7 +290,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        @if ($item->status_daftar_ulang == 'belum daftar ulang' && $item->status_ujian == 'selesai ujian' && $data_periode_pendaftaran)
+                                        {{-- @if ($item->status_daftar_ulang == 'belum daftar ulang' && $item->status_ujian == 'selesai ujian' && $data_periode_pendaftaran)
                                             <hr class="my-1 sm:my-2" />
                                             <div class="flex items-center justify-center text-center ">
                                                 <div class="items-center justify-center text-center text-base font-semibold text-gray-900">
@@ -304,7 +304,7 @@
                                                     </Link>
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif --}}
                                     </li>
                                 @empty
                                     <li class="p-4">
