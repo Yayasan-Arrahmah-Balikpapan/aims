@@ -155,12 +155,13 @@
                             Karena telah mencapai level Tajwidi, Anda akan di arahkan ke form pendaftaran Yayasan Al-Haqq Indonesia.
                         </h1>
                         <h1 class="text-md text-gray-700">
-                            Silah isi google form dan menuggu dihubungi oleh admin yayasan Al-Haqq Indonesia.
+                            Silah isi google form dan menunggu dihubungi oleh admin yayasan Al-Haqq Indonesia.
                         </h1>
                         <div class="my-2">
                             <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSc2_AR0PDkF4q3zLQszYdrOnygi0x6Fwq1pg4_ubiXBN8p7lQ/viewform"
-                                class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full">
+                                class="bg-primary-700 text-medium text-white rounded-md mt-2 flex items-center justify-between p-2 w-full">
                                 Klik Link Daftar Ulang Tajwidi
+                                <x-carbon-chevron-right class="h-6 w-6 ml-2" />
                             </a>
                         </div>
                     </div>
