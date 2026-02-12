@@ -149,198 +149,215 @@
 
                 <hr class="mt-4">
 
-                <div class="border border-gray-300 bg-gray-100 rounded-md p-4 my-4">
-                    @if ($data_peserta->status_daftar_ulang == 'belum daftar ulang')
-                        <x-splade-select class="text-2xl " name="jadwal" :label="__('Pilih Jadwal')" required>
-                            <option value="" disabled selected>-- Pilih Jadwal</option>
-                            @foreach ($data_jadwal as $jadwal)
-                                <option class="text-sm flex" value="{{ $jadwal->id }}" {{ $jadwal->kelas->count() >= $jadwal->batasan_peserta ? 'disabled' : '' }}>
-                                    {{
-                                        $jadwal->kelas->count() >= $jadwal->batasan_peserta
-                                                ? 'Penuh - '.$jadwal->pengajar->kode_nama_pengajar . ', ' .$jadwal->hari_belajar . ' ' . $jadwal->level->nama . ' ,' . $jadwal->jam_mulai . ' WITA - ' . $jadwal->status_belajar . ' - ' . $jadwal->kelas->count() . '/' . $jadwal->batasan_peserta
-                                                : ($jadwal->pengajar->kode_nama_pengajar . ', ' .$jadwal->hari_belajar . ' ' . $jadwal->level->nama . ' ,' . $jadwal->jam_mulai . ' WITA - ' . $jadwal->status_belajar . ' - ' . $jadwal->kelas->count() . '/' . $jadwal->batasan_peserta)
-                                    }}
-                                </option>
-                            @endforeach
-                        </x-splade-select>
-                    @else
-                    <div class="text-center">
-                        <h1 class="text-lg">
-                            Peserta telah menyelsaikan proses daftar ulang dan memilih jadwal tahsin
+                @if ($data_peserta->data_nilai['ujian'] == 11)
+                    <div class="text-center bg-sky-100 border border-sky-300 rounded-md p-4 my-4">
+                        <h1 class="text-lg font-bold text-gray-700">
+                            Karena telah mencapai level Tajwidi, Anda akan di arahkan ke form pendaftaran Yayasan Al-Haqq Indonesia.
                         </h1>
-                        <h1 class="text-lg font-bold">
-                            Jadwal yang sudah dipilih :
+                        <h1 class="text-md text-gray-700">
+                            Silah isi google form dan menuggu dihubungi oleh admin yayasan Al-Haqq Indonesia.
                         </h1>
-                        <h1 class="text-lg font-bold">
-                            {{ $data_peserta_sudah_daftar->jadwal->nama_jadwal }}
-                        </h1>
+                        <div class="my-2">
+                            <a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSc2_AR0PDkF4q3zLQszYdrOnygi0x6Fwq1pg4_ubiXBN8p7lQ/viewform"
+                                class="bg-white rounded-md mt-2 flex items-center justify-between p-2 w-full">
+                                Klik Link Daftar Ulang Tajwidi
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-md my-4 pt-2 flex items-center justify-center">
+                @else
+                    <div class="border border-gray-300 bg-gray-100 rounded-md p-4 my-4">
+                        @if ($data_peserta->status_daftar_ulang == 'belum daftar ulang')
+                            <x-splade-select class="text-2xl " name="jadwal" :label="__('Pilih Jadwal')" required>
+                                <option value="" disabled selected>-- Pilih Jadwal</option>
+                                @foreach ($data_jadwal as $jadwal)
+                                    <option class="text-sm flex" value="{{ $jadwal->id }}" {{ $jadwal->kelas->count() >= $jadwal->batasan_peserta ? 'disabled' : '' }}>
+                                        {{
+                                            $jadwal->kelas->count() >= $jadwal->batasan_peserta
+                                                    ? 'Penuh - '.$jadwal->pengajar->kode_nama_pengajar . ', ' .$jadwal->hari_belajar . ' ' . $jadwal->level->nama . ' ,' . $jadwal->jam_mulai . ' WITA - ' . $jadwal->status_belajar . ' - ' . $jadwal->kelas->count() . '/' . $jadwal->batasan_peserta
+                                                    : ($jadwal->pengajar->kode_nama_pengajar . ', ' .$jadwal->hari_belajar . ' ' . $jadwal->level->nama . ' ,' . $jadwal->jam_mulai . ' WITA - ' . $jadwal->status_belajar . ' - ' . $jadwal->kelas->count() . '/' . $jadwal->batasan_peserta)
+                                        }}
+                                    </option>
+                                @endforeach
+                            </x-splade-select>
+                        @else
+                        <div class="text-center">
+                            <h1 class="text-lg">
+                                Peserta telah menyelsaikan proses daftar ulang dan memilih jadwal tahsin
+                            </h1>
+                            <h1 class="text-lg font-bold">
+                                Jadwal yang sudah dipilih :
+                            </h1>
+                            <h1 class="text-lg font-bold">
+                                {{ $data_peserta_sudah_daftar->jadwal->nama_jadwal }}
+                            </h1>
+                        </div>
+                        <p class="text-md my-4 pt-2 flex items-center justify-center">
 
-                        <Link href="{{ route('dashboard.peserta.data') }}" class="flex p-2 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-900">
-                            Ke Profile Data Peserta
-                            <x-carbon-user class="h-6 w-6 ml-2" />
-                        </Link>
-                    </p>
+                            <Link href="{{ route('dashboard.peserta.data') }}" class="flex p-2 border border-gray-300 rounded-md hover:bg-gray-200 hover:text-gray-900">
+                                Ke Profile Data Peserta
+                                <x-carbon-user class="h-6 w-6 ml-2" />
+                            </Link>
+                        </p>
 
 
-                    @endif
+                        @endif
 
-                </div>
+                    </div>
 
-                @if ($data_peserta->status_daftar_ulang == 'belum daftar ulang')
+                    @if ($data_peserta->status_daftar_ulang == 'belum daftar ulang')
 
-                    <hr class="mb-4">
+                        <hr class="mb-4">
 
-                    <h1 class="text-md mb-2">Pembiayaan</h1>
-                    <div class="">
-                        <div class="relative overflow-x-auto border rounded-md mb-4">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                                <thead>
-                                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                                        <th scope="col"
-                                            class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 ">
-                                            Jenis Pembayaran
-                                        </th>
-                                        <th scope="col"
-                                            class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 text-center">
-                                            Pilihan
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach ($data_biaya as $item_biaya)
-                                        <tr class="border-b text-sm border-gray-200 0">
-                                            <td class="px-3 py-3 font-semibold uppercase text-gray-900">
-                                                {{ $item_biaya->nama }}
-                                                <div class="font-base text-gray-600">
-                                                    Rp. {{ number_format($item_biaya->nominal, 0, ',', '.') }}
-                                                </div>
-                                            </td>
-                                            <td class="px-3 py-3 font-semibold uppercase text-gray-900 text-center">
-                                                @if ($item_biaya->wajib_dibayar_awal == true)
-                                                    <div class="flex items-center justify-center">
-                                                        <div class="bg-primary-600 p-1 rounded-md">
-                                                            <x-carbon-checkmark class="h-4 w-4 text-white" />
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <input type="checkbox" v-model="form.pembayaran{{ $item_biaya->id }}" name="pembayaran{{ $item_biaya->id }}"
-                                                        class="w-6 h-6 rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
-                                                    >
-
-                                                @endif
-                                            </td>
+                        <h1 class="text-md mb-2">Pembiayaan</h1>
+                        <div class="">
+                            <div class="relative overflow-x-auto border rounded-md mb-4">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                                    <thead>
+                                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                                            <th scope="col"
+                                                class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 ">
+                                                Jenis Pembayaran
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3 font-bold text-gray-600 whitespace-nowrap bg-gray-50 text-center">
+                                                Pilihan
+                                            </th>
                                         </tr>
-                                    @endforeach
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach ($data_biaya as $item_biaya)
+                                            <tr class="border-b text-sm border-gray-200 0">
+                                                <td class="px-3 py-3 font-semibold uppercase text-gray-900">
+                                                    {{ $item_biaya->nama }}
+                                                    <div class="font-base text-gray-600">
+                                                        Rp. {{ number_format($item_biaya->nominal, 0, ',', '.') }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-3 py-3 font-semibold uppercase text-gray-900 text-center">
+                                                    @if ($item_biaya->wajib_dibayar_awal == true)
+                                                        <div class="flex items-center justify-center">
+                                                            <div class="bg-primary-600 p-1 rounded-md">
+                                                                <x-carbon-checkmark class="h-4 w-4 text-white" />
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <input type="checkbox" v-model="form.pembayaran{{ $item_biaya->id }}" name="pembayaran{{ $item_biaya->id }}"
+                                                            class="w-6 h-6 rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50"
+                                                        >
+
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="my-4 bg-stone-100 p-4 rounded-lg font-semibold">
+                            <p class="text-sm text-gray-500 mb-2">
+                                Dengan ini saya menyetujui aturan-aturan yang berlaku untuk mendaftar diri saya sebagai peserta tahsin Ar Rahmah:
+                            </p>
+                            <table class="w-full text-xs text-gray-700">
+                                <tbody>
+                                    <tr class="border-b">
+                                        <td class="px-4">1.</td>
+                                        <td class="py-2">Tahsin LTTQ Ar Rahmah Balikpapan menggunakan Metode Al Haqq.</td>
+                                    </tr>
+                                    <tr class="border-b bg-stone-200">
+                                        <td class="px-4">2.</td>
+                                        <td class="py-2">Jumlah pertemuan tahsin adalah sebanyak 16 kali pertemuan dalam 1 level (termasuk kuliah perdana).</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="px-4">3.</td>
+                                        <td class="py-2">Jumlah pertemuan tahsin dalam sepekan diadakan sebanyak 1 kali dengan durasi maksimal 2 jam.</td>
+                                    </tr>
+                                    <tr class="border-b bg-stone-200">
+                                        <td class="px-4">4.</td>
+                                        <td class="py-2">SPP wajib dibayarkan sebanyak 480.000 dalam 1 level pembelajaran (diluar biaya pendaftaran, modul, buku prestasi, dan mushaf).</td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="px-4">5.</td>
+                                        <td class="py-2">Peserta wajib membeli perlengkapan tahsin; Mushaf Rasm Utsmani, Modul dan Buku Prestasi.</td>
+                                    </tr>
+                                    <tr class="border-b bg-stone-200">
+                                        <td class="px-4">6.</td>
+                                        <td class="py-2">Peserta wajib mengikuti minimal 10 pertemuan agar bisa mengikuti ujian.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-4">7.</td>
+                                        <td class="py-2">Peserta wajib mengikuti aturan tambahan jika dikeluarkan sewaktu-waktu oleh pihak LTTQ Ar Rahmah Balikpatan.</td>
+                                    </tr>
+                                    <tr class="border-b bg-stone-200">
+                                        <td class="px-4 ">8.</td>
+                                        <td class="py-2">Peserta yang terdaftar kemudian membatalkan keikutsertaan kegiatan Tahsin di LTTQ Ar Rahmah Balikpapan, Maka refund (pengembalian biaya pembayaran) bisa diberlakukan kecuali Biaya Pendaftaran.</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="my-4 bg-stone-100 p-4 rounded-lg font-semibold">
-                        <p class="text-sm text-gray-500 mb-2">
-                            Dengan ini saya menyetujui aturan-aturan yang berlaku untuk mendaftar diri saya sebagai peserta tahsin Ar Rahmah:
-                        </p>
-                        <table class="w-full text-xs text-gray-700">
-                            <tbody>
-                                <tr class="border-b">
-                                    <td class="px-4">1.</td>
-                                    <td class="py-2">Tahsin LTTQ Ar Rahmah Balikpapan menggunakan Metode Al Haqq.</td>
-                                </tr>
-                                <tr class="border-b bg-stone-200">
-                                    <td class="px-4">2.</td>
-                                    <td class="py-2">Jumlah pertemuan tahsin adalah sebanyak 16 kali pertemuan dalam 1 level (termasuk kuliah perdana).</td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-4">3.</td>
-                                    <td class="py-2">Jumlah pertemuan tahsin dalam sepekan diadakan sebanyak 1 kali dengan durasi maksimal 2 jam.</td>
-                                </tr>
-                                <tr class="border-b bg-stone-200">
-                                    <td class="px-4">4.</td>
-                                    <td class="py-2">SPP wajib dibayarkan sebanyak 480.000 dalam 1 level pembelajaran (diluar biaya pendaftaran, modul, buku prestasi, dan mushaf).</td>
-                                </tr>
-                                <tr class="border-b">
-                                    <td class="px-4">5.</td>
-                                    <td class="py-2">Peserta wajib membeli perlengkapan tahsin; Mushaf Rasm Utsmani, Modul dan Buku Prestasi.</td>
-                                </tr>
-                                <tr class="border-b bg-stone-200">
-                                    <td class="px-4">6.</td>
-                                    <td class="py-2">Peserta wajib mengikuti minimal 10 pertemuan agar bisa mengikuti ujian.</td>
-                                </tr>
-                                <tr>
-                                    <td class="px-4">7.</td>
-                                    <td class="py-2">Peserta wajib mengikuti aturan tambahan jika dikeluarkan sewaktu-waktu oleh pihak LTTQ Ar Rahmah Balikpatan.</td>
-                                </tr>
-                                <tr class="border-b bg-stone-200">
-                                    <td class="px-4 ">8.</td>
-                                    <td class="py-2">Peserta yang terdaftar kemudian membatalkan keikutsertaan kegiatan Tahsin di LTTQ Ar Rahmah Balikpapan, Maka refund (pengembalian biaya pembayaran) bisa diberlakukan kecuali Biaya Pendaftaran.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4 border p-4 rounded-md">
-                        <label for="donasi" class="block text-sm font-medium text-gray-700">Yuk salurkan infaq terbaikmu :)</label>
-                        <div class="grid grid-cols-2 gap-2 mt-2">
-                            <div>
-                                <label class="flex items-center space-y-2">
-                                    <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="0" checked>
-                                    <span class="ml-2 block text-sm text-gray-700">0</span>
-                                </label>
-                                <hr>
-                                @foreach ([
-                                    5000 => 'Rp 5.000',
-                                    10000 => 'Rp 10.000',
-                                    25000 => 'Rp 25.000',
-                                    50000 => 'Rp 50.000',
-                                ] as $value => $label)
+                        <div class="mt-4 border p-4 rounded-md">
+                            <label for="donasi" class="block text-sm font-medium text-gray-700">Yuk salurkan infaq terbaikmu :)</label>
+                            <div class="grid grid-cols-2 gap-2 mt-2">
+                                <div>
                                     <label class="flex items-center space-y-2">
-                                        <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="{{ $value }}">
-                                        <span class="ml-2 block text-sm text-gray-700">{{ $label }}</span>
+                                        <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="0" checked>
+                                        <span class="ml-2 block text-sm text-gray-700">0</span>
                                     </label>
                                     <hr>
-                                @endforeach
+                                    @foreach ([
+                                        5000 => 'Rp 5.000',
+                                        10000 => 'Rp 10.000',
+                                        25000 => 'Rp 25.000',
+                                        50000 => 'Rp 50.000',
+                                    ] as $value => $label)
+                                        <label class="flex items-center space-y-2">
+                                            <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="{{ $value }}">
+                                            <span class="ml-2 block text-sm text-gray-700">{{ $label }}</span>
+                                        </label>
+                                        <hr>
+                                    @endforeach
+                                </div>
+                                <div>
+                                    @foreach ([
+                                        100000 => 'Rp 100.000',
+                                        200000 => 'Rp 200.000',
+                                        500000 => 'Rp 500.000',
+                                        1000000 => 'Rp 1.000.000',
+                                    ] as $value => $label)
+                                        <label class="flex items-center space-y-2">
+                                            <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="{{ $value }}">
+                                            <span class="ml-2 block text-sm text-gray-700">{{ $label }}</span>
+                                        </label>
+                                        <hr>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div>
-                                @foreach ([
-                                    100000 => 'Rp 100.000',
-                                    200000 => 'Rp 200.000',
-                                    500000 => 'Rp 500.000',
-                                    1000000 => 'Rp 1.000.000',
-                                ] as $value => $label)
-                                    <label class="flex items-center space-y-2">
-                                        <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="{{ $value }}">
-                                        <span class="ml-2 block text-sm text-gray-700">{{ $label }}</span>
-                                    </label>
-                                    <hr>
-                                @endforeach
-                            </div>
-                        </div>
-                        <label class="flex items-center pt-2">
-                            <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="custom">
-                            <input type="number" class="ml-2 block w-full border-gray-300 rounded" name="pembayaran_custom_donasi" v-model="form.pembayarandonasicustom" placeholder="Atau Masukkan nominal" min="0" step="1000" disabled>
-                        </label>
-                        <x-splade-script>
-                            document.querySelectorAll('input[name="pembayaran_donasi"]').forEach(radio => {
-                                radio.addEventListener('change', function() {
-                                    const customInput = document.querySelector('input[name="pembayaran_custom_donasi"]');
-                                    if (this.value === 'custom') {
-                                        customInput.disabled = false;
-                                        customInput.focus();
-                                    } else {
-                                        customInput.disabled = true;
-                                    }
+                            <label class="flex items-center pt-2">
+                                <input type="radio" class="focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded" name="pembayaran_donasi" v-model="form.pembayarandonasi" value="custom">
+                                <input type="number" class="ml-2 block w-full border-gray-300 rounded" name="pembayaran_custom_donasi" v-model="form.pembayarandonasicustom" placeholder="Atau Masukkan nominal" min="0" step="1000" disabled>
+                            </label>
+                            <x-splade-script>
+                                document.querySelectorAll('input[name="pembayaran_donasi"]').forEach(radio => {
+                                    radio.addEventListener('change', function() {
+                                        const customInput = document.querySelector('input[name="pembayaran_custom_donasi"]');
+                                        if (this.value === 'custom') {
+                                            customInput.disabled = false;
+                                            customInput.focus();
+                                        } else {
+                                            customInput.disabled = true;
+                                        }
+                                    });
                                 });
-                            });
-                        </x-splade-script>
-                    </div>
+                            </x-splade-script>
+                        </div>
 
-                    <div class="flex items-center justify-center mt-6">
-                        <x-splade-submit class="bg-primary-700 text-medium text-white py-2.5 px-5 rounded-lg flex items-center justify-between">
-                            Daftar & Lanjutkan Pembayaran <x-carbon-chevron-right class="h-8 w-8 pl-2" />
-                        </x-splade-submit>
-                    </div>
+                        <div class="flex items-center justify-center mt-6">
+                            <x-splade-submit class="bg-primary-700 text-medium text-white py-2.5 px-5 rounded-lg flex items-center justify-between">
+                                Daftar & Lanjutkan Pembayaran <x-carbon-chevron-right class="h-8 w-8 pl-2" />
+                            </x-splade-submit>
+                        </div>
+                    @endif
                 @endif
             </x-splade-form>
         </div>
