@@ -52,12 +52,12 @@ class AuthPhoneController extends Controller
         $kode = rand(1000,9999);
         $user = $this->userRepo->findDataPhone($nomor);
         $this->userRepo->updateOTP($nomor, $kode);
-        $this->notifService->kirimNotifWa($user->phone_code.ltrim($user->phone_number, '0'), $this->formatPesanAksesWa($kode));
-        $this->successSendOTP($nomor);
+        // $this->notifService->kirimNotifWa($user->phone_code.ltrim($user->phone_number, '0'), $this->formatPesanAksesWa($kode));
+        // $this->successSendOTP($nomor);
 
         return redirect()->route('akses.nomor',
             ['nomor' => $request->phone_number,
-                        // 'kode' => $kode
+                        'kode' => $kode
                     ]);
     }
 

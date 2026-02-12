@@ -6,7 +6,7 @@
         <x-auth-session-status class="mb-4" />
 
         <x-splade-form action="{{ route('akses.login') }}" :default="['phone_number' => $nomor,
-        // 'password' => request()->kode
+        'password' => request()->kode
         ]" >
 
             <label class="mb-2 flex items-center justify-center text-l font-bold text-gray-500 pt-5">
@@ -31,7 +31,7 @@
                     <x-splade-input name="password" type="tel" class="text-3xl text-center border-0" placeholder="_ _ _ _"  required autocomplete="current-password"/>
                 </div>
             </div>
-            <SendOTP />
+            {{-- <SendOTP /> --}}
 
 
             <div class="flex items-center justify-center py-5">
