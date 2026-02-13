@@ -41,7 +41,9 @@ class TahsinDaftarUlangController extends Controller
             ;
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', Auth::user()->id);
+                        $query->where('user_id', Auth::user()->id)
+                                ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                        ;
                     })
                     ->latest()
                     ->paginate(10);
@@ -176,7 +178,7 @@ class TahsinDaftarUlangController extends Controller
 
         if ($periode) {
 
-            try {
+            // try {
                 DB::beginTransaction();
 
                 $lock_peserta = \App\Models\Peserta::lockForUpdate()->latest()->first();
@@ -265,17 +267,17 @@ class TahsinDaftarUlangController extends Controller
                     return redirect()->back();
                 }
 
-            } catch (\Exception $e) {
-                DB::rollBack();
-                Toast::title('Terjadi Kesalahan. Bisa jadi mengalami gangguan jaringan internet. Mohon Ulangi.')
-                    ->warning()
-                    ->autoDismiss(10);
-                Toast::title('Jika kesalahan berulang, gunakan perangkat lain atau hubungin admin.')
-                    ->warning()
-                    ->autoDismiss(10);
-                return redirect()->back();
-                // return $e;
-            }
+            // } catch (\Exception $e) {
+            //     DB::rollBack();
+            //     Toast::title('Terjadi Kesalahan. Bisa jadi mengalami gangguan jaringan internet. Mohon Ulangi.')
+            //         ->warning()
+            //         ->autoDismiss(10);
+            //     Toast::title('Jika kesalahan berulang, gunakan perangkat lain atau hubungin admin.')
+            //         ->warning()
+            //         ->autoDismiss(10);
+            //     return redirect()->back();
+            //     // return $e;
+            // }
 
             return redirect()->route('website.lttq.invoice', ['uuid' => $uuid_transaksi]);
         } else {
