@@ -43,7 +43,7 @@
                     @endfor
                 @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
                     <th></th>
-                @else 
+                @else
                     <th></th>
                 @endif
                 <th></th>
@@ -102,7 +102,7 @@
                         @endfor
                     @else
                         <th>
-                            
+
                         </th>
                     @endif
                 @endfor
@@ -112,12 +112,12 @@
                         {{ $i }}
                     </th>
                 @endfor
-            @else 
+            @else
                 <th>
                     Belum Pilih Format Absensi
                 </th>
             @endif
-            
+
             @if ($dataperiode->format_absensi['jenis_absensi'] == '2')
                 <th>
                     Total Hadir
@@ -221,7 +221,7 @@
                             @endif
                         </td>
                     @endfor
-                @else 
+                @else
                     <td>
                         Belum Pilih Format Absensi
                     </td>
@@ -236,7 +236,7 @@
                         BELUM
                     @endif
                 </td>
-                <td>-</td>
+                <td>{{ isset($item->data_nilai['ujian']) ? $item->levelTahsin($item->data_nilai['ujian']) : '-' }} - {{ isset($item->data_nilai['ujian']) ? $item->data_nilai['ujian'] : '-' }}</td>
             </tr>
         @endforeach
     </tbody>
