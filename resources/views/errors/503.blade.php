@@ -23,16 +23,24 @@
             </div>
 
             <div class="w-full sm:max-w-3xl mt-6 px-6 text-center py-4 bg-white shadow-md overflow-hidden rounded-lg">
-                <h2 class="mb-4 text-4xl font-medium text-gray-900 md:text-5xl lg:text-6xl">
+                <h2 class="mb-2 text-4xl font-medium text-gray-900 md:text-5xl lg:text-6xl">
                     Sistem Sedang Maintenance
                 </h2>
-                <p class="mb-6 text-lg font-normal text-gray-500">
+                <p class="mb-2 text-lg font-normal text-gray-500">
                     Mohon maaf untuk sementara atas ketidaknyamanan ini.
                 </p>
-                <p class="mb-6 text-lg font-normal text-gray-500">
+                <p class="mb-2 text-lg font-normal text-gray-500">
                     Insya allah segera kembali online pada waktu 13.00 WITA, 13 Februari 2026.
                 </p>
-                <p class="mb-6 text-lg font-normal text-gray-500">
+                <p class="mb-2 text-lg font-normal text-gray-500">
+                    Syukron.
+                </p>
+                <br class="border-t border-gray-200" />
+                <p class="mb-2 text-lg font-normal text-gray-500">
+                    Kami masi memastikan data utama. kami berusaha secepat mungkin. mohon maaf.
+                    Insya allah segera kembali online pada waktu 15.00 WITA, 13 Februari 2026.
+                </p>
+                <p class="mb-2 text-lg font-normal text-gray-500">
                     Syukron.
                 </p>
             </div>
