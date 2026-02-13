@@ -38,7 +38,7 @@
                 <br class="border-t border-gray-200" />
                 <p class="mb-2 text-lg font-normal text-gray-500">
                     Kami masi memastikan data utama. kami berusaha secepat mungkin. mohon maaf.
-                    Insya allah segera kembali online pada waktu 15.00 WITA, 13 Februari 2026.
+                    Insya allah segera kembali online pada waktu 17.00 WITA, 13 Februari 2026.
                 </p>
                 <p class="mb-2 text-lg font-normal text-gray-500">
                     Syukron.
