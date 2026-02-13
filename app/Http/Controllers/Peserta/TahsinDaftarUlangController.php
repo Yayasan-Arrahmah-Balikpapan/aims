@@ -110,7 +110,7 @@ class TahsinDaftarUlangController extends Controller
 
 
         $data_jadwal = \App\Models\Jadwal::whereHas('level', function ($query) use ($data_peserta) {
-                                $query->where('id', $data_peserta->data_nilai['ujian'] ?? '');
+                                $query->where('id', $data_peserta->data_nilai['ujian'] ?? $data_peserta->jadwal->level_id);
                             })
                     ->whereRaw('LOWER(jenis_peserta) = ?', strtolower($data_peserta->peserta->jenis_peserta))
                     ->where('periode_id', $data_periode->id)
