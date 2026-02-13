@@ -30,10 +30,10 @@ class PesertaController extends Controller
     }
 
     public function data($unit, $periode) {
-        $data_periode = Cache::remember('pengajar_peserta_periode.'.$unit.'.'.$periode, now()->addMinutes(10), function () use ($periode) {
+        $data_periode = Cache::remember('pengajar_peserta_periode.'.$unit.'.'.$periode, now()->addMinutes(1), function () use ($periode) {
             return \App\Models\Periode::find($periode);
         });
-        $data_pengajar = Cache::remember('pengajar_peserta_pengajar.'.$unit, now()->addMinutes(10), function () use ($unit) {
+        $data_pengajar = Cache::remember('pengajar_peserta_pengajar.'.$unit, now()->addMinutes(1), function () use ($unit) {
             return \App\Models\Pengajar::whereHas('unit', function($query) use ($unit) {
                                 $query->where('slug', $unit);
                             })
@@ -58,13 +58,13 @@ class PesertaController extends Controller
 
     public function show($unit, $periode, $peserta)
     {
-        $data_periode = Cache::remember('pengajar_peserta_periode.'.$unit.'.'.$periode, now()->addHours(1), function () use ($periode) {
+        $data_periode = Cache::remember('pengajar_peserta_periode.'.$unit.'.'.$periode, now()->addMinutes(1), function () use ($periode) {
             return \App\Models\Periode::find($periode);
         });
-        $data_peserta = Cache::remember('pengajar_peserta.'.$unit.'.'.$periode.'.'.$peserta, now()->addHours(1), function () use ($periode, $peserta) {
+        $data_peserta = Cache::remember('pengajar_peserta.'.$unit.'.'.$periode.'.'.$peserta, now()->addMinutes(1), function () use ($periode, $peserta) {
             return \App\Models\Kelas::find($peserta);
         });
-        $datalevel = Cache::remember('pengajar_peserta_level.'.$unit.'.'.$periode, now()->addHours(1), function () use ($data_periode) {
+        $datalevel = Cache::remember('pengajar_peserta_level.'.$unit.'.'.$periode, now()->addMinutes(1), function () use ($data_periode) {
             return \App\Models\Modules\Level::where('unit_id', $data_periode->unit_id)->get();
         });
         return view('dashboard.pengajar.peserta.show', compact('data_peserta', 'data_periode', 'unit', 'datalevel'));
