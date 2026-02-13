@@ -13,6 +13,7 @@
                 <x-splade-form action="{{ route('admin.peserta.update', ['unit' => $unit, 'periode' => $periode, 'peserta' => $peserta]) }}" method="POST" onkeydown="return event.key != 'Enter';"
                     :default="[
                         'phone_number' => $data_peserta->peserta->phone_number ?? null,
+                        'user' => $data_peserta->peserta->user_id ?? null,
                         'jenis_peserta' => $data_peserta->peserta->jenis_peserta ?? 'ikhwan',
                         'domisili' => $data_peserta->peserta->biodata['kota_domisili'] ?? '',
                         'nama_peserta' => $data_peserta->peserta->nama ?? null,
@@ -25,7 +26,8 @@
                         'status_aktif' => $data_peserta->status_aktif ?? 'diproses',
                         'status_ujian' => $data_peserta->status_ujian ?? 'belum ujian',
                         'status_daftar_ulang' => $data_peserta->status_daftar_ulang ?? 'belum daftar ulang',
-                        'status_domisili' => $data_peserta->status_domisili ?? '1'
+                        'status_domisili' => $data_peserta->status_domisili ?? '1',
+                        // 'nilai_ujian' => $data_level[$data_peserta->data_nilai['ujian'] ?? 0] ?? '-',
                     ]"
                 >
                     @csrf
@@ -34,24 +36,18 @@
                         <x-forms.body >
                             <h3 class="text-xl font-semibold text-gray-500">Biodata - {{ $data_peserta->nis_peserta ?? '' }}</h3>
                             <hr class="my-4">
-                            <label class="flex text-gray-700">
-                                Masukkan Nomor HP Whatsapp Aktif :
-                            </label>
+
                             <div class="flex items-center">
                                 <div class="relative w-full">
-                                    <x-splade-input type="tel" name="phone_number" minlength="9" maxlength="14" placeholder="Masukkan Nomor Disini " required />
+                                    <x-splade-select name="user" :options="$user" :label="__('Nomor Yang terhubung')" option-label="phone_number" option-value="id" choices required />
                                 </div>
                             </div>
-                            <div class="flex items-center">
+
+                            {{-- <div class="flex items-center">
                                 <a href="https://wa.me/{{ $data_peserta->peserta->phone_number }}" target="_blank" class="text-sm text-gray-500 font-bold">
                                     Klik Link WhatsApp wa.me/{{ $data_peserta->peserta->phone_number }}
                                 </a>
-                            </div>
-                            <div class="flex items-center justify-end ">
-                                <div class="text-sm text-gray-500">
-                                    Harus pake kode negara : 628123456789
-                                </div>
-                            </div>
+                            </div> --}}
                             <x-splade-input name="nama_peserta" :label="__('Nama peserta')" required/>
                             <x-splade-select name="jenis_peserta" :label="__('Gender')" choices>
                                 <option value="ikhwan">Ikhwan / Laki-laki</option>
@@ -105,12 +101,12 @@
                                     ]" choices />
                                 </div>
                             </div>
-                            <div class="flex gap-2 my-4 border border-green-300 p-2 rounded-lg bg-green-50">
+                            {{-- <div class="flex gap-2 my-4 border border-green-300 p-2 rounded-lg bg-green-50">
                                 <x-splade-select class="w-full" name="nilai_ujian" :label="__('Nilai Ujian')" :options="[
                                     'belum ujian' => 'Belum Ujian',
                                     'selesai ujian' => 'Selesai Ujian',
                                 ]" choices />
-                            </div>
+                            </div> --}}
                             <x-splade-submit class="mt-4" label="Simpan" />
                         </x-forms.body>
 

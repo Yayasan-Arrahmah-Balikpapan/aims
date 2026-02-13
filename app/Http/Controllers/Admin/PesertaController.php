@@ -394,8 +394,12 @@ class PesertaController extends Controller
         $data_transaksi = \App\Models\Transaksi::where('peserta_id', $peserta)->get();
         $data_biaya = \App\Models\Biaya::where('periode_id', $data_peserta->periode->id)->get();
         $data_pembayaran_peserta = \App\Models\Pembayaran::where('kelas_id', $data_peserta->id)->get();
-
-        return view('dashboard.admin.periode.peserta.show', compact('unit','periode', 'jadwals', 'data_peserta', 'dataperiode', 'peserta', 'data_transaksi', 'data_biaya', 'data_pembayaran_peserta'));
+        $user = \App\Models\User::select('id', 'phone_number')->get();
+        $data_level =  \App\Models\Modules\Level::get()->mapWithKeys(function ($item) {
+                return [$item->id => $item->nama];
+            })
+            ->toArray();
+        return view('dashboard.admin.periode.peserta.show', compact('unit','periode', 'jadwals', 'data_peserta', 'dataperiode', 'peserta', 'data_transaksi', 'data_biaya', 'data_pembayaran_peserta', 'user', 'data_level'));
     }
 
     public function update($unit, $periode, $peserta, Request $request)
@@ -403,10 +407,9 @@ class PesertaController extends Controller
         $request->validate([
             'nama_peserta' => 'required|string|max:100',
             'jenis_peserta' => 'required|in:ikhwan,akhwat',
-            'phone_number' => 'required|numeric',
             'tanggal_lahir' => 'nullable|date',
             ]);
-
+        // dd($request->all());
         try {
             DB::beginTransaction();
             $peserta_kelas = \App\Models\Kelas::findOrFail($peserta);
@@ -424,12 +427,14 @@ class PesertaController extends Controller
             $peserta_kelas->status_domisili = $request->status_domisili;
             $peserta_kelas->save();
 
+            $user = \App\Models\User::find($request->user);
+
             $peserta_data = \App\Models\Peserta::find($peserta_kelas->peserta_id);
-            $peserta_data->phone_number = $request->phone_number;
+            $peserta_data->phone_number = $user->phone_code.ltrim($user->phone_number, '0');
             $peserta_data->nama = $request->nama_peserta;
             $peserta_data->jenis_peserta = $request->jenis_peserta;
             $peserta_data->tanggal_lahir = $request->tanggal_lahir ?? null;
-            
+            $peserta_data->user_id = $request->user;
             $peserta_data->save();
 
             DB::commit();
@@ -618,5 +623,26 @@ class PesertaController extends Controller
     {
         $data_periode = \App\Models\Periode::find($periode);
         return Excel::download(new \App\Exports\AdminPeserta($periode), 'Data_Peserta_Admin_' . $unit . '_' . $data_periode->nama . '.xlsx');
+    }
+
+    public function daftar_ulang($unit, $periode)
+    {
+        $data_peserta = \App\Models\Kelas::where('unit_id', $unit)
+                    ->latest()
+                    ->paginate(10);
+        $data_periode =  \App\Models\Periode::
+                        where('kategori', 'reguler')
+                        ->whereHas('unit', function($query) {
+                            $query->where('slug', 'tahsin');
+                        })
+                        ->latest()
+                        ->get();
+        dd($data_periode);
+        $data_level =  \App\Models\Modules\Level::get()->mapWithKeys(function ($item) {
+                            return [$item->id => $item->nama];
+                        })
+                        ->toArray();
+
+        return view('dashboard.admin.periode.peserta.daftar-ulang', compact('unit', 'periode', 'data_peserta', 'data_periode', 'data_level'));
     }
 }
