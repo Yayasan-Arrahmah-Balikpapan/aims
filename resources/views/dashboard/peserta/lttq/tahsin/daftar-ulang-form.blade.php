@@ -124,10 +124,10 @@
                             <div class="flex items-center space-x-4">
                                 <div class="flex-1 min-w-0">
                                     <p class="text-sm font-normal text-gray-500 truncate ">
-                                        Hasil Level Ujian
+                                        Hasil Level
                                     </p>
                                     <p class="text-base font-semibold text-gray-900">
-                                        {{ $data_level[$data_peserta->data_nilai['ujian']] }}
+                                        {{ $data_peserta->data_nilai['ujian'] ? $data_level[$data_peserta->data_nilai['ujian']] : $data_level[$data_peserta->jadwal->level_id] }}
                                     </p>
                                 </div>
                             </div>
