@@ -94,10 +94,10 @@
                                                 </p>
                                             </Link>
                                     </td>
+                                    @php
+                                        $total_hadir = 0;
+                                    @endphp
                                     @for($i = 1; $i <= 16; $i++)
-                                        @php
-                                            $total_hadir = 0;
-                                        @endphp
                                         <td class="text-center py-4 px-2 uppercase">
                                             @if (isset($data_absensi_peserta[$item->id.'-'.$i]))
                                                 @if ($data_absensi_peserta[$item->id.'-'.$i] == 1)
@@ -122,9 +122,9 @@
                                     </td>
                                     <td class="border-x text-center p-1 uppercase text-xs font-bold ">
                                         @if ($total_hadir >= 10)
-                                            BOLEH
+                                            SUDAH MEMENUHI ABSENSI
                                         @else
-                                            BELUM
+                                            BELUM MEMENUHI ABSENSI
                                             {{-- <Link href="#" class=" text-primary-600 border border-primary-600 rounded-md px-2 py-1">
                                                 <x-carbon-checkmark class="w-4 h-4 text-primary-600" />
                                             </Link> --}}
