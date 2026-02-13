@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use ProtoneMedia\Splade\Facades\Toast;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 
 class PembayaranController extends Controller
@@ -14,10 +15,12 @@ class PembayaranController extends Controller
     public function pembayaran_pilih_peserta(Request $request) {
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
-                    })
-                    ->latest()
-                    ->paginate(10);
+                            $query->where('user_id', Auth::user()->id)
+                                    ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                            ;
+                        })
+                        ->latest()
+                        ->paginate(10);
 
         return view('dashboard.peserta.pembayaran-pilih-peserta', compact( 'data_peserta'));
     }
@@ -25,7 +28,9 @@ class PembayaranController extends Controller
     public function pembayaran_form($uuid, Request $request) {
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
+                        $query->where('user_id', Auth::user()->id)
+                                    ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                            ;
                     })
                     ->where('uuid', $uuid)
                     ->first();
@@ -38,7 +43,9 @@ class PembayaranController extends Controller
     public function pembayaran_form_store($uuid, Request $request) {
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', auth()->user()->id);
+                        $query->where('user_id', Auth::user()->id)
+                                    ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                            ;
                     })
                     ->where('uuid', $uuid)
                     ->first();
@@ -83,7 +90,7 @@ class PembayaranController extends Controller
                 'kelas_id'                 => $data_peserta->id,
                 'kode_unik'                => $data_peserta->kode_unik,
                 'peserta_id'               => $data_peserta->peserta->id,
-                'user_id'                  => auth()->user()->id,
+                'user_id'                  => Auth::user()->id,
                 'nominal_total'            => $total_nominal,
                 'nominal_total_pembayaran' => $total_pembayaran,
                 'donasi'                   => $donasi,
