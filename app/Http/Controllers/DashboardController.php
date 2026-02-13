@@ -34,7 +34,7 @@ class DashboardController extends Controller
 
         $key_data_peserta = 'data_peserta_dashboard_' . Auth::id();
         // untuk spill peserta terbaru saja di depan
-        // $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(10), function () {
+        // $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(0), function () {
         //     return \App\Models\Kelas::whereHas('peserta', function($query) {
         //                 $query->where('user_id', Auth::id());
         //             })
@@ -45,9 +45,11 @@ class DashboardController extends Controller
         // });
 
         $key_data_peserta_paginate = 'data_peserta_dashboard_paginate' . Auth::id();
-        $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(1), function () {
+        $data_peserta_paginate = Cache::remember($key_data_peserta_paginate, now()->addMinutes(0), function () {
             return \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', Auth::id());
+                        $query->where('user_id', Auth::user()->id)
+                                ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                        ;
                     })
                     ->with('periode', 'periode.unit', 'peserta')
                     ->latest()
@@ -56,15 +58,20 @@ class DashboardController extends Controller
 
         $data_peserta_id = $data_peserta_paginate->pluck('id');
         $key_data_transaksi = 'data_transaksi_dashboard_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(1), function () {
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(0), function () {
             return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit', 'pembayaran')
                             ->where('user_id', Auth::id())
+                            ->orWhereHas('peserta', function($query) {
+                                $query->where('user_id', Auth::user()->id)
+                                        ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                                ;
+                            })
                             ->latest()
                             ->paginate(10);
         });
 
         // $key_data_pembayaran = 'data_pembayaran_dashboard_' . Auth::id();
-        // $data_pembayaran = Cache::remember($key_data_pembayaran, now()->addMinutes(10), function () use ($data_peserta_id) {
+        // $data_pembayaran = Cache::remember($key_data_pembayaran, now()->addMinutes(0), function () use ($data_peserta_id) {
         //     return \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)->get();
         // });
 
@@ -72,8 +79,8 @@ class DashboardController extends Controller
 
         // $data_pembayaran = \App\Models\Pembayaran::whereIn('kelas_id', $data_peserta_id)->get()->toArray();
 
-        $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(1), function () {
-            return Peserta::where('user_id', Auth::id())->count();
+        $count_peserta = Cache::remember('count_peserta_dashboard_' . Auth::id(), now()->addMinutes(0), function () {
+            return Peserta::where('user_id', Auth::id())->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))->count();
         });
 
         $data_periode_pendaftaran =  \App\Models\Periode::
@@ -91,7 +98,9 @@ class DashboardController extends Controller
     public function peserta($uuid) {
 
         $data_peserta = \App\Models\Kelas::whereHas('peserta', function($query) {
-                        $query->where('user_id', Auth::id());
+                        $query->where('user_id', Auth::user()->id)
+                                ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                        ;
                     })
                     ->where('uuid', $uuid)
                     ->first();
@@ -123,7 +132,9 @@ class DashboardController extends Controller
         $data_peserta = Cache::remember($key_data_peserta, now()->addMinutes(0), function () use ($request) {
             return \App\Models\Kelas::with('periode', 'periode.unit', 'peserta')
                     ->whereHas('peserta', function($query) {
-                        $query->where('user_id', Auth::id());
+                        $query->where('user_id', Auth::user()->id)
+                                ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                        ;
                     })
                     ->when($request->cari, function($query, $request) {
                         $query->whereHas('peserta', function($query) use ($request) {
@@ -150,9 +161,14 @@ class DashboardController extends Controller
     public function peserta_riwayat_pembayaran() {
 
         $key_data_transaksi = 'data_transaksi_riwayat_' . Auth::id();
-        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(10), function () {
+        $data_transaksi = Cache::remember($key_data_transaksi, now()->addMinutes(0), function () {
             return Transaksi::with('kelas', 'kelas.peserta', 'periode', 'periode.unit')
                             ->where('user_id', Auth::id())
+                            ->orWhereHas('peserta', function($query) {
+                                $query->where('user_id', Auth::user()->id)
+                                        ->orWhere('phone_number', Auth::user()->phone_code.ltrim(Auth::user()->phone_number, '0'))
+                                ;
+                            })
                             ->latest()
                             ->paginate(10);
         });
