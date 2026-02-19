@@ -54,6 +54,9 @@
                 Nama
             </th>
             <th>
+                Notelp
+            </th>
+            <th>
                 Jenis
             </th>
             <th>
@@ -137,6 +140,9 @@
             <tr>
                 <td>
                     {{ $item->peserta->nama }}
+                </td>
+                <td>
+                    {{ $item->peserta->phone_number }}
                 </td>
                 <td>
                     {{ isset($item->jadwal) ? ($item->jadwal->jenis_peserta ?? '-') : '-' }}
