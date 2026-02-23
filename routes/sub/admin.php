@@ -42,6 +42,8 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/peserta/create', [App\Http\Controllers\Admin\PesertaController::class, 'create'])->name('admin.peserta.create');
         Route::get('/peserta/create/pilih', [App\Http\Controllers\Admin\PesertaController::class, 'create_pilih'])->name('admin.peserta.create.pilih');
         Route::post('/peserta', [App\Http\Controllers\Admin\PesertaController::class, 'store'])->name('admin.peserta.store');
+        Route::post('/peserta/pilih', [App\Http\Controllers\Admin\PesertaController::class, 'store_pilih'])->name('admin.peserta.store.pilih');
+        Route::get('/peserta/data/api', [App\Http\Controllers\Admin\PesertaController::class, 'data_api'])->name('admin.peserta.data.api');
         Route::get('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'show'])->name('admin.peserta.show');
         Route::get('/peserta/{peserta}/edit', [App\Http\Controllers\Admin\PesertaController::class, 'edit'])->name('admin.peserta.edit');
         Route::post('/peserta/{peserta}', [App\Http\Controllers\Admin\PesertaController::class, 'update'])->name('admin.peserta.update');
@@ -49,6 +51,7 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/peserta/{peserta}/potongan', [App\Http\Controllers\Admin\PesertaController::class, 'potongan'])->name('admin.peserta.potongan');
         Route::get('/peserta/{peserta}/pembayaran', [App\Http\Controllers\Admin\PesertaController::class, 'pembayaran'])->name('admin.peserta.pembayaran');
         Route::post('/peserta/{peserta}/pembayaran/store', [App\Http\Controllers\Admin\PesertaController::class, 'pembayaran_store'])->name('admin.peserta.pembayaran.store');
+        // Route::get('/peserta/daftar-ulang', [App\Http\Controllers\Admin\PesertaController::class, 'daftar_ulang'])->name('admin.peserta.daftar-ulang');
 
         Route::get('/absensi', [App\Http\Controllers\Admin\AbsensiController::class, 'index'])->name('admin.absensi.index');
         Route::get('/absensi/export', [App\Http\Controllers\Admin\AbsensiController::class, 'export'])->name('admin.absensi.export');
