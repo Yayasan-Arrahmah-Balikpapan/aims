@@ -112,4 +112,19 @@ class PesertaLombaRamadhanController extends Controller
 
     }
 
+
+    public function data_cabang_lomba($cabang)
+    {
+        $data_cabang = \App\Models\LombaCabang::find($cabang);
+        $data_peserta_lomba = \App\Models\LombaPeserta::
+            whereHas('transaksi', function ($q2) {
+                $q2->whereIn('status', [2, 3]);
+            })
+            ->whereHas('pendaftaran', function ($q) use ($data_cabang) {
+                $q->where('cabang_id', $data_cabang->id);
+            })
+            ->orderBy('nama', 'asc')
+            ->get();
+        return view('dashboard-ramadhan.admin.peserta-lomba.data-cabang-lomba', compact('data_peserta_lomba', 'data_cabang'));
+    }
 }

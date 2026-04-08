@@ -20,7 +20,95 @@
                     </div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2  gap-4">
+            @php
+                $lombas = [
+                    [
+                        'judul' => 'Lomba Menggambar & Mewarnai',
+                        'cabang' => [
+                            ['id'=>1,'label'=>'Kategori A'],
+                            ['id'=>2,'label'=>'Kategori B'],
+                        ],
+                        'total' => [1,2],
+                    ],
+                    [
+                        'judul' => 'Cerdas Cermat',
+                        'cabang' => [
+                            ['id'=>9,'label'=>'Kategori SD'],
+                            ['id'=>10,'label'=>'Kategori SMP'],
+                        ],
+                        'total' => [9,10],
+                    ],
+                    [
+                        'judul' => 'Lomba Adzan & Iqomah',
+                        'cabang' => [
+                            ['id'=>3,'label'=>'Kategori A'],
+                            ['id'=>4,'label'=>'Kategori B'],
+                            ['id'=>5,'label'=>'Kategori C'],
+                        ],
+                        'total' => [3,4,5],
+                    ],
+                    [
+                        'judul' => 'Lomba Tahfidz',
+                        'cabang' => [
+                            ['id'=>6,'label'=>'Kategori A'],
+                            ['id'=>7,'label'=>'Kategori B'],
+                            ['id'=>8,'label'=>'Kategori C'],
+                        ],
+                        'total' => [6,7,8],
+                    ],
+                ];
+            @endphp
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                @foreach ($lombas as $lomba)
+                    <div class="bg-white rounded-lg p-4">
+                        <h3 class="text-xl font-bold">
+                            Peserta {{ $lomba['judul'] }} -
+                            {{ collect($lomba['total'])->sum(fn($i) => $data_per_cabang[$i]) }}
+                        </h3>
+
+                        <table class="w-full text-sm text-left">
+                            <thead>
+                                <tr class="border-b">
+                                    <th></th>
+                                    <th>Pendaftar</th>
+                                    <th>Peserta</th>
+                                    <th>Menunggu Pembayaran</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($lomba['cabang'] as $c)
+                                <tr class="border-b">
+                                    <td class="font-medium bg-gray-50 px-3 py-2">
+                                        {{ $c['label'] }}
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        {{ $data_per_cabang_pendaftar[$c['id']] }}
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        {{ $data_per_cabang[$c['id']] }}
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        {{ $data_per_cabang_pendaftar[$c['id']] - $data_per_cabang[$c['id']] }}
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <Link
+                                            href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => $c['id']]) }}"
+                                            class="font-bold py-1.5 px-3 border rounded">
+                                            Lihat Detail
+                                        </Link>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endforeach
+            </div>
+
+
+            {{-- <div class="grid grid-cols-1 md:grid-cols-2  gap-4">
                 <div class="bg-white rounded-lg p-4 ">
                     <h3 class="text-xl font-bold">Peserta Lomba Menggambar & Mewarnai - {{ $data_per_cabang[1] + $data_per_cabang[2] }}</h3>
                     <table class="w-full text-sm text-left border-gray-200">
@@ -35,8 +123,9 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Menunggu Konfirmasi
+                                    Menunggu Pembayaran
                                 </th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +142,12 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[1]-$data_per_cabang[1] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '1']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -66,6 +161,12 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[2]-$data_per_cabang[2] }}
+                                </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '2']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
                                 </td>
                             </tr>
                         </tbody>
@@ -85,7 +186,7 @@
                                     Kelompok
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Menunggu Konfirmasi
+                                    Menunggu Pembayaran
                                 </th>
                             </tr>
                         </thead>
@@ -103,6 +204,12 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[9]-$data_per_cabang[9] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '9']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -116,6 +223,12 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[10]-$data_per_cabang[10] }}
+                                </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '10']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
                                 </td>
                             </tr>
                         </tbody>
@@ -135,7 +248,7 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Menunggu Konfirmasi
+                                    Menunggu Pembayaran
                                 </th>
                             </tr>
                         </thead>
@@ -153,6 +266,12 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[3]-$data_per_cabang[3] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '3']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -167,6 +286,12 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[4]-$data_per_cabang[4] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '4']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -180,6 +305,12 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[5]-$data_per_cabang[5] }}
+                                </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '5']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
                                 </td>
                             </tr>
                         </tbody>
@@ -199,7 +330,7 @@
                                     Peserta
                                 </th>
                                 <th class="px-3 py-3 uppercase text-gray-900 font-medium">
-                                    Menunggu Konfirmasi
+                                    Menunggu Pembayaran
                                 </th>
                             </tr>
                         </thead>
@@ -217,6 +348,12 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[6]-$data_per_cabang[6] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '6']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                             <tr class="border-b border-gray-200">
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium bg-gray-50">
@@ -230,6 +367,12 @@
                                 </td>
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[7]-$data_per_cabang[7] }}
+                                </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '7']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
                                 </td>
                             </tr>
                             <tr class="border-b border-gray-200">
@@ -245,13 +388,19 @@
                                 <td class="px-3 py-3 uppercase text-gray-900 font-medium">
                                     {{ $data_per_cabang_pendaftar[8]-$data_per_cabang[8] }}
                                 </td>
+                                <td class="px-3 py-3  text-gray-900 font-medium">
+                                    <Link href="{{ route('admin-ramadhan.peserta-lomba.data-cabang-lomba', ['cabang' => '8']) }}"
+                                        class="font-bold py-1.5 px-3 border border-gray-700 hover:border-gray-300 rounded">
+                                        Lihat Detail
+                                    </Link>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="items-center justify-end flex space-x-2">
+            <div class="items-center justify-end flex space-x-2 mt-2">
                 <a target="_blank" href="{{ route('admin-ramadhan.peserta-lomba.export')}}" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 mb-2 flex items-center focus:outline-none">
                     Export Semua Peserta
                     @svg('carbon-download', 'ml-2 text-white h-4 w-4')
