@@ -14,7 +14,7 @@
         </div>
 
         <div v-if="!beforeRecording && !isUploadSuccessful">
-            <audio ref="audioPlayback" controls class="w-full mb-4"></audio>
+            <audio ref="audioPlayback" :src="audioUrl" controls class="w-full mb-4"></audio>
             <div v-if="isUploading" class="flex items-center justify-center gap-2 text-sm text-gray-600">
                 <span class="upload-spinner"></span>
                 <span>Mengunggah rekaman...</span>
@@ -34,7 +34,14 @@
         <div v-if="isUploadSuccessful" class="text-center mb-4">
             <i class="fas fa-check-circle text-green-500 text-4xl"></i>
             <p class="text-green-500 text-xl mt-2">Rekaman Berhasil</p>
-            <audio ref="audioPlayback" controls class="w-full mt-4"></audio>
+            <audio ref="audioPlayback" :src="audioUrl" controls class="w-full mt-4"></audio>
+            <a
+                href="#"
+                @click.prevent="repeatRecording"
+                class="mt-4 inline-flex items-center border border-red-700 text-red-700 px-4 py-2 rounded-xl hover:bg-red-700 hover:text-white"
+            >
+                Ulangi Rekaman
+            </a>
         </div>
     </div>
 </template>
@@ -53,11 +60,25 @@ export default {
             mediaRecorder: null,
             mediaStream: null,
             audioChunks: [],
+            audioUrl: '',
             audioData: '',
             csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Ambil token CSRF dari meta tag
         };
     },
     methods: {
+        async repeatRecording() {
+            this.resetUploadState();
+            this.beforeRecording = true;
+            await this.startRecording();
+        },
+        resetUploadState() {
+            this.isUploadSuccessful = false;
+            this.isUploading = false;
+            this.uploadError = '';
+            this.audioData = '';
+            this.audioChunks = [];
+            this.audioUrl = '';
+        },
         async startRecording() {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             this.mediaStream = stream;
@@ -69,8 +90,7 @@ export default {
 
             this.mediaRecorder.onstop = async () => {
                 const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
-                const audioUrl = URL.createObjectURL(audioBlob);
-                this.$refs.audioPlayback.src = audioUrl;
+                this.audioUrl = URL.createObjectURL(audioBlob);
 
                 const formData = new FormData();
                 const fileName = uuidv4() + '.wav'; // Gunakan UUID untuk nama file
@@ -118,6 +138,16 @@ export default {
                 console.log(response.data);
                 this.isUploadSuccessful = true;
                 this.isRecording = false;
+
+                this.$nextTick(async () => {
+                    if (this.$refs.audioPlayback && this.audioUrl) {
+                        try {
+                            await this.$refs.audioPlayback.play();
+                        } catch (playError) {
+                            console.warn('Autoplay diblokir browser:', playError);
+                        }
+                    }
+                });
             } catch (error) {
                 this.uploadError = error?.response?.data?.message || 'Upload gagal. Silakan coba lagi.';
                 console.error('Error uploading audio:', error.response || error.message);
