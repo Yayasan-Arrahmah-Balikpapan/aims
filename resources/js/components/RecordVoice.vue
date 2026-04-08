@@ -15,13 +15,20 @@
 
         <div v-if="!beforeRecording && !isUploadSuccessful">
             <audio ref="audioPlayback" controls class="w-full mb-4"></audio>
-            <form @submit.prevent="uploadAudio" class="flex flex-col">
-                <input type="hidden" v-model="audioData">
-                <input type="hidden" name="_token" :value="csrfToken">
-                <a href="#" @click.prevent="uploadAudio" class="border text-white bg-primary-800 px-4 py-2 rounded-xl hover:bg-green-600  cursor-pointer flex justify-between">
-                    <span>Klik Jika Rekaman Selesai</span> <i class="fas fa-upload pt-1"></i>
+            <div v-if="isUploading" class="flex items-center justify-center gap-2 text-sm text-gray-600">
+                <span class="upload-spinner"></span>
+                <span>Mengunggah rekaman...</span>
+            </div>
+            <div v-else-if="uploadError" class="text-center">
+                <p class="text-sm text-red-600 mb-2">{{ uploadError }}</p>
+                <a
+                    href="#"
+                    @click.prevent="uploadAudio"
+                    class="inline-flex items-center border border-red-600 text-red-600 px-3 py-1 rounded-lg hover:bg-red-600 hover:text-white"
+                >
+                    Coba Upload Lagi
                 </a>
-            </form>
+            </div>
         </div>
 
         <div v-if="isUploadSuccessful" class="text-center mb-4">
@@ -41,7 +48,10 @@ export default {
             beforeRecording: true,
             isRecording: false,
             isUploadSuccessful: false,
+            isUploading: false,
+            uploadError: '',
             mediaRecorder: null,
+            mediaStream: null,
             audioChunks: [],
             audioData: '',
             csrfToken: document.querySelector('meta[name="csrf-token"]').getAttribute('content'), // Ambil token CSRF dari meta tag
@@ -50,6 +60,7 @@ export default {
     methods: {
         async startRecording() {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            this.mediaStream = stream;
             this.mediaRecorder = new MediaRecorder(stream);
 
             this.mediaRecorder.ondataavailable = (event) => {
@@ -68,18 +79,36 @@ export default {
                 this.audioData = formData;
 
                 this.audioChunks = [];
+                await this.uploadAudio();
+
+                if (this.mediaStream) {
+                    this.mediaStream.getTracks().forEach((track) => track.stop());
+                    this.mediaStream = null;
+                }
             };
 
             this.mediaRecorder.start();
             this.isRecording = true;
+            this.isUploadSuccessful = false;
+            this.uploadError = '';
         },
         stopRecording() {
+            if (!this.mediaRecorder || this.mediaRecorder.state !== 'recording') {
+                return;
+            }
+
             this.mediaRecorder.stop();
             this.isRecording = false;
             this.beforeRecording = false;
         },
         async uploadAudio() {
+            if (this.isUploading || !this.audioData) {
+                return;
+            }
+
             try {
+                this.isUploading = true;
+                this.uploadError = '';
                 console.log('Mengirim data:', this.audioData); // Log data yang akan dikirim
                 const response = await axios.post('/lttq/tahsin/pendaftaran/store/rekaman', this.audioData, {
                     headers: {
@@ -90,7 +119,10 @@ export default {
                 this.isUploadSuccessful = true;
                 this.isRecording = false;
             } catch (error) {
+                this.uploadError = error?.response?.data?.message || 'Upload gagal. Silakan coba lagi.';
                 console.error('Error uploading audio:', error.response || error.message);
+            } finally {
+                this.isUploading = false;
             }
         }
     },
@@ -102,9 +134,22 @@ export default {
     animation: blink 1s infinite;
 }
 
+.upload-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #d1d5db;
+    border-top-color: #374151;
+    border-radius: 9999px;
+    animation: spin 0.7s linear infinite;
+}
+
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
     100% { opacity: 1; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 </style>
