@@ -55,6 +55,7 @@ class WhatsappService implements NotificationService
                             ->withHeaders([
                                 'Content-Type' => 'application/json',
                                 'Accept'       => 'application/json',
+                                'X-Device-Id'    => 'eace9cb4-381b-49c6-916c-7c9993338212',
                             ]);
 
         try {
