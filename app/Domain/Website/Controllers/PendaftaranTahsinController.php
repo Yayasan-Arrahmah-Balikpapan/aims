@@ -36,6 +36,10 @@ class PendaftaranTahsinController extends Controller
         $this->notifService = $notifService;
     }
 
+    public function tesnotif() {
+        $this->notifService->kirimNotifWa('628125144744', 'tes via sistem mac');
+        return 'ok';
+    }
     public function tahsin_pendaftaran()
     {
         $page_title = 'LTTQ Arrahmah Balikpapan';
@@ -144,8 +148,8 @@ class PendaftaranTahsinController extends Controller
             }
 
             if(!$peserta) {
-                try {
-                    DB::beginTransaction();
+                // try {
+                //     DB::beginTransaction();
 
                     $lock_peserta = Peserta::lockForUpdate()->latest()->first();
                     $lock_kelas = Kelas::lockForUpdate()->latest()->first();
@@ -206,6 +210,7 @@ class PendaftaranTahsinController extends Controller
                         'status_domisili'     => $domisili,
                         'data_nilai'          => [
                                                     'rekaman-daftar-baru' => $rekaman,
+                                                    'penempatan-level'    => '-',
                                                 ]
                     ]);
 
@@ -248,6 +253,7 @@ class PendaftaranTahsinController extends Controller
 
                     $isi_notif_wa = $this->formatWhatsappPesertaKelasDanTransaksi($data_notifikasi->pesan_whatsapp, $peserta_kelas->id, $transaksi->id);
                     $this->notifService->kirimNotifWa($nomor_wa, $isi_notif_wa);
+                    dd($nomor_wa, $isi_notif_wa);
 
                     Toast::title('Pendaftaran Berhasil')
                         ->autoDismiss(10);
@@ -255,16 +261,16 @@ class PendaftaranTahsinController extends Controller
                         ->warning()
                         ->autoDismiss(10);
 
-                    DB::commit();
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
-                        ->warning()
-                        ->autoDismiss(10);
-                    return redirect()->back();
+                //     DB::commit();
+                // } catch (\Exception $e) {
+                //     DB::rollBack();
+                //     Toast::title('Terjadi Kesalahan. Mohon Ulangi !')
+                //         ->warning()
+                //         ->autoDismiss(10);
+                //     return redirect()->back();
 
-                    // return $e;
-                }
+                //     // return $e;
+                // }
             } else {
                 // KARENA DATA BARU TRANSAKSI BARU CUMA SATU
                 $transaksi =Transaksi::where('peserta_id', $peserta_kelas->id)->latest()->first();

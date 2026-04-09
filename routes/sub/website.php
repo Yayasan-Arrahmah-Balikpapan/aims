@@ -80,3 +80,5 @@ Route::get("/sosial/fundraising", [App\Domain\Website\Controllers\Sosial\Fundrai
 
 
 
+//TEST
+// Route::get("/tes-notif-wa", [App\Domain\Website\Controllers\PendaftaranTahsinController::class, "tesnotif"])->name("website.tes.notifwa");
