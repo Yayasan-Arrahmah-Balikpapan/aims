@@ -210,7 +210,7 @@ class PendaftaranTahsinController extends Controller
                         'status_domisili'     => $domisili,
                         'data_nilai'          => [
                                                     'rekaman-daftar-baru' => $rekaman,
-                                                    'penempatan-level'    => '-',
+                                                    'penempatan-level'    => '',
                                                 ]
                     ]);
 
