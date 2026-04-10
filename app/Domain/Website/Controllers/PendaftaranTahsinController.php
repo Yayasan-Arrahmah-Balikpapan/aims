@@ -253,7 +253,6 @@ class PendaftaranTahsinController extends Controller
 
                     $isi_notif_wa = $this->formatWhatsappPesertaKelasDanTransaksi($data_notifikasi->pesan_whatsapp, $peserta_kelas->id, $transaksi->id);
                     $this->notifService->kirimNotifWa($nomor_wa, $isi_notif_wa);
-                    dd($nomor_wa, $isi_notif_wa);
 
                     Toast::title('Pendaftaran Berhasil')
                         ->autoDismiss(10);
