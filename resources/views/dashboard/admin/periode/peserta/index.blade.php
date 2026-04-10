@@ -34,6 +34,10 @@
                         {{-- <Link href="{{ route('invoice.index', ['uuid' => $data->uuid]) }}" target="_blank" class="text-sky-500 border border-sky-500 rounded-md px-2 py-1">
                             <x-carbon-report class="w-5 h-5 text-sky-500"/>
                         </Link> --}}
+                        <Link confirm="Kirim Notif Daftar Ulang ?" href="{{ route('admin.peserta.notif-daftar-ulang', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}" class="relative text-white border border-yellow-400 bg-yellow-400 rounded-md px-2 py-1 ">
+                            <span class="absolute top-0 right-0 inline-flex items-center p-1  justify-center text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-green-500 rounded-full">{{ isset($data->notifikasi['daftar_ulang']) ? $data->notifikasi['daftar_ulang'] : '0' }}</span>
+                            <x-carbon-notification class="w-4 h-4 mr-1 text-white"/>
+                        </Link>
                         <Link href="{{ route('admin.peserta.show', ['unit' => $data->periode->unit->slug, 'periode' => $data->periode->id, 'peserta' => $data->id]) }}" class="text-yellow-500 border border-yellow-500 rounded-md px-2 py-1">
                             <x-carbon-edit class="w-5 h-5 text-yellow-500"/>
                         </Link>

@@ -7,6 +7,13 @@ trait ConvertNotifikasi
     public function formatWhatsappPesertaKelas($data_notifikasi, $id)
     {
         $data = \App\Models\Kelas::find($id);
+
+        $data_nilai_ = $data->data_nilai ?? null;
+        if ($data_nilai_ && isset($data_nilai_['penempatan-level'])) {
+            $level_ = $data_nilai_['penempatan-level'];
+        } else {
+            $level_ = null;
+        }
         $notifikasi = $data_notifikasi;
         $notifikasi = str_replace('{Nama}', $data->peserta->nama ?? '-', $notifikasi);
         $notifikasi = str_replace('{No Telp}', $data->peserta->phone_number ?? null, $notifikasi);
@@ -20,10 +27,7 @@ trait ConvertNotifikasi
         $notifikasi = str_replace('{Jadwal}', $data->jadwal ? $data->jadwal->nama_jadwal : '-', $notifikasi);
         $notifikasi = str_replace('{Pengajar}', $data->jadwal ? $data->jadwal->pengajar->nama : '-', $notifikasi);
         $notifikasi = str_replace('{Level}', $data->jadwal ? $data->jadwal->level->nama : '-', $notifikasi);
-        $notifikasi = str_replace('{Level Baru}', $data->data_nilai
-                                                                    ? (empty($data->data_nilai['penempatan-level']) ? '' : $data->data_nilai['penempatan-level'])
-                                                                    : '',
-                                                                    $notifikasi);
+        $notifikasi = str_replace('{Level Baru}', $level_ ? $level_ : '-', $notifikasi);
         $notifikasi = str_replace('{Hari}', $data->jadwal ? $data->jadwal->hari_belajar : '', $notifikasi);
         $notifikasi = str_replace('{Jam}', $data->jadwal ? $data->jadwal->jam_mulai : '', $notifikasi);
         $notifikasi = str_replace('{Jenis Pembelajaran}', $data->jadwal ? $data->jadwal->status_belajar : '', $notifikasi);
@@ -35,6 +39,12 @@ trait ConvertNotifikasi
     {
         $data = \App\Models\Kelas::find($id_peserta_kelas);
         $data_transaksi = \App\Models\Transaksi::find($id_transaksi);
+        $data_nilai_ = $data->data_nilai ?? null;
+        if ($data_nilai_ && isset($data_nilai_['penempatan-level'])) {
+            $level_ = $data_nilai_['penempatan-level'];
+        } else {
+            $level_ = null;
+        }
         $notifikasi = $data_notifikasi;
         $notifikasi = str_replace('{Nama}', $data->peserta->nama ?? '-', $notifikasi);
         $notifikasi = str_replace('{No Telp}', $data->peserta->phone_number ?? null, $notifikasi);
@@ -48,7 +58,7 @@ trait ConvertNotifikasi
         $notifikasi = str_replace('{Jadwal}', $data->jadwal ? $data->jadwal->nama_jadwal : '-', $notifikasi);
         $notifikasi = str_replace('{Pengajar}', $data->jadwal ? $data->jadwal->pengajar->nama : '-', $notifikasi);
         $notifikasi = str_replace('{Level}', $data->jadwal ? $data->jadwal->level->nama : '-', $notifikasi);
-        $notifikasi = str_replace('{Level Baru}', $data->data_nilai ? $data->data_nilai['penempatan-level'] : '-', $notifikasi);
+        $notifikasi = str_replace('{Level Baru}', $level_ ? $level_ : '-', $notifikasi);
         $notifikasi = str_replace('{Hari}', $data->jadwal ? $data->jadwal->hari_belajar : '', $notifikasi);
         $notifikasi = str_replace('{Jam}', $data->jadwal ? $data->jadwal->jam_mulai : '', $notifikasi);
         $notifikasi = str_replace('{Jenis Pembelajaran}', $data->jadwal ? $data->jadwal->status_belajar : '', $notifikasi);

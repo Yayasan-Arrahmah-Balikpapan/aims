@@ -29,12 +29,14 @@ class Kelas extends Model
         'status_ujian',
         'status_daftar_ulang',
         'status_domisili',
+        'notifikasi',
     ];
 
     protected $casts = [
         'data_pembayaran' => 'array',
         'data_absensi' => 'array',
         'data_nilai' => 'array',
+        'notifikasi' => 'array',
     ];
 
     public function peserta()

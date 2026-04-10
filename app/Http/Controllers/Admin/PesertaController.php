@@ -10,11 +10,20 @@ use Illuminate\Support\Facades\DB;
 use ProtoneMedia\Splade\Facades\Toast;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
+use App\Traits\ConvertNotifikasi;
+
 
 
 
 class PesertaController extends Controller
 {
+    use ConvertNotifikasi;
+    public $description, $keywords, $sitename;
+    private $notifService;
+    public function __construct( \App\Contracts\NotificationService $notifService)
+    {
+        $this->notifService = $notifService;
+    }
     private function getPesertaTable($unit, $periode)
     {
         return match ($unit) {
@@ -644,5 +653,51 @@ class PesertaController extends Controller
                         ->toArray();
 
         return view('dashboard.admin.periode.peserta.daftar-ulang', compact('unit', 'periode', 'data_peserta', 'data_periode', 'data_level'));
+    }
+
+    public function notif_daftar_ulang($unit, $periode, $peserta)
+    {
+        $data_peserta = \App\Models\Kelas::find($peserta);
+
+        if (empty($data_peserta)) {
+            Toast::warning('Tidak ada peserta yang dipilih untuk dikirim notifikasi daftar ulang.')->autoDismiss(5);
+            return redirect()->back();
+        }
+
+        // try {
+            // Logika pengiriman notifikasi daftar ulang ke peserta yang dipilih
+            // Contoh: Kirim notifikasi menggunakan model User atau layanan notifikasi lainnya
+            // foreach ($peserta_ids as $peserta_id) {
+            //     $kelas = \App\Models\Kelas::find($peserta_id);
+            //     if ($kelas) {
+            //         $user = $kelas->peserta->user;
+            //         // Kirim notifikasi ke $user, misalnya menggunakan Laravel Notifications
+            //         // Notification::send($user, new DaftarUlangNotification($kelas));
+            //     }
+            // }
+
+            $data_notifikasi = \App\Models\Notifikasi::where('slug', 'pengingat-daftar-ulang')
+                                    ->where('unit_id',1)
+                                    ->first();
+            $code = $data_peserta->peserta->user->phone_code ?? '62';
+            $nomor_wa = $code.ltrim($data_peserta->peserta->user->phone_number, '0');
+            $isi_notif_wa = $this->formatWhatsappPesertaKelasDanTransaksi($data_notifikasi->pesan_whatsapp, $data_peserta->id, null);
+            $this->notifService->kirimNotifWa($nomor_wa, $isi_notif_wa);
+
+            $notifikasi = $data_peserta->notifikasi;
+            if (isset($notifikasi['daftar_ulang'])) {
+                $notifikasi['daftar_ulang'] += 1;
+            } else {
+                $notifikasi['daftar_ulang'] = 1;
+            }
+            $data_peserta->notifikasi = $notifikasi;
+            $data_peserta->save();
+
+            Toast::success('Notifikasi daftar ulang berhasil dikirim ke peserta.')->autoDismiss(5);
+        // } catch (\Exception $e) {
+        //     Toast::error('Terjadi kesalahan saat mengirim notifikasi: ' . $e->getMessage())->autoDismiss(5);
+        // }
+
+        return redirect()->back();
     }
 }
