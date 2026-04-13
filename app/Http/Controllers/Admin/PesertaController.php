@@ -400,7 +400,7 @@ class PesertaController extends Controller
             ->get();
         $data_peserta = \App\Models\Kelas::find($peserta);
         $dataperiode = \App\Models\Periode::find( $periode);
-        $data_transaksi = \App\Models\Transaksi::where('peserta_id', $peserta)->get();
+        $data_transaksi = \App\Models\Transaksi::where('kelas_id', $peserta)->get();
         $data_biaya = \App\Models\Biaya::where('periode_id', $data_peserta->periode->id)->get();
         $data_pembayaran_peserta = \App\Models\Pembayaran::where('kelas_id', $data_peserta->id)->get();
         $user = \App\Models\User::select('id', 'phone_number')->get();
