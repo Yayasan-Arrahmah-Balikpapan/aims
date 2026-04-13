@@ -67,9 +67,60 @@
             <div class="relative overflow-x-scroll border rounded-md mb-4 bg-white">
                 <table class="text-sm text-left text-gray-500 w-full">
                     <thead>
-                        @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
-                            <tr class="border-b border-gray-200 ">
-                                <th></th>
+                        @isset($dataperiode->format_absensi['jenis_absensi'])
+                            @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
+                                <tr class="border-b border-gray-200 ">
+                                    <th></th>
+                                    @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
+                                        @php
+                                            $m_i_start = $dataperiode->waktu_start->format('m');
+                                            $m_i_start = $m_i_start - 0;
+                                            $d_i_start = $dataperiode->waktu_start->format('d');
+                                            $d_i_start = $d_i_start - 0;
+
+                                            $m_i_end = $dataperiode->waktu_end->format('m');
+                                            $m_i_end = $m_i_end - 0;
+                                            $d_i_end = $dataperiode->waktu_end->format('d');
+                                            $d_i_end = $d_i_end - 0;
+                                            $d_i_end_add = 0;
+                                        @endphp
+                                        @for ($i =  $m_i_start; $i <= $m_i_end; $i++)
+                                            @php
+                                                if($i != $m_i_start){
+                                                    $d_i_start = 1;
+                                                }
+
+                                                if($i != $m_i_end){
+                                                    $d_i_end_add++;
+                                                    $md_i_end = $dataperiode->waktu_start->addMonths($d_i_end_add);
+                                                    $d_i_end = $md_i_end->endOfMonth()->format('d');
+                                                    $cd_i_end = $d_i_end - $d_i_start + 1;
+                                                    $d_i_end = $d_i_end - 0;
+                                                } else {
+                                                    $d_i_end = $dataperiode->waktu_end->format('d');
+                                                    $d_i_end = $d_i_end - 0;
+                                                }
+                                            @endphp
+                                                <th colspan="{{ $dataperiode->format_absensi['jenis_laporan'] == 'harian' ? $cd_i_end : '' }}"
+                                                    class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
+                                                    {{ $md_i_end->format('M Y') }}
+                                                </th>
+                                        @endfor
+                                    @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
+                                        <th></th>
+                                    @else
+                                        <th></th>
+                                    @endif
+                                    <th></th>
+                                </tr>
+                            @endif
+                        @endisset
+
+                        <tr class="border-b border-gray-200 ">
+                            <th class="p-2 text-center font-bold text-gray-900 bg-gray-50">
+                                Jadwal
+                            </th>
+                            @isset($dataperiode->format_absensi['jenis_absensi'])
                                 @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
                                     @php
                                         $m_i_start = $dataperiode->waktu_start->format('m');
@@ -84,125 +135,6 @@
                                         $d_i_end_add = 0;
                                     @endphp
                                     @for ($i =  $m_i_start; $i <= $m_i_end; $i++)
-                                        @php
-                                            if($i != $m_i_start){
-                                                $d_i_start = 1;
-                                            }
-
-                                            if($i != $m_i_end){
-                                                $d_i_end_add++;
-                                                $md_i_end = $dataperiode->waktu_start->addMonths($d_i_end_add);
-                                                $d_i_end = $md_i_end->endOfMonth()->format('d');
-                                                $cd_i_end = $d_i_end - $d_i_start + 1;
-                                                $d_i_end = $d_i_end - 0;
-                                            } else {
-                                                $d_i_end = $dataperiode->waktu_end->format('d');
-                                                $d_i_end = $d_i_end - 0;
-                                            }
-                                        @endphp
-                                            <th colspan="{{ $dataperiode->format_absensi['jenis_laporan'] == 'harian' ? $cd_i_end : '' }}"
-                                                class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
-                                                {{ $md_i_end->format('M Y') }}
-                                            </th>
-                                    @endfor
-                                @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
-                                    <th></th>
-                                @else 
-                                    <th></th>
-                                @endif
-                                <th></th>
-                            </tr>
-                        @endif
-                        <tr class="border-b border-gray-200 ">
-                            <th class="p-2 text-center font-bold text-gray-900 bg-gray-50">
-                                Jadwal
-                            </th>
-                            @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
-                                @php
-                                    $m_i_start = $dataperiode->waktu_start->format('m');
-                                    $m_i_start = $m_i_start - 0;
-                                    $d_i_start = $dataperiode->waktu_start->format('d');
-                                    $d_i_start = $d_i_start - 0;
-
-                                    $m_i_end = $dataperiode->waktu_end->format('m');
-                                    $m_i_end = $m_i_end - 0;
-                                    $d_i_end = $dataperiode->waktu_end->format('d');
-                                    $d_i_end = $d_i_end - 0;
-                                    $d_i_end_add = 0;
-                                @endphp
-                                @for ($i =  $m_i_start; $i <= $m_i_end; $i++)
-                                    @if ($dataperiode->format_absensi['jenis_laporan'] == 'harian')
-                                        @php
-                                            if($i != $m_i_start){
-                                                $d_i_start = 1;
-                                            }
-
-                                            if($i != $m_i_end){
-                                                $d_i_end_add++;
-                                                $d_i_end = $dataperiode->waktu_start->addMonths($d_i_end_add);
-                                                $d_i_end = $d_i_end->endOfMonth()->format('d');
-                                                $d_i_end = $d_i_end - 0;
-                                            } else {
-                                                $d_i_end = $dataperiode->waktu_end->format('d');
-                                                $d_i_end = $d_i_end - 0;
-                                            }
-                                        @endphp
-                                        @for ($j = $d_i_start; $j <= $d_i_end; $j++)
-                                            <th scope="col"
-                                                class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
-                                                {{ $j }}
-                                            </th>
-                                        @endfor
-                                    @else
-                                        <th scope="col"
-                                            class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
-                                            
-                                        </th>
-                                    @endif
-                                @endfor
-                            @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
-                                @for ($i = 1; $i <= $dataperiode->format_absensi['jumlah_pertemuan']; $i++)
-                                    <th scope="col"
-                                        class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
-                                        {{ $i }}
-                                    </th>
-                                @endfor
-                            @else 
-                                <th scope="col" class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
-                                    Belum Pilih Format Absensi
-                                </th>
-                            @endif
-                            
-                            <th scope="col" class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
-                                @if ($dataperiode->format_absensi['jenis_absensi'] == '2')
-                                    Jumlah
-                                @endif
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($data_jadwal as $item)
-                            @php
-                                $total_hadir = 0;
-                            @endphp
-                            <tr class="text-gray-700 border-b border-gray-200 py-4">
-                                <td class="p-2 uppercase font-semibold whitespace-nowrap">
-                                    {{ $item->nama_jadwal }}
-                                </td>
-                                @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
-                                    @php
-                                        $m_i_start = $dataperiode->waktu_start->format('m');
-                                        $m_i_start = $m_i_start - 0;
-                                        $d_i_start = $dataperiode->waktu_start->format('d');
-                                        $d_i_start = $d_i_start - 0;
-
-                                        $m_i_end = $dataperiode->waktu_end->format('m');
-                                        $m_i_end = $m_i_end - 0;
-                                        $d_i_end = $dataperiode->waktu_end->format('d');
-                                        $d_i_end = $d_i_end - 0;
-                                        $d_i_end_add = 0;
-                                    @endphp
-                                    @for ($i = $m_i_start; $i <= $m_i_end; $i++)
                                         @if ($dataperiode->format_absensi['jenis_laporan'] == 'harian')
                                             @php
                                                 if($i != $m_i_start){
@@ -218,46 +150,123 @@
                                                     $d_i_end = $dataperiode->waktu_end->format('d');
                                                     $d_i_end = $d_i_end - 0;
                                                 }
-
-                                                $dy = $dataperiode->waktu_start->addMonths($d_i_end_add);
                                             @endphp
                                             @for ($j = $d_i_start; $j <= $d_i_end; $j++)
-                                                <td class="text-center p-2 uppercase border-x border-gray-200">
-                                                @if(isset($data_absen_tanggal[$item->id.'-'.$j.'-'.$dy->format('m-Y')]))
-                                                        <x-carbon-checkmark class="w-6 h-6 text-sky-500" />
-                                                    @else
-                                                        -
-                                                    @endif
-                                                </td>
+                                                <th scope="col"
+                                                    class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
+                                                    {{ $j }}
+                                                </th>
                                             @endfor
                                         @else
-                                            <td class=" p-2 uppercase border-x border-gray-200">
-                                                <div></div>
-                                                <div>
-                                                    <x-carbon-add-alt class="w-6 h-6 text-gray-700" />
-                                                </div>
-                                            </td>
+                                            <th scope="col"
+                                                class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50 border-x border-gray-200">
+
+                                            </th>
                                         @endif
                                     @endfor
                                 @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
                                     @for ($i = 1; $i <= $dataperiode->format_absensi['jumlah_pertemuan']; $i++)
-                                        
-                                        <td class="text-center p-2 uppercase">
-                                            @if(isset($data_absen[$item->id.'-'.$i]))
-                                                @php
-                                                    $total_hadir += 1;
-                                                @endphp
-                                                {{ \Carbon\Carbon::parse($data_absen[$item->id.'-'.$i])->format('d-m-Y') }}
-                                            @else
-                                                -
-                                            @endif
-                                        </td>
+                                        <th scope="col"
+                                            class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
+                                            {{ $i }}
+                                        </th>
                                     @endfor
-                                @else 
-                                    <td class="text-center p-2 uppercase">
+                                @else
+                                    <th scope="col" class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
                                         Belum Pilih Format Absensi
-                                    </td>
+                                    </th>
                                 @endif
+                            @endisset
+
+                            <th scope="col" class="p-2 text-center font-bold text-gray-900 whitespace-nowrap bg-gray-50">
+                                @isset($dataperiode->format_absensi['jenis_absensi'])
+                                    @if ($dataperiode->format_absensi['jenis_absensi'] == '2')
+                                        Jumlah
+                                    @endif
+                                @endisset
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data_jadwal as $item)
+                            @php
+                                $total_hadir = 0;
+                            @endphp
+                            <tr class="text-gray-700 border-b border-gray-200 py-4">
+                                <td class="p-2 uppercase font-semibold whitespace-nowrap">
+                                    {{ $item->nama_jadwal }}
+                                </td>
+                                @isset($dataperiode->format_absensi['jenis_absensi'])
+                                    @if ($dataperiode->format_absensi['jenis_absensi'] == '1')
+                                        @php
+                                            $m_i_start = $dataperiode->waktu_start->format('m');
+                                            $m_i_start = $m_i_start - 0;
+                                            $d_i_start = $dataperiode->waktu_start->format('d');
+                                            $d_i_start = $d_i_start - 0;
+
+                                            $m_i_end = $dataperiode->waktu_end->format('m');
+                                            $m_i_end = $m_i_end - 0;
+                                            $d_i_end = $dataperiode->waktu_end->format('d');
+                                            $d_i_end = $d_i_end - 0;
+                                            $d_i_end_add = 0;
+                                        @endphp
+                                        @for ($i = $m_i_start; $i <= $m_i_end; $i++)
+                                            @if ($dataperiode->format_absensi['jenis_laporan'] == 'harian')
+                                                @php
+                                                    if($i != $m_i_start){
+                                                        $d_i_start = 1;
+                                                    }
+
+                                                    if($i != $m_i_end){
+                                                        $d_i_end_add++;
+                                                        $d_i_end = $dataperiode->waktu_start->addMonths($d_i_end_add);
+                                                        $d_i_end = $d_i_end->endOfMonth()->format('d');
+                                                        $d_i_end = $d_i_end - 0;
+                                                    } else {
+                                                        $d_i_end = $dataperiode->waktu_end->format('d');
+                                                        $d_i_end = $d_i_end - 0;
+                                                    }
+
+                                                    $dy = $dataperiode->waktu_start->addMonths($d_i_end_add);
+                                                @endphp
+                                                @for ($j = $d_i_start; $j <= $d_i_end; $j++)
+                                                    <td class="text-center p-2 uppercase border-x border-gray-200">
+                                                    @if(isset($data_absen_tanggal[$item->id.'-'.$j.'-'.$dy->format('m-Y')]))
+                                                            <x-carbon-checkmark class="w-6 h-6 text-sky-500" />
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                @endfor
+                                            @else
+                                                <td class=" p-2 uppercase border-x border-gray-200">
+                                                    <div></div>
+                                                    <div>
+                                                        <x-carbon-add-alt class="w-6 h-6 text-gray-700" />
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        @endfor
+                                    @elseif ($dataperiode->format_absensi['jenis_absensi'] == '2')
+                                        @for ($i = 1; $i <= $dataperiode->format_absensi['jumlah_pertemuan']; $i++)
+
+                                            <td class="text-center p-2 uppercase">
+                                                @if(isset($data_absen[$item->id.'-'.$i]))
+                                                    @php
+                                                        $total_hadir += 1;
+                                                    @endphp
+                                                    {{ \Carbon\Carbon::parse($data_absen[$item->id.'-'.$i])->format('d-m-Y') }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        @endfor
+                                    @else
+                                        <td class="text-center p-2 uppercase">
+                                            Belum Pilih Format Absensi
+                                        </td>
+                                    @endif
+                                @endisset
                                 <td class="text-center p-2 uppercase">
                                     {{ $total_hadir }}
                                 </td>
