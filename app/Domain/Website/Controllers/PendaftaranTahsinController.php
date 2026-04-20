@@ -208,6 +208,7 @@ class PendaftaranTahsinController extends Controller
                         'status_daftar_ulang' => 'belum daftar ulang',
                         'status_penerimaan'   => 'umum',
                         'status_domisili'     => $domisili,
+                        'notifikasi'          => [],
                         'data_nilai'          => [
                                                     'rekaman-daftar-baru' => $rekaman,
                                                     'penempatan-level'    => '',
