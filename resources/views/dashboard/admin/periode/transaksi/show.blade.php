@@ -112,7 +112,11 @@
                                                 {{-- <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload> --}}
                                             </div>
                                             <div class="flex items-center justify-center">
-                                                <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Update</x-splade-submit>
+                                                {{-- <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Update</x-splade-submit> --}}
+                                                {{-- <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Update</x-splade-submit> --}}
+                                                <button type="button" onclick="window.location.reload();" class="flex items-center justify-between text-primary-700 border border-primary-700 rounded-md p-2 mr-2">
+                                                    Update
+                                                </button>
                                             </div>
                                         </x-splade-form>
                                         </div>
