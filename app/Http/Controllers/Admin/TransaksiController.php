@@ -8,6 +8,7 @@ use ProtoneMedia\Splade\Facades\Toast;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -95,6 +96,95 @@ class TransaksiController extends Controller
         // dd($data_transaksi, $data_biaya, $data_pembayaran, $biaya_pembayaran);
 
         return view('dashboard.admin.periode.transaksi.show', compact('unit','periode', 'dataperiode', 'data_transaksi', 'data_biaya', 'data_pembayaran', 'biaya_pembayaran'));
+    }
+
+    public function update_bukti_transfer($unit, $periode, $transaksi)
+    {
+        // DB::beginTransaction();
+        // // Tentukan folder path dengan hierarki tahun/bulan/tanggal
+        // $year  = now()->format('Y');
+        // $month = now()->format('m');
+        // $day   = now()->format('d');
+        // $folderPath = "$year/$month/$day/";
+        // try {
+        //     $data_transaksi = \App\Models\Transaksi::where('uuid', $transaksi)->first();
+        //     if($data_transaksi){
+
+        //         $data_pembayaran = $data_transaksi->data_pembayaran ?? [];
+        //         $data_pembayaran['bukti_transfer'] = $folderPath . $transaksi;
+        //         $data_transaksi->data_pembayaran = $data_pembayaran;
+        //         $data_transaksi->save();
+
+        //         DB::commit();
+
+        //         Toast::title('Konfirmasi Pembayaran Berhasil Dikirim !')
+        //         ->autoDismiss(10);
+        //     } else {
+        //         DB::rollBack();
+        //         Toast::title('Terjadi Kesalahan Data Transaksi. Mohon Ulangi')
+        //             ->warning()
+        //             ->autoDismiss(10);
+        //     }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     Toast::title('Terjadi Kesalahan. Kontak Admin !')
+        //         ->warning()
+        //         ->autoDismiss(10);
+        // }
+
+        return redirect()->back();
+
+    }
+
+    public function store_update_bukti_transfer($unit, $periode, $transaksi, Request $request)
+    {
+        // FIX SETELAH PROSES MELELAHKAN
+        $request->validate([
+            'buktitransfer' => 'required|image|mimes:jpeg,jpg,png,gif,bmp,webp,svg,tiff,ico,heic,heif,avif,jfif,jp2,j2k|max:20480', // maksimal 20MB
+        ]);
+
+        // Tentukan folder path dengan hierarki tahun/bulan/tanggal
+        $year  = now()->format('Y');
+        $month = now()->format('m');
+        $day   = now()->format('d');
+        $folderPath = "$year/$month/$day";
+
+        DB::beginTransaction();
+
+        // Generate nama file unik
+        $fileName = $transaksi . '.' . $request->file('buktitransfer')->getClientOriginalExtension();
+
+        // Simpan file di storage
+        try {
+            $filePath = $request->file('buktitransfer')->storeAs($folderPath, $fileName, 'public');
+            // session()->put('invoice.buktitransfer.' . $transaksi, $filePath);
+
+            // Kembalikan response sukses
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di-upload.',
+                'file_path' => Storage::url($filePath),
+            ]);
+
+            $data_transaksi = \App\Models\Transaksi::where('uuid', $transaksi)->first();
+
+            $data_pembayaran = $data_transaksi->data_pembayaran ?? [];
+            $data_pembayaran['bukti_transfer'] = $folderPath . $transaksi . '.' . $request->file('buktitransfer')->getClientOriginalExtension();
+            $data_transaksi->data_pembayaran = $data_pembayaran;
+            $data_transaksi->save();
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+
+            // Kembalikan response gagal
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal Upload',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+        // return view('website.pages.lttq.tahsin');
     }
 
     public function update($unit, $periode, $transaksi, Request $request)

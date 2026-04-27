@@ -76,6 +76,8 @@ Route::prefix('/admin/{unit}')->middleware('role:admin-tahsin|admin-rtq|admin-tl
         Route::get('/transaksi', [App\Http\Controllers\Admin\TransaksiController::class, 'index'])->name('admin.transaksi.index');
         Route::get('/transaksi/export', [App\Http\Controllers\Admin\TransaksiController::class, 'export'])->name('admin.transaksi.export');
         Route::get('/transaksi/bukti-transfer/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'bukti_transfer'])->name('admin.transaksi.bukti-transfer');
+        Route::post('/transaksi/bukti-transfer/{transaksi}/update', [App\Http\Controllers\Admin\TransaksiController::class, 'update_bukti_transfer'])->name('admin.transaksi.update-bukti-transfer');
+        Route::post('/transaksi/bukti-transfer/{transaksi}/update/store', [App\Http\Controllers\Admin\TransaksiController::class, 'store_update_bukti_transfer'])->name('admin.transaksi.store-update-bukti-transfer');
         Route::get('/transaksi/konfirmasi/{transaksi}', [App\Http\Controllers\Admin\TransaksiController::class, 'konfirmasi'])->name('admin.transaksi.konfirmasi');
         Route::get('/transaksi/create', [App\Http\Controllers\Admin\TransaksiController::class, 'create'])->name('admin.transaksi.create');
         Route::post('/transaksi', [App\Http\Controllers\Admin\TransaksiController::class, 'store'])->name('admin.transaksi.store');

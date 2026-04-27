@@ -75,32 +75,72 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="mt-5 flex-col items-center justify-center text-center">
-                            <span class="w-full">Bukti Transfer</span>
-                            <div class=" text-gray-400">
-                                @if (isset($item->data_pembayaran['bukti_transfer']))
-                                    <img src="{{ Storage::url($item->data_pembayaran['bukti_transfer']) }}" alt="bukti transfer" class="w-52" />
+                        <div class="mt-5 flex justify-between">
+                            <div>
+                                @if ($data_transaksi->status != 1)
+                                {{-- <Link modal href="{{ route('admin.transaksi.bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->id]) }}"
+                                    class="text-white bg-gray-500 font-medium rounded-lg text-xs px-2 py-1 "
+                                    >
+                                    Lihat Bukti
+                                </Link> --}}
+                                {{-- <x-splade-toggle>
+                                    <button @click.prevent="toggle" class="text-white bg-gray-500 font-medium rounded-lg text-xs p-2">Lihat Bukti</button>
+                                    <div v-show="toggled"> --}}
+                                        @if (isset($data_transaksi->data_pembayaran['bukti_transfer']))
+                                            <img src="{{ Storage::url($data_transaksi->data_pembayaran['bukti_transfer']) }}" alt="bukti transfer" class="w-52" />
+                                        @else
+                                            Data kosong
+                                        @endif
+                                        <div class="p-2 border rounded-md mt-2">
+                                            <x-splade-form action="{{ route('admin.transaksi.store-update-bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->uuid]) }}"
+                                                confirm-text="Apakah file bukti transfer sudah benar ?"
+                                                confirm="Konfirmasi"
+                                                confirm-button="Benar"
+                                                cancel-button="Belum"
+                                                method="POST"
+                                                >
+                                                @csrf
+                                            <div class="my-4">
+                                                <span class="block mb-1 text-gray-700 font-sans"> Upload Ulang Bukti</span>
+                                                <BuktiTransferUpload upload-url="{{ route('admin.transaksi.store-update-bukti-transfer', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->uuid]) }}">
+                                                    <!-- Slot untuk konten yang akan muncul setelah upload -->
+                                                    <template #uploaded-content>
+                                                        <!-- Tombol atau konten yang ingin ditampilkan -->
+                                                        <p class="my-2 text-sm text-green-600 text-center">Upload berhasil. .</p>
+                                                    </template>
+                                                </BuktiTransferUpload>
+                                                {{-- <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload> --}}
+                                            </div>
+                                            <div class="flex items-center justify-center">
+                                                <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Update</x-splade-submit>
+                                            </div>
+                                        </x-splade-form>
+                                        </div>
+                                        {{-- <button @click.prevent="setToggle(false)" class="text-white bg-red-500 font-medium rounded-lg text-xs px-2 py-1">Tutup</button> --}}
+                                    {{-- </div>
+                                </x-splade-toggle>--}}
                                 @else
-                                    Data Bukti kosong
+                                -
                                 @endif
                             </div>
-                        </div>
-                        <div class="mt-5 flex justify-between">
-                            <a href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi->uuid]) }}" target="_blank" class="flex items-center justify-between text-primary-700 border border-primary-700 rounded-md p-2">
-                                Lihat Invoice <x-carbon-view class="w-4 h-4 ml-2 text-primary-700"/>
-                            </a>
-                            <x-splade-form action="{{ route('admin.transaksi.destroy', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->id]) }}"
-                                method="DELETE"
-                                confirm="Konfirmasi Hapus Data"
-                                confirm-text="Data dihapus ?"
-                                confirm-button="Ya"
-                                cancel-button="Tidak"
-                                >
-                                @csrf
-                                <button type="submit" class="text-red-700 border border-red-700 rounded-md p-2">
-                                    <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
-                                </button>
-                            </x-splade-form>
+                            <div class="flex items-center">
+                                <a href="{{ route('website.lttq.invoice', ['uuid' => $data_transaksi->uuid]) }}" target="_blank" class="flex items-center justify-between text-primary-700 border border-primary-700 rounded-md p-2 mr-2">
+                                    Lihat Invoice <x-carbon-view class="w-4 h-4 ml-2 text-primary-700"/>
+                                </a>
+
+                                <x-splade-form action="{{ route('admin.transaksi.destroy', ['unit' => $unit, 'periode' => $periode, 'transaksi' => $data_transaksi->id]) }}"
+                                    method="DELETE"
+                                    confirm="Konfirmasi Hapus Data"
+                                    confirm-text="Data dihapus ?"
+                                    confirm-button="Ya"
+                                    cancel-button="Tidak"
+                                    >
+                                    @csrf
+                                    <button type="submit" class="text-red-700 border border-red-700 rounded-md p-2">
+                                        <x-carbon-trash-can class="w-5 h-5 text-red-700"/>
+                                    </button>
+                                </x-splade-form>
+                            </div>
                         </div>
                     </div>
                 </div>
