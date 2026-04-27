@@ -169,7 +169,7 @@ class TransaksiController extends Controller
             $data_transaksi = \App\Models\Transaksi::where('uuid', $transaksi)->first();
 
             $data_pembayaran = $data_transaksi->data_pembayaran ?? [];
-            $data_pembayaran['bukti_transfer'] = $folderPath . $transaksi . '.' . $request->file('buktitransfer')->getClientOriginalExtension();
+            $data_pembayaran['bukti_transfer'] = $filePath;
             $data_transaksi->data_pembayaran = $data_pembayaran;
             $data_transaksi->save();
 
