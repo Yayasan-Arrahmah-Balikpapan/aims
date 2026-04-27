@@ -159,12 +159,7 @@ class TransaksiController extends Controller
             $filePath = $request->file('buktitransfer')->storeAs($folderPath, $fileName, 'public');
             // session()->put('invoice.buktitransfer.' . $transaksi, $filePath);
 
-            // Kembalikan response sukses
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil di-upload.',
-                'file_path' => Storage::url($filePath),
-            ]);
+
 
             $data_transaksi = \App\Models\Transaksi::where('uuid', $transaksi)->first();
 
@@ -175,6 +170,14 @@ class TransaksiController extends Controller
 
             DB::commit();
 
+            // Kembalikan response sukses
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di-upload.',
+                'file_path' => Storage::url($filePath),
+                'info' => $data_transaksi,
+            ]);
+
         } catch (\Exception $e) {
 
             // Kembalikan response gagal
@@ -184,7 +187,7 @@ class TransaksiController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
-        // return view('website.pages.lttq.tahsin');
+        return view('website.pages.lttq.tahsin');
     }
 
     public function update($unit, $periode, $transaksi, Request $request)
