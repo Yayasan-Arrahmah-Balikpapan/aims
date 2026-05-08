@@ -231,22 +231,19 @@
                                         >
                                         @csrf
                                     <div class="my-4">
-                                        <span class="block mb-1 text-gray-700 font-sans"> Upload Bukti Transfer<span aria-hidden="true" class="text-red-600" title="This field is required">*</span></span>
+                                        <span class="block mb-1 text-gray-700 font-sans"> Upload Bukti Transfer (Opsional)</span>
                                         <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}">
                                             <!-- Slot untuk konten yang akan muncul setelah upload -->
                                             <template #uploaded-content>
                                                 <!-- Tombol atau konten yang ingin ditampilkan -->
-                                                <p class="my-2 text-sm text-green-600 text-center">Upload berhasil! Silakan Klik Konfirmasi.</p>
-                                                <div class="flex items-center justify-center">
-                                                    <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </x-splade-submit>
-                                                </div>
+                                                <p class="my-2 text-sm text-green-600 text-center">Upload berhasil. Anda bisa lanjut konfirmasi pembayaran.</p>
                                             </template>
                                         </BuktiTransferUpload>
                                         {{-- <BuktiTransferUpload upload-url="{{ route('website.lttq.invoice.store.buktitransfer', ['uuid' => $uuid]) }}"></BuktiTransferUpload> --}}
                                     </div>
-                                    {{-- <div class="flex items-center justify-center">
+                                    <div class="flex items-center justify-center">
                                         <x-splade-submit class="bg-primary-700 text-white py-2.5 px-5 rounded-lg">Konfirmasi Pembayaran </x-splade-submit>
-                                    </div> --}}
+                                    </div>
                                 </x-splade-form>
                             @elseif ($data->status == 2)
                                 <div class="text-center">

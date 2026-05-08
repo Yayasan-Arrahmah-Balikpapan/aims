@@ -302,39 +302,39 @@ Yayasan Arrahmah Balikpapan
 
     public function lomba_invoice_store($uuid, Request $request)
     {
-        // dd(session()->get('invoice.buktitransfer'));
-        $buktitransfer     = session()->get('invoice.buktitransfer');
-        if (!$buktitransfer) {
-            Toast::title('Anda Belum Upload Bukti Transfer !')
-                ->warning()
-                ->autoDismiss(10);
-        } else {
-            DB::beginTransaction();
-            try {
-                $transaksi = \App\Models\LombaTransaksi::where('uuid', $uuid)->first();
-                if($transaksi){
+        $sessionBuktiTransferKey = 'invoice.buktitransfer.' . $uuid;
+        $buktitransfer = session()->get($sessionBuktiTransferKey);
 
-                    $data_pembayaran = $transaksi->data_pembayaran;
+        DB::beginTransaction();
+        try {
+            $transaksi = \App\Models\LombaTransaksi::where('uuid', $uuid)->first();
+            if($transaksi){
+
+                $data_pembayaran = $transaksi->data_pembayaran ?? [];
+                if ($buktitransfer) {
                     $data_pembayaran['bukti_transfer'] = $buktitransfer;
-                    $transaksi->data_pembayaran = $data_pembayaran;
-                    $transaksi->status = 2;
-                    $transaksi->save();
-
-                    DB::commit();
-                    Toast::title('Upload Bukti Transfer Berhasil !')
-                    ->autoDismiss(10);
-                } else {
-                    DB::rollBack();
-                    Toast::title('Terjadi Kesalahan Data Transaksi. Mohon Ulangi')
-                        ->warning()
-                        ->autoDismiss(10);
                 }
-            } catch (\Exception $e) {
+
+                $transaksi->data_pembayaran = $data_pembayaran;
+                $transaksi->status = 2;
+                $transaksi->save();
+
+                DB::commit();
+                session()->forget($sessionBuktiTransferKey);
+
+                Toast::title('Konfirmasi Pembayaran Berhasil Dikirim !')
+                ->autoDismiss(10);
+            } else {
                 DB::rollBack();
-                Toast::title('Terjadi Kesalahan. Kontak Admin !')
+                Toast::title('Terjadi Kesalahan Data Transaksi. Mohon Ulangi')
                     ->warning()
                     ->autoDismiss(10);
             }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Toast::title('Terjadi Kesalahan. Kontak Admin !')
+                ->warning()
+                ->autoDismiss(10);
         }
 
         return redirect()->back();
@@ -360,7 +360,7 @@ Yayasan Arrahmah Balikpapan
         // Simpan file di storage
         try {
             $filePath = $request->file('buktitransfer')->storeAs($folderPath, $fileName, 'public');
-            session()->put('invoice.buktitransfer', $filePath);
+            session()->put('invoice.buktitransfer.' . $uuid, $filePath);
 
             // Kembalikan response sukses
             return response()->json([
