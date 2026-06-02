@@ -57,12 +57,12 @@ class PeriodeController extends Controller
             'angkatan'             => $request->angkatan,
             'kategori'             => $request->kategori,
 
-            'form_biodata_daftar'  => json_encode([]),
-            'format_nilai'         => json_encode([]),
-            'format_rapot'         => json_encode([]),
-            'format_absensi'       => json_encode([]),
-            'format_pembayaran'    => json_encode([]),
-            'notifikasi'           => json_encode([]),
+            'form_biodata_daftar'  => NULL,
+            'format_nilai'         => NULL,
+            'format_rapot'         => NULL,
+            'format_absensi'       => NULL,
+            'format_pembayaran'    => NULL,
+            'notifikasi'           => NULL,
         ]);
 
 

@@ -89,22 +89,12 @@
                         </div> --}}
                     </div>
                 </section>
-                <section class="max-w-7xl mx-auto bg-white text-sm p-10">
+                {{-- <section class="max-w-7xl mx-auto bg-white text-sm p-10">
                     <div class="p-2 sm:p-4 rounded-md bg-amber-50 shadow-md">
                         <div class="flex items-center">
                             <div class="shrink-0 px-0 sm:px-4">
                                 <Link href="{{ route('dashboard.peserta.ramadhan.index') }}">
                                     <img class="w-28 sm:w-32" src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" alt="Semarak Ramadhan">
-                                </Link>
-                            </div>
-                            <div class="flex-1 min-w-0 sm:ms-4 ms-2">
-                                <Link href="{{ route('dashboard.peserta.ramadhan.index') }}">
-                                    <p class="text-md font-medium text-[#1d6a6a] uppercase">
-                                        Program Ramadhan
-                                    </p>
-                                    <p class="text-sm text-gray-500 uppercase">
-                                        1447H / 2026
-                                    </p>
                                 </Link>
                             </div>
                             <div class="items-center text-base font-semibold ">
@@ -115,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                </section>
+                </section> --}}
             </div>
             {{-- <section class="max-w-7xl mx-auto px-5 md:px-10 py-10 bg-white text-sm">
                 <h2 class="text-xl font-bold pb-2">Daftar</h2>
@@ -446,10 +436,4 @@
             </div>
         </template>
     </Dashboard>
-
-    <div class="fixed bottom-20 right-4 p-0 z-50">
-        <Link href="{{ route('dashboard.peserta.ramadhan.index') }}" class="inline-flex flex-col items-center bg-[#fff3e0] rounded-lg p-1">
-            <img src="{{ asset('assets/logo/logo-ramadhan-1447h.png') }}" class="h-16 sm:h-24" alt="icon-ramadhan">
-        </Link>
-    </div>
 </x-app-layout>
