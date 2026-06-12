@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LogDML;
+// use App\Models\LogDML;
 use ProtoneMedia\Splade\SpladeTable;
 use App\Repositories\Interface\DivisiRepoInterface;
 use App\Repositories\Interface\UnitRepoInterface;
@@ -223,15 +223,16 @@ class SuperAdminController extends Controller
     }
 
     public function log_dml_index() {
-        $log_dml = SpladeTable::for(LogDML::class)
-        ->column(
-            key     : 'user.name',
-            label   : 'user'
-        )
-        ->column('status')
-        ->column('from')
-        ->column('to')
-        ->paginate(10);
+        $log_dml = null ;
+        // $log_dml = SpladeTable::for(LogDML::class)
+        // ->column(
+        //     key     : 'user.name',
+        //     label   : 'user'
+        // )
+        // ->column('status')
+        // ->column('from')
+        // ->column('to')
+        // ->paginate(10);
 
         return view('modules.log-dml.index', compact('log_dml'));
     }
