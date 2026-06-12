@@ -9,9 +9,8 @@ services:
       - "8000:80" # Map port 8000 di server (aaPanel) ke port 80 di dalam container
     volumes:
       - .:/var/www
-    environment:
-      - APP_ENV=local
-      - APP_DEBUG=true
+    env_file:
+      - .env
     networks:
       - laravel_network
 
