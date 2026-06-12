@@ -1,7 +1,5 @@
-# Menggunakan PHP 8.3 dengan FPM
-FROM php:8.3-fpm
-
-FROM dunglas/frankenphp
+# Menggunakan image PHP Apache sebagai standar yang stabil untuk Laravel
+FROM php:8.3-apache
 
 # Install dependencies yang diperlukan termasuk oniguruma
 RUN apt-get update && apt-get install -y \
@@ -24,22 +22,26 @@ RUN apt-get update && apt-get install -y \
     exif \
     && docker-php-ext-enable exif
 
+# Aktifkan mod_rewrite Apache untuk perutean (routing) Laravel
+RUN a2enmod rewrite
+
+# Ubah DocumentRoot Apache ke folder public Laravel
+ENV APACHE_DOCUMENT_ROOT /var/www/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Install FrankenPHP (Pastikan URL yang tepat)
-#RUN curl -sSL https://github.com/frankensoft/frankenphp/releases/latest/download/frankenphp-linux-amd64.tar.gz | tar xz -C /usr/local/bin && \
-#    chmod +x /usr/local/bin/frankenphp
 
 # Set direktori kerja
 WORKDIR /var/www
 
-# Salin file composer.json dan composer.lock
-COPY composer.json composer.lock ./
+# Salin file composer.json (dan composer.lock jika ada)
+COPY composer.json composer.lock* ./
 
 # Install dependensi Laravel tanpa script dan autoloader
 RUN composer clear-cache
-RUN composer install --no-dev --no-autoloader --no-scripts
+RUN composer install --no-dev --no-autoloader --no-scripts || true
 
 # Salin sisa aplikasi
 COPY . .
@@ -47,15 +49,11 @@ COPY . .
 # Jalankan autoloader
 RUN composer dump-autoload --optimize
 
-# Permissions untuk Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Berikan hak akses penuh pada proses apache di direktori penting Laravel
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache /var/www/public
 
-# Expose port 9000
-EXPOSE 9000
+# Expose port standar HTTP (80)
+EXPOSE 80
 
-# Jalankan FrankenPHP di port 9000
-#CMD ["frankenphp", "start", "--port", "9000"]
-CMD ["php", "artisan", "octane:frankenphp", "--port", "9000"]
-
-
-#ENTRYPOINT ["php", "artisan", "octane:frankenphp"]
+# Jalankan Apache dalam mode foreground
+CMD ["apache2-foreground"]
